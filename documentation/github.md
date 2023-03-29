@@ -5,7 +5,7 @@ parent: Installation
 grand_parent: Documentation
 nav_order: 1
 ---
-# Using Github to install IBDCluster:
+# Using Github to install DRIVE:
 ---
 
 This installation method assumes that you are familiar with Git and Github, the commandline, and python's Anaconda package manager and that these programs are installed/can be install on whatever computing environment you are using. You will have to use all of these tools so you will need to be familiar enough with each one to run the example commands. If you wish to read the documentation for each of these then they will be listed below:
