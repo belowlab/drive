@@ -15,8 +15,12 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
     "Topic :: Scientific/Engineering :: Bio-Informatics"
     ]
+packages = [
+    {include = "ibdcluster"}
+]
+
 [tool.poetry.scripts]
-drive = "IBDCluster.IBDCluster:app"
+drive = "ibdcluster.ibdcluster:app"
 
 [tool.poetry.dependencies]
 python = ">=3.11,<4.0.0"
