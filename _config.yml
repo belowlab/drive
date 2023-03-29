@@ -1,6 +1,6 @@
 title: DRIVE
 # tagline: A CLI tool to identify networks of Identity by Descent Sharing in Biobanks
-subtitle: "Version 1.1.0"
+subtitle: "Version 1.0.0"
 # affiliation: Vanderbilt Genetics Institute
 remote_theme: pmarsceill/just-the-docs
 color_scheme: dark
