@@ -10,8 +10,8 @@ search_enabled: true
 # Makes Aux links open in a new tab. Default is false
 aux_links_new_tab: true
 
-# kramdown:
-input: GFM
+kramdown:
+  input: GFM
 
 # Aux links for the upper right navigation
 aux_links:
