@@ -39,8 +39,7 @@ ls drive/
 
 The process should look similar to the screencasts below:
 
-<img src="https://belowlab.github.io/drive/screencasts/github_cloning.gif" width="600" height="400" />
-<!-- ![github cloning](/screencasts/github_cloning.gif) -->
+<img src="https://belowlab.github.io/drive/screencasts/github_cloning.gif" alt="Github Drive repository cloning" width="600" height="400" />
 
 If you see a directory file tree then the program cloned correctly. If you receive an error saying that the directory does not exist, then you will have to debug the error to move onto step 2.
 
@@ -67,7 +66,8 @@ Once you have created and activated the environment, you can install the necessa
 poetry install --without dev
 {% endhighlight %}
 
-![Poetry dependency installation](/screencasts/poetry_dependency_install.gif)
+<img src="https://belowlab.github.io/drive/screencasts/poetry_dependency_install.gif" alt="Poetry installation example" width="600" height="400" />
+
 
 This command will install all of the runtime dependencies and not the developer dependencies. If you are developing the tool then you can use the command
 
@@ -83,4 +83,4 @@ python drive/drive.py -h
 
 you should see the DRIVE cli as shown below: 
 
-![DRIVE cli](/screencasts/drive_cli.gif)
+<img src="https://belowlab.github.io/drive/screencasts/drive_cli.gif" alt="DRIVE cli options" width="600" height="400" />
