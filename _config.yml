@@ -10,7 +10,7 @@ search_enabled: true
 # Makes Aux links open in a new tab. Default is false
 aux_links_new_tab: true
 # Setting variables for the url and baseurl
-baseurl: https://github.com/belowlab/drive
+
 
 
 kramdown:
