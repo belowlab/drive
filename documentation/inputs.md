@@ -7,8 +7,8 @@ nav_order: 2
 # Inputs:
 ---
 The DRIVE program has several command line arguments shown in the image below. 
-
-<img src="/imgs/DRIVE_cli_options.png" width="600" height="400" />
+![image]({{ site.url }}/imgs/DRIVE_cli_options.png)
+<!-- <img src="{{ site.base_url }}/imgs/DRIVE_cli_options.png" width="600" height="400" /> -->
 
 ---
 
