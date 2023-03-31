@@ -39,7 +39,8 @@ ls drive/
 
 The process should look similar to the screencasts below:
 
-![github cloning](/screencasts/github_cloning.gif)
+<img src="/screencasts/github_cloning.gif" width="600" height="400" />
+<!-- ![github cloning](/screencasts/github_cloning.gif) -->
 
 If you see a directory file tree then the program cloned correctly. If you receive an error saying that the directory does not exist, then you will have to debug the error to move onto step 2.
 
