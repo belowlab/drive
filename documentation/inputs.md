@@ -6,7 +6,9 @@ nav_order: 2
 ---
 # Inputs:
 ---
-IBDCluster has a number of inputs, some of which are required and some that are optional. These are listed below. The required input files will be colored yellow while the optional ones will be grey:
+The DRIVE program has several command line arguments shown in the image below. 
+
+<img src="/imgs/DRIVE_cli_options.png" width="600" height="400" />
 
 ---
 
