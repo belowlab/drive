@@ -9,7 +9,10 @@ color_scheme: dark
 search_enabled: true
 # Makes Aux links open in a new tab. Default is false
 aux_links_new_tab: true
+# Setting variables for the url and baseurl
 url: https://github.com/belowlab/drive
+baseurl: /drive
+
 kramdown:
   input: GFM
 
