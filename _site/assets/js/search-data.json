@@ -112,11 +112,11 @@
     "relUrl": "/documentation/installation.html"
   },"16": {
     "doc": "Outputs",
-    "title": "Output Files:",
-    "content": ". ",
-    "url": "/documentation/outputs.html#output-files",
+    "title": "Output File:",
+    "content": ". DRIVE outputs a file that ends in .DRIVE.txt. This file has the results of the clustering analysis. The file begins with two lines that tell how many IBD segments and haplotypes were identified as well as how many clusters were identified. There are eight columns in the output file like the table below. | clustID | n.total | n.haplotype | true.positive.n | true.positive | false.positive | IDs | ID.haplotype | . | # | # | # | # | # | # | grids in network | haplotypes in network | . Column descriptions: . | clustID: | . | n.total: | . | n.haplotype: | . | true.positive.n: | . | true.postive: | . | false.postive: | . | IDs: | . | ID.haplotype: | . ",
+    "url": "/documentation/outputs.html#output-file",
     
-    "relUrl": "/documentation/outputs.html#output-files"
+    "relUrl": "/documentation/outputs.html#output-file"
   },"17": {
     "doc": "Outputs",
     "title": "Outputs",
