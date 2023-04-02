@@ -15,13 +15,13 @@ DRIVE outputs a file that ends in .DRIVE.txt. This file has the results of the c
 
 ### Column descriptions:
 ---
-* <span style="color: #F0FF00">**clustID**:</span> 
+* <span style="color: #F0FF00">**clustID**:</span> ID given to each network identified. This value will have the form "clst#".
 
 ---
-* <span style="color: #F0FF00">**n.total**:</span> 
+* <span style="color: #F0FF00">**n.total**:</span> Total number of individuals in the network.
 
 ---
-* <span style="color: #F0FF00">**n.haplotype**:</span> 
+* <span style="color: #F0FF00">**n.haplotype**:</span> The number of haplotypes in the network. This value may be different than n.total due to inbreeding.
 
 ---
 * <span style="color: #F0FF00">**true.positive.n**:</span> 
@@ -33,7 +33,7 @@ DRIVE outputs a file that ends in .DRIVE.txt. This file has the results of the c
 * <span style="color: #F0FF00">**false.postive**:</span>
 
 ---
-* <span style="color: #F0FF00">**IDs**:</span> 
+* <span style="color: #F0FF00">**IDs**:</span> List of ids that are in the network.
 
 ---
-* <span style="color: #F0FF00">**ID.haplotype**:</span> 
+* <span style="color: #F0FF00">**ID.haplotype**:</span> List of haplotypes that are in the network. These will be equivalent to the ids in the "IDs" column except each id will have a phase value attached to it.
