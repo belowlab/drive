@@ -24,16 +24,16 @@ DRIVE outputs a file that ends in .DRIVE.txt. This file has the results of the c
 * <span style="color: #F0FF00">**n.haplotype**:</span> The number of haplotypes in the network. This value may be different than n.total due to inbreeding.
 
 ---
-* <span style="color: #F0FF00">**true.positive.n**:</span> 
+* <span style="color: #F0FF00">**true.positive.n**:</span> Number of shared IBD segments that are identified in the network. 
 
 ---
-* <span style="color: #F0FF00">**true.postive**:</span> 
+* <span style="color: #F0FF00">**true.postive**:</span> Proportion of identified IBD segments in networks vs the total number of possible IBD segments that could exist between all individuals in the network.
 
 ---
-* <span style="color: #F0FF00">**false.postive**:</span>
+* <span style="color: #F0FF00">**false.postive**:</span> Proportion of individuals within the cluster that share an IBD segment with another individual outside of the cluster.
 
 ---
-* <span style="color: #F0FF00">**IDs**:</span> List of ids that are in the network.
+* <span style="color: #F0FF00">**IDs**:</span> List of ids that are in the network. 
 
 ---
 * <span style="color: #F0FF00">**ID.haplotype**:</span> List of haplotypes that are in the network. These will be equivalent to the ids in the "IDs" column except each id will have a phase value attached to it.
