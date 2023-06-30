@@ -28,7 +28,7 @@ Currently the paper DRIVE originally appeared in can be found on medrxiv at the 
 
 Contact:
 --------
-If you have any questions about DRIVE, you can either post an issue on the Github issues page or you can contact us at the email address, insert email here.
+If you have any questions about DRIVE, you can either post an issue on the Github issues page.
 
 .. toctree::
    :maxdepth: 2
