@@ -1,12 +1,10 @@
 """Module to faciliate the user in parsing the phenotype file by incorporating multiple 
 ecodings, separators, and by handling multiple errors."""
 
-import gzip
 from logging import Logger
 from pathlib import Path
 from typing import Dict, List, Optional, Set, Tuple, TypeVar, Union
 import pandas as pd
-import numpy as np
 
 from drive.log import CustomLogger
 
@@ -81,21 +79,58 @@ class PhenotypeFileParser:
         self.phenotype_df = pheno_df
 
         logger.verbose(
-            f"Reading in {self.phenotype_df.shape[1] - 1} phecodes for {self.phenotype_df.shape[0]} individuals"
+            f"Reading in {self.phenotype_df.shape[1] - 1} phecodes for {self.phenotype_df.shape[0]} individuals"  # noqa: E501
         )  # noqa: E501
 
         return self
 
     def __exit__(self, exc_type, exc_value, traceback) -> None:
-        """Close the resource when it is not longer being used. Used by the context manager."""
+        """Close the resource when it is not longer being used. Used by the context
+        manager."""
         logger.verbose("Finished reading in individuals from the phenotype file")
 
+    def _generate_columns_to_keep(self) -> List[str]:
+        """determines which columns in the phecode file to use
+
+        Returns
+        -------
+        List[str]
+        returns a list of strings. If the user specified a specific phecode then
+        it returns every phecode otherwise it returns a single phecode in a list
+
+        Raises
+        ------
+        ValueError
+            if the specified PheCode is not found in the phenotype file then an error is
+            logged and raised
+        """
+        if (
+            self.specific_phenotype is not None
+            and self.specific_phenotype not in self.phenotype_df.columns
+        ):  # noqa: E501
+            logger.critical(
+                f"The phenotype {self.specific_phenotype} was not found in the phenotype file"  # noqa: E501
+            )  # noqa: E501
+            raise ValueError(
+                f"The phenotype {self.specific_phenotype} was not found in the phenotype file"  # noqa: E501
+            )  # noqa: E501
+        elif self.specific_phenotype is not None:
+            return [self.specific_phenotype]
+        else:
+            return list(self.phenotype_df.columns[1:])
+
     def _process_matrix(
-        self,
+        self, columns: List[str]
     ) -> Tuple[Dict[str, Dict[str, Set[str]]], List[str]]:
         """Function that will generate a dictionary where the keys are
         phenotypes and the values are lists of the cases/exclusions/controls
 
+        Parameters
+        ----------
+        columns : List[str]
+            list of columns from the phenotype matrix. If the user provides
+            a specific phenotype then this list will be of size one, otherwise it will
+            be the size of the number of phecodes in the file.
 
         Returns
         -------
@@ -118,7 +153,9 @@ class PhenotypeFileParser:
 
         # We will pull out values for each phenotype to determine the cases/controls/
         # exclusions
-        for phecode_name, phenotyping_status in self.phenotype_df.iloc[:, 1:].items():
+        for phecode_name, phenotyping_status in self.phenotype_df.iloc[
+            :, columns
+        ].items():
             cases = set(
                 grids[phenotyping_status[phenotyping_status == 1].index].unique()
             )
@@ -155,6 +192,8 @@ class PhenotypeFileParser:
             cohort
         """
 
-        phenotyping_dictionary, cohort_ids = self._process_matrix()
+        cols_to_keep = self._generate_columns_to_keep()
+
+        phenotyping_dictionary, cohort_ids = self._process_matrix(cols_to_keep)
 
         return phenotyping_dictionary, cohort_ids
