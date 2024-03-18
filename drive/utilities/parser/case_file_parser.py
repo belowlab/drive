@@ -149,11 +149,11 @@ class PhenotypeFileParser:
         phenotype_dict = {phecode: None for phecode in self.phenotype_df.columns[1:]}
 
         # we ultimately are going to just want to filter this grids series
-        grids = self.phenotype_df.iloc[:, 0]
+        grids = self.phenotype_df.iloc[:, 0].astype(str)
 
         # We will pull out values for each phenotype to determine the cases/controls/
         # exclusions
-        for phecode_name, phenotyping_status in self.phenotype_df.iloc[
+        for phecode_name, phenotyping_status in self.phenotype_df.loc[
             :, columns
         ].items():
             cases = set(
