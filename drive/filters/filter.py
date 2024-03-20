@@ -3,6 +3,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Callable, Dict, Iterator, List, Optional, TypeVar
 from pandas import DataFrame, concat, read_csv
+from datetime import datetime
 
 from drive.log import CustomLogger
 from drive.models import FileIndices, Genes
@@ -90,7 +91,7 @@ class IbdFilter:
         """
         haplotypes = chunk_data.values.ravel()
 
-        logger.verbose(f"identified {len(haplotypes)} haplotypes.")
+        logger.verbose(f"identified {len(haplotypes)} haplotypes in this chunk.")
 
         # iterate over each haplotype and add it to the
         # dictionary if the value is not present
@@ -400,14 +401,24 @@ class IbdFilter:
             Lists of ids that make up the cohort. The ibd_file
             will be filtered to only this list.
         """
+        # getting the start time for when the program begines to read in the ibd file
+        start_time = datetime.now()
 
         for chunk in self.ibd_file:
             cohort_restricted_chunk = self._filter_for_cohort(chunk, cohort_ids)
+
+            logger.debug(
+                f"Identified {cohort_restricted_chunk.shape[0]} pairs in this chunk"
+            )  # noqa: E501
 
             if cohort_restricted_chunk.empty:
                 continue
 
             size_filtered_chunk = self.filter(cohort_restricted_chunk, min_centimorgan)
+
+            logger.debug(
+                f"{size_filtered_chunk.shape[0]} pairs remaining after filtering for the loci of interest with a {min_centimorgan} minimum shared segment threshold"
+            )  # noqa: E501
 
             if not size_filtered_chunk.empty:
                 # We have to add two column with the haplotype ids
@@ -442,3 +453,11 @@ class IbdFilter:
 
         self.ibd_pd.reset_index(drop=True, inplace=True)
         self.ibd_vs = self.ibd_vs.drop_duplicates().sort_values(by="idnum")
+
+        # We are going to print out how long it took to read in the ibd file
+        # if the user puts the program in verbose mod
+        end_time = datetime.now()
+
+        logger.verbose(
+            f"Analysis finished at {end_time}. Total runtime: {end_time - start_time}"
+        )
