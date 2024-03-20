@@ -197,6 +197,4 @@ class PhenotypeFileParser:
 
         phenotyping_dictionary, cohort_ids = self._process_matrix(cols_to_keep)
 
-        print(phenotyping_dictionary)
-
         return phenotyping_dictionary, cohort_ids
