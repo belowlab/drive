@@ -250,9 +250,11 @@ def main() -> None:
         default="drive.log",
         type=str,
         help="Name for the log output file. (default: %(default)s)",
-    ) 
+    )
 
-    parser.add_argument('--version', action='version', version=f"%(prog)s: {version('drive-ibd')}")
+    parser.add_argument(
+        "--version", action="version", version=f"%(prog)s: {version('drive-ibd')}"
+    )
 
     args = parser.parse_args()
 

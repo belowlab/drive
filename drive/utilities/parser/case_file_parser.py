@@ -146,7 +146,9 @@ class PhenotypeFileParser:
 
         # we need to create the dictionary that will have the case/control/exclusion
         # ids for each phecode
-        phenotype_dict = {phecode: None for phecode in self.phenotype_df.columns[1:]}
+        phenotype_dict = {phecode: None for phecode in columns}
+
+        # we need to create a dictionary that will map the index of the phenotype
 
         # we ultimately are going to just want to filter this grids series
         grids = self.phenotype_df.iloc[:, 0].astype(str)
@@ -179,7 +181,6 @@ class PhenotypeFileParser:
     def parse_cases_and_controls(
         self,
     ) -> Tuple[Dict[str, Dict[str, Set[str]]], Dict[int, str]]:
-        # ) -> PhenotypeInfo:
         """Generate a list for cases, controls, and excluded individuals.
 
         Returns
@@ -195,5 +196,7 @@ class PhenotypeFileParser:
         cols_to_keep = self._generate_columns_to_keep()
 
         phenotyping_dictionary, cohort_ids = self._process_matrix(cols_to_keep)
+
+        print(phenotyping_dictionary)
 
         return phenotyping_dictionary, cohort_ids
