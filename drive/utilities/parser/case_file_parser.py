@@ -65,7 +65,7 @@ class PhenotypeFileParser:
                 self.file,
                 sep="\t",
                 na_values=["na", "n/a", "-1", "-1.0", " ", "", "NA", "N/A"],
-            ).fillna("-1")
+            ).fillna(-1)
 
         except pd.errors.ParserError as e:
             logger.critical(e)
@@ -176,6 +176,9 @@ class PhenotypeFileParser:
                 "excluded": exclusions,
             }
 
+        logger.info(
+            f"For PheCode, {phecode_name}, identified {len(phenotype_dict[phecode_name]['cases'])} cases, {len(phenotype_dict[phecode_name]['controls'])} controls, and {len(phenotype_dict[phecode_name]['excluded'])} exclusions"
+        )  # noqa: E501
         return phenotype_dict, grids.values.tolist()
 
     def parse_cases_and_controls(

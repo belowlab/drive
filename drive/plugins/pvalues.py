@@ -61,11 +61,16 @@ class Pvalues:
         return pvalue
 
     @staticmethod
-    def _determine_phenotype_frequency(phenotype_counts: Dict[str, List[str]]) -> float:
+    def _determine_phenotype_frequency(
+        phecode: str, phenotype_counts: Dict[str, List[str]]
+    ) -> float:
         """calculate the phenotype frequency in the cohort
 
         Parameters
         ----------
+        phecode : str
+            phecode id. This value will only be used for a logging statement
+
         phenotype_counts : Dict[str, List[str]]
             Dictionary that has list for individuals who are
             cases, controls, or exclusions.
@@ -78,13 +83,11 @@ class Pvalues:
 
         # We need to first check if there are even controls in the file
         phenotype_frequency = len(phenotype_counts.get("cases")) / (
-            len(phenotype_counts.get("controls"))
-            + len(phenotype_counts.get("cases"))
-            + len(phenotype_counts.get("excluded", []))
+            len(phenotype_counts.get("controls")) + len(phenotype_counts.get("cases"))
         )
 
         logger.verbose(
-            f"Identified {len(phenotype_counts.get('cases'))} cases and {len(phenotype_counts.get('controls'))} giving a phenotype frequency of {phenotype_frequency}"  # noqa: E501
+            f"For PheCode, {phecode}, {len(phenotype_counts.get('cases'))} cases and {len(phenotype_counts.get('controls'))} were identified giving a phenotype frequency of {phenotype_frequency}"  # noqa: E501
         )
 
         return phenotype_frequency
@@ -219,7 +222,7 @@ class Pvalues:
                 phenotype_pvalues[phenotype] = "N/A\tN/A\tN/A\tN/A"
             else:
                 phenotype_freq = Pvalues._determine_phenotype_frequency(
-                    phenotype_counts
+                    phenotype, phenotype_counts
                 )
 
                 num_carriers_in_network = Pvalues._get_carrier_count_in_network(
