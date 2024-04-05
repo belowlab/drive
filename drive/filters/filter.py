@@ -1,9 +1,10 @@
 import sys
 from dataclasses import dataclass, field
+from datetime import datetime
 from pathlib import Path
 from typing import Callable, Dict, Iterator, List, Optional, TypeVar
+
 from pandas import DataFrame, concat, read_csv
-from datetime import datetime
 
 from drive.log import CustomLogger
 from drive.models import FileIndices, Genes

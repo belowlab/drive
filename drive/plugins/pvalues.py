@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Dict, List, Set, Tuple
+from typing import Dict, List, Optional, Set, Tuple
 
 from numpy import float64
 from scipy.stats import binomtest
@@ -121,7 +121,7 @@ class Pvalues:
     @staticmethod
     def _get_carriers_in_network(
         phenotype_counts: Dict[str, List[str]], network: Network_Interface
-    ) -> Set[str]:
+    ) -> str:
         """Generate a set of cases that are in the network
 
         Parameters
@@ -136,13 +136,55 @@ class Pvalues:
 
         Returns
         -------
-        Set[str]
-            returns a set of individuals that are in both the phenotype_counts
-            case set and the network members set
+        str
+            returns a string of individuals that are in both the phenotype_counts
+            case set and the network members set. If this interection is empty
+            then it returns a str "N/A"
         """
         # determine the number of carriers in the network
+        case_individuals = network.members.intersection(phenotype_counts.get("cases"))
 
-        return network.members.intersection(phenotype_counts.get("cases"))
+        if case_individuals:
+            return ", ".join(
+                network.members.intersection(phenotype_counts.get("cases"))
+            )  # noqa: E501
+        else:
+            return "N/A"
+
+    @staticmethod
+    def _get_exclusions_in_network(
+        phenotype_counts: Dict[str, List[str]], network: Network_Interface
+    ) -> str:
+        """Generate a set of cases that are in the network
+
+        Parameters
+        ----------
+        phenotype_counts : Dict[str, List[str]]
+            Dictionary that has list for individuals who are
+            cases, controls, or exclusions.
+
+        network : Network_Interface
+            Network object with information about members of
+            the networks and what haplotypes are in the network
+
+        Returns
+        -------
+        str
+            returns a string of individuals that are in both the phenotype_counts
+            exclusion set and the network members set. If this interection is
+            empty then it returns a str "N/A"
+        """
+        # determine the number of carriers in the network
+        excluded_individuals = network.members.intersection(
+            phenotype_counts.get("excluded")
+        )  # noqa: E501
+
+        if excluded_individuals:
+            return ", ".join(
+                network.members.intersection(phenotype_counts.get("excluded"))
+            )  # noqa: E501
+        else:
+            "N/A"
 
     def _remove_exclusions(
         phenotype_counts: Dict[str, List[str]], network: Network_Interface
@@ -166,7 +208,7 @@ class Pvalues:
             returns the number of individuals in the network,
             not counting those individuals classified as
             excluded in the phenotype_counts dictionary. Also
-            returns the number of individuals excluded.
+            returns the number of individuals excluded. Also returns the
         """
 
         return (
@@ -229,7 +271,11 @@ class Pvalues:
                     phenotype_counts, network
                 )
 
-                carrier_set = Pvalues._get_carriers_in_network(
+                carrier_str = Pvalues._get_carriers_in_network(
+                    phenotype_counts, network
+                )
+
+                exclusion_str = Pvalues._get_exclusions_in_network(
                     phenotype_counts, network
                 )
 
@@ -247,10 +293,8 @@ class Pvalues:
                 )
 
                 # Next two lines create the string and then concats it to the output_str
-                if carrier_set:
-                    phenotype_str = f"{num_carriers_in_network}\t{', '.join(carrier_set)}\t{excluded_count}\t{pvalue}"  # noqa: E501
-                else:
-                    phenotype_str = f"{num_carriers_in_network}\tN/A\t{excluded_count}\t{pvalue}"  # noqa: E501
+
+                phenotype_str = f"{num_carriers_in_network}\t{carrier_str}\t{excluded_count}\t{exclusion_str}\t{pvalue}"  # noqa: E501
 
                 phenotype_pvalues[phenotype] = phenotype_str
 
