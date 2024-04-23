@@ -258,7 +258,6 @@ def main() -> None:
 
     args = parser.parse_args()
 
-    print("test")
     # getting the programs start time
     start_time = datetime.now()
 
