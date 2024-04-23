@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Dict, List, Protocol
+from typing import Dict, List, Protocol, Set
 
 from .networks import Network_Interface
 
@@ -10,7 +10,7 @@ class Data_Interface(Protocol):
 
     networks: List[Network_Interface]
     output_path: Path
-    carriers: Dict[str, Dict[str, List[str]]]
+    carriers: Dict[str, Dict[str, Set[str]]]
     phenotype_descriptions: Dict[str, Dict[str, str]]
 
 
@@ -20,5 +20,5 @@ class Data:
 
     networks: List[Network_Interface]
     output_path: Path
-    carriers: Dict[str, Dict[str, List[str]]]
+    carriers: Dict[str, Dict[str, Set[str]]]
     phenotype_descriptions: Dict[str, Dict[str, str]]
