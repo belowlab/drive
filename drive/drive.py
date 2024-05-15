@@ -1,10 +1,11 @@
+import argparse
 import json
 import re
 from datetime import datetime
+from importlib.metadata import version
 from pathlib import Path
-import argparse
-from rich_argparse import RichHelpFormatter
 
+from rich_argparse import RichHelpFormatter
 
 import drive.factory as factory
 from drive.cluster import ClusterHandler, cluster
@@ -249,6 +250,10 @@ def main() -> None:
         default="drive.log",
         type=str,
         help="Name for the log output file. (default: %(default)s)",
+    )
+
+    parser.add_argument(
+        "--version", action="version", version=f"%(prog)s: {version('drive-ibd')}"
     )
 
     args = parser.parse_args()
