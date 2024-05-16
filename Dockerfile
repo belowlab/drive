@@ -30,7 +30,7 @@ RUN curl -sSL https://install.python-poetry.org | python3 - \
     && poetry self add poetry-plugin-bundle
 
 # Use poetry to install dependencies into the virtualenv
-RUN poetry bundle venv /opt/venv/
+RUN poetry bundle venv /opt/venv/ 
 
 # Now we can create the runtime container and just copy the virtualenv to this container
 FROM python:3.11-slim-bullseye as runtime-container

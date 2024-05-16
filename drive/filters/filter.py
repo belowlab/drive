@@ -419,7 +419,7 @@ class IbdFilter:
 
             logger.debug(
                 f"{size_filtered_chunk.shape[0]} pairs remaining after filtering for the loci of interest with a {min_centimorgan} minimum shared segment threshold"  # noqa: E501
-            )  
+            )
 
             if not size_filtered_chunk.empty:
                 # We have to add two column with the haplotype ids

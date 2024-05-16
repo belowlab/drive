@@ -42,7 +42,7 @@ pytest = "^7.2.2"
 pydocstyle = "^6.3.0"
 ipykernel = "^6.22.0"
 isort = "^5.12.0"
-ruff = "^0.0.275"
+ruff = "^0.4.4"
 scalene = "^1.5.35"
 
 
@@ -81,3 +81,25 @@ profile = "black"
 
 [tool.pylint.format]
 max-line-length = "88"
+
+[tool.ruff]
+exclude = [
+    ".mypy_cache",
+    ".git",
+    ".ipynb_checkpoints",
+    ".pytest_cache",
+    ".venv",
+    ".vscode",
+    "build",
+    "dist",
+    "venv",
+    "site-packages",
+    ".github",
+]
+
+[tool.ruff.lint]
+ignore = ["E501"]
+
+[tool.ruff.format]
+# Like Black, use double quotes for strings.
+quote-style = "double"
