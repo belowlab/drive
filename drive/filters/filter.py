@@ -4,6 +4,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import Callable, Dict, Iterator, List, Optional, TypeVar
 
+import numpy as np
 from pandas import DataFrame, concat, read_csv
 
 from drive.log import CustomLogger
@@ -453,6 +454,22 @@ class IbdFilter:
         self._check_empty_dataframes()
 
         self.ibd_pd.reset_index(drop=True, inplace=True)
+
+        ids_in_ibd_pd = len(
+            np.unique(
+                np.concatenate(
+                    [
+                        self.ibd_pd[self.indices.id1_indx].unique(),
+                        self.ibd_pd[self.indices.id2_indx].unique(),
+                    ]
+                )
+            )
+        )
+
+        logger.info(
+            f"{ids_in_ibd_pd} out of the {len(cohort_ids)} ids provided were found within the IBD data file after filtering"
+        )
+
         self.ibd_vs = self.ibd_vs.drop_duplicates().sort_values(by="idnum")
 
         # We are going to print out how long it took to read in the ibd file
