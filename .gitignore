@@ -1,5 +1,6 @@
 # ENVIRONMENTAL FILE
 /venv/
+.venv
 .env
 
 # TEST FILES

@@ -1,12 +1,18 @@
-FROM python:3.11-slim-bullseye as build-container
+# FROM python:3.11-slim-bullseye as build-container
+FROM debian:12.6-slim as build-container
 
 # changing the working directory to be app
 WORKDIR /app/
 
 # We need to install curl
 RUN apt-get update \
-    && apt-get install -y curl \
+    && apt-get install -y curl python3.11 python3.11-venv\
     && rm -rf /var/lib/apt/lists/* 
+
+RUN python3.11 -m venv venv
+
+# RUN PYTHON=$(command -v python3.11)
+# RUN ln -s ${PYTHON} /usr/bin/python
 
 # Copy the requirements file into the container
 COPY ./drive ./drive
@@ -26,19 +32,24 @@ POETRY_CACHE_DIR='/var/cache/pypoetry' \
 POETRY_HOME='/usr/local'
 
 # Install poetry
-RUN curl -sSL https://install.python-poetry.org | python3 - \
-    && poetry self add poetry-plugin-bundle
+RUN curl -sSL https://install.python-poetry.org | python3.11 - 
+RUN PATH="/root/.local/bin:$PATH"
+RUN poetry self add poetry-plugin-bundle
+
 
 # Use poetry to install dependencies into the virtualenv
-RUN poetry bundle venv /opt/venv/ 
+RUN poetry bundle venv --python venv/bin/python /app/venv/ 
 
 # Now we can create the runtime container and just copy the virtualenv to this container
-FROM python:3.11-slim-bullseye as runtime-container
+FROM debian:12.6-slim as runtime-container
 
+RUN apt-get update \
+    && apt-get install -y python3.11 \
+    && rm -rf /var/lib/apt/lists/* 
 
 LABEL maintainer="belowlab"
-LABEL version="2.7.1"
+LABEL version="2.7.4"
 
 # Copy and activate the virtualenv
-COPY --from=build-container /opt/venv /opt/venv
-ENV PATH="/opt/venv/bin:$PATH"
+COPY --from=build-container /app/venv /app/venv
+ENV PATH="/app/venv/bin:$PATH"
