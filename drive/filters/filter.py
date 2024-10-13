@@ -202,7 +202,11 @@ class IbdFilter:
         # we are going to first make sure that the ibd file is for the
         # right chromosome. If the target_gene chromosome number is not
         # found in the file then a ValueError is raised.
-        if self.target_gene.chr not in data_chunk[self.indices.chr_indx].values:
+        if (
+            self.target_gene.chr not in data_chunk[self.indices.chr_indx].values
+            and f"chr{self.target_gene.chr}"
+            not in data_chunk[self.indices.chr_indx].values
+        ):
             error_msg = f"Expected the value of the chromosome column in the ibd file to be {self.target_gene.chr}. This value was not found in the column. Please ensure that you selected the proper IBD file for chromosome {self.target_gene.chr} before re-running DRIVE."  # noqa: E501
 
             logger.critical(error_msg)
