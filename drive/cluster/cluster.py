@@ -1,5 +1,6 @@
 import itertools
 import logging
+import sys
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Set, Tuple
 
@@ -374,7 +375,7 @@ class ClusterHandler:
         """
         # pulling the id from the original cluster
         original_id = network.clst_id
-
+        # logger.debug("In redo_clustering section")
         # filters for the specific cluster
         redopd = ibd_pd[
             (ibd_pd["idnum1"].isin(network.haplotypes))
@@ -392,6 +393,8 @@ class ClusterHandler:
             # redo_networks = ClusterHandler.generate_graph(redopd)
             # performing the random walk
             redo_walktrap_clusters = self.random_walk(redo_networks)
+            # logger.info(redo_networks)
+            # logger.info(redo_walktrap_clusters)
 
             # If only one cluster is found
             if len(redo_walktrap_clusters.sizes()) == 1:
@@ -399,6 +402,7 @@ class ClusterHandler:
                 clst_conn = DataFrame(columns=["idnum", "conn", "conn.N", "TP"])
                 # iterate over each member id
                 # for idnum in network.haplotypes:
+
                 for idnum in network.members:
                     conn = sum(
                         list(
@@ -420,6 +424,7 @@ class ClusterHandler:
                             & redopd["idnum2"].isin(conn_idnum)
                         ].index
                     )
+
                     # assert 1 == 0
                     if len(conn_idnum) == 1:
                         connTP = 1
