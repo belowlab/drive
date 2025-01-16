@@ -117,6 +117,36 @@ class IbdFilter:
 
         data_chunk.loc[:, "idnum2"] = data_chunk["hapid2"].map(self.hapid_map)
 
+    def _check_correct_chromosome(self, data_chunk: DataFrame) -> None:
+        """Check to make sure that the data contains the correct chromosome for
+        the target gene
+
+        Parameters
+        ----------
+        data_chunk : DataFrame
+            dataframe that contains the pairwise IDB segments previously detected
+
+        Raises
+        ------
+        ValueError
+            If the target chromosome is not in the data then drive prefixes it with
+            'chr' incase the data has that prefix. If the adjusted target chromosome
+            is still not in the data then a ValueError is raised
+        """
+        if self.target_gene.chr not in data_chunk[self.indices.chr_indx].values:
+            logger.warning(
+                f"Could not find the gene target, {self.target_gene.chr}, in the ibd data values. Append 'chr' prefix to the chromosome incase the user provided data with this prefix and then provided a region without this prefix"
+            )
+
+            self.target_gene.chr = f"chr{self.target_gene.chr}"
+
+            if self.target_gene not in data_chunk[self.indices.chr_indx].values:
+                error_msg = f"Expected the value of the chromosome column in the ibd file to be {self.target_gene.chr} or chr{self.target_gene.chr}. This value was not found in the column. Please ensure that you selected the proper IBD file for chromosome {self.target_gene.chr} before re-running DRIVE."  # noqa: E501
+
+                logger.critical(error_msg)
+
+                raise ValueError(error_msg)
+
     def _contains_filter(self, data_chunk: DataFrame, min_cm: int) -> DataFrame:
         """Method that will filter the ibd file on four conditions: Chromosome number is the same, segment start position is <= target start position, segment end position is >= to the start position, and the size of the segment is >= to the minimum centimorgan threshold.
 
@@ -150,17 +180,8 @@ class IbdFilter:
 
         # sometimes build 38 have chr# instead of # in the file so we should also
         # check for that
-        chromo_str = f"chr{self.target_gene.chr}"
 
-        if (
-            self.target_gene.chr not in data_chunk[self.indices.chr_indx].values
-            and chromo_str not in data_chunk[self.indices.chr_indx].values
-        ):
-            error_msg = f"Expected the value of the chromosome column in the ibd file to be {self.target_gene.chr} or {chromo_str}. This value was not found in the column. Please ensure that you selected the proper IBD file for chromosome {self.target_gene.chr} before re-running DRIVE."  # noqa: E501
-
-            logger.critical(error_msg)
-
-            raise ValueError(error_msg)
+        self._check_correct_chromosome(data_chunk)
         # We are going to filter the data and then make a copy
         # of it to return so that we don't get the
         # SettingWithCopyWarning
@@ -202,16 +223,8 @@ class IbdFilter:
         # we are going to first make sure that the ibd file is for the
         # right chromosome. If the target_gene chromosome number is not
         # found in the file then a ValueError is raised.
-        if (
-            self.target_gene.chr not in data_chunk[self.indices.chr_indx].values
-            and f"chr{self.target_gene.chr}"
-            not in data_chunk[self.indices.chr_indx].values
-        ):
-            error_msg = f"Expected the value of the chromosome column in the ibd file to be {self.target_gene.chr}. This value was not found in the column. Please ensure that you selected the proper IBD file for chromosome {self.target_gene.chr} before re-running DRIVE."  # noqa: E501
+        self._check_correct_chromosome(data_chunk)
 
-            logger.critical(error_msg)
-
-            raise ValueError(error_msg)
         # We are going to filter the data and then make a copy
         # of it to return so that we don't get the
         # SettingWithCopyWarning
@@ -242,7 +255,8 @@ class IbdFilter:
             string that represents the user's choice for how to filter the ibd segments.
             If the user chooses 'contains' the only segments that contain the entire
             region are kept. If the user chooses 'overlaps' then segments that overlap
-            at all with the target region are kept."""
+            at all with the target region are kept.
+        """
 
         if filter_option == "contains":
             logger.info("Identifying IBD segments that contain the target region")
@@ -470,9 +484,14 @@ class IbdFilter:
             )
         )
 
-        logger.info(
-            f"{ids_in_ibd_pd} out of the {len(cohort_ids)} ids provided were found within the IBD data file after filtering"
-        )
+        if len(cohort_ids) != 0:
+            logger.info(
+                f"{ids_in_ibd_pd} out of the {len(cohort_ids)} ids provided were found within the IBD data file after filtering"
+            )
+        else:
+            logger.info(
+                f"Identified {ids_in_ibd_pd} unique ids within the provided IBD data"
+            )
 
         self.ibd_vs = self.ibd_vs.drop_duplicates().sort_values(by="idnum")
 
@@ -481,5 +500,5 @@ class IbdFilter:
         end_time = datetime.now()
 
         logger.verbose(
-            f"Analysis finished at {end_time}. Total runtime: {end_time - start_time}"
+            f"Finished reading in the IBD file. Time spent reading file: {end_time - start_time}"
         )
