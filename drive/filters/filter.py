@@ -135,12 +135,13 @@ class IbdFilter:
         """
         if self.target_gene.chr not in data_chunk[self.indices.chr_indx].values:
             logger.warning(
-                f"Could not find the gene target, {self.target_gene.chr}, in the ibd data values. Append 'chr' prefix to the chromosome incase the user provided data with this prefix and then provided a region without this prefix"
+                f"Could not find the gene target, {self.target_gene.chr}, in the ibd data values. Appending 'chr' prefix to the chromosome and checking again incase the user provided data with this prefix and then provided a region without this prefix"
             )
 
-            self.target_gene.chr = f"chr{self.target_gene.chr}"
-
-            if self.target_gene not in data_chunk[self.indices.chr_indx].values:
+            if (
+                f"chr{self.target_gene.chr}"
+                not in data_chunk[self.indices.chr_indx].values
+            ):
                 error_msg = f"Expected the value of the chromosome column in the ibd file to be {self.target_gene.chr} or chr{self.target_gene.chr}. This value was not found in the column. Please ensure that you selected the proper IBD file for chromosome {self.target_gene.chr} before re-running DRIVE."  # noqa: E501
 
                 logger.critical(error_msg)
@@ -174,21 +175,12 @@ class IbdFilter:
             exception is raised. It is assumed to be due the user
             providing the incorrect file by accident
         """  # noqa: E501
-        # we are going to first make sure that the ibd file is for the
-        # right chromosome. If the target_gene chromosome number is not
-        # found in the file then a ValueError is raised.
-
-        # sometimes build 38 have chr# instead of # in the file so we should also
-        # check for that
-
-        self._check_correct_chromosome(data_chunk)
         # We are going to filter the data and then make a copy
         # of it to return so that we don't get the
         # SettingWithCopyWarning
 
         return data_chunk[
-            (data_chunk[self.indices.chr_indx] == self.target_gene.chr)
-            & (data_chunk[self.indices.str_indx] <= self.target_gene.start)
+            (data_chunk[self.indices.str_indx] <= self.target_gene.start)
             & (data_chunk[self.indices.end_indx] >= self.target_gene.end)
             & (data_chunk[self.indices.cM_indx] >= min_cm)
         ].copy()
@@ -220,10 +212,6 @@ class IbdFilter:
             exception is raised. It is assumed to be due the user
             providing the incorrect file by accident
         """  # noqa: E501
-        # we are going to first make sure that the ibd file is for the
-        # right chromosome. If the target_gene chromosome number is not
-        # found in the file then a ValueError is raised.
-        self._check_correct_chromosome(data_chunk)
 
         # We are going to filter the data and then make a copy
         # of it to return so that we don't get the
@@ -423,6 +411,9 @@ class IbdFilter:
         """
         # getting the start time for when the program begines to read in the ibd file
         start_time = datetime.now()
+
+        # We need to make sure that the IBD data is for the correct chromosome
+        self._check_correct_chromosome(self.ibd_file)
 
         for chunk in self.ibd_file:
             cohort_restricted_chunk = self._filter_for_cohort(chunk, cohort_ids)
