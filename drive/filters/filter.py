@@ -117,37 +117,6 @@ class IbdFilter:
 
         data_chunk.loc[:, "idnum2"] = data_chunk["hapid2"].map(self.hapid_map)
 
-    def _check_correct_chromosome(self, data_chunk: DataFrame) -> None:
-        """Check to make sure that the data contains the correct chromosome for
-        the target gene
-
-        Parameters
-        ----------
-        data_chunk : DataFrame
-            dataframe that contains the pairwise IDB segments previously detected
-
-        Raises
-        ------
-        ValueError
-            If the target chromosome is not in the data then drive prefixes it with
-            'chr' incase the data has that prefix. If the adjusted target chromosome
-            is still not in the data then a ValueError is raised
-        """
-        if self.target_gene.chr not in data_chunk[self.indices.chr_indx].values:
-            logger.warning(
-                f"Could not find the gene target, {self.target_gene.chr}, in the ibd data values. Appending 'chr' prefix to the chromosome and checking again incase the user provided data with this prefix and then provided a region without this prefix"
-            )
-
-            if (
-                f"chr{self.target_gene.chr}"
-                not in data_chunk[self.indices.chr_indx].values
-            ):
-                error_msg = f"Expected the value of the chromosome column in the ibd file to be {self.target_gene.chr} or chr{self.target_gene.chr}. This value was not found in the column. Please ensure that you selected the proper IBD file for chromosome {self.target_gene.chr} before re-running DRIVE."  # noqa: E501
-
-                logger.critical(error_msg)
-
-                raise ValueError(error_msg)
-
     def _contains_filter(self, data_chunk: DataFrame, min_cm: int) -> DataFrame:
         """Method that will filter the ibd file on four conditions: Chromosome number is the same, segment start position is <= target start position, segment end position is >= to the start position, and the size of the segment is >= to the minimum centimorgan threshold.
 
@@ -411,9 +380,6 @@ class IbdFilter:
         """
         # getting the start time for when the program begines to read in the ibd file
         start_time = datetime.now()
-
-        # We need to make sure that the IBD data is for the correct chromosome
-        self._check_correct_chromosome(self.ibd_file)
 
         for chunk in self.ibd_file:
             cohort_restricted_chunk = self._filter_for_cohort(chunk, cohort_ids)
