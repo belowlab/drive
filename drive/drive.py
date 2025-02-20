@@ -188,7 +188,7 @@ def main() -> None:
 
     parser.add_argument(
         "--min-network-size",
-        default=2,
+        default=3,
         type=int,
         help="This argument sets the minimun network size that we allow. All networks smaller than this size will be filtered out. If the user wishes to keep all networks they can set this to 0. (default: %(default)s)",  # noqa: E501
     )
