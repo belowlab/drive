@@ -112,7 +112,7 @@ class ClusterHandler:
         return [
             i
             for i, v in enumerate(random_walk_clusters_sizes)
-            if v > self.min_cluster_size
+            if v >= self.min_cluster_size
         ]
 
     @staticmethod
