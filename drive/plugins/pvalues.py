@@ -52,7 +52,7 @@ class Pvalues:
             logger.debug(f"carrier count = 0 therefore pvalue for {phenotype} = 1")
             return 1
 
-        result = binomtest(carriers_count - 1, network_size, phenotype_percent)
+        result = binomtest(carriers_count - 1, network_size - 1, phenotype_percent)
 
         pvalue = result.pvalue
 
