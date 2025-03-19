@@ -10,7 +10,7 @@ from rich_argparse import RichHelpFormatter
 import drive.factory as factory
 from drive.cluster import ClusterHandler, cluster
 from drive.filters import IbdFilter
-from drive.log import CustomLogger
+from log import CustomLogger
 from drive.models import Data, Genes, create_indices
 from drive.utilities.callbacks import CheckInputExist
 from drive.utilities.parser import PhenotypeFileParser, load_phenotype_descriptions

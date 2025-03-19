@@ -7,7 +7,7 @@ from typing import Dict, List, Optional, Set, Tuple
 import igraph as ig
 from pandas import DataFrame
 
-from drive.log import CustomLogger
+from log import CustomLogger
 from drive.models import Filter, Network, Network_Interface
 
 # creating a logger

@@ -1,14 +1,33 @@
-[tool.poetry]
+[project]
 name = "drive-ibd"
-
 version = "2.7.15a1"
 description = "cli tool to identify networks of individuals who share IBD segments overlapping loci of interest"
-authors = ["James Baker <james.baker@vanderbilt.edu>", "Hung-Hsin Chen <hung-hsin.chen.1@vumc.org>", "Jennifer E. Below <jennifer.e.below@vumc.org>"]
-maintainers = ["James Baker <james.baker@vanderbilt.edu>", "Hung-Hsin Chen <hung-hsin.chen.1@vumc.org>"]
-repository = "https://github.com/belowlab/drive"
-homepage = "https://drive-ibd.readthedocs.io/en/latest/"
+authors = [
+    {name = "James Baker", email = "james.baker@vanderbilt.edu"},
+    {name = "Hung-Hsin Chen", email = "hung-hsin.chen.1@vumc.org"},
+    {name = "Jennifer E. Below", email = "jennifer.e.below@vumc.org"},
+]
+maintainers = [
+    {name = "James Baker", email = "james.baker@vanderbilt.edu"},
+    {name = "Hung-Hsin Chen", email = "hung-hsin.chen.1@vumc.org"},
+]
+requires-python = "!=3.11.0,<3.12,>=3.9"
+dependencies = [
+    "pandas<2.0.0,>=1.5.3",
+    "numpy<2.0.0,>=1.24.2",
+    "igraph<1.0.0,>=0.10.4",
+    "scipy<2.0.0,>=1.10.1",
+    "rich-argparse<2.0.0,>=1.3.0",
+    "log @ git+https://github.com/jtb324/log.git",
+]
+
 readme = "README.md"
-keywords = ["python", "genetics", "identity by descent", "relatedness"]
+keywords = [
+    "python",
+    "genetics",
+    "identity by descent",
+    "relatedness",
+]
 classifiers = [
     "Development Status :: 5 - Production/Stable",
     "Operating System :: Unix",
@@ -17,57 +36,55 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
 ]
 
-packages = [
-    {include = "drive"}
+[project.urls]
+homepage = "https://drive-ibd.readthedocs.io/en/latest/"
+repository = "https://github.com/belowlab/drive"
+
+[project.license]
+text = "Apache-2.0"
+
+[project.scripts]
+drive = "drive.drive:main"
+
+[tool.pdm.dev-dependencies]
+dev = [
+    "commitizen<3.0.0,>=2.42.1",
+    "black<24.0.0,>=23.1.0",
+    "mypy<2.0.0,>=1.1.1",
+    "data-science-types<1.0.0,>=0.2.23",
+    "pytest<8.0.0,>=7.2.2",
+    "pydocstyle<7.0.0,>=6.3.0",
+    "ipykernel<7.0.0,>=6.22.0",
+    "isort<6.0.0,>=5.12.0",
+    "ruff<1.0.0,>=0.4.4",
+    "scalene<2.0.0,>=1.5.35",
+]
+notebook = [
+    "ipykernel<7.0.0,>=6.22.0",
+]
+docs = [
+    "sphinx<7.0.0",
+    "sphinx-autobuild<2022.0.0,>=2021.3.14",
+    "sphinx-autodocgen<2.0,>=1.3",
+    "sphinx-copybutton<1.0.0,>=0.5.2",
+    "sphinx-book-theme<2.0.0,>=1.0.1",
 ]
 
-[tool.poetry.scripts]
-drive = 'drive.drive:main'
+[tool.pdm.build]
+package-dir = "src"
 
-[tool.poetry.dependencies]
-python = ">=3.9,<3.11.0 || >3.11.0,<3.12"
-pandas = "^1.5.3"
-numpy = "^1.24.2"
-igraph = "^0.10.4"
-scipy = "^1.10.1"
-rich-argparse = "^1.3.0"
+[tool.pdm]
+distribution = true
 
-
-[tool.poetry.group.dev.dependencies]
-commitizen = "^2.42.1"
-black = "^23.1.0"
-mypy = "^1.1.1"
-data-science-types = "^0.2.23"
-pytest = "^7.2.2"
-pydocstyle = "^6.3.0"
-ipykernel = "^6.22.0"
-isort = "^5.12.0"
-ruff = "^0.4.4"
-scalene = "^1.5.35"
-
-
-
-[tool.poetry.group.notebook.dependencies]
-ipykernel = "^6.22.0"
-
-
-[tool.poetry.group.docs.dependencies]
-sphinx = "<7.0.0"
-sphinx-autobuild = "^2021.3.14"
-sphinx-autodocgen = "^1.3"
-sphinx-copybutton = "^0.5.2"
-sphinx-book-theme = "^1.0.1"
+[build-system]
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
 
 [tool.commitizen]
 name = "cz_conventional_commits"
 version = "2.0.2"
 tag_format = "$version"
 update_changelog_on_bump = true
-
-
-[build-system]
-requires = ["poetry-core>=1.8.3"]
-build-backend = "poetry.core.masonry.api"
 
 [tool.pytest.ini_options]
 markers = [
@@ -104,3 +121,5 @@ ignore = ["E501"]
 [tool.ruff.format]
 # Like Black, use double quotes for strings.
 quote-style = "double"
+
+
