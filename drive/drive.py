@@ -271,6 +271,8 @@ def main() -> None:
         args.output.parent, args.log_filename, args.verbose, args.log_to_console
     )
 
+    logger.info(f"DRIVE version: {version('drive-ibd')}")
+
     # record the input parameters using a method from the logger object that
     # takes the parser as an argument
     logger.record_namespace(args)
