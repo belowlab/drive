@@ -1,4 +1,4 @@
-FROM debian:bookwork-slim AS build-container
+FROM debian:bookworm-slim AS build-container
 
 # changing the working directory to be app
 WORKDIR /app/
@@ -29,7 +29,7 @@ ENV PDM_CHECK_UPDATE=false
 RUN pdm install --check --prod --no-editable
 
 # Now we can create the runtime container and just copy the virtualenv to this container
-FROM debian:bookwork-slim as runtime-container
+FROM debian:bookworm-slim as runtime-container
 
 RUN apt-get update \
     && apt-get install -y python3.11 python3-venv \
