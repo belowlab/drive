@@ -18,7 +18,7 @@ dependencies = [
     "igraph<1.0.0,>=0.10.4",
     "scipy<2.0.0,>=1.10.1",
     "rich-argparse<2.0.0,>=1.3.0",
-    "log @ git+https://github.com/jtb324/log.git",
+    "modified-logger>=1.0.0",
 ]
 
 readme = "README.md"
