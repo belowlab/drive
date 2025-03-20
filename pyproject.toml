@@ -1,7 +1,7 @@
 [project]
 name = "drive-ibd"
 version = "2.7.15a1"
-description = "cli tool to identify networks of individuals who share IBD segments overlapping loci of interest"
+description = "Python CLI using graph theory to identify networks of individuals who share IBD segments overlapping loci of interest"
 authors = [
     {name = "James Baker", email = "james.baker@vanderbilt.edu"},
     {name = "Hung-Hsin Chen", email = "hung-hsin.chen.1@vumc.org"},
