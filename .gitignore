@@ -2,6 +2,8 @@
 /venv/
 .venv
 .env
+.pdm-python
+.python-version
 
 # TEST FILES
 *.ipynb

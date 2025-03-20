@@ -6,8 +6,7 @@ from pathlib import Path
 from typing import Dict, List, Optional, Set, Tuple, TypeVar, Union
 
 import pandas as pd
-
-from drive.log import CustomLogger
+from log import CustomLogger
 
 logger: Logger = CustomLogger.get_logger(__name__)
 

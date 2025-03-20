@@ -5,9 +5,9 @@ from pathlib import Path
 from typing import Callable, Dict, Iterator, List, Optional, TypeVar
 
 import numpy as np
+from log import CustomLogger
 from pandas import DataFrame, concat, read_csv
 
-from drive.log import CustomLogger
 from drive.models import FileIndices, Genes
 
 logger = CustomLogger.get_logger(__name__)

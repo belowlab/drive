@@ -1,11 +1,11 @@
 from dataclasses import dataclass
-from typing import Dict, List, Optional, Set, Tuple
+from typing import Dict, List, Tuple
 
+from log import CustomLogger
 from numpy import float64
 from scipy.stats import binomtest
 
 from drive.factory import factory_register
-from drive.log import CustomLogger
 from drive.models import Data_Interface, Network_Interface
 
 logger = CustomLogger.get_logger(__name__)
