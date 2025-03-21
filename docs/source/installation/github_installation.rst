@@ -12,7 +12,7 @@ This installation method assumes that you are familiar with Git and Github, the 
 
 .. admonition:: Optional Tip
 
-    You can also use Poetry to install the program. Poetry is a python package manager (another alternative to Pip and Conda and all the other package manages) that has good dependency resolution to create a reproducible environment. You can read more about the project here [Poetry documentation](https://python-poetry.org/) and the steps to install it are described here [Poetry Installation](https://python-poetry.org/docs/#installation). For individuals wishing to contribute to DRIVE development, Poetry is the current recommended way to install DRIVE. Poetry allows for individuals to install the necessary development dependencies to properly format and commit the code so that they can contribute to the repository. 
+    You can also use PDM to install the program. PDM is a python package manager (another alternative to Pip and Conda and all the other package manages) that has good dependency resolution to create a reproducible environment. You can read more about the project here [PDM documentation](https://pdm-project.org/en/latest/) and the steps to install it are described in the "Installation" section. For individuals wishing to contribute to DRIVE development, PDM is the current recommended way to install DRIVE. PDM allows for individuals to install all the necessary dependencies for both runtime and development so that code can be properly formatted and tested before it is committed. 
 
 Steps to installing DRIVE:
 --------------------------
@@ -45,20 +45,30 @@ If you see a directory file tree then the program cloned correctly. If you recei
 
 Step 2: Installing necessary dependencies:
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-*if not using Poetry or are not interested in developing the project:* 
+*if not using PDM or are not interested in developing the project:* 
 
-If you are not using Poetry than you can directly clone the conda environment.yml file using the following command:
+If you are not using PDM than you can directly clone the conda environment.yml file using the following command:
 
 .. code::
 
     conda env create -f DRIVE_envi.yml
 
-
 Make sure that you are in the drive directory. This command will create a virtual environment called DRIVE using python 3.6 with all the required dependencies. 
 
-*If using Poetry:* 
+You can also just PIP to install the required dependencies from the pyproject.toml file. Make sure you are in the same direcotry as the pyproject.toml file and then run the following command:
 
-If you are using poetry you will first have to create a new [conda environment](https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html) or [virtual environment using venv](https://docs.python.org/3/library/venv.html) and then activate the environment.
+.. code::
+    
+    pip install .
+
+.. admonition:: Tip on pip installing
+
+    If you are choosing to PIP install instead of conda it is recommend to create a virtualenv first. This environment can be created using the venv module from python.
+
+
+*If using PDM:* 
+
+PDM allows the user to install a specific version of python. The user can then create an environment using that python version and install dependencies. If PDM is being used to install dependencies then the user needs to first select a version of python ([see documentation for installing python with PDM](https://pdm-project.org/en/latest/usage/project/#install-python-interpreters-with-pdm)) and then create a virtual environment using PDM ([see PDM venv documentation](https://pdm-project.org/en/latest/usage/venv/)). Once these steps have completed then you can use PDM to install all dependencies.
 
 
 .. warning::
@@ -69,7 +79,7 @@ Once you have created and activated the environment, you can install the necessa
 
 .. code::
 
-    poetry install --without dev, docs
+    pdm install --with dev
 
 
 .. image:: /screencasts/poetry_dependency_install.gif
@@ -82,9 +92,10 @@ This command will install all of the runtime dependencies and not the developer 
 
 .. code:: 
     
-    poetry install --with dev
+    pdm install 
 
 
+*After Successful Install*
 If successful you will have all the dependencies you need to run the program. You can check this by running the command:
 
 .. code:: 

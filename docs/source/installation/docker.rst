@@ -1,6 +1,6 @@
 Using DRIVE with Docker
 =======================
-DRIVE now has a working docker image as of v2.7.1. This image is available on DockerHub and can be pulled with the following command:
+DRIVE is avaliable in a container on DockerHub. This image was built for linux/arm64 and linux/amd64. If users need to run DRIVE on a windows machine then it is recoomended to use PIP to install into a virtual environemnt. The image can be pulled from DockerHub with the following command:
 
 .. code::
 

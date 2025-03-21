@@ -14,12 +14,12 @@ import sys
 project = "DRIVE"
 copyright = "2023, James Baker, Hung-Hsin Chen, David Samuels, Jennifer Piper-Below"
 author = "James Baker, Hung-Hsin Chen, David Samuels, Jennifer Piper-Below"
-release = "2.0.1"
+release = "2.7.15a1"
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
-sys.path.insert(0, os.path.abspath("../../drive/"))
+sys.path.insert(0, os.path.abspath("../../src/drive"))
 sys.path.insert(0, os.path.abspath("../../"))
 
 github_url = "https://github.com/belowlab/drive"

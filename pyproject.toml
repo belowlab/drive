@@ -45,6 +45,7 @@ text = "Apache-2.0"
 
 [project.scripts]
 drive = "drive.drive:main"
+docs = "sphinx-autobuild docs/ docs/_build/html"
 
 [tool.pdm.dev-dependencies]
 dev = [
