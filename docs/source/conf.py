@@ -19,7 +19,7 @@ release = "2.0.1"
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
-sys.path.insert(0, os.path.abspath("../../drive/"))
+sys.path.insert(0, os.path.abspath("../../src/"))
 sys.path.insert(0, os.path.abspath("../../"))
 
 github_url = "https://github.com/belowlab/drive"
