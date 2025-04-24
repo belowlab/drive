@@ -1,4 +1,4 @@
-FROM debian:bookwork-slim AS build-container
+FROM debian:bookworm-slim AS build-container
 
 # changing the working directory to be app
 WORKDIR /app/
@@ -15,6 +15,7 @@ RUN apt-get update \
 
 # Copy the requirements file into the container
 COPY ./src /app/src
+COPY ./tests /app/tests
 COPY ./pyproject.toml /app/pyproject.toml
 COPY ./pdm.lock /app/pdm.lock
 COPY LICENSE /app/LICENSE
@@ -27,16 +28,17 @@ ENV PATH=/root/.local/bin:$PATH
 ENV PDM_CHECK_UPDATE=false
 
 RUN pdm install --check --prod --no-editable
+RUN pdm run pytest ./tests/test_integration.py -v
 
 # Now we can create the runtime container and just copy the virtualenv to this container
-FROM debian:bookwork-slim as runtime-container
+FROM debian:bookworm-slim as runtime-container
 
 RUN apt-get update \
     && apt-get install -y python3.11 python3-venv \
     && rm -rf /var/lib/apt/lists/* 
 
 LABEL maintainer="belowlab"
-LABEL version="2.7.15a1"
+LABEL version="2.7.15b1"
 
 # Copy and activate the virtualenv
 COPY --from=build-container /app/.venv/ /app/.venv
