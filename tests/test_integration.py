@@ -3,6 +3,7 @@ import itertools
 import pytest
 import sys
 import pandas as pd
+from pathlib import Path
 
 sys.path.append("./src")
 
@@ -58,15 +59,11 @@ def system_args_with_pheno(monkeypatch):
 
 @pytest.mark.integtest
 def test_drive_full_run_no_phenotypes(system_args_no_pheno):
+    # Make sure the output directory exists
+    Path("./tests/test_output").mkdir(exist_ok=True)
+
     drive.main()
 
-    # result = runner.invoke(
-    #     app,
-    #     [
-    #         "--help"
-    #     ],
-    #     color=True
-    # )
     # we need to make sure the output was properly formed
     output = pd.read_csv("./tests/test_output/integration_test_results_no_pheno.drive_networks.txt", sep="\t")
     # list of errors to keep
@@ -85,15 +82,11 @@ def test_drive_full_run_no_phenotypes(system_args_no_pheno):
 
 @pytest.mark.integtest
 def test_drive_full_run_with_phenotypes(system_args_with_pheno):
+    # Make sure the output directory exists
+    Path("./tests/test_output").mkdir(exist_ok=True)
+
     drive.main()
 
-    # result = runner.invoke(
-    #     app,
-    #     [
-    #         "--help"
-    #     ],
-    #     color=True
-    # )
     # we need to make sure the output was properly formed
     output = pd.read_csv("./tests/test_output/integration_test_results_with_pheno.drive_networks.txt", sep="\t")
 
