@@ -16,6 +16,10 @@ It is recommended to install DRIVE within a virtual environment such as venv, or
 
 If the user wishes to develop DRIVE or install the program from source then they can clone the repository. This process is described under the section called "Github Installation" in the documentation.
 
+DRIVE is also available on Docker. The docker image can be found here "jtb114/drive".
+
+If you are working on an HPC cluster it may be better to use a singularity image. Singularity can pull the docker container and build a singularity image with the following command:
+
 ### Reporting issues:
 If you wish to report a bug or propose a feature you can find templates under the .github/ISSUE_TEMPLATE directory.
 

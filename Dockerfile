@@ -38,7 +38,7 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/* 
 
 LABEL maintainer="belowlab"
-LABEL version="2.7.15b1"
+LABEL version="2.7.15"
 
 # Copy and activate the virtualenv
 COPY --from=build-container /app/.venv/ /app/.venv
