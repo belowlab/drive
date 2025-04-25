@@ -3,7 +3,7 @@ DRIVE Inputs
 
 The DRIVE program has several command line arguments shown in the image below. 
 
-.. ![image](https://belowlab.github.io/drive/assets/images/DRIVE_cli_options.png)
+.. ![image](/data100t1/home/james/bin/drive/drive/docs/source/assets/images/drive_help_message.png)
 
 ----------
 
