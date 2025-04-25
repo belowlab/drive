@@ -7,7 +7,7 @@
 Example command format
 ============================
 
-The following command assumes that you have either installed DRIVE using pip or that you have installed it from github. The following command will show you how to call it if you install DRIVE using pip. This example command has only the required arguments.
+The following command assumes that you have either installed DRIVE into a virtualenv using pip/pdm/conda or that you have installed it from github. The following command will show you how to call it if you install DRIVE using pip. This example command has only the required arguments.
 
 .. code::
 
