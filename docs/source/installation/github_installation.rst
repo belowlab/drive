@@ -70,8 +70,11 @@ Once you have created and activated the environment, you can install the necessa
 
     pdm install --without dev,docs
 
+    or
 
-.. image:: /screencasts/poetry_dependency_install.gif
+    pdm install --prod
+
+.. image:: /screencasts/pdm_installation.gif
     :height: 300
     :align: center
     :alt: screencast of installing dependencies using poetry
@@ -93,7 +96,7 @@ If successful you will have all the dependencies you need to run the program. Yo
 
 you should see the DRIVE cli as shown below: 
 
-.. image:: /screencasts/drive_cli.gif
+.. image:: /screencasts/drive_help_message.gif
     :height: 300
     :align: center
     :alt: help message displayed by successful install of DRIVE
