@@ -21,6 +21,10 @@ DRIVE is also available on Docker. The docker image can be found here "jtb114/dr
 
 If you are working on an HPC cluster it may be better to use a singularity image. Singularity can pull the docker container and build a singularity image with the following command:
 
+```bash
+singularity pull singularity-image-name.sif docker://jtb114/drive:latest
+```
+
 ### Reporting issues:
 If you wish to report a bug or propose a feature you can find templates under the .github/ISSUE_TEMPLATE directory.
 

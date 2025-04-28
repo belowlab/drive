@@ -4,14 +4,6 @@ drive.models package
 Submodules
 ----------
 
-drive.models.choices module
----------------------------
-
-.. automodule:: drive.models.choices
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 drive.models.data\_container module
 -----------------------------------
 
@@ -44,10 +36,3 @@ drive.models.types module
    :undoc-members:
    :show-inheritance:
 
-Module contents
----------------
-
-.. automodule:: drive.models
-   :members:
-   :undoc-members:
-   :show-inheritance:

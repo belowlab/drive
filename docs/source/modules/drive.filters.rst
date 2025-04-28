@@ -12,10 +12,3 @@ drive.filters.filter module
    :undoc-members:
    :show-inheritance:
 
-Module contents
----------------
-
-.. automodule:: drive.filters
-   :members:
-   :undoc-members:
-   :show-inheritance:

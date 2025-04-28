@@ -5,14 +5,14 @@ Code Styling Tips
 
 When contributing to this project we ask that you use a few development tools to maintain consistent code style across the code base. Each of these tools will be described in the sections below. These tools can be install with poetry when you run the following command:
 
+.. code:: bash
+
+    pdm install --with dev
+
 .. note:: 
     :class: sidebar
 
     If you are only contributing to the documentation of DRIVE then you can jump to the section titled "Commitizen"
-
-.. code:: bash
-
-    poetry install --with dev
 
 All of these tools can also be installed separately with pip if the user did not originally clone the repository and does not have the pyproject.toml file.
 
