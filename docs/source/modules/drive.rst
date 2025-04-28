@@ -10,7 +10,6 @@ Subpackages
    drive.cluster
    drive.factory
    drive.filters
-   drive.log
    drive.models
    drive.plugins
 

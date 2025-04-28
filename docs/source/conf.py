@@ -20,7 +20,7 @@ release = "2.0.1"
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
 
-sys.path.insert(0, os.path.abspath("../../src/drive"))
+sys.path.insert(0, os.path.abspath("../../src/"))
 sys.path.insert(0, os.path.abspath("../../"))
 
 github_url = "https://github.com/belowlab/drive"
@@ -39,7 +39,6 @@ extensions = [
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 master_doc = "index"
-extensions = []
 
 html_theme = "sphinx_book_theme"
 html_theme_options = {
