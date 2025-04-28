@@ -3,9 +3,8 @@ drive package
 
 Subpackages
 -----------
-
 .. toctree::
-   :maxdepth: 4
+   :maxdepth: 1
 
    drive.cluster
    drive.factory
@@ -13,21 +12,12 @@ Subpackages
    drive.models
    drive.plugins
 
-Submodules
-----------
-
-drive.drive module
-------------------
+DRIVE functions
+---------------
 
 .. automodule:: drive.drive
    :members:
    :undoc-members:
    :show-inheritance:
 
-Module contents
----------------
 
-.. automodule:: drive
-   :members:
-   :undoc-members:
-   :show-inheritance:

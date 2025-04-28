@@ -1,9 +1,6 @@
 drive.cluster package
 =====================
 
-drive.cluster.cluster module
-----------------------------
-
 .. autoclass:: drive.cluster.ClusterHandler
    :members:
 
@@ -14,9 +11,4 @@ drive.cluster.cluster module
 
 
 
-Module contents
----------------
-
-.. automodule:: drive.cluster
-   :members:
 

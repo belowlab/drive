@@ -36,10 +36,3 @@ drive.models.types module
    :undoc-members:
    :show-inheritance:
 
-Module contents
----------------
-
-.. automodule:: drive.models
-   :members:
-   :undoc-members:
-   :show-inheritance:
