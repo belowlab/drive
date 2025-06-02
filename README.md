@@ -1,6 +1,7 @@
 [![Documentation Status](https://readthedocs.org/projects/drive-ibd/badge/?version=latest)](https://drive-ibd.readthedocs.io/en/latest/?badge=latest)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![PyPI version](https://badge.fury.io/py/drive-ibd.svg)](https://badge.fury.io/py/drive-ibd)
+[![DRIVE python package](https://github.com/belowlab/drive/actions/workflows/python-app.yml/badge.svg)](https://github.com/belowlab/drive/actions/workflows/python-app.yml)
 
 # DRIVE:
 
