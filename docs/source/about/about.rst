@@ -27,6 +27,10 @@ This algorithm for DRIVE is depicted in the following figure.
     :height: 500
     :figwidth: 500
     :align: center
+=======
+.. image:: /assets/images/DRIVE_flowchart_4_27_25.excalidraw.png
+    :height: 300
+    :algin: center
     :alt: DRIVE application flowchart
     
     Flowchart describing the DRIVE algorithm and decisions that affect runtime behavior. *generated using excalidraw*
