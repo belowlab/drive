@@ -1,14 +1,15 @@
 import json
-from pathlib import Path
 import re
+from pathlib import Path
+
 from log import CustomLogger
 
 import drive.network.factory as factory
 from drive.network.cluster import ClusterHandler, cluster
 from drive.network.filters import IbdFilter
 from drive.network.models import Data, create_indices
-from drive.utilities.parser import PhenotypeFileParser, load_phenotype_descriptions
 from drive.utilities.functions import split_target_string
+from drive.utilities.parser import PhenotypeFileParser, load_phenotype_descriptions
 
 logger = CustomLogger.get_logger(__name__)
 

@@ -4,9 +4,9 @@ from pathlib import Path
 
 from rich_argparse import RichHelpFormatter
 
-from drive.utilities.callbacks import CheckInputExist
 from drive.dendrogram import generate_dendrograms
 from drive.network import run_network_identification
+from drive.utilities.callbacks import CheckInputExist
 
 
 def generate_cmd_parser() -> argparse.ArgumentParser:
@@ -235,6 +235,14 @@ def generate_cmd_parser() -> argparse.ArgumentParser:
     )
 
     dendrogram_parser.add_argument(
+        "--output",
+        "-o",
+        help="directory to write output to",
+        default=Path("./"),
+        type=Path,
+    )
+
+    dendrogram_parser.add_argument(
         "--keep-temp",
         default=False,
         help="Optional flag to retain the intermediate distance matrices. (default: %(default)s)",
@@ -258,6 +266,22 @@ def generate_cmd_parser() -> argparse.ArgumentParser:
         required=True,
     )
 
+    dendrogram_parser.add_argument(
+        "--segment-overlap",
+        default="contains",
+        choices=["contains", "overlaps"],
+        type=str,
+        help="Indicates if the user wants the gene to contain the whole target region or if it just needs to overlap the segment. (default: %(default)s)",  # noqa: E501
+    )
+
+    dendrogram_parser.add_argument(
+        "--min-cm",
+        "-m",
+        default=3,
+        type=int,
+        help="minimum centimorgan threshold. The program expects this to be an integer value. (default: %(default)s)",
+    )
+
     # Add a mutually exclusive group that requires you to either provide the
     # argument for the network id or the generate-all flag
     exclusive_group = dendrogram_parser.add_mutually_exclusive_group(required=True)
@@ -278,7 +302,6 @@ def generate_cmd_parser() -> argparse.ArgumentParser:
 
     dendrogram_parser.add_argument(
         "--max-network-size",
-        "-m",
         type=int,
         default=30,
         help="maximum network size to make a dendrogram for. When networks are really large they are hard to visualize. We suggest using your own script for these networks. This value will only be used if the user chooses to generate all the dendrograms in the DRIVE output. (default: %(default)s)",
@@ -293,7 +316,7 @@ def generate_cmd_parser() -> argparse.ArgumentParser:
 
     dendrogram_parser.add_argument(
         "--font-size",
-        default=10,
+        default=15,
         type=int,
         help="set the label size for the output dendrograms. (default: %(default)s)",
     )

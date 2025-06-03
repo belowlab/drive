@@ -17,9 +17,14 @@ def main() -> None:
     # creating and configuring the logger and then recording user inputs
     logger = CustomLogger.create_logger()
 
-    logger.configure(
-        args.output.parent, args.log_filename, args.verbose, args.log_to_console
-    )
+    if args.output.is_dir():
+        logger.configure(
+            args.output, args.log_filename, args.verbose, args.log_to_console
+        )
+    else:
+        logger.configure(
+            args.output.parent, args.log_filename, args.verbose, args.log_to_console
+        )
 
     logger.info(f"DRIVE version: {version('drive-ibd')}")
 
