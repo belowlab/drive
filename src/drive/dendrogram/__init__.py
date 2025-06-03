@@ -1,1 +1,1 @@
-from .generate_dendrogram import generate_dendrograms
+from .dendrogram_subcommand import generate_dendrograms
