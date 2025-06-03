@@ -5,6 +5,8 @@ from pathlib import Path
 from rich_argparse import RichHelpFormatter
 
 from drive.utilities.callbacks import CheckInputExist
+from drive.dendrogram import generate_dendrograms
+from drive.network import run_network_identification
 
 
 def generate_cmd_parser() -> argparse.ArgumentParser:
@@ -14,11 +16,56 @@ def generate_cmd_parser() -> argparse.ArgumentParser:
         formatter_class=RichHelpFormatter,
     )
 
-    # This first section will handle all of the arguments for the 
-    # clustering subcommand
-    subparser = parser.add_subparsers(title="subcommands", description="options to run either the DRIVE clustering algorithm or the dendrogram algorithm. To run DRIVE, type either: 'drive cluster --help' or 'drive dendrogram --help'")
+    parser.add_argument(
+        "--version", action="version", version=f"%(prog)s: {version('drive-ibd')}"
+    )
 
-    cluster_parser = subparser.add_parser("cluster", help="run the DRIVE clustering algorithm", formatter_class=RichHelpFormatter)
+    # We are also going to create a parser for common options
+    common_parser = argparse.ArgumentParser(
+        formatter_class=RichHelpFormatter, add_help=False
+    )
+
+    logging_group = common_parser.add_argument_group(
+        "logging",
+        description="parameters that affect what runtime information is printed to a file or the console",
+    )
+
+    logging_group.add_argument(
+        "--verbose",
+        "-v",
+        default=0,
+        help="verbose flag indicating if the user wants more information",
+        action="count",
+    )
+
+    logging_group.add_argument(
+        "--log-to-console",
+        default=False,
+        help="Optional flag to log to only the console or also a file",
+        action="store_true",
+    )
+
+    logging_group.add_argument(
+        "--log-filename",
+        default="drive.log",
+        type=str,
+        help="Name for the log output file. (default: %(default)s)",
+    )
+
+    # This first section will handle all of the arguments for the
+    # clustering subcommand
+    subparser = parser.add_subparsers(
+        title="subcommands",
+        description="options to run either the DRIVE clustering algorithm or the dendrogram algorithm. To run DRIVE, type either: 'drive cluster --help' or 'drive dendrogram --help'",
+    )
+
+    cluster_parser = subparser.add_parser(
+        name="cluster",
+        help="run the DRIVE clustering algorithm",
+        formatter_class=RichHelpFormatter,
+        parents=[common_parser],
+        description="cluster",
+    )
 
     cluster_parser.add_argument(
         "--input",
@@ -158,34 +205,17 @@ def generate_cmd_parser() -> argparse.ArgumentParser:
         help="whether or not the user wishes the program to automically recluster based on things like hub threshold, max network size and how connected the graph is. ",  # noqa: E501
     )
 
-    cluster_parser.add_argument(
-        "--verbose",
-        "-v",
-        default=0,
-        help="verbose flag indicating if the user wants more information",
-        action="count",
-    )
+    cluster_parser.set_defaults(func=run_network_identification)
 
-    cluster_parser.add_argument(
-        "--log-to-console",
-        default=False,
-        help="Optional flag to log to only the console or also a file",
-        action="store_true",
-    )
-
-    cluster_parser.add_argument(
-        "--log-filename",
-        default="drive.log",
-        type=str,
-        help="Name for the log output file. (default: %(default)s)",
-    )
-
-    cluster_parser.add_argument(
-        "--version", action="version", version=f"%(prog)s: {version('drive-ibd')}"
-    )
-    # This is where we will define all of the necessary arguments to make 
+    # This is where we will define all of the necessary arguments to make
     # the dendrogram script work
-    dendrogram_parser = subparser.add_parser("dendrogram", help="run the DRIVE dendrogram program", formatter_class=RichHelpFormatter)
+    dendrogram_parser = subparser.add_parser(
+        name="dendrogram",
+        help="run the DRIVE dendrogram program",
+        formatter_class=RichHelpFormatter,
+        parents=[common_parser],
+        description="dendrogram",
+    )
 
     dendrogram_parser.add_argument(
         "--input",
@@ -201,7 +231,7 @@ def generate_cmd_parser() -> argparse.ArgumentParser:
         type=Path,
         help="path to the input ibd file that was used to create the networks from",
         required=True,
-        action=CheckInputExist
+        action=CheckInputExist,
     )
 
     dendrogram_parser.add_argument(
@@ -211,7 +241,7 @@ def generate_cmd_parser() -> argparse.ArgumentParser:
         action="store_true",
     )
 
-    # Add a mutually exclusive group that requires you to either provide the 
+    # Add a mutually exclusive group that requires you to either provide the
     # argument for the network id or the generate-all flag
     exclusive_group = dendrogram_parser.add_mutually_exclusive_group(required=True)
 
@@ -219,14 +249,14 @@ def generate_cmd_parser() -> argparse.ArgumentParser:
         "--network-id",
         "-n",
         type=str,
-        help="Network ID to make dendrograms only for a specific cluster. This value needs to match what is in the clstID column from the output from DRIVE."
+        help="Network ID to make dendrograms only for a specific cluster. This value needs to match what is in the clstID column from the output from DRIVE.",
     )
 
     exclusive_group.add_argument(
         "--generate-all",
         default=False,
         help="Optional flag to choose to generate dendrograms for all networks. This option will require longer runtime. (default: %(default)s)",
-        action="store_true"
+        action="store_true",
     )
 
     dendrogram_parser.add_argument(
@@ -234,28 +264,30 @@ def generate_cmd_parser() -> argparse.ArgumentParser:
         "-m",
         type=int,
         default=30,
-        help="maximum network size to make a dendrogram for. When networks are really large they are hard to visualize. We suggest using your own script for these networks. This value will only be used if the user chooses to generate all the dendrograms in the DRIVE output. (default: %(default)s)"
+        help="maximum network size to make a dendrogram for. When networks are really large they are hard to visualize. We suggest using your own script for these networks. This value will only be used if the user chooses to generate all the dendrograms in the DRIVE output. (default: %(default)s)",
     )
 
     dendrogram_parser.add_argument(
         "--min-network-size",
         type=int,
         default=3,
-        help="minimum network size to make a dendrogram for. By default, DRIVE can return 2 person networks. Dendrogram should not be made for these because they are uninformative. Users can also select different values if they are interested in returning networks of only size 'x' or larger. This value will only be used if the user chooses to generate all the dendrograms in the DRIVE output. (default: %(default)s)"
+        help="minimum network size to make a dendrogram for. By default, DRIVE can return 2 person networks. Dendrogram should not be made for these because they are uninformative. Users can also select different values if they are interested in returning networks of only size 'x' or larger. This value will only be used if the user chooses to generate all the dendrograms in the DRIVE output. (default: %(default)s)",
     )
 
     dendrogram_parser.add_argument(
         "--font-size",
         default=10,
         type=int,
-        help="set the label size for the output dendrograms. (default: %(default)s)"
+        help="set the label size for the output dendrograms. (default: %(default)s)",
     )
 
     dendrogram_parser.add_argument(
         "--title",
         type=str,
         default="test dendrogram",
-        help="title of the dendrogram to be written on the plot. This is not the output file name. This argument should not be used if you are creating dendrograms for every network provided by DRIVE"
+        help="title of the dendrogram to be written on the plot. This is not the output file name. This argument should not be used if you are creating dendrograms for every network provided by DRIVE",
     )
+
+    dendrogram_parser.set_defaults(func=generate_dendrograms)
 
     return parser

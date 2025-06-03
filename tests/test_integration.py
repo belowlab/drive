@@ -19,6 +19,7 @@ def system_args_no_pheno(monkeypatch):
     monkeypatch.setattr("sys.argv", 
         [
             "drive", 
+            "cluster",
             "-i",
             "./tests/test_inputs/simulated_ibd_test_data_v2_chr20.ibd.gz",
             "-f",
@@ -39,6 +40,7 @@ def system_args_with_pheno(monkeypatch):
     monkeypatch.setattr("sys.argv", 
         [
             "drive", 
+            "cluster",
             "-i",
             "./tests/test_inputs/simulated_ibd_test_data_v2_chr20.ibd.gz",
             "-f",

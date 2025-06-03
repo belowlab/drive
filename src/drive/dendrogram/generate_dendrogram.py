@@ -7,8 +7,10 @@ import scipy.cluster.hierarchy as sch
 from scipy.spatial.distance import squareform
 import matplotlib.pyplot as plt
 
+
 def gather_individuals_from_input() -> dict:
     ...
+
 
 def check_kwargs(args_dict: dict[str, Any]) -> Optional[str]:
     """Function that will make sure that the necessary arguments are passed to distance function
@@ -335,5 +337,6 @@ def draw_dendrogram(
 
     return figure, ax, dendrogram
 
-def generate_dendrogram() -> None:
+
+def generate_dendrograms(args) -> None:
     ...
