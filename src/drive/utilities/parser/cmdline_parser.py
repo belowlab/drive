@@ -241,6 +241,23 @@ def generate_cmd_parser() -> argparse.ArgumentParser:
         action="store_true",
     )
 
+    dendrogram_parser.add_argument(
+        "--format",
+        "-f",
+        default="hapibd",
+        type=str,
+        help="IBD program used to detect segments. Allowed values are hapibd, ilash, germline, rapid. Program expects for value to be lowercase. (default: %(default)s)",
+        choices=["hapibd", "ilash", "germline", "rapid"],
+    )
+
+    dendrogram_parser.add_argument(
+        "--target",
+        "-t",
+        type=str,
+        help="Target region or position, chr:start-end or chr:pos",
+        required=True,
+    )
+
     # Add a mutually exclusive group that requires you to either provide the
     # argument for the network id or the generate-all flag
     exclusive_group = dendrogram_parser.add_mutually_exclusive_group(required=True)

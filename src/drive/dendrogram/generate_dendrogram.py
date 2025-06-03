@@ -7,6 +7,16 @@ import scipy.cluster.hierarchy as sch
 from scipy.spatial.distance import squareform
 import matplotlib.pyplot as plt
 
+from drive.network.models import Data, Genes, create_indices
+from drive.utilities.functions import split_target_string
+from drive.network.filters import IbdFilter
+
+
+class NetworkIDNotFound(Exception):
+    def __init__(self, network_id: str) -> None:
+        self.msg = f"The id, {network_id}, was not found in the IBD data. Make sure that the ID you are looking for perfectly matches what should be in the DRIVE file. Trailing zeros can make a difference, 10.0 != 10 in DRIVE."
+        super().__init__(self.msg)
+
 
 def gather_individuals_from_input() -> dict:
     ...
@@ -338,5 +348,84 @@ def draw_dendrogram(
     return figure, ax, dendrogram
 
 
+def load_networks(
+    drive_results: Path, network_id: str = Optional[str]
+) -> dict[str, list[str]]:
+    """method reads the drive networks into a dictionary
+
+    Parameters
+    ----------
+    drive_results : Path
+        output file from running the clustering step of DRIVE
+
+    network_id : str
+        the id of the cluster ID by DRIVE. Default value = none
+
+    Returns
+    -------
+    dict[str, list[str]]
+        returns a dictionary where the keys are the cluster IDs and the values are a list of haplotypes in the cluster
+
+    Raises
+    ------
+    NetworkIDNotFount
+        raises a KeyError if the network_id value is not found in the drive file"""
+    return_dict = {}
+
+    with open(drive_results, "r", encoding="utf-8") as drive_file:
+        if network_id:
+            for line in drive_file:
+                (
+                    clst_id,
+                    network_size,
+                    haplotype_count,
+                    edge_count,
+                    connectedness,
+                    _,
+                    id_list,
+                    haplotype_list,
+                    *_,
+                ) = line.strip().split("\t")
+                if clst_id == network_id:
+                    return_dict[clst_id] = haplotype_list.strip().split(",")
+
+            if not return_dict:
+                raise NetworkIDNotFound(network_id)
+        else:
+            for line in drive_file:
+                # we can skip the header line
+                if "clstID" in line:
+                    pass
+                else:
+                    (
+                        clst_id,
+                        network_size,
+                        haplotype_count,
+                        edge_count,
+                        connectedness,
+                        _,
+                        id_list,
+                        haplotype_list,
+                        *_,
+                    ) = line.strip().split("\t")
+                    return_dict[clst_id] = haplotype_list.strip().split(",")
+    return return_dict
+
+
 def generate_dendrograms(args) -> None:
-    ...
+    # need to add read in the drive networks to get the appropriate ids
+    network_ids = load_networks(args.input, args.network_id)
+
+    # generate an object that has all of the indices for the correct ibd format
+    indices = create_indices(args.format.lower())
+
+    ##target gene region or variant position
+    target_gene = split_target_string(args.target)
+
+    filter_obj: IbdFilter = IbdFilter.load_file(args.input, indices, target_gene)
+
+    # choosing the proper way to filter the ibd files
+    filter_obj.set_filter(args.segment_overlap)
+
+    for clstID, id_list in network_ids.items():
+        filter_obj.preprocess(args.min_cm, id_list)
