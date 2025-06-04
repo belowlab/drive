@@ -1,0 +1,896 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>drive.network.filters.filter &#8212; DRIVE</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/styles/sphinx-book-theme.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+    <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../../_static/clipboard.min.js"></script>
+    <script src="../../../../_static/copybutton.js"></script>
+    <script src="../../../../_static/scripts/sphinx-book-theme.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/drive/network/filters/filter';</script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">DRIVE</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../../index.html">
+                    Welcome to DRIVE’s documentation!
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">User's Guide</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../about/about.html">About DRIVE</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../installation/installation.html">DRIVE Installation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../installation/pip_installation.html">Installing DRIVE from Pip</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../installation/github_installation.html">Installing DRIVE from Github</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../installation/docker.html">Using DRIVE with Docker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../installation/testing.html">Testing DRIVE</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../inputs_and_outputs/inputs.html">DRIVE Inputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../inputs_and_outputs/outputs.html">DRIVE Output</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tutorial</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/examples_command_format.html">Example command format</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Developer's Guide</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../contributing/contributing.html">Contributing</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../contributing/how_to_contribute.html">How to contribute</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../contributing/code_style.html">Code Styling Tips</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../contributing/testing.html">Testing</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../plugin_descriptions/extending_drive.html">Extending Drive</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../plugin_descriptions/plugin_architecture.html">How is DRIVE extensible</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../plugin_descriptions/data_container_api.html">Structure of the Data container</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../plugin_descriptions/factory_plugins.html">Pre-Installed Plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../plugin_descriptions/expected_plugin_structure.html">Custom Plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../plugin_descriptions/plugin_configuration.html">Configuring DRIVE to use the plugins</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../modules/modules.html">drive</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../modules/drive.html">drive package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../modules/drive.cluster.html">drive.network.cluster package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../modules/drive.factory.html">drive.factory package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../modules/drive.filters.html">drive.network.filters package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../modules/drive.models.html">drive.network.models package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../modules/drive.plugins.html">drive.plugins package</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/belowlab/drive" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for drive.network.filters.filter</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">field</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Iterator</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">TypeVar</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">log</span><span class="w"> </span><span class="kn">import</span> <span class="n">CustomLogger</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="kn">import</span> <span class="n">DataFrame</span><span class="p">,</span> <span class="n">concat</span><span class="p">,</span> <span class="n">read_csv</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">drive.network.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">FileIndices</span><span class="p">,</span> <span class="n">Genes</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">CustomLogger</span><span class="o">.</span><span class="n">get_logger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="c1"># we are going to create two exception class for the vertex</span>
+
+<span class="n">T</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;T&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="s2">&quot;IbdFilter&quot;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="IbdFilter"><a class="viewcode-back" href="../../../../modules/drive.filters.html#drive.network.filters.filter.IbdFilter">[docs]</a><span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">IbdFilter</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    class handling the filtering of the IBD files provided</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    ibd_file : iterator[DataFrame]</span>
+<span class="sd">        pandas dataframe being read in chunk by chunk. This data represents</span>
+<span class="sd">        the pairwise IBD segments from hap-IBD, GERMLINE, RaPID, or iLASH</span>
+
+<span class="sd">    indices : FileIndices</span>
+<span class="sd">        object that abstracts away the indices needed based on the IBD program</span>
+<span class="sd">        used</span>
+
+<span class="sd">    target_gene : Genes</span>
+<span class="sd">        namedTuple that has fields for the chromosome and the start and end</span>
+<span class="sd">        region of the target locus</span>
+
+<span class="sd">    filter : Optional[Callable] = None</span>
+<span class="sd">        Function that will be used to filter the provided segments. Default</span>
+<span class="sd">        functions will either filter to segments containing the target locus</span>
+<span class="sd">        or those that overlap</span>
+
+<span class="sd">    ibd_vs : DataFrame</span>
+<span class="sd">        dataframe representing all the potential vertices in the graph. Each</span>
+<span class="sd">        vertex is a haplotype</span>
+
+<span class="sd">    ibd_pd : DataFrame</span>
+<span class="sd">        dataframe representing the pairwise segments. Each row is the pair ids</span>
+<span class="sd">        and the length of the segment</span>
+
+<span class="sd">    hapid_map : Dict[str, int]</span>
+<span class="sd">        dictionary mapping the haplotype to a unique integer id</span>
+
+<span class="sd">    all_haplotypes : List[str]</span>
+<span class="sd">        list of all the different haplotypes in the IBD data</span>
+
+<span class="sd">    haplotype_id : int = 0</span>
+<span class="sd">        This value is used as the counter and is incremented as the program runs</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">ibd_file</span><span class="p">:</span> <span class="n">Iterator</span><span class="p">[</span>
+        <span class="n">DataFrame</span>
+    <span class="p">]</span>  <span class="c1"># IBD segments being read in by chunks making the pandas dataframe an iterator</span>
+    <span class="n">indices</span><span class="p">:</span> <span class="n">FileIndices</span>
+    <span class="n">target_gene</span><span class="p">:</span> <span class="n">Genes</span>
+    <span class="nb">filter</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">ibd_vs</span><span class="p">:</span> <span class="n">DataFrame</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="n">DataFrame</span><span class="p">)</span>
+    <span class="n">ibd_pd</span><span class="p">:</span> <span class="n">DataFrame</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="n">DataFrame</span><span class="p">)</span>
+    <span class="n">hapid_map</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">dict</span><span class="p">)</span>
+    <span class="n">all_haplotypes</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">list</span><span class="p">)</span>
+    <span class="n">haplotype_id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+
+<div class="viewcode-block" id="IbdFilter.load_file"><a class="viewcode-back" href="../../../../modules/drive.filters.html#drive.network.filters.filter.IbdFilter.load_file">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">load_file</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">ibd_file</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span>
+        <span class="n">indices</span><span class="p">:</span> <span class="n">FileIndices</span><span class="p">,</span>
+        <span class="n">target_gene</span><span class="p">:</span> <span class="n">Genes</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Factory method that returns the IBDFilter model</span>
+<span class="sd">        This method makes sure that the ibd file exists</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        ibd_file : Path</span>
+<span class="sd">            Path object containing the filepath for the ibd</span>
+<span class="sd">            file from hapibd, iLASH, etc...</span>
+
+<span class="sd">        indices: FileIndices</span>
+<span class="sd">            Object that has all the indices for the necessary</span>
+<span class="sd">            columns in the ibd file. This object also has a</span>
+<span class="sd">            get_haplotype_ids method that will form the</span>
+<span class="sd">            haplotype ibd.</span>
+
+<span class="sd">        target_gene : Genes</span>
+<span class="sd">            namedtuple that has attributes for the</span>
+<span class="sd">            chromosome, the gene start position, and the</span>
+<span class="sd">            gene end position.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        IbdFilter</span>
+<span class="sd">            returns an initialized IbdFilter object</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        FileNotFoundError</span>
+<span class="sd">            raises an error if the file doesn&#39;t exist</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">verbose</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Reading in the ibd input file at </span><span class="si">{</span><span class="n">ibd_file</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">ibd_file</span><span class="o">.</span><span class="n">is_file</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The file, </span><span class="si">{</span><span class="n">ibd_file</span><span class="si">}</span><span class="s2">, was not found&quot;</span><span class="p">)</span>
+
+        <span class="c1"># we need to make sure that the id columns read in as strings no matter what</span>
+        <span class="n">input_file_chunks</span> <span class="o">=</span> <span class="n">read_csv</span><span class="p">(</span>
+            <span class="n">ibd_file</span><span class="p">,</span>
+            <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">chunksize</span><span class="o">=</span><span class="mi">100_100</span><span class="p">,</span>
+            <span class="n">dtype</span><span class="o">=</span><span class="p">{</span><span class="n">indices</span><span class="o">.</span><span class="n">id1_indx</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">indices</span><span class="o">.</span><span class="n">id2_indx</span><span class="p">:</span> <span class="nb">str</span><span class="p">},</span>
+        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">input_file_chunks</span><span class="p">,</span> <span class="n">indices</span><span class="p">,</span> <span class="n">target_gene</span><span class="p">)</span></div>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_generate_map</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chunk_data</span><span class="p">:</span> <span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Method that will generate the dictionary that maps hapibd to integers</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        data_chunk : pd.DataFrame</span>
+<span class="sd">            chunk of the ibdfile. The size of this chunk is determined by the</span>
+<span class="sd">            chunksize argument to pd.read_csv. This value is currently set to 100,000.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">haplotypes</span> <span class="o">=</span> <span class="n">chunk_data</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">verbose</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;identified </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">haplotypes</span><span class="p">)</span><span class="si">}</span><span class="s2"> haplotypes in this chunk.&quot;</span><span class="p">)</span>
+
+        <span class="c1"># iterate over each haplotype and add it to the</span>
+        <span class="c1"># dictionary if the value is not present</span>
+        <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">haplotypes</span><span class="p">:</span>
+            <span class="n">key_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hapid_map</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">haplotype_id</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">key_value</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">haplotype_id</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">haplotype_id</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_map_grids</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_chunk</span><span class="p">:</span> <span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Function responsible for creating two new columns that</span>
+<span class="sd">        have the haplotype id numbers.</span>
+
+<span class="sd">        data_chunk : pd.DataFrame</span>
+<span class="sd">            chunk of the ibdfile. The size of this chunk is</span>
+<span class="sd">            determined by the chunksize argument to</span>
+<span class="sd">            pd.read_csv. This value is currently set to 100,000.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># we are going to map the haplotype id to integers in a new</span>
+        <span class="c1"># column. this needs to be done for both hapid1 an hapid2</span>
+        <span class="n">data_chunk</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s2">&quot;idnum1&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data_chunk</span><span class="p">[</span><span class="s2">&quot;hapid1&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hapid_map</span><span class="p">)</span>
+
+        <span class="n">data_chunk</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s2">&quot;idnum2&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data_chunk</span><span class="p">[</span><span class="s2">&quot;hapid2&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hapid_map</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_contains_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_chunk</span><span class="p">:</span> <span class="n">DataFrame</span><span class="p">,</span> <span class="n">min_cm</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Method that will filter the ibd file on four conditions: Chromosome number is the same, segment start position is &lt;= target start position, segment end position is &gt;= to the start position, and the size of the segment is &gt;= to the minimum centimorgan threshold.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        data_chunk : pd.DataFrame</span>
+<span class="sd">            chunk of the ibdfile. The size of this chunk is</span>
+<span class="sd">            determined by the chunksize argument to</span>
+<span class="sd">            pd.read_csv. This value is currently set to 100,000.</span>
+
+<span class="sd">        min_cm : int</span>
+<span class="sd">            centimorgan threshold</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        pd.DataFrame</span>
+<span class="sd">            returns the filtered dataframe</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            raises a ValueError if the target chromosome number is not</span>
+<span class="sd">            found within the provided IBD file. This situation will</span>
+<span class="sd">            lead to a error later in the program which is why the</span>
+<span class="sd">            exception is raised. It is assumed to be due the user</span>
+<span class="sd">            providing the incorrect file by accident</span>
+<span class="sd">        &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+        <span class="c1"># We are going to filter the data and then make a copy</span>
+        <span class="c1"># of it to return so that we don&#39;t get the</span>
+        <span class="c1"># SettingWithCopyWarning</span>
+
+        <span class="k">return</span> <span class="n">data_chunk</span><span class="p">[</span>
+            <span class="p">(</span><span class="n">data_chunk</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">indices</span><span class="o">.</span><span class="n">str_indx</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_gene</span><span class="o">.</span><span class="n">start</span><span class="p">)</span>
+            <span class="o">&amp;</span> <span class="p">(</span><span class="n">data_chunk</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">indices</span><span class="o">.</span><span class="n">end_indx</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_gene</span><span class="o">.</span><span class="n">end</span><span class="p">)</span>
+            <span class="o">&amp;</span> <span class="p">(</span><span class="n">data_chunk</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">indices</span><span class="o">.</span><span class="n">cM_indx</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">min_cm</span><span class="p">)</span>
+        <span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_overlaps_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_chunk</span><span class="p">:</span> <span class="n">DataFrame</span><span class="p">,</span> <span class="n">min_cm</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Method that will filter the ibd file on four conditions: Chromosome number is the same, segment start position is &lt;= target start position, segment end position is &gt;= to the start position, and the size of the segment is &gt;= to the minimum centimorgan threshold.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        data_chunk : pd.DataFrame</span>
+<span class="sd">            chunk of the ibdfile. The size of this chunk is</span>
+<span class="sd">            determined by the chunksize argument to</span>
+<span class="sd">            pd.read_csv. This value is currently set to 100,000.</span>
+
+<span class="sd">        min_cm : int</span>
+<span class="sd">            centimorgan threshold</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        pd.DataFrame</span>
+<span class="sd">            returns the filtered dataframe</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            raises a ValueError if the target chromosome number is not</span>
+<span class="sd">            found within the provided IBD file. This situation will</span>
+<span class="sd">            lead to a error later in the program which is why the</span>
+<span class="sd">            exception is raised. It is assumed to be due the user</span>
+<span class="sd">            providing the incorrect file by accident</span>
+<span class="sd">        &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+
+        <span class="c1"># We are going to filter the data and then make a copy</span>
+        <span class="c1"># of it to return so that we don&#39;t get the</span>
+        <span class="c1"># SettingWithCopyWarning</span>
+        <span class="k">return</span> <span class="n">data_chunk</span><span class="p">[</span>
+            <span class="p">(</span>
+                <span class="p">(</span>
+                    <span class="p">(</span><span class="n">data_chunk</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">indices</span><span class="o">.</span><span class="n">str_indx</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">target_gene</span><span class="o">.</span><span class="n">start</span><span class="p">))</span>
+                    <span class="o">&amp;</span> <span class="p">(</span><span class="n">data_chunk</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">indices</span><span class="o">.</span><span class="n">end_indx</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">target_gene</span><span class="o">.</span><span class="n">start</span><span class="p">))</span>
+                <span class="p">)</span>
+                <span class="o">|</span> <span class="p">(</span>
+                    <span class="p">(</span><span class="n">data_chunk</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">indices</span><span class="o">.</span><span class="n">str_indx</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">target_gene</span><span class="o">.</span><span class="n">start</span><span class="p">))</span>
+                    <span class="o">&amp;</span> <span class="p">(</span><span class="n">data_chunk</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">indices</span><span class="o">.</span><span class="n">end_indx</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">target_gene</span><span class="o">.</span><span class="n">end</span><span class="p">))</span>
+                <span class="p">)</span>
+                <span class="o">|</span> <span class="p">(</span>
+                    <span class="p">(</span><span class="n">data_chunk</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">indices</span><span class="o">.</span><span class="n">str_indx</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">target_gene</span><span class="o">.</span><span class="n">end</span><span class="p">))</span>
+                    <span class="o">&amp;</span> <span class="p">(</span><span class="n">data_chunk</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">indices</span><span class="o">.</span><span class="n">end_indx</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">target_gene</span><span class="o">.</span><span class="n">end</span><span class="p">))</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+            <span class="o">&amp;</span> <span class="p">(</span><span class="n">data_chunk</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">indices</span><span class="o">.</span><span class="n">cM_indx</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">min_cm</span><span class="p">)</span>
+        <span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+<div class="viewcode-block" id="IbdFilter.set_filter"><a class="viewcode-back" href="../../../../modules/drive.filters.html#drive.network.filters.filter.IbdFilter.set_filter">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">set_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filter_option</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Method to determine how the user wishes to filter the IBD segments file</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filter_option : str</span>
+<span class="sd">            string that represents the user&#39;s choice for how to filter the ibd segments.</span>
+<span class="sd">            If the user chooses &#39;contains&#39; the only segments that contain the entire</span>
+<span class="sd">            region are kept. If the user chooses &#39;overlaps&#39; then segments that overlap</span>
+<span class="sd">            at all with the target region are kept.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">filter_option</span> <span class="o">==</span> <span class="s2">&quot;contains&quot;</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Identifying IBD segments that contain the target region&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">filter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_contains_filter</span>
+        <span class="k">elif</span> <span class="n">filter_option</span> <span class="o">==</span> <span class="s2">&quot;overlaps&quot;</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Identifying IBD segments that overlap the target region&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">filter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_overlaps_filter</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span>
+                <span class="s2">&quot;Non-recognized filter option selected. Allowed values are &#39;contains&#39; and &#39;overlaps&#39;. Exiting program now...&quot;</span>  <span class="c1"># noqa: E501</span>
+            <span class="p">)</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span></div>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_remove_dups</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Filters out rows where the haplotype ids are the</span>
+<span class="sd">        same</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        data_chunk : pd.DataFrame</span>
+<span class="sd">            chunk of the ibdfile. The size of this chunk is</span>
+<span class="sd">            determined by the chunksize argument to</span>
+<span class="sd">            pd.read_csv. This value is currently set to 100,000.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        DataFrame</span>
+<span class="sd">            returns a dataframe where we make sure that hapibd1 does != hapibd2</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        KeyError</span>
+<span class="sd">            raises a key error if hapid1 or hapid2 are not columns in the dataframe</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;hapid1&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;hapid2&quot;</span><span class="p">]]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Expected the keys hapid1 and hapid2 to be in the dataframe. Instead the only keys were: </span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>  <span class="c1"># noqa: E501</span>
+            <span class="p">)</span>
+            <span class="k">raise</span> <span class="n">e</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Expected the keys hapid1 and hapid2 to be in the dataframe. Instead the only keys were: </span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>  <span class="c1"># noqa: E501</span>
+            <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_generate_vertices</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_chunk</span><span class="p">:</span> <span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Method that will generate the vertices dataframe which just has the</span>
+<span class="sd">        columns idnum, hapID, and IID</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        data_chunk : pd.DataFrame</span>
+<span class="sd">            chunk of the ibdfile. The size of this chunk is</span>
+<span class="sd">            determined by the chunksize argument to</span>
+<span class="sd">            pd.read_csv. This value is currently set to 100,000.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">id1_df</span> <span class="o">=</span> <span class="n">data_chunk</span><span class="p">[[</span><span class="s2">&quot;idnum1&quot;</span><span class="p">,</span> <span class="s2">&quot;hapid1&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">indices</span><span class="o">.</span><span class="n">id1_indx</span><span class="p">]]</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span>
+            <span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;idnum1&quot;</span><span class="p">:</span> <span class="s2">&quot;idnum&quot;</span><span class="p">,</span> <span class="s2">&quot;hapid1&quot;</span><span class="p">:</span> <span class="s2">&quot;hapID&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span> <span class="s2">&quot;IID&quot;</span><span class="p">}</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">ibd_vs</span> <span class="o">=</span> <span class="n">concat</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">ibd_vs</span><span class="p">,</span> <span class="n">id1_df</span><span class="p">])</span>
+
+        <span class="n">id2_df</span> <span class="o">=</span> <span class="n">data_chunk</span><span class="p">[[</span><span class="s2">&quot;idnum2&quot;</span><span class="p">,</span> <span class="s2">&quot;hapid2&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">indices</span><span class="o">.</span><span class="n">id2_indx</span><span class="p">]]</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span>
+            <span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;idnum2&quot;</span><span class="p">:</span> <span class="s2">&quot;idnum&quot;</span><span class="p">,</span> <span class="s2">&quot;hapid2&quot;</span><span class="p">:</span> <span class="s2">&quot;hapID&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="s2">&quot;IID&quot;</span><span class="p">}</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">ibd_vs</span> <span class="o">=</span> <span class="n">concat</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">ibd_vs</span><span class="p">,</span> <span class="n">id2_df</span><span class="p">])</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_filter_for_cohort</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">chunk</span><span class="p">:</span> <span class="n">DataFrame</span><span class="p">,</span> <span class="n">cohort_ids</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;filter cohort chunk to individuals in the cohort</span>
+<span class="sd">        list</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        chunk : DataFrame</span>
+<span class="sd">            chunk of pandas dataframe that has information about the shared</span>
+<span class="sd">            pairwise IBD segment.</span>
+
+<span class="sd">        cohort_ids : List[str]</span>
+<span class="sd">            Lists of ids that make up the cohort. The ibd_file will be filtered to only this list.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        DataFrame</span>
+<span class="sd">            returns the filtered pandas dataframe</span>
+<span class="sd">        &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+        <span class="c1"># if no cohort ids were provided then we just return the chunk, otherwise we</span>
+        <span class="c1"># filter the dataframe for where id1 and id2 are in the cohort</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">cohort_ids</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">chunk</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">chunk</span><span class="p">[</span>
+                <span class="p">(</span><span class="n">chunk</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">indices</span><span class="o">.</span><span class="n">id1_indx</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">cohort_ids</span><span class="p">))</span>
+                <span class="o">&amp;</span> <span class="p">(</span><span class="n">chunk</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">indices</span><span class="o">.</span><span class="n">id2_indx</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">cohort_ids</span><span class="p">))</span>
+            <span class="p">]</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_check_for_no_shared_segments</span><span class="p">(</span><span class="n">ibd_pd</span><span class="p">:</span> <span class="n">DataFrame</span><span class="p">,</span> <span class="n">ibd_vs</span><span class="p">:</span> <span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Check to ensure that there were shared IBD segments</span>
+<span class="sd">        found based on the input conditions</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        ibd_pd : DataFrame</span>
+<span class="sd">            dataframe that has all the pairwise shared</span>
+<span class="sd">            segments that satisfy the input conditions</span>
+
+<span class="sd">        ibd_vs : DataFrame</span>
+<span class="sd">            dataframe that has the information about each</span>
+<span class="sd">            haplotype and individual that are in ibd_pd</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            raises a ValueError if the dataframes are empty</span>
+<span class="sd">            because they cannot be empty or other steps of the</span>
+<span class="sd">            program will fail.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">ibd_pd</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span>
+                <span class="s2">&quot;There were no shared IBD segments that satisfied the provided input conditions&quot;</span>  <span class="c1"># noqa: E501</span>
+            <span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;There were no shared IBD segments that satisfied the provided input conditions. Please check to make sure that there is no typo in the target region or that the correct ibd input file was provided.&quot;</span>  <span class="c1"># noqa: E501</span>
+            <span class="p">)</span>
+        <span class="k">elif</span> <span class="n">ibd_vs</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span>
+                <span class="s2">&quot;There were no haplotype ids identified in the filtering step.&quot;</span>
+            <span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;There were no haplotype ids identified in the filtering step.&quot;</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Identified </span><span class="si">{</span><span class="n">ibd_pd</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> shared ibd segments with </span><span class="si">{</span><span class="n">ibd_vs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> unique haplotypes&quot;</span>  <span class="c1"># noqa: E501</span>
+            <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_check_empty_dataframes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Check if the provided dataframe is empty. If it is</span>
+<span class="sd">        then it raises an error and exits the program&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ibd_pd</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                <span class="s2">&quot;No individuals from the analysis cohort share an IBD segment across the provided target region. Please ensure that the target region is correct. Exiting program now.&quot;</span>  <span class="c1"># noqa: E501</span>
+            <span class="p">)</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+<div class="viewcode-block" id="IbdFilter.preprocess"><a class="viewcode-back" href="../../../../modules/drive.filters.html#drive.network.filters.filter.IbdFilter.preprocess">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">preprocess</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">min_centimorgan</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">cohort_ids</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Method that will filter the ibd file.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        min_centimorgan : int</span>
+<span class="sd">            Minimum segment threshold that is used to filter</span>
+<span class="sd">            the ibd file. Program only keeps segments that</span>
+<span class="sd">            are greater than or equal to the threshold.</span>
+
+<span class="sd">        cohort_ids : List[str]</span>
+<span class="sd">            Lists of ids that make up the cohort. The ibd_file</span>
+<span class="sd">            will be filtered to only this list.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># getting the start time for when the program begines to read in the ibd file</span>
+        <span class="n">start_time</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+
+        <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ibd_file</span><span class="p">:</span>
+            <span class="n">cohort_restricted_chunk</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filter_for_cohort</span><span class="p">(</span><span class="n">chunk</span><span class="p">,</span> <span class="n">cohort_ids</span><span class="p">)</span>
+
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Identified </span><span class="si">{</span><span class="n">cohort_restricted_chunk</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> pairs in this chunk&quot;</span>
+            <span class="p">)</span>  <span class="c1"># noqa: E501</span>
+
+            <span class="k">if</span> <span class="n">cohort_restricted_chunk</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+                <span class="k">continue</span>
+
+            <span class="n">size_filtered_chunk</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">cohort_restricted_chunk</span><span class="p">,</span> <span class="n">min_centimorgan</span><span class="p">)</span>
+
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">size_filtered_chunk</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> pairs remaining after filtering for the loci of interest with a </span><span class="si">{</span><span class="n">min_centimorgan</span><span class="si">}</span><span class="s2"> minimum shared segment threshold&quot;</span>  <span class="c1"># noqa: E501</span>
+            <span class="p">)</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">size_filtered_chunk</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+                <span class="c1"># We have to add two column with the haplotype ids</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">indices</span><span class="o">.</span><span class="n">get_haplotype_id</span><span class="p">(</span>
+                    <span class="n">size_filtered_chunk</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">indices</span><span class="o">.</span><span class="n">id1_indx</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">indices</span><span class="o">.</span><span class="n">hap1_indx</span><span class="p">,</span>
+                    <span class="s2">&quot;hapid1&quot;</span><span class="p">,</span>
+                <span class="p">)</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">indices</span><span class="o">.</span><span class="n">get_haplotype_id</span><span class="p">(</span>
+                    <span class="n">size_filtered_chunk</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">indices</span><span class="o">.</span><span class="n">id2_indx</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">indices</span><span class="o">.</span><span class="n">hap2_indx</span><span class="p">,</span>
+                    <span class="s2">&quot;hapid2&quot;</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="c1"># We then need to make sure that there are no</span>
+                <span class="c1"># duplicates in the dataframe</span>
+                <span class="n">removed_dups</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_remove_dups</span><span class="p">(</span><span class="n">size_filtered_chunk</span><span class="p">)</span>
+
+                <span class="c1"># We need to update the mappings for the grids</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_generate_map</span><span class="p">(</span><span class="n">removed_dups</span><span class="p">[[</span><span class="s2">&quot;hapid1&quot;</span><span class="p">,</span> <span class="s2">&quot;hapid2&quot;</span><span class="p">]])</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">_map_grids</span><span class="p">(</span><span class="n">removed_dups</span><span class="p">)</span>
+                <span class="c1"># concat the filtered dataframe with the ibd_pd</span>
+                <span class="c1"># attribute to get all the edges in the graph</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ibd_pd</span> <span class="o">=</span> <span class="n">concat</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">ibd_pd</span><span class="p">,</span> <span class="n">removed_dups</span><span class="p">])</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">_generate_vertices</span><span class="p">(</span><span class="n">removed_dups</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_check_empty_dataframes</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">ibd_pd</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="n">ids_in_ibd_pd</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span>
+                    <span class="p">[</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">ibd_pd</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">indices</span><span class="o">.</span><span class="n">id1_indx</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">(),</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">ibd_pd</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">indices</span><span class="o">.</span><span class="n">id2_indx</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">(),</span>
+                    <span class="p">]</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">cohort_ids</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ids_in_ibd_pd</span><span class="si">}</span><span class="s2"> out of the </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">cohort_ids</span><span class="p">)</span><span class="si">}</span><span class="s2"> ids provided were found within the IBD data file after filtering&quot;</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Identified </span><span class="si">{</span><span class="n">ids_in_ibd_pd</span><span class="si">}</span><span class="s2"> unique ids within the provided IBD data&quot;</span>
+            <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">ibd_vs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ibd_vs</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">()</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s2">&quot;idnum&quot;</span><span class="p">)</span>
+
+        <span class="c1"># We are going to print out how long it took to read in the ibd file</span>
+        <span class="c1"># if the user puts the program in verbose mod</span>
+        <span class="n">end_time</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">verbose</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Finished reading in the IBD file. Time spent reading file: </span><span class="si">{</span><span class="n">end_time</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">start_time</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span></div></div>
+</pre></div>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By James Baker, Hung-Hsin Chen, David Samuels, Jennifer Piper-Below
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023, James Baker, Hung-Hsin Chen, David Samuels, Jennifer Piper-Below.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

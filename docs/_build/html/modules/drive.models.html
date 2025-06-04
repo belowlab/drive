@@ -1,0 +1,1204 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>drive.network.models package &#8212; DRIVE</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'modules/drive.models';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="drive.plugins package" href="drive.plugins.html" />
+    <link rel="prev" title="drive.network.filters package" href="drive.filters.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">DRIVE</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    Welcome to DRIVE’s documentation!
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">User's Guide</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../about/about.html">About DRIVE</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../installation/installation.html">DRIVE Installation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../installation/pip_installation.html">Installing DRIVE from Pip</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/github_installation.html">Installing DRIVE from Github</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/docker.html">Using DRIVE with Docker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/testing.html">Testing DRIVE</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../inputs_and_outputs/inputs.html">DRIVE Inputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../inputs_and_outputs/outputs.html">DRIVE Output</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tutorial</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../examples/examples_command_format.html">Example command format</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Developer's Guide</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../contributing/contributing.html">Contributing</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../contributing/how_to_contribute.html">How to contribute</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../contributing/code_style.html">Code Styling Tips</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../contributing/testing.html">Testing</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../plugin_descriptions/extending_drive.html">Extending Drive</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../plugin_descriptions/plugin_architecture.html">How is DRIVE extensible</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../plugin_descriptions/data_container_api.html">Structure of the Data container</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../plugin_descriptions/factory_plugins.html">Pre-Installed Plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../plugin_descriptions/expected_plugin_structure.html">Custom Plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../plugin_descriptions/plugin_configuration.html">Configuring DRIVE to use the plugins</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="modules.html">drive</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active has-children"><a class="reference internal" href="drive.html">drive package</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="drive.cluster.html">drive.network.cluster package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="drive.factory.html">drive.network.factory package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="drive.filters.html">drive.network.filters package</a></li>
+<li class="toctree-l3 current active"><a class="current reference internal" href="#">drive.network.models package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="drive.plugins.html">drive.plugins package</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/belowlab/drive" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/modules/drive.models.rst" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.rst</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>drive.network.models package</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-drive.network.models.data_container">drive.network.models.data_container module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.data_container.Data"><code class="docutils literal notranslate"><span class="pre">Data</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.data_container.Data.carriers"><code class="docutils literal notranslate"><span class="pre">Data.carriers</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.data_container.Data.networks"><code class="docutils literal notranslate"><span class="pre">Data.networks</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.data_container.Data.output_path"><code class="docutils literal notranslate"><span class="pre">Data.output_path</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.data_container.Data.phenotype_descriptions"><code class="docutils literal notranslate"><span class="pre">Data.phenotype_descriptions</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.data_container.Data_Interface"><code class="docutils literal notranslate"><span class="pre">Data_Interface</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.data_container.Data_Interface.carriers"><code class="docutils literal notranslate"><span class="pre">Data_Interface.carriers</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.data_container.Data_Interface.networks"><code class="docutils literal notranslate"><span class="pre">Data_Interface.networks</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.data_container.Data_Interface.output_path"><code class="docutils literal notranslate"><span class="pre">Data_Interface.output_path</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.data_container.Data_Interface.phenotype_descriptions"><code class="docutils literal notranslate"><span class="pre">Data_Interface.phenotype_descriptions</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-drive.network.models.generate_indices">drive.network.models.generate_indices module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.FileIndices"><code class="docutils literal notranslate"><span class="pre">FileIndices</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.FileIndices.get_haplotype_id"><code class="docutils literal notranslate"><span class="pre">FileIndices.get_haplotype_id()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.Germline"><code class="docutils literal notranslate"><span class="pre">Germline</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.Germline.cM_indx"><code class="docutils literal notranslate"><span class="pre">Germline.cM_indx</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.Germline.chr_indx"><code class="docutils literal notranslate"><span class="pre">Germline.chr_indx</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.Germline.end_indx"><code class="docutils literal notranslate"><span class="pre">Germline.end_indx</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.Germline.get_haplotype_id"><code class="docutils literal notranslate"><span class="pre">Germline.get_haplotype_id()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.Germline.hap1_indx"><code class="docutils literal notranslate"><span class="pre">Germline.hap1_indx</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.Germline.hap2_indx"><code class="docutils literal notranslate"><span class="pre">Germline.hap2_indx</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.Germline.id1_indx"><code class="docutils literal notranslate"><span class="pre">Germline.id1_indx</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.Germline.id2_indx"><code class="docutils literal notranslate"><span class="pre">Germline.id2_indx</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.Germline.str_indx"><code class="docutils literal notranslate"><span class="pre">Germline.str_indx</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.Germline.unit"><code class="docutils literal notranslate"><span class="pre">Germline.unit</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.HapIBD"><code class="docutils literal notranslate"><span class="pre">HapIBD</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.HapIBD.cM_indx"><code class="docutils literal notranslate"><span class="pre">HapIBD.cM_indx</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.HapIBD.chr_indx"><code class="docutils literal notranslate"><span class="pre">HapIBD.chr_indx</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.HapIBD.end_indx"><code class="docutils literal notranslate"><span class="pre">HapIBD.end_indx</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.HapIBD.get_haplotype_id"><code class="docutils literal notranslate"><span class="pre">HapIBD.get_haplotype_id()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.HapIBD.hap1_indx"><code class="docutils literal notranslate"><span class="pre">HapIBD.hap1_indx</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.HapIBD.hap2_indx"><code class="docutils literal notranslate"><span class="pre">HapIBD.hap2_indx</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.HapIBD.id1_indx"><code class="docutils literal notranslate"><span class="pre">HapIBD.id1_indx</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.HapIBD.id2_indx"><code class="docutils literal notranslate"><span class="pre">HapIBD.id2_indx</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.HapIBD.str_indx"><code class="docutils literal notranslate"><span class="pre">HapIBD.str_indx</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.Rapid"><code class="docutils literal notranslate"><span class="pre">Rapid</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.Rapid.cM_indx"><code class="docutils literal notranslate"><span class="pre">Rapid.cM_indx</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.Rapid.chr_indx"><code class="docutils literal notranslate"><span class="pre">Rapid.chr_indx</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.Rapid.end_indx"><code class="docutils literal notranslate"><span class="pre">Rapid.end_indx</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.Rapid.get_haplotype_id"><code class="docutils literal notranslate"><span class="pre">Rapid.get_haplotype_id()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.Rapid.hap1_indx"><code class="docutils literal notranslate"><span class="pre">Rapid.hap1_indx</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.Rapid.hap2_indx"><code class="docutils literal notranslate"><span class="pre">Rapid.hap2_indx</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.Rapid.id1_indx"><code class="docutils literal notranslate"><span class="pre">Rapid.id1_indx</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.Rapid.id2_indx"><code class="docutils literal notranslate"><span class="pre">Rapid.id2_indx</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.Rapid.str_indx"><code class="docutils literal notranslate"><span class="pre">Rapid.str_indx</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.create_indices"><code class="docutils literal notranslate"><span class="pre">create_indices()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.iLASH"><code class="docutils literal notranslate"><span class="pre">iLASH</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.iLASH.cM_indx"><code class="docutils literal notranslate"><span class="pre">iLASH.cM_indx</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.iLASH.chr_indx"><code class="docutils literal notranslate"><span class="pre">iLASH.chr_indx</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.iLASH.end_indx"><code class="docutils literal notranslate"><span class="pre">iLASH.end_indx</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.iLASH.get_haplotype_id"><code class="docutils literal notranslate"><span class="pre">iLASH.get_haplotype_id()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.iLASH.hap1_indx"><code class="docutils literal notranslate"><span class="pre">iLASH.hap1_indx</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.iLASH.hap2_indx"><code class="docutils literal notranslate"><span class="pre">iLASH.hap2_indx</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.iLASH.id1_indx"><code class="docutils literal notranslate"><span class="pre">iLASH.id1_indx</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.iLASH.id2_indx"><code class="docutils literal notranslate"><span class="pre">iLASH.id2_indx</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.iLASH.str_indx"><code class="docutils literal notranslate"><span class="pre">iLASH.str_indx</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-drive.network.models.networks">drive.network.models.networks module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.networks.Network"><code class="docutils literal notranslate"><span class="pre">Network</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.networks.Network.clst_id"><code class="docutils literal notranslate"><span class="pre">Network.clst_id</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.networks.Network.false_negative_count"><code class="docutils literal notranslate"><span class="pre">Network.false_negative_count</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.networks.Network.false_negative_edges"><code class="docutils literal notranslate"><span class="pre">Network.false_negative_edges</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.networks.Network.haplotypes"><code class="docutils literal notranslate"><span class="pre">Network.haplotypes</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.networks.Network.members"><code class="docutils literal notranslate"><span class="pre">Network.members</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.networks.Network.min_pvalue_str"><code class="docutils literal notranslate"><span class="pre">Network.min_pvalue_str</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.networks.Network.print_members_list"><code class="docutils literal notranslate"><span class="pre">Network.print_members_list()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.networks.Network.pvalues"><code class="docutils literal notranslate"><span class="pre">Network.pvalues</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.networks.Network.true_positive_count"><code class="docutils literal notranslate"><span class="pre">Network.true_positive_count</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.networks.Network.true_positive_percent"><code class="docutils literal notranslate"><span class="pre">Network.true_positive_percent</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.networks.Network_Interface"><code class="docutils literal notranslate"><span class="pre">Network_Interface</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.networks.Network_Interface.clst_id"><code class="docutils literal notranslate"><span class="pre">Network_Interface.clst_id</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.networks.Network_Interface.false_negative_count"><code class="docutils literal notranslate"><span class="pre">Network_Interface.false_negative_count</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.networks.Network_Interface.false_negative_edges"><code class="docutils literal notranslate"><span class="pre">Network_Interface.false_negative_edges</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.networks.Network_Interface.haplotypes"><code class="docutils literal notranslate"><span class="pre">Network_Interface.haplotypes</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.networks.Network_Interface.members"><code class="docutils literal notranslate"><span class="pre">Network_Interface.members</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.networks.Network_Interface.min_pvalue_str"><code class="docutils literal notranslate"><span class="pre">Network_Interface.min_pvalue_str</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.networks.Network_Interface.print_members_list"><code class="docutils literal notranslate"><span class="pre">Network_Interface.print_members_list()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.networks.Network_Interface.pvalues"><code class="docutils literal notranslate"><span class="pre">Network_Interface.pvalues</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.networks.Network_Interface.true_positive_count"><code class="docutils literal notranslate"><span class="pre">Network_Interface.true_positive_count</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.networks.Network_Interface.true_positive_percent"><code class="docutils literal notranslate"><span class="pre">Network_Interface.true_positive_percent</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-drive.network.models.types">drive.network.models.types module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.types.Filter"><code class="docutils literal notranslate"><span class="pre">Filter</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.types.Filter.ibd_pd"><code class="docutils literal notranslate"><span class="pre">Filter.ibd_pd</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.types.Filter.ibd_vs"><code class="docutils literal notranslate"><span class="pre">Filter.ibd_vs</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.types.Genes"><code class="docutils literal notranslate"><span class="pre">Genes</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.types.Genes.chr"><code class="docutils literal notranslate"><span class="pre">Genes.chr</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.types.Genes.end"><code class="docutils literal notranslate"><span class="pre">Genes.end</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.types.Genes.start"><code class="docutils literal notranslate"><span class="pre">Genes.start</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="drive-network-models-package">
+<h1>drive.network.models package<a class="headerlink" href="#drive-network-models-package" title="Permalink to this heading">#</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading">#</a></h2>
+</section>
+<section id="module-drive.network.models.data_container">
+<span id="drive-network-models-data-container-module"></span><h2>drive.network.models.data_container module<a class="headerlink" href="#module-drive.network.models.data_container" title="Permalink to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="drive.network.models.data_container.Data">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">drive.network.models.data_container.</span></span><span class="sig-name descname"><span class="pre">Data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">networks</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#drive.network.models.networks.Network_Interface" title="drive.network.models.networks.Network_Interface"><span class="pre">Network_Interface</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">carriers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Set</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phenotype_descriptions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/drive/network/models/data_container.html#Data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drive.network.models.data_container.Data" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>main class to hold the data from the network analysis and the different pvalues</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="drive.network.models.data_container.Data.carriers">
+<span class="sig-name descname"><span class="pre">carriers</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Set</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#drive.network.models.data_container.Data.carriers" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="drive.network.models.data_container.Data.networks">
+<span class="sig-name descname"><span class="pre">networks</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#drive.network.models.networks.Network_Interface" title="drive.network.models.networks.Network_Interface"><span class="pre">Network_Interface</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#drive.network.models.data_container.Data.networks" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="drive.network.models.data_container.Data.output_path">
+<span class="sig-name descname"><span class="pre">output_path</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Path</span></em><a class="headerlink" href="#drive.network.models.data_container.Data.output_path" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="drive.network.models.data_container.Data.phenotype_descriptions">
+<span class="sig-name descname"><span class="pre">phenotype_descriptions</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#drive.network.models.data_container.Data.phenotype_descriptions" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="drive.network.models.data_container.Data_Interface">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">drive.network.models.data_container.</span></span><span class="sig-name descname"><span class="pre">Data_Interface</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/drive/network/models/data_container.html#Data_Interface"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drive.network.models.data_container.Data_Interface" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Protocol</span></code></p>
+<p>Protocol defining what attributes the DataHolder Interface needs to have</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="drive.network.models.data_container.Data_Interface.carriers">
+<span class="sig-name descname"><span class="pre">carriers</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Set</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#drive.network.models.data_container.Data_Interface.carriers" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="drive.network.models.data_container.Data_Interface.networks">
+<span class="sig-name descname"><span class="pre">networks</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#drive.network.models.networks.Network_Interface" title="drive.network.models.networks.Network_Interface"><span class="pre">Network_Interface</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#drive.network.models.data_container.Data_Interface.networks" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="drive.network.models.data_container.Data_Interface.output_path">
+<span class="sig-name descname"><span class="pre">output_path</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Path</span></em><a class="headerlink" href="#drive.network.models.data_container.Data_Interface.output_path" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="drive.network.models.data_container.Data_Interface.phenotype_descriptions">
+<span class="sig-name descname"><span class="pre">phenotype_descriptions</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#drive.network.models.data_container.Data_Interface.phenotype_descriptions" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-drive.network.models.generate_indices">
+<span id="drive-network-models-generate-indices-module"></span><h2>drive.network.models.generate_indices module<a class="headerlink" href="#module-drive.network.models.generate_indices" title="Permalink to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="drive.network.models.generate_indices.FileIndices">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">drive.network.models.generate_indices.</span></span><span class="sig-name descname"><span class="pre">FileIndices</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/drive/network/models/generate_indices.html#FileIndices"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drive.network.models.generate_indices.FileIndices" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Protocol</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="drive.network.models.generate_indices.FileIndices.get_haplotype_id">
+<span class="sig-name descname"><span class="pre">get_haplotype_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ind_id_indx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phase_col_indx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">col_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/drive/network/models/generate_indices.html#FileIndices.get_haplotype_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drive.network.models.generate_indices.FileIndices.get_haplotype_id" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="drive.network.models.generate_indices.Germline">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">drive.network.models.generate_indices.</span></span><span class="sig-name descname"><span class="pre">Germline</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id1_indx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hap1_indx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id2_indx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hap2_indx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chr_indx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">str_indx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_indx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">6</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cM_indx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">11</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/drive/network/models/generate_indices.html#Germline"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drive.network.models.generate_indices.Germline" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#drive.network.models.generate_indices.FileIndices" title="drive.network.models.generate_indices.FileIndices"><code class="xref py py-class docutils literal notranslate"><span class="pre">FileIndices</span></code></a></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="drive.network.models.generate_indices.Germline.cM_indx">
+<span class="sig-name descname"><span class="pre">cM_indx</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">10</span></em><a class="headerlink" href="#drive.network.models.generate_indices.Germline.cM_indx" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="drive.network.models.generate_indices.Germline.chr_indx">
+<span class="sig-name descname"><span class="pre">chr_indx</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4</span></em><a class="headerlink" href="#drive.network.models.generate_indices.Germline.chr_indx" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="drive.network.models.generate_indices.Germline.end_indx">
+<span class="sig-name descname"><span class="pre">end_indx</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">6</span></em><a class="headerlink" href="#drive.network.models.generate_indices.Germline.end_indx" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="drive.network.models.generate_indices.Germline.get_haplotype_id">
+<span class="sig-name descname"><span class="pre">get_haplotype_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ind_id_indx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phase_col_indx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">col_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/drive/network/models/generate_indices.html#Germline.get_haplotype_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drive.network.models.generate_indices.Germline.get_haplotype_id" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="drive.network.models.generate_indices.Germline.hap1_indx">
+<span class="sig-name descname"><span class="pre">hap1_indx</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#drive.network.models.generate_indices.Germline.hap1_indx" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="drive.network.models.generate_indices.Germline.hap2_indx">
+<span class="sig-name descname"><span class="pre">hap2_indx</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#drive.network.models.generate_indices.Germline.hap2_indx" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="drive.network.models.generate_indices.Germline.id1_indx">
+<span class="sig-name descname"><span class="pre">id1_indx</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#drive.network.models.generate_indices.Germline.id1_indx" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="drive.network.models.generate_indices.Germline.id2_indx">
+<span class="sig-name descname"><span class="pre">id2_indx</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#drive.network.models.generate_indices.Germline.id2_indx" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="drive.network.models.generate_indices.Germline.str_indx">
+<span class="sig-name descname"><span class="pre">str_indx</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5</span></em><a class="headerlink" href="#drive.network.models.generate_indices.Germline.str_indx" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="drive.network.models.generate_indices.Germline.unit">
+<span class="sig-name descname"><span class="pre">unit</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">11</span></em><a class="headerlink" href="#drive.network.models.generate_indices.Germline.unit" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="drive.network.models.generate_indices.HapIBD">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">drive.network.models.generate_indices.</span></span><span class="sig-name descname"><span class="pre">HapIBD</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id1_indx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hap1_indx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id2_indx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hap2_indx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chr_indx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">str_indx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_indx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">6</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cM_indx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">7</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/drive/network/models/generate_indices.html#HapIBD"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drive.network.models.generate_indices.HapIBD" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#drive.network.models.generate_indices.FileIndices" title="drive.network.models.generate_indices.FileIndices"><code class="xref py py-class docutils literal notranslate"><span class="pre">FileIndices</span></code></a></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="drive.network.models.generate_indices.HapIBD.cM_indx">
+<span class="sig-name descname"><span class="pre">cM_indx</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">7</span></em><a class="headerlink" href="#drive.network.models.generate_indices.HapIBD.cM_indx" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="drive.network.models.generate_indices.HapIBD.chr_indx">
+<span class="sig-name descname"><span class="pre">chr_indx</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4</span></em><a class="headerlink" href="#drive.network.models.generate_indices.HapIBD.chr_indx" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="drive.network.models.generate_indices.HapIBD.end_indx">
+<span class="sig-name descname"><span class="pre">end_indx</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">6</span></em><a class="headerlink" href="#drive.network.models.generate_indices.HapIBD.end_indx" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="drive.network.models.generate_indices.HapIBD.get_haplotype_id">
+<span class="sig-name descname"><span class="pre">get_haplotype_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ind_id_indx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phase_col_indx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">col_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/drive/network/models/generate_indices.html#HapIBD.get_haplotype_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drive.network.models.generate_indices.HapIBD.get_haplotype_id" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="drive.network.models.generate_indices.HapIBD.hap1_indx">
+<span class="sig-name descname"><span class="pre">hap1_indx</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#drive.network.models.generate_indices.HapIBD.hap1_indx" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="drive.network.models.generate_indices.HapIBD.hap2_indx">
+<span class="sig-name descname"><span class="pre">hap2_indx</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#drive.network.models.generate_indices.HapIBD.hap2_indx" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="drive.network.models.generate_indices.HapIBD.id1_indx">
+<span class="sig-name descname"><span class="pre">id1_indx</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#drive.network.models.generate_indices.HapIBD.id1_indx" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="drive.network.models.generate_indices.HapIBD.id2_indx">
+<span class="sig-name descname"><span class="pre">id2_indx</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#drive.network.models.generate_indices.HapIBD.id2_indx" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="drive.network.models.generate_indices.HapIBD.str_indx">
+<span class="sig-name descname"><span class="pre">str_indx</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5</span></em><a class="headerlink" href="#drive.network.models.generate_indices.HapIBD.str_indx" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="drive.network.models.generate_indices.Rapid">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">drive.network.models.generate_indices.</span></span><span class="sig-name descname"><span class="pre">Rapid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id1_indx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hap1_indx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id2_indx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hap2_indx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chr_indx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cM_indx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">7</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">str_indx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_indx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">6</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/drive/network/models/generate_indices.html#Rapid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drive.network.models.generate_indices.Rapid" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#drive.network.models.generate_indices.FileIndices" title="drive.network.models.generate_indices.FileIndices"><code class="xref py py-class docutils literal notranslate"><span class="pre">FileIndices</span></code></a></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="drive.network.models.generate_indices.Rapid.cM_indx">
+<span class="sig-name descname"><span class="pre">cM_indx</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">7</span></em><a class="headerlink" href="#drive.network.models.generate_indices.Rapid.cM_indx" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="drive.network.models.generate_indices.Rapid.chr_indx">
+<span class="sig-name descname"><span class="pre">chr_indx</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#drive.network.models.generate_indices.Rapid.chr_indx" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="drive.network.models.generate_indices.Rapid.end_indx">
+<span class="sig-name descname"><span class="pre">end_indx</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">6</span></em><a class="headerlink" href="#drive.network.models.generate_indices.Rapid.end_indx" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="drive.network.models.generate_indices.Rapid.get_haplotype_id">
+<span class="sig-name descname"><span class="pre">get_haplotype_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ind_id_indx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phase_col_indx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">col_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/drive/network/models/generate_indices.html#Rapid.get_haplotype_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drive.network.models.generate_indices.Rapid.get_haplotype_id" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="drive.network.models.generate_indices.Rapid.hap1_indx">
+<span class="sig-name descname"><span class="pre">hap1_indx</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#drive.network.models.generate_indices.Rapid.hap1_indx" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="drive.network.models.generate_indices.Rapid.hap2_indx">
+<span class="sig-name descname"><span class="pre">hap2_indx</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4</span></em><a class="headerlink" href="#drive.network.models.generate_indices.Rapid.hap2_indx" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="drive.network.models.generate_indices.Rapid.id1_indx">
+<span class="sig-name descname"><span class="pre">id1_indx</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#drive.network.models.generate_indices.Rapid.id1_indx" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="drive.network.models.generate_indices.Rapid.id2_indx">
+<span class="sig-name descname"><span class="pre">id2_indx</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#drive.network.models.generate_indices.Rapid.id2_indx" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="drive.network.models.generate_indices.Rapid.str_indx">
+<span class="sig-name descname"><span class="pre">str_indx</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5</span></em><a class="headerlink" href="#drive.network.models.generate_indices.Rapid.str_indx" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="drive.network.models.generate_indices.create_indices">
+<span class="sig-prename descclassname"><span class="pre">drive.network.models.generate_indices.</span></span><span class="sig-name descname"><span class="pre">create_indices</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ibd_file_format</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#drive.network.models.generate_indices.FileIndices" title="drive.network.models.generate_indices.FileIndices"><span class="pre">FileIndices</span></a></span></span><a class="reference internal" href="../_modules/drive/network/models/generate_indices.html#create_indices"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drive.network.models.generate_indices.create_indices" title="Permalink to this definition">#</a></dt>
+<dd><p>Factory method to generate the proper file indice object based on the ibd program</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ibd_file_format</strong> (<em>str</em>) – string indicating what ibd program was used identify IBD segments. EX: hapibd,
+ilash, rapid, and germline. expects this value to be lower case</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>returns an object that conforms to the FileIndices protocol. It will have the
+method getHAPID. It will also have the correct indices for the ibd program</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#drive.network.models.generate_indices.FileIndices" title="drive.network.models.generate_indices.FileIndices">FileIndices</a></p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – Raises a value error if the user passes an ibd_file_format that is not hapibd,
+    hap-ibd, germline, ilash, rapid</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="drive.network.models.generate_indices.iLASH">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">drive.network.models.generate_indices.</span></span><span class="sig-name descname"><span class="pre">iLASH</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id1_indx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hap1_indx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id2_indx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hap2_indx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chr_indx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">str_indx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_indx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">6</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cM_indx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">9</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/drive/network/models/generate_indices.html#iLASH"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drive.network.models.generate_indices.iLASH" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#drive.network.models.generate_indices.FileIndices" title="drive.network.models.generate_indices.FileIndices"><code class="xref py py-class docutils literal notranslate"><span class="pre">FileIndices</span></code></a></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="drive.network.models.generate_indices.iLASH.cM_indx">
+<span class="sig-name descname"><span class="pre">cM_indx</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">9</span></em><a class="headerlink" href="#drive.network.models.generate_indices.iLASH.cM_indx" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="drive.network.models.generate_indices.iLASH.chr_indx">
+<span class="sig-name descname"><span class="pre">chr_indx</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4</span></em><a class="headerlink" href="#drive.network.models.generate_indices.iLASH.chr_indx" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="drive.network.models.generate_indices.iLASH.end_indx">
+<span class="sig-name descname"><span class="pre">end_indx</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">6</span></em><a class="headerlink" href="#drive.network.models.generate_indices.iLASH.end_indx" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="drive.network.models.generate_indices.iLASH.get_haplotype_id">
+<span class="sig-name descname"><span class="pre">get_haplotype_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ind_id_indx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phase_col_indx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">col_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/drive/network/models/generate_indices.html#iLASH.get_haplotype_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drive.network.models.generate_indices.iLASH.get_haplotype_id" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="drive.network.models.generate_indices.iLASH.hap1_indx">
+<span class="sig-name descname"><span class="pre">hap1_indx</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#drive.network.models.generate_indices.iLASH.hap1_indx" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="drive.network.models.generate_indices.iLASH.hap2_indx">
+<span class="sig-name descname"><span class="pre">hap2_indx</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#drive.network.models.generate_indices.iLASH.hap2_indx" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="drive.network.models.generate_indices.iLASH.id1_indx">
+<span class="sig-name descname"><span class="pre">id1_indx</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#drive.network.models.generate_indices.iLASH.id1_indx" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="drive.network.models.generate_indices.iLASH.id2_indx">
+<span class="sig-name descname"><span class="pre">id2_indx</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#drive.network.models.generate_indices.iLASH.id2_indx" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="drive.network.models.generate_indices.iLASH.str_indx">
+<span class="sig-name descname"><span class="pre">str_indx</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5</span></em><a class="headerlink" href="#drive.network.models.generate_indices.iLASH.str_indx" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-drive.network.models.networks">
+<span id="drive-network-models-networks-module"></span><h2>drive.network.models.networks module<a class="headerlink" href="#module-drive.network.models.networks" title="Permalink to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="drive.network.models.networks.Network">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">drive.network.models.networks.</span></span><span class="sig-name descname"><span class="pre">Network</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">clst_id:</span> <span class="pre">float,</span> <span class="pre">true_positive_count:</span> <span class="pre">int,</span> <span class="pre">true_positive_percent:</span> <span class="pre">float,</span> <span class="pre">false_negative_edges:</span> <span class="pre">List[int],</span> <span class="pre">false_negative_count:</span> <span class="pre">int,</span> <span class="pre">members:</span> <span class="pre">Union[Set[int],</span> <span class="pre">Set[str]],</span> <span class="pre">haplotypes:</span> <span class="pre">Union[List[int],</span> <span class="pre">List[str]],</span> <span class="pre">min_pvalue_str:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">'',</span> <span class="pre">pvalues:</span> <span class="pre">Dict[str,</span> <span class="pre">Dict[str,</span> <span class="pre">Any]]</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/drive/network/models/networks.html#Network"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drive.network.models.networks.Network" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="drive.network.models.networks.Network.clst_id">
+<span class="sig-name descname"><span class="pre">clst_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#drive.network.models.networks.Network.clst_id" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="drive.network.models.networks.Network.false_negative_count">
+<span class="sig-name descname"><span class="pre">false_negative_count</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#drive.network.models.networks.Network.false_negative_count" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="drive.network.models.networks.Network.false_negative_edges">
+<span class="sig-name descname"><span class="pre">false_negative_edges</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#drive.network.models.networks.Network.false_negative_edges" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="drive.network.models.networks.Network.haplotypes">
+<span class="sig-name descname"><span class="pre">haplotypes</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#drive.network.models.networks.Network.haplotypes" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="drive.network.models.networks.Network.members">
+<span class="sig-name descname"><span class="pre">members</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Set</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Set</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#drive.network.models.networks.Network.members" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="drive.network.models.networks.Network.min_pvalue_str">
+<span class="sig-name descname"><span class="pre">min_pvalue_str</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">''</span></em><a class="headerlink" href="#drive.network.models.networks.Network.min_pvalue_str" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="drive.network.models.networks.Network.print_members_list">
+<span class="sig-name descname"><span class="pre">print_members_list</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/drive/network/models/networks.html#Network.print_members_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drive.network.models.networks.Network.print_members_list" title="Permalink to this definition">#</a></dt>
+<dd><p>Returns a string that has all of the members ids separated by space</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>returns a string where the members list attribute
+is formatted as a string for the output file. Individuals strings are joined by comma.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="drive.network.models.networks.Network.pvalues">
+<span class="sig-name descname"><span class="pre">pvalues</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#drive.network.models.networks.Network.pvalues" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="drive.network.models.networks.Network.true_positive_count">
+<span class="sig-name descname"><span class="pre">true_positive_count</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#drive.network.models.networks.Network.true_positive_count" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="drive.network.models.networks.Network.true_positive_percent">
+<span class="sig-name descname"><span class="pre">true_positive_percent</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#drive.network.models.networks.Network.true_positive_percent" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="drive.network.models.networks.Network_Interface">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">drive.network.models.networks.</span></span><span class="sig-name descname"><span class="pre">Network_Interface</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/drive/network/models/networks.html#Network_Interface"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drive.network.models.networks.Network_Interface" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Protocol</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="drive.network.models.networks.Network_Interface.clst_id">
+<span class="sig-name descname"><span class="pre">clst_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#drive.network.models.networks.Network_Interface.clst_id" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="drive.network.models.networks.Network_Interface.false_negative_count">
+<span class="sig-name descname"><span class="pre">false_negative_count</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#drive.network.models.networks.Network_Interface.false_negative_count" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="drive.network.models.networks.Network_Interface.false_negative_edges">
+<span class="sig-name descname"><span class="pre">false_negative_edges</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#drive.network.models.networks.Network_Interface.false_negative_edges" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="drive.network.models.networks.Network_Interface.haplotypes">
+<span class="sig-name descname"><span class="pre">haplotypes</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#drive.network.models.networks.Network_Interface.haplotypes" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="drive.network.models.networks.Network_Interface.members">
+<span class="sig-name descname"><span class="pre">members</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Set</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#drive.network.models.networks.Network_Interface.members" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="drive.network.models.networks.Network_Interface.min_pvalue_str">
+<span class="sig-name descname"><span class="pre">min_pvalue_str</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">''</span></em><a class="headerlink" href="#drive.network.models.networks.Network_Interface.min_pvalue_str" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="drive.network.models.networks.Network_Interface.print_members_list">
+<span class="sig-name descname"><span class="pre">print_members_list</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/drive/network/models/networks.html#Network_Interface.print_members_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drive.network.models.networks.Network_Interface.print_members_list" title="Permalink to this definition">#</a></dt>
+<dd><p>Returns a string that has all of the members ids separated by space</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>returns a string where the members list attribute
+is formatted as a string for the output file. Individuals strings are joined by comma.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="drive.network.models.networks.Network_Interface.pvalues">
+<span class="sig-name descname"><span class="pre">pvalues</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">Field(name=None,type=None,default=&lt;dataclasses._MISSING_TYPE</span> <span class="pre">object&gt;,default_factory=&lt;class</span> <span class="pre">'dict'&gt;,init=True,repr=True,hash=None,compare=True,metadata=mappingproxy({}),kw_only=&lt;dataclasses._MISSING_TYPE</span> <span class="pre">object&gt;,_field_type=None)</span></em><a class="headerlink" href="#drive.network.models.networks.Network_Interface.pvalues" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="drive.network.models.networks.Network_Interface.true_positive_count">
+<span class="sig-name descname"><span class="pre">true_positive_count</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#drive.network.models.networks.Network_Interface.true_positive_count" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="drive.network.models.networks.Network_Interface.true_positive_percent">
+<span class="sig-name descname"><span class="pre">true_positive_percent</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#drive.network.models.networks.Network_Interface.true_positive_percent" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-drive.network.models.types">
+<span id="drive-network-models-types-module"></span><h2>drive.network.models.types module<a class="headerlink" href="#module-drive.network.models.types" title="Permalink to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="drive.network.models.types.Filter">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">drive.network.models.types.</span></span><span class="sig-name descname"><span class="pre">Filter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/drive/network/models/types.html#Filter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drive.network.models.types.Filter" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Protocol</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="drive.network.models.types.Filter.ibd_pd">
+<span class="sig-name descname"><span class="pre">ibd_pd</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">DataFrame</span></em><a class="headerlink" href="#drive.network.models.types.Filter.ibd_pd" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="drive.network.models.types.Filter.ibd_vs">
+<span class="sig-name descname"><span class="pre">ibd_vs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">DataFrame</span></em><a class="headerlink" href="#drive.network.models.types.Filter.ibd_vs" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="drive.network.models.types.Genes">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">drive.network.models.types.</span></span><span class="sig-name descname"><span class="pre">Genes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">chr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#drive.network.models.types.Genes" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="drive.network.models.types.Genes.chr">
+<span class="sig-name descname"><span class="pre">chr</span></span><a class="headerlink" href="#drive.network.models.types.Genes.chr" title="Permalink to this definition">#</a></dt>
+<dd><p>Alias for field number 0</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="drive.network.models.types.Genes.end">
+<span class="sig-name descname"><span class="pre">end</span></span><a class="headerlink" href="#drive.network.models.types.Genes.end" title="Permalink to this definition">#</a></dt>
+<dd><p>Alias for field number 2</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="drive.network.models.types.Genes.start">
+<span class="sig-name descname"><span class="pre">start</span></span><a class="headerlink" href="#drive.network.models.types.Genes.start" title="Permalink to this definition">#</a></dt>
+<dd><p>Alias for field number 1</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="drive.filters.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">drive.network.filters package</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="drive.plugins.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">drive.plugins package</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-drive.network.models.data_container">drive.network.models.data_container module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.data_container.Data"><code class="docutils literal notranslate"><span class="pre">Data</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.data_container.Data.carriers"><code class="docutils literal notranslate"><span class="pre">Data.carriers</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.data_container.Data.networks"><code class="docutils literal notranslate"><span class="pre">Data.networks</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.data_container.Data.output_path"><code class="docutils literal notranslate"><span class="pre">Data.output_path</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.data_container.Data.phenotype_descriptions"><code class="docutils literal notranslate"><span class="pre">Data.phenotype_descriptions</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.data_container.Data_Interface"><code class="docutils literal notranslate"><span class="pre">Data_Interface</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.data_container.Data_Interface.carriers"><code class="docutils literal notranslate"><span class="pre">Data_Interface.carriers</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.data_container.Data_Interface.networks"><code class="docutils literal notranslate"><span class="pre">Data_Interface.networks</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.data_container.Data_Interface.output_path"><code class="docutils literal notranslate"><span class="pre">Data_Interface.output_path</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.data_container.Data_Interface.phenotype_descriptions"><code class="docutils literal notranslate"><span class="pre">Data_Interface.phenotype_descriptions</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-drive.network.models.generate_indices">drive.network.models.generate_indices module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.FileIndices"><code class="docutils literal notranslate"><span class="pre">FileIndices</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.FileIndices.get_haplotype_id"><code class="docutils literal notranslate"><span class="pre">FileIndices.get_haplotype_id()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.Germline"><code class="docutils literal notranslate"><span class="pre">Germline</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.Germline.cM_indx"><code class="docutils literal notranslate"><span class="pre">Germline.cM_indx</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.Germline.chr_indx"><code class="docutils literal notranslate"><span class="pre">Germline.chr_indx</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.Germline.end_indx"><code class="docutils literal notranslate"><span class="pre">Germline.end_indx</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.Germline.get_haplotype_id"><code class="docutils literal notranslate"><span class="pre">Germline.get_haplotype_id()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.Germline.hap1_indx"><code class="docutils literal notranslate"><span class="pre">Germline.hap1_indx</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.Germline.hap2_indx"><code class="docutils literal notranslate"><span class="pre">Germline.hap2_indx</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.Germline.id1_indx"><code class="docutils literal notranslate"><span class="pre">Germline.id1_indx</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.Germline.id2_indx"><code class="docutils literal notranslate"><span class="pre">Germline.id2_indx</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.Germline.str_indx"><code class="docutils literal notranslate"><span class="pre">Germline.str_indx</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.Germline.unit"><code class="docutils literal notranslate"><span class="pre">Germline.unit</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.HapIBD"><code class="docutils literal notranslate"><span class="pre">HapIBD</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.HapIBD.cM_indx"><code class="docutils literal notranslate"><span class="pre">HapIBD.cM_indx</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.HapIBD.chr_indx"><code class="docutils literal notranslate"><span class="pre">HapIBD.chr_indx</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.HapIBD.end_indx"><code class="docutils literal notranslate"><span class="pre">HapIBD.end_indx</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.HapIBD.get_haplotype_id"><code class="docutils literal notranslate"><span class="pre">HapIBD.get_haplotype_id()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.HapIBD.hap1_indx"><code class="docutils literal notranslate"><span class="pre">HapIBD.hap1_indx</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.HapIBD.hap2_indx"><code class="docutils literal notranslate"><span class="pre">HapIBD.hap2_indx</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.HapIBD.id1_indx"><code class="docutils literal notranslate"><span class="pre">HapIBD.id1_indx</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.HapIBD.id2_indx"><code class="docutils literal notranslate"><span class="pre">HapIBD.id2_indx</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.HapIBD.str_indx"><code class="docutils literal notranslate"><span class="pre">HapIBD.str_indx</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.Rapid"><code class="docutils literal notranslate"><span class="pre">Rapid</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.Rapid.cM_indx"><code class="docutils literal notranslate"><span class="pre">Rapid.cM_indx</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.Rapid.chr_indx"><code class="docutils literal notranslate"><span class="pre">Rapid.chr_indx</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.Rapid.end_indx"><code class="docutils literal notranslate"><span class="pre">Rapid.end_indx</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.Rapid.get_haplotype_id"><code class="docutils literal notranslate"><span class="pre">Rapid.get_haplotype_id()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.Rapid.hap1_indx"><code class="docutils literal notranslate"><span class="pre">Rapid.hap1_indx</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.Rapid.hap2_indx"><code class="docutils literal notranslate"><span class="pre">Rapid.hap2_indx</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.Rapid.id1_indx"><code class="docutils literal notranslate"><span class="pre">Rapid.id1_indx</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.Rapid.id2_indx"><code class="docutils literal notranslate"><span class="pre">Rapid.id2_indx</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.Rapid.str_indx"><code class="docutils literal notranslate"><span class="pre">Rapid.str_indx</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.create_indices"><code class="docutils literal notranslate"><span class="pre">create_indices()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.iLASH"><code class="docutils literal notranslate"><span class="pre">iLASH</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.iLASH.cM_indx"><code class="docutils literal notranslate"><span class="pre">iLASH.cM_indx</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.iLASH.chr_indx"><code class="docutils literal notranslate"><span class="pre">iLASH.chr_indx</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.iLASH.end_indx"><code class="docutils literal notranslate"><span class="pre">iLASH.end_indx</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.iLASH.get_haplotype_id"><code class="docutils literal notranslate"><span class="pre">iLASH.get_haplotype_id()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.iLASH.hap1_indx"><code class="docutils literal notranslate"><span class="pre">iLASH.hap1_indx</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.iLASH.hap2_indx"><code class="docutils literal notranslate"><span class="pre">iLASH.hap2_indx</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.iLASH.id1_indx"><code class="docutils literal notranslate"><span class="pre">iLASH.id1_indx</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.iLASH.id2_indx"><code class="docutils literal notranslate"><span class="pre">iLASH.id2_indx</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.generate_indices.iLASH.str_indx"><code class="docutils literal notranslate"><span class="pre">iLASH.str_indx</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-drive.network.models.networks">drive.network.models.networks module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.networks.Network"><code class="docutils literal notranslate"><span class="pre">Network</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.networks.Network.clst_id"><code class="docutils literal notranslate"><span class="pre">Network.clst_id</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.networks.Network.false_negative_count"><code class="docutils literal notranslate"><span class="pre">Network.false_negative_count</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.networks.Network.false_negative_edges"><code class="docutils literal notranslate"><span class="pre">Network.false_negative_edges</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.networks.Network.haplotypes"><code class="docutils literal notranslate"><span class="pre">Network.haplotypes</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.networks.Network.members"><code class="docutils literal notranslate"><span class="pre">Network.members</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.networks.Network.min_pvalue_str"><code class="docutils literal notranslate"><span class="pre">Network.min_pvalue_str</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.networks.Network.print_members_list"><code class="docutils literal notranslate"><span class="pre">Network.print_members_list()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.networks.Network.pvalues"><code class="docutils literal notranslate"><span class="pre">Network.pvalues</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.networks.Network.true_positive_count"><code class="docutils literal notranslate"><span class="pre">Network.true_positive_count</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.networks.Network.true_positive_percent"><code class="docutils literal notranslate"><span class="pre">Network.true_positive_percent</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.networks.Network_Interface"><code class="docutils literal notranslate"><span class="pre">Network_Interface</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.networks.Network_Interface.clst_id"><code class="docutils literal notranslate"><span class="pre">Network_Interface.clst_id</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.networks.Network_Interface.false_negative_count"><code class="docutils literal notranslate"><span class="pre">Network_Interface.false_negative_count</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.networks.Network_Interface.false_negative_edges"><code class="docutils literal notranslate"><span class="pre">Network_Interface.false_negative_edges</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.networks.Network_Interface.haplotypes"><code class="docutils literal notranslate"><span class="pre">Network_Interface.haplotypes</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.networks.Network_Interface.members"><code class="docutils literal notranslate"><span class="pre">Network_Interface.members</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.networks.Network_Interface.min_pvalue_str"><code class="docutils literal notranslate"><span class="pre">Network_Interface.min_pvalue_str</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.networks.Network_Interface.print_members_list"><code class="docutils literal notranslate"><span class="pre">Network_Interface.print_members_list()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.networks.Network_Interface.pvalues"><code class="docutils literal notranslate"><span class="pre">Network_Interface.pvalues</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.networks.Network_Interface.true_positive_count"><code class="docutils literal notranslate"><span class="pre">Network_Interface.true_positive_count</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.networks.Network_Interface.true_positive_percent"><code class="docutils literal notranslate"><span class="pre">Network_Interface.true_positive_percent</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-drive.network.models.types">drive.network.models.types module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.types.Filter"><code class="docutils literal notranslate"><span class="pre">Filter</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.types.Filter.ibd_pd"><code class="docutils literal notranslate"><span class="pre">Filter.ibd_pd</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.types.Filter.ibd_vs"><code class="docutils literal notranslate"><span class="pre">Filter.ibd_vs</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.types.Genes"><code class="docutils literal notranslate"><span class="pre">Genes</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.types.Genes.chr"><code class="docutils literal notranslate"><span class="pre">Genes.chr</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.types.Genes.end"><code class="docutils literal notranslate"><span class="pre">Genes.end</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#drive.network.models.types.Genes.start"><code class="docutils literal notranslate"><span class="pre">Genes.start</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By James Baker, Hung-Hsin Chen, David Samuels, Jennifer Piper-Below
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023, James Baker, Hung-Hsin Chen, David Samuels, Jennifer Piper-Below.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

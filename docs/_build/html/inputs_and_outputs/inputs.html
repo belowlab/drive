@@ -1,0 +1,677 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>DRIVE Inputs &#8212; DRIVE</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'inputs_and_outputs/inputs';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="DRIVE Output" href="outputs.html" />
+    <link rel="prev" title="Testing DRIVE" href="../installation/testing.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">DRIVE</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    Welcome to DRIVE’s documentation!
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">User's Guide</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../about/about.html">About DRIVE</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../installation/installation.html">DRIVE Installation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../installation/pip_installation.html">Installing DRIVE from Pip</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/github_installation.html">Installing DRIVE from Github</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/docker.html">Using DRIVE with Docker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/testing.html">Testing DRIVE</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">DRIVE Inputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="outputs.html">DRIVE Output</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tutorial</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../examples/examples_command_format.html">Example command format</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Developer's Guide</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../contributing/contributing.html">Contributing</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../contributing/how_to_contribute.html">How to contribute</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../contributing/code_style.html">Code Styling Tips</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../contributing/testing.html">Testing</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../plugin_descriptions/extending_drive.html">Extending Drive</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../plugin_descriptions/plugin_architecture.html">How is DRIVE extensible</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../plugin_descriptions/data_container_api.html">Structure of the Data container</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../plugin_descriptions/factory_plugins.html">Pre-Installed Plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../plugin_descriptions/expected_plugin_structure.html">Custom Plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../plugin_descriptions/plugin_configuration.html">Configuring DRIVE to use the plugins</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../modules/modules.html">drive</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../modules/drive.html">drive package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../modules/drive.cluster.html">drive.cluster package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../modules/drive.factory.html">drive.factory package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../modules/drive.filters.html">drive.filters package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../modules/drive.models.html">drive.models package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../modules/drive.plugins.html">drive.plugins package</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/belowlab/drive" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/inputs_and_outputs/inputs.rst" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.rst</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>DRIVE Inputs</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inputs-for-the-clustering-subcommand">Inputs for the clustering subcommand:</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#required"><em>required:</em></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#optional"><em>optional:</em></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inputs-for-the-dendrogram-subcommand">Inputs for the dendrogram subcommand:</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1"><em>required:</em></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2"><em>optional:</em></a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="drive-inputs">
+<h1>DRIVE Inputs<a class="headerlink" href="#drive-inputs" title="Permalink to this heading">#</a></h1>
+<p>The DRIVE program has two subcommands shown in the image below.</p>
+<a class="reference internal image-reference" href="../_images/drive_help_message.png"><img alt="../_images/drive_help_message.png" class="align-center" src="../_images/drive_help_message.png" style="height: 300px;" /></a>
+<hr class="docutils" />
+<section id="inputs-for-the-clustering-subcommand">
+<h2>Inputs for the clustering subcommand:<a class="headerlink" href="#inputs-for-the-clustering-subcommand" title="Permalink to this heading">#</a></h2>
+<section id="required">
+<h3><em>required:</em><a class="headerlink" href="#required" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>input</strong>: This input file describes the pairwise shared IBD segments within the cohort. The file is formed as the result of running hap-IBD, iLASH, GERMLINE, or RapID.</p></li>
+</ul>
+<hr class="docutils" />
+<ul class="simple">
+<li><p><strong>format</strong>: This argument indicates which ibd program that was used to identify IBD segments. Currently the program supports values of hapibd, hap-IBD, iLASH, RapID, and GERMLINE.</p></li>
+</ul>
+<hr class="docutils" />
+<ul class="simple">
+<li><p><strong>target</strong>: This argument is the region of interest that you wish to cluster around. The program will filter out segments that don’t contain this entire region. This argument should be of the format chromosome_number:start-end (eg: 7:1234-2345).</p></li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Make sure that the base position in the file corresponds to the same build of the human genome as what you used in the IBD detection software. If the builds are different then you will get inaccurate results.</p>
+</div>
+<hr class="docutils" />
+<ul class="simple">
+<li><p><strong>output</strong>: This argument will indicate a path to write the output file to. The user should provide a file path without an extension and the program will add the extension <em>.drive_networks.txt</em>.</p></li>
+</ul>
+</section>
+<section id="optional">
+<h3><em>optional:</em><a class="headerlink" href="#optional" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>min-cm</strong>: DRIVE will use this argument to filter out all pairwise IBD segments that are shorter than the provided threshold. This value defaults to 3cM.</p></li>
+</ul>
+<hr class="docutils" />
+<ul class="simple">
+<li><p><strong>step</strong>: This argument indicates the number of minimum steps that the random walk will use to generate a network. By default this value is 3.</p></li>
+</ul>
+<hr class="docutils" />
+<ul class="simple">
+<li><p><strong>max-recheck</strong>: This value indicates the maximum number of times the program will redo the clustering in an effort to perform tree pruning. This argument defaults to 5 if the user doesn’t provide any value. This argument is ignored if the flag –no-recluster is provided.</p></li>
+</ul>
+<hr class="docutils" />
+<ul class="simple">
+<li><p><strong>cases</strong>: A tab separated text file containing individuals who are either cases, controls, or exclusions. This file expects for there to be at least columns. The first column will have individual ids. All other columns in the file are for each phenotype being analyzed. Each column is expected to have the individual’s status where cases are indicated by a 1, controls are indicated by a 0, and excluded individuals are indiciated by -1, -1.0, N/A, or a blank space. Excluded individuals will not be included in the binomial test but will be included in the clustering analysis. The file is expected to have a header where the first column is grid or grids (case insensitive) and the remaining columns are the phenotype names. If this argument is not supplied than the program will not perform the binomial test that determines enrichment of phenotypes within the identified networks.</p></li>
+</ul>
+<hr class="docutils" />
+<ul class="simple">
+<li><p><strong>descriptions</strong>: This argument provides the path to a tab separated text file that contains a text description of each phenotype. This file is typically supplied when the user is running the program phenomewide with PheCodes but can be provided for any phenotype. This file is expected to have two columns called “phecode” and “phenotype”</p></li>
+</ul>
+<hr class="docutils" />
+<ul class="simple">
+<li><p><strong>max-network-size</strong>: This argument provides one of the thresholds that determines if a network needs to be re-clustered. max-network-size indicates the largest size of a network that is permitted. If a network is bigger than the max-network-size argument and it is smaller than the min-connected-threshold argument then the network will be re-clustered.</p></li>
+</ul>
+<hr class="docutils" />
+<ul class="simple">
+<li><p><strong>min-connected-threshold</strong>: This argument provides one of the thresholds that determines if a network needs to be re-clustered. min-connected-threshold indicates how connected we want the network to be. If the network is sparser than the min-connected-threshold and is larger than the max-network-size then the network will be re-clustered.</p></li>
+</ul>
+<hr class="docutils" />
+<ul class="simple">
+<li><p><strong>min-network-size</strong>: This argument sets a threshold for the minimum size a network has to be to be included in the analysis. Users can filter out pairs or trios but changing this value. By default this argument is set to 2</p></li>
+</ul>
+<hr class="docutils" />
+<ul class="simple">
+<li><p><strong>segment-distribution-threshold</strong>: Threshold to filter the network length to remove hub individuals</p></li>
+</ul>
+<hr class="docutils" />
+<ul class="simple">
+<li><p><strong>segment-overlap</strong>: Flag indicating whether we only want to keep segments which fully contain the target locus or if we want to consider segments which also just partially overlap the target locus. The accept values are “contains” and “defaults”.</p></li>
+</ul>
+<hr class="docutils" />
+<ul class="simple">
+<li><p><strong>phenotype-name</strong>: If the user passes a phenotype table with multiple phenotypes then this flag can be used to specify just one phenotype for the analysis. If this flag is not used then the program will use all phenotypes in the provided phenotype table.</p></li>
+</ul>
+<hr class="docutils" />
+<ul class="simple">
+<li><p><strong>hub-threshold</strong>: Threshold to determine what percentage of hubs to keep</p></li>
+</ul>
+<hr class="docutils" />
+<ul class="simple">
+<li><p><strong>json-config</strong>: This argument provides a path to the config.json file that DRIVE uses to identify what plugins the user wishes to use. DRIVE uses the plugin architecture to allow users to add new functionality to the program. The program comes with default plugins to determine enrichment pvalues and to write networks to a file. These plugins are listed in the config.json file found within the programs install directory. If the user wishes to use DRIVE in its standard form then they should just use the default value. If the user wishes to extend DRIVE then they can read more about the plugin system and how to add new plugins HERE.</p></li>
+</ul>
+<hr class="docutils" />
+<ul class="simple">
+<li><p><strong>recluster</strong>: Flag indicating if the user wishes to recluster networks or if they wish to only return the initial networks without redoing the clustering algorithm. If the user wishes to use reclustering then DRIVE will use the values for hub-threshold, segment-distribution-threshold, min-connected-threshold, and max-network-size. If the user wishes to not perform reclustering, then they should pass the flag “<em>–no-recluster</em>”.</p></li>
+</ul>
+<hr class="docutils" />
+<ul class="simple">
+<li><p><strong>verbose</strong>: Flag indicating how verbose the user wants the drive program to be. The flag can be combined with itself to indicating more verbosity (-v = verbose while -vv = debug mode). By default the program will provide minimum information. If the user passes -v the program will run in verbose mode. If the user passes -vv then it will run in debug mode. Debug mode will generate a lot of logging output so use with caution if you are writting to a log file..</p></li>
+</ul>
+<hr class="docutils" />
+<ul class="simple">
+<li><p><strong>log_to_console</strong>: Flag indicating if the user wishes to write output to the console. If this flag is passed then output will be written to the console. Otherwise the output will only be written to the log file.</p></li>
+</ul>
+<hr class="docutils" />
+<ul class="simple">
+<li><p><strong>log_filename</strong>: Argument providing a name for the log file generated by drive. This log file will be written to the parent directory from the “output” argument.</p></li>
+</ul>
+<p>—</p>
+<ul class="simple">
+<li><p><strong>version</strong>: Flag that outputs the version of DRIVE that the user is using</p></li>
+</ul>
+</section>
+</section>
+<section id="inputs-for-the-dendrogram-subcommand">
+<h2>Inputs for the dendrogram subcommand:<a class="headerlink" href="#inputs-for-the-dendrogram-subcommand" title="Permalink to this heading">#</a></h2>
+<section id="id1">
+<h3><em>required:</em><a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>input</strong>: This input file is the output from running the cluster subcommand of DRIVE. The file has the suffix “*.drive_networks.txt”. No formatting of this file has to be done before running the dendrogram command.</p></li>
+</ul>
+<hr class="docutils" />
+<ul class="simple">
+<li><p><strong>ibd</strong>: This file is the input IBD file from the drive cluster command. It should contain the shared Pairwise IBD segments detected from either hap-IBD, iLASH, RapID, or GERMLINE</p></li>
+</ul>
+<hr class="docutils" />
+<ul class="simple">
+<li><p><strong>target</strong>: This argument is the region of interest that you wish to cluster around. The program will filter out segments that don’t contain this entire region. This argument should be of the format chromosome_number:start-end (eg: 7:1234-2345).</p></li>
+</ul>
+<hr class="docutils" />
+<ul class="simple">
+<li><p><strong>network-id</strong>: ID of the network that the user wishes to make a dendrogram for. This value needs to exactly match the clstID value from the DRIVE “*drive_networks.txt” file. In this analysis “1” and “1.0” will not be interpreted as the same number. This argument cannot be provided if the “–generate-all” flag is used</p></li>
+</ul>
+<hr class="docutils" />
+<ul class="simple">
+<li><p><strong>generate-all</strong>: Flag to indicate that the user does wish to generate dendrograms for all of the networks in the DRIVE file. This networks will all be in the specified output directory and will be identified by the network ID. This produces a lot of files (&gt;10,000) which is why we require the user specifies that they want to generate all of the dendrograms. Due to drawing limitations DRIVE will only generate dendrograms for networks &gt;= 3 individuals or &lt;= 30 individuals. These thresholds can be changed with optional parameters.</p></li>
+</ul>
+</section>
+<section id="id2">
+<h3><em>optional:</em><a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>format</strong>: This argument indicates which ibd program that was used to identify IBD segments. Currently the program supports values of hapibd, hap-IBD, iLASH, RapID, and GERMLINE. The default value is hapibd.</p></li>
+</ul>
+<hr class="docutils" />
+<ul class="simple">
+<li><p><strong>min-cm</strong>: DRIVE will use this argument to filter out all pairwise IBD segments that are shorter than the provided threshold. This value is in centimorgans and defaults to 3.</p></li>
+</ul>
+<hr class="docutils" />
+<ul class="simple">
+<li><p><strong>segment-overlap</strong>: Flag indicating whether we only want to keep segments which fully contain the target locus or if we want to consider segments which also just partially overlap the target locus. The accept values are “contains” and “defaults”.</p></li>
+</ul>
+<hr class="docutils" />
+<ul class="simple">
+<li><p><strong>max-network-size</strong>: Threshold for the largest network to make a dendrogram for. This flag is only used if the user selects the “–generate-all” flag. Default value is 30 individuals.</p></li>
+</ul>
+<hr class="docutils" />
+<ul class="simple">
+<li><p><strong>min_network-size</strong>: Threshold for the smallest network to make a dendrogram for. DRIVE can return 2 person networks but dendrograms of these networks are not that informative. Therefore for computationally efficieny we exclude these small networks. A user can change this value to also exclude even larger networks if they so wish. Default value is 3 individuals.</p></li>
+</ul>
+<hr class="docutils" />
+<ul class="simple">
+<li><p><strong>font-size</strong>: Size of the text for the leaf nodes of the dendrogram (The individuals’ ids). This value defaults to 15 but may have to be changed if you know you have a large network to make a dendrogram for.</p></li>
+</ul>
+<hr class="docutils" />
+<ul class="simple">
+<li><p><strong>title</strong>: Title that is written on the dendrogram image. This title is not the same as the filepath. By default this value is “test dendrogram”</p></li>
+</ul>
+<hr class="docutils" />
+<ul class="simple">
+<li><p><strong>keep-temp</strong>: To make the dendrogram DRIVE has to create a distance matrix where the measure of distance between 2 individuals is just the inverse of the IBD segment length. This file is not save by default to perserve space. If the user passes this flag then the file will be saved in the specified output directory in a temp folder called “network_#_temp”</p></li>
+</ul>
+<hr class="docutils" />
+<ul class="simple">
+<li><p><strong>verbose</strong>: Flag indicating how verbose the user wants the drive program to be. The flag can be combined with itself to indicating more verbosity (-v = verbose while -vv = debug mode). By default the program will provide minimum information. If the user passes -v the program will run in verbose mode. If the user passes -vv then it will run in debug mode. Debug mode will generate a lot of logging output so use with caution if you are writting to a log file..</p></li>
+</ul>
+<hr class="docutils" />
+<ul class="simple">
+<li><p><strong>log_to_console</strong>: Flag indicating if the user wishes to write output to the console. If this flag is passed then output will be written to the console. Otherwise the output will only be written to the log file.</p></li>
+</ul>
+<hr class="docutils" />
+<ul class="simple">
+<li><p><strong>log_filename</strong>: Argument providing a name for the log file generated by drive. This log file will be written to the parent directory from the “output” argument.</p></li>
+</ul>
+</section>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../installation/testing.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Testing DRIVE</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="outputs.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">DRIVE Output</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inputs-for-the-clustering-subcommand">Inputs for the clustering subcommand:</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#required"><em>required:</em></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#optional"><em>optional:</em></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inputs-for-the-dendrogram-subcommand">Inputs for the dendrogram subcommand:</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1"><em>required:</em></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2"><em>optional:</em></a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By James Baker, Hung-Hsin Chen, David Samuels, Jennifer Piper-Below
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023, James Baker, Hung-Hsin Chen, David Samuels, Jennifer Piper-Below.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,936 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>drive.network.cluster.cluster &#8212; DRIVE</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/styles/sphinx-book-theme.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+    <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../../_static/clipboard.min.js"></script>
+    <script src="../../../../_static/copybutton.js"></script>
+    <script src="../../../../_static/scripts/sphinx-book-theme.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/drive/network/cluster/cluster';</script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">DRIVE</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../../index.html">
+                    Welcome to DRIVE’s documentation!
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">User's Guide</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../about/about.html">About DRIVE</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../installation/installation.html">DRIVE Installation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../installation/pip_installation.html">Installing DRIVE from Pip</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../installation/github_installation.html">Installing DRIVE from Github</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../installation/docker.html">Using DRIVE with Docker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../installation/testing.html">Testing DRIVE</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../inputs_and_outputs/inputs.html">DRIVE Inputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../inputs_and_outputs/outputs.html">DRIVE Output</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tutorial</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/examples_command_format.html">Example command format</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Developer's Guide</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../contributing/contributing.html">Contributing</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../contributing/how_to_contribute.html">How to contribute</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../contributing/code_style.html">Code Styling Tips</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../contributing/testing.html">Testing</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../plugin_descriptions/extending_drive.html">Extending Drive</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../plugin_descriptions/plugin_architecture.html">How is DRIVE extensible</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../plugin_descriptions/data_container_api.html">Structure of the Data container</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../plugin_descriptions/factory_plugins.html">Pre-Installed Plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../plugin_descriptions/expected_plugin_structure.html">Custom Plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../plugin_descriptions/plugin_configuration.html">Configuring DRIVE to use the plugins</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../modules/modules.html">drive</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../modules/drive.html">drive package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../modules/drive.cluster.html">drive.network.cluster package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../modules/drive.factory.html">drive.factory package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../modules/drive.filters.html">drive.network.filters package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../modules/drive.models.html">drive.network.models package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../modules/drive.plugins.html">drive.plugins package</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/belowlab/drive" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for drive.network.cluster.cluster</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">itertools</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">field</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Set</span><span class="p">,</span> <span class="n">Tuple</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">igraph</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ig</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">log</span><span class="w"> </span><span class="kn">import</span> <span class="n">CustomLogger</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="kn">import</span> <span class="n">DataFrame</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">drive.network.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">Filter</span><span class="p">,</span> <span class="n">Network</span><span class="p">,</span> <span class="n">Network_Interface</span>
+
+<span class="c1"># creating a logger</span>
+<span class="n">logger</span><span class="p">:</span> <span class="n">logging</span><span class="o">.</span><span class="n">Logger</span> <span class="o">=</span> <span class="n">CustomLogger</span><span class="o">.</span><span class="n">get_logger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="c1"># Create a generic variable that can represents the class from the</span>
+
+
+<div class="viewcode-block" id="ClusterHandler"><a class="viewcode-back" href="../../../../modules/drive.cluster.html#drive.network.cluster.ClusterHandler">[docs]</a><span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ClusterHandler</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Class responsible for performing the cluster on the network objects&quot;&quot;&quot;</span>
+
+    <span class="n">minimum_connected_thres</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="n">max_network_size</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">max_rechecks</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">random_walk_step_size</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">min_cluster_size</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">segment_dist_threshold</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">hub_threshold</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="n">haplotype_mappings</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span>
+    <span class="n">recluster</span><span class="p">:</span> <span class="nb">bool</span>
+    <span class="n">check_times</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">recheck_clsts</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">Network_Interface</span><span class="p">]]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">dict</span><span class="p">)</span>
+    <span class="n">final_clusters</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Network_Interface</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">list</span><span class="p">)</span>
+
+<div class="viewcode-block" id="ClusterHandler.generate_graph"><a class="viewcode-back" href="../../../../modules/drive.cluster.html#drive.network.cluster.ClusterHandler.generate_graph">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">generate_graph</span><span class="p">(</span>
+        <span class="n">ibd_edges</span><span class="p">:</span> <span class="n">DataFrame</span><span class="p">,</span>
+        <span class="n">ibd_vertices</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">DataFrame</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ig</span><span class="o">.</span><span class="n">Graph</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Method that will be responsible for creating the graph</span>
+<span class="sd">        used in the network analysis</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        ibd_edges : DataFrame</span>
+<span class="sd">            DataFrame that has the edges of the graph with the length</span>
+<span class="sd">            of the edges.</span>
+
+<span class="sd">        ibd_vertices : Optional[DataFrame]</span>
+<span class="sd">            DataFrame that has information for each vertice in the</span>
+<span class="sd">            graph. This value will be none when we are redoing the clustering</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">ibd_vertices</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Generating graph with vertex labels.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">ig</span><span class="o">.</span><span class="n">Graph</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+                <span class="n">ibd_edges</span><span class="p">,</span> <span class="n">directed</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">vertices</span><span class="o">=</span><span class="n">ibd_vertices</span><span class="p">,</span> <span class="n">use_vids</span><span class="o">=</span><span class="kc">False</span>
+            <span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                <span class="s2">&quot;No vertex metadata provided. Vertex ids will be nonnegative integers&quot;</span>
+            <span class="p">)</span>
+            <span class="c1"># return ig.Graph.DataFrame(ibd_edges, directed=False, use_vids=False)</span>
+            <span class="k">return</span> <span class="n">ig</span><span class="o">.</span><span class="n">Graph</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">ibd_edges</span><span class="p">,</span> <span class="n">directed</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ClusterHandler.random_walk"><a class="viewcode-back" href="../../../../modules/drive.cluster.html#drive.network.cluster.ClusterHandler.random_walk">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">random_walk</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">graph</span><span class="p">:</span> <span class="n">ig</span><span class="o">.</span><span class="n">Graph</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ig</span><span class="o">.</span><span class="n">VertexClustering</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Method used to perform the random walk from igraph.community_walktrap</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        graph : ig.Graph</span>
+<span class="sd">            graph object created by ig.Graph.DataFrame</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        ig.VertexClustering</span>
+<span class="sd">            result of the random walk cluster. This object has</span>
+<span class="sd">            information about clusters and membership</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Performing the community walktrap algorithm with a random walk step size of: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">random_walk_step_size</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span>
+
+        <span class="n">ibd_walktrap</span> <span class="o">=</span> <span class="n">ig</span><span class="o">.</span><span class="n">Graph</span><span class="o">.</span><span class="n">community_walktrap</span><span class="p">(</span>
+            <span class="n">graph</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="s2">&quot;cm&quot;</span><span class="p">,</span> <span class="n">steps</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">random_walk_step_size</span>
+        <span class="p">)</span>
+
+        <span class="n">random_walk_clusters</span> <span class="o">=</span> <span class="n">ibd_walktrap</span><span class="o">.</span><span class="n">as_clustering</span><span class="p">()</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">verbose</span><span class="p">(</span><span class="n">random_walk_clusters</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
+
+        <span class="k">return</span> <span class="n">random_walk_clusters</span></div>
+
+<div class="viewcode-block" id="ClusterHandler.filter_cluster_size"><a class="viewcode-back" href="../../../../modules/drive.cluster.html#drive.network.cluster.ClusterHandler.filter_cluster_size">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">filter_cluster_size</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">random_walk_clusters_sizes</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Method to filter networks that are smaller than the min_cluster_size from</span>
+<span class="sd">        the analysis</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        random_walk_clusters_sizes : List[int]</span>
+<span class="sd">            size of each cluster from the random walk results</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        List[int]</span>
+<span class="sd">            returns a list of integers where each integer</span>
+<span class="sd">            represents a cluster id. Each cluster in the</span>
+<span class="sd">            network will be &gt;= to the min_cluster_size</span>
+<span class="sd">            attribute.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">[</span>
+            <span class="n">i</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">random_walk_clusters_sizes</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">v</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_cluster_size</span>
+        <span class="p">]</span></div>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_gather_members</span><span class="p">(</span>
+        <span class="n">random_walk_members</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">clst_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">graph</span><span class="p">:</span> <span class="n">ig</span><span class="o">.</span><span class="n">Graph</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Generate a list of individuals ids in the network</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        random_walk_members : List[int]</span>
+<span class="sd">            list of all members from the random walk results</span>
+
+<span class="sd">        clst_id : int</span>
+<span class="sd">            id for the cluster. This value is used to pull out members</span>
+<span class="sd">            that belong to the cluster</span>
+
+<span class="sd">        graph : ig.Graph</span>
+<span class="sd">            Graph object formed by ig.Graph.DataFrame</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Tuple[List[int], List[int]]</span>
+<span class="sd">            returns a list of ids of individuals in the network and then</span>
+<span class="sd">            a list of vertex ids. The individual ids are just the index</span>
+<span class="sd">            of the element in the membership list and the vertex ids are</span>
+<span class="sd">            the list of ids provided by nme label in the vs() property.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">member_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="c1"># this list has the ids. It is sometimes the same as the</span>
+        <span class="c1"># member_list but it will not be the same in the redo_networks</span>
+        <span class="c1"># graph</span>
+        <span class="n">vertex_ids</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">member_id</span><span class="p">,</span> <span class="n">assigned_clst_id</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">random_walk_members</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">assigned_clst_id</span> <span class="o">==</span> <span class="n">clst_id</span><span class="p">:</span>
+                <span class="n">member_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">graph</span><span class="o">.</span><span class="n">vs</span><span class="p">()[</span><span class="n">member_id</span><span class="p">][</span><span class="s2">&quot;name&quot;</span><span class="p">])</span>
+                <span class="n">vertex_ids</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">member_id</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">member_list</span><span class="p">,</span> <span class="n">vertex_ids</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_determine_true_positive_edges</span><span class="p">(</span>
+        <span class="n">member_list</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">clst_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">random_walk_results</span><span class="p">:</span> <span class="n">ig</span><span class="o">.</span><span class="n">VertexClustering</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;determining the number of true positive edges</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        member_list : List[int]</span>
+<span class="sd">            list of ids within the specific network</span>
+
+<span class="sd">        clst_id : int</span>
+<span class="sd">            id for the original cluster</span>
+
+<span class="sd">        random_walk_results : ig.VertexClustering</span>
+<span class="sd">            vertexClustering object returned after the random</span>
+<span class="sd">            walk that has the different clusters</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Tuple[int, float]</span>
+<span class="sd">            returns a tuple where the first element is the</span>
+<span class="sd">            number of edges in the graph and the second</span>
+<span class="sd">            element is the ratio of actually edges in the</span>
+<span class="sd">            graph compared to the theoretical maximum number</span>
+<span class="sd">            of edges in the graph.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># getting the total number of edges possible</span>
+        <span class="n">theoretical_edge_count</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">combinations</span><span class="p">(</span><span class="n">member_list</span><span class="p">,</span> <span class="mi">2</span><span class="p">)))</span>
+
+        <span class="c1"># Getting the number of edges within the graph and saving it</span>
+        <span class="c1"># as a dictionary key, &#39;true_positive_n&#39;</span>
+        <span class="n">cluster_edge_count</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">random_walk_results</span><span class="o">.</span><span class="n">subgraph</span><span class="p">(</span><span class="n">clst_id</span><span class="p">)</span><span class="o">.</span><span class="n">get_edgelist</span><span class="p">())</span>
+
+        <span class="k">return</span> <span class="n">cluster_edge_count</span><span class="p">,</span> <span class="n">cluster_edge_count</span> <span class="o">/</span> <span class="n">theoretical_edge_count</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_determine_false_positive_edges</span><span class="p">(</span>
+        <span class="n">graph</span><span class="p">:</span> <span class="n">ig</span><span class="o">.</span><span class="n">Graph</span><span class="p">,</span> <span class="n">vertex_list</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;determine the number of false positive edges</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        graph : ig.Graph</span>
+<span class="sd">            graph object returned from ig.Graph.DataFrame</span>
+
+<span class="sd">        vertex_list : List[int]</span>
+<span class="sd">            list of vertex ids within the specific network</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Tuple[int, List[int]]</span>
+<span class="sd">            returns a tuple where the first element is the</span>
+<span class="sd">            number of edges in the graph and the second</span>
+<span class="sd">            element is a list of false positive edges.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">all_edge</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([])</span>
+
+        <span class="k">for</span> <span class="n">mem</span> <span class="ow">in</span> <span class="n">vertex_list</span><span class="p">:</span>
+            <span class="n">all_edge</span> <span class="o">=</span> <span class="n">all_edge</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">graph</span><span class="o">.</span><span class="n">incident</span><span class="p">(</span><span class="n">mem</span><span class="p">)))</span>
+
+        <span class="n">false_negative_edges</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
+            <span class="n">all_edge</span><span class="o">.</span><span class="n">difference</span><span class="p">(</span>
+                <span class="nb">list</span><span class="p">(</span>
+                    <span class="n">graph</span><span class="o">.</span><span class="n">get_eids</span><span class="p">(</span>
+                        <span class="n">pairs</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">combinations</span><span class="p">(</span><span class="n">vertex_list</span><span class="p">,</span> <span class="mi">2</span><span class="p">)),</span>
+                        <span class="n">directed</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                        <span class="n">error</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">false_negative_edges</span><span class="p">),</span> <span class="n">false_negative_edges</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_map_ids_back_to_haplotypes</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">members</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;remap the haplotype integer ids back to the haplotype</span>
+<span class="sd">        strings for the output file</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        members : List[int]</span>
+<span class="sd">            list of integers that represent the name of each vertex in the network</span>
+<span class="sd">            corresponding the the graph</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Tuple[List[str], List[str]]</span>
+<span class="sd">            returns a list of haplotype id strings in the network. These</span>
+<span class="sd">            strings include the phase number. Also returns a list of ids</span>
+<span class="sd">            within the networks. This will be the same as the haplotype</span>
+<span class="sd">            id without the phase number</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">haplotypes</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">haplotype_mappings</span><span class="p">[</span><span class="n">value</span><span class="p">]</span> <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">members</span><span class="p">]</span>
+
+        <span class="n">member_ids</span> <span class="o">=</span> <span class="p">{</span><span class="n">value</span><span class="p">[:</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span> <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">haplotypes</span><span class="p">}</span>
+
+        <span class="k">return</span> <span class="n">haplotypes</span><span class="p">,</span> <span class="n">member_ids</span>
+
+<div class="viewcode-block" id="ClusterHandler.gather_cluster_info"><a class="viewcode-back" href="../../../../modules/drive.cluster.html#drive.network.cluster.ClusterHandler.gather_cluster_info">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">gather_cluster_info</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">graph</span><span class="p">:</span> <span class="n">ig</span><span class="o">.</span><span class="n">Graph</span><span class="p">,</span>
+        <span class="n">cluster_ids</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span>
+        <span class="n">random_walk_clusters</span><span class="p">:</span> <span class="n">ig</span><span class="o">.</span><span class="n">VertexClustering</span><span class="p">,</span>
+        <span class="n">parent_cluster_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Method for getting the information about membership,</span>
+<span class="sd">        true.positive, false.positives, etc... from the random</span>
+<span class="sd">        walk</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        graph : ig.Graph</span>
+<span class="sd">            Graph object generated by ig.Graph.DataFrame</span>
+
+<span class="sd">        cluster_ids : List[int]</span>
+<span class="sd">            list of integers for each cluster id</span>
+
+<span class="sd">        random_walk_clusters : ig.VertexClustering</span>
+<span class="sd">            result from performing the random walk.</span>
+
+<span class="sd">        parent_cluster_id : Optional[str]</span>
+<span class="sd">            id of the original cluster that is now being broken up. Child</span>
+<span class="sd">            cluster ids will take the form parent_id.child_id</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">for</span> <span class="n">clst_id</span> <span class="ow">in</span> <span class="n">cluster_ids</span><span class="p">:</span>
+            <span class="c1"># We need to form the appropriate id if the cluster has a</span>
+            <span class="c1"># parent otherwise they get the value of the clst_id argument</span>
+            <span class="k">if</span> <span class="n">parent_cluster_id</span><span class="p">:</span>
+                <span class="n">clst_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">parent_cluster_id</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">clst_id</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">clst_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">clst_id</span><span class="si">}</span><span class="s2">&quot;</span>
+
+            <span class="c1"># We are going to get the vertex id and member id of each</span>
+            <span class="c1"># graph</span>
+            <span class="n">member_list</span><span class="p">,</span> <span class="n">vertex_ids</span> <span class="o">=</span> <span class="n">ClusterHandler</span><span class="o">.</span><span class="n">_gather_members</span><span class="p">(</span>
+                <span class="n">random_walk_clusters</span><span class="o">.</span><span class="n">membership</span><span class="p">,</span> <span class="n">clst_id</span><span class="p">,</span> <span class="n">graph</span>
+            <span class="p">)</span>
+
+            <span class="c1"># Next we get the number of edges/ ratio of actual edges to</span>
+            <span class="c1"># the potential edges</span>
+            <span class="p">(</span>
+                <span class="n">true_pos_count</span><span class="p">,</span>
+                <span class="n">true_pos_ratio</span><span class="p">,</span>
+            <span class="p">)</span> <span class="o">=</span> <span class="n">ClusterHandler</span><span class="o">.</span><span class="n">_determine_true_positive_edges</span><span class="p">(</span>
+                <span class="n">member_list</span><span class="p">,</span> <span class="n">clst_id</span><span class="p">,</span> <span class="n">random_walk_clusters</span>
+            <span class="p">)</span>
+            <span class="c1"># next we determine the number of false positive edges</span>
+            <span class="p">(</span>
+                <span class="n">false_neg_count</span><span class="p">,</span>
+                <span class="n">false_neg_list</span><span class="p">,</span>
+            <span class="p">)</span> <span class="o">=</span> <span class="n">ClusterHandler</span><span class="o">.</span><span class="n">_determine_false_positive_edges</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="n">vertex_ids</span><span class="p">)</span>
+
+            <span class="c1"># If the graph is too sparse and it is too large and the max</span>
+            <span class="c1"># number of rechecks has not been reached then we will put</span>
+            <span class="c1"># the network into a recluster dictionary. Otherwise it is</span>
+            <span class="c1"># added to the final_clst list</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">check_times</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_rechecks</span>
+                <span class="ow">and</span> <span class="n">true_pos_ratio</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">minimum_connected_thres</span>
+                <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">member_list</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_network_size</span>
+                <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">recluster</span>
+            <span class="p">):</span>
+                <span class="c1"># We can put all of this information into a network class. Here the</span>
+                <span class="c1"># member list will still be in integers</span>
+                <span class="n">network</span> <span class="o">=</span> <span class="n">Network</span><span class="p">(</span>
+                    <span class="n">clst_name</span><span class="p">,</span>
+                    <span class="n">true_pos_count</span><span class="p">,</span>
+                    <span class="n">true_pos_ratio</span><span class="p">,</span>
+                    <span class="n">false_neg_list</span><span class="p">,</span>
+                    <span class="n">false_neg_count</span><span class="p">,</span>
+                    <span class="n">member_list</span><span class="p">,</span>
+                    <span class="n">vertex_ids</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="c1"># debug statement if we want to see the members and the haplotypes</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;members: </span><span class="si">{</span><span class="n">member_list</span><span class="si">}</span><span class="se">\n</span><span class="s2">haplotypes: </span><span class="si">{</span><span class="n">vertex_ids</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+                <span class="c1"># we are going to append the network to the list of networks that needs</span>
+                <span class="c1"># to be rechecked</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">recheck_clsts</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">check_times</span><span class="p">,</span> <span class="p">[])</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">network</span><span class="p">)</span>
+
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># we need to convert the integer ids back to strings</span>
+                <span class="n">haplotype_ids</span><span class="p">,</span> <span class="n">member_ids</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_map_ids_back_to_haplotypes</span><span class="p">(</span>
+                    <span class="n">member_list</span>
+                <span class="p">)</span>
+
+                <span class="n">network</span> <span class="o">=</span> <span class="n">Network</span><span class="p">(</span>
+                    <span class="n">clst_name</span><span class="p">,</span>
+                    <span class="n">true_pos_count</span><span class="p">,</span>
+                    <span class="n">true_pos_ratio</span><span class="p">,</span>
+                    <span class="n">false_neg_list</span><span class="p">,</span>
+                    <span class="n">false_neg_count</span><span class="p">,</span>
+                    <span class="n">member_ids</span><span class="p">,</span>
+                    <span class="n">haplotype_ids</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="c1"># logger.info(f&quot;members: {member_ids}\nhaplotypes: {haplotype_ids}&quot;)</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">final_clusters</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">network</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ClusterHandler.redo_clustering"><a class="viewcode-back" href="../../../../modules/drive.cluster.html#drive.network.cluster.ClusterHandler.redo_clustering">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">redo_clustering</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">network</span><span class="p">:</span> <span class="n">Network_Interface</span><span class="p">,</span> <span class="n">ibd_pd</span><span class="p">:</span> <span class="n">DataFrame</span><span class="p">,</span> <span class="n">ibd_vs</span><span class="p">:</span> <span class="n">DataFrame</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Method that will redo the clustering, if the</span>
+<span class="sd">        networks were too large or did not show a high degree</span>
+<span class="sd">        of connectedness</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        network : Network_InterFace</span>
+<span class="sd">            object that represents each cluster. These objects have information</span>
+<span class="sd">            about the cluster id, number and ratio of edges, true_positive_percent,</span>
+<span class="sd">            false_negative_edges, false_negative_count</span>
+
+<span class="sd">        ibd_pd : pd.DataFrame</span>
+<span class="sd">            DataFrame that has information about the edges that a pair shares</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># pulling the id from the original cluster</span>
+        <span class="n">original_id</span> <span class="o">=</span> <span class="n">network</span><span class="o">.</span><span class="n">clst_id</span>
+        <span class="c1"># logger.debug(&quot;In redo_clustering section&quot;)</span>
+        <span class="c1"># filters for the specific cluster</span>
+        <span class="n">redopd</span> <span class="o">=</span> <span class="n">ibd_pd</span><span class="p">[</span>
+            <span class="p">(</span><span class="n">ibd_pd</span><span class="p">[</span><span class="s2">&quot;idnum1&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">network</span><span class="o">.</span><span class="n">haplotypes</span><span class="p">))</span>
+            <span class="o">&amp;</span> <span class="p">(</span><span class="n">ibd_pd</span><span class="p">[</span><span class="s2">&quot;idnum2&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">network</span><span class="o">.</span><span class="n">haplotypes</span><span class="p">))</span>
+        <span class="p">]</span>
+
+        <span class="n">redo_vs</span> <span class="o">=</span> <span class="n">ibd_vs</span><span class="p">[</span><span class="n">ibd_vs</span><span class="o">.</span><span class="n">idnum</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">network</span><span class="o">.</span><span class="n">haplotypes</span><span class="p">)]</span>
+
+        <span class="c1"># If the redopd or redo_vs is empty it causes strange behavior and the code will</span>
+        <span class="c1"># usually fail. The desired behavior is for the program to tell teh user that</span>
+        <span class="c1"># the graph could not be constructed and then for it to move on.</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">redopd</span><span class="o">.</span><span class="n">empty</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">redo_vs</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+            <span class="c1"># We are going to generate a new Networks object using the redo graph</span>
+            <span class="n">redo_networks</span> <span class="o">=</span> <span class="n">ClusterHandler</span><span class="o">.</span><span class="n">generate_graph</span><span class="p">(</span><span class="n">redopd</span><span class="p">,</span> <span class="n">redo_vs</span><span class="p">)</span>
+            <span class="c1"># redo_networks = ClusterHandler.generate_graph(redopd)</span>
+            <span class="c1"># performing the random walk</span>
+            <span class="n">redo_walktrap_clusters</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">random_walk</span><span class="p">(</span><span class="n">redo_networks</span><span class="p">)</span>
+            <span class="c1"># logger.info(redo_networks)</span>
+            <span class="c1"># logger.info(redo_walktrap_clusters)</span>
+
+            <span class="c1"># If only one cluster is found</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">redo_walktrap_clusters</span><span class="o">.</span><span class="n">sizes</span><span class="p">())</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="c1"># creates an empty dataframe with these columns</span>
+                <span class="n">clst_conn</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;idnum&quot;</span><span class="p">,</span> <span class="s2">&quot;conn&quot;</span><span class="p">,</span> <span class="s2">&quot;conn.N&quot;</span><span class="p">,</span> <span class="s2">&quot;TP&quot;</span><span class="p">])</span>
+                <span class="c1"># iterate over each member id</span>
+                <span class="c1"># for idnum in network.haplotypes:</span>
+
+                <span class="k">for</span> <span class="n">idnum</span> <span class="ow">in</span> <span class="n">network</span><span class="o">.</span><span class="n">members</span><span class="p">:</span>
+                    <span class="n">conn</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span>
+                        <span class="nb">list</span><span class="p">(</span>
+                            <span class="nb">map</span><span class="p">(</span>
+                                <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">x</span><span class="p">,</span>
+                                <span class="n">redopd</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span>
+                                    <span class="p">(</span><span class="n">redopd</span><span class="p">[</span><span class="s2">&quot;idnum1&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">idnum</span><span class="p">)</span>
+                                    <span class="o">|</span> <span class="p">(</span><span class="n">redopd</span><span class="p">[</span><span class="s2">&quot;idnum2&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">idnum</span><span class="p">)</span>
+                                <span class="p">][</span><span class="s2">&quot;cm&quot;</span><span class="p">],</span>
+                            <span class="p">)</span>
+                        <span class="p">)</span>
+                    <span class="p">)</span>
+                    <span class="n">conn_idnum</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
+                        <span class="n">redopd</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="n">redopd</span><span class="p">[</span><span class="s2">&quot;idnum1&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">idnum</span><span class="p">)][</span><span class="s2">&quot;idnum2&quot;</span><span class="p">]</span>
+                    <span class="p">)</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">redopd</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="n">redopd</span><span class="p">[</span><span class="s2">&quot;idnum2&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">idnum</span><span class="p">)][</span><span class="s2">&quot;idnum1&quot;</span><span class="p">])</span>
+                    <span class="n">conn_tp</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span>
+                        <span class="n">redopd</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span>
+                            <span class="n">redopd</span><span class="p">[</span><span class="s2">&quot;idnum1&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">conn_idnum</span><span class="p">)</span>
+                            <span class="o">&amp;</span> <span class="n">redopd</span><span class="p">[</span><span class="s2">&quot;idnum2&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">conn_idnum</span><span class="p">)</span>
+                        <span class="p">]</span><span class="o">.</span><span class="n">index</span>
+                    <span class="p">)</span>
+
+                    <span class="c1"># assert 1 == 0</span>
+                    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">conn_idnum</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                        <span class="n">connTP</span> <span class="o">=</span> <span class="mi">1</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="k">try</span><span class="p">:</span>
+                            <span class="n">connTP</span> <span class="o">=</span> <span class="n">conn_tp</span> <span class="o">/</span> <span class="p">(</span>
+                                <span class="nb">len</span><span class="p">(</span><span class="n">conn_idnum</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">conn_idnum</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
+                            <span class="p">)</span>
+                        <span class="k">except</span> <span class="ne">ZeroDivisionError</span><span class="p">:</span>
+                            <span class="k">raise</span> <span class="ne">ZeroDivisionError</span><span class="p">(</span>
+                                <span class="sa">f</span><span class="s2">&quot;There was a zero division error encountered when looking at the network with the id </span><span class="si">{</span><span class="n">idnum</span><span class="si">}</span><span class="s2">&quot;</span>  <span class="c1"># noqa: E501</span>
+                            <span class="p">)</span>  <span class="c1"># noqa: E501</span>
+
+                    <span class="n">clst_conn</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idnum</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">idnum</span><span class="p">,</span> <span class="n">conn</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">conn_idnum</span><span class="p">),</span> <span class="n">connTP</span><span class="p">]</span>
+                <span class="n">rmID</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
+                    <span class="n">clst_conn</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span>
+                        <span class="p">(</span>
+                            <span class="n">clst_conn</span><span class="p">[</span><span class="s2">&quot;conn.N&quot;</span><span class="p">]</span>
+                            <span class="o">&gt;</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">segment_dist_threshold</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">network</span><span class="o">.</span><span class="n">members</span><span class="p">))</span>
+                        <span class="p">)</span>
+                        <span class="o">&amp;</span> <span class="p">(</span><span class="n">clst_conn</span><span class="p">[</span><span class="s2">&quot;TP&quot;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">minimum_connected_thres</span><span class="p">)</span>
+                        <span class="o">&amp;</span> <span class="p">(</span>
+                            <span class="n">clst_conn</span><span class="p">[</span><span class="s2">&quot;conn&quot;</span><span class="p">]</span>
+                            <span class="o">&gt;</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">clst_conn</span><span class="p">[</span><span class="s2">&quot;conn&quot;</span><span class="p">],</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)[</span>
+                                <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hub_threshold</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">network</span><span class="o">.</span><span class="n">members</span><span class="p">))</span>
+                            <span class="p">]</span>
+                        <span class="p">)</span>
+                    <span class="p">][</span><span class="s2">&quot;idnum&quot;</span><span class="p">]</span>
+                <span class="p">)</span>
+
+                <span class="n">redopd</span> <span class="o">=</span> <span class="n">redopd</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span>
+                    <span class="p">(</span><span class="o">~</span><span class="n">redopd</span><span class="p">[</span><span class="s2">&quot;idnum1&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">rmID</span><span class="p">))</span> <span class="o">&amp;</span> <span class="p">(</span><span class="o">~</span><span class="n">redopd</span><span class="p">[</span><span class="s2">&quot;idnum2&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">rmID</span><span class="p">))</span>
+                <span class="p">]</span>
+                <span class="n">redo_graph</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_graph</span><span class="p">(</span>
+                    <span class="n">redopd</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="c1"># redo_g = ig.Graph.DataFrame(redopd, directed=False)</span>
+                <span class="n">redo_walktrap_clusters</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">random_walk</span><span class="p">(</span><span class="n">redo_graph</span><span class="p">)</span>
+                <span class="c1"># redo_walktrap = ig.Graph.community_walktrap(</span>
+                <span class="c1">#     redo_g, weights=&quot;cm&quot;, steps=self.random_walk_step_size</span>
+                <span class="c1"># )</span>
+                <span class="c1"># redo_walktrap_clusters = redo_walktrap.as_clustering()</span>
+
+            <span class="c1"># Filter to the clusters that are llarger than the minimum size</span>
+            <span class="n">allclst</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filter_cluster_size</span><span class="p">(</span><span class="n">redo_walktrap_clusters</span><span class="o">.</span><span class="n">sizes</span><span class="p">())</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">gather_cluster_info</span><span class="p">(</span>
+                <span class="n">redo_networks</span><span class="p">,</span> <span class="n">allclst</span><span class="p">,</span> <span class="n">redo_walktrap_clusters</span><span class="p">,</span> <span class="n">original_id</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;A graph was not able to be generated when we attempted to recluster the network: </span><span class="si">{</span><span class="n">original_id</span><span class="si">}</span><span class="s2">. This error probably indicates that there were There were none of the </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">network</span><span class="o">.</span><span class="n">haplotypes</span><span class="p">)</span><span class="si">}</span><span class="s2"> individuals in that specific network that shared ibd segments with one another.&quot;</span>
+            <span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="cluster"><a class="viewcode-back" href="../../../../modules/drive.cluster.html#drive.network.cluster.cluster">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">cluster</span><span class="p">(</span>
+    <span class="n">filter_obj</span><span class="p">:</span> <span class="n">Filter</span><span class="p">,</span>
+    <span class="n">cluster_obj</span><span class="p">:</span> <span class="n">ClusterHandler</span><span class="p">,</span>
+    <span class="n">centimorgan_indx</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Network_Interface</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Main function that will perform the clustering using igraph</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    filter_obj : Filter</span>
+<span class="sd">        Filter object that has two attributes: ibd_pd and ibd_vs. These</span>
+<span class="sd">        attributes are two dataframes that have information about the</span>
+<span class="sd">        edges and information about the vertices.</span>
+
+<span class="sd">    cluster_obj : ClusterHandler</span>
+<span class="sd">        Object that contains information about how the random walk</span>
+<span class="sd">        needs to be performed. It will use the construct networks and return those</span>
+<span class="sd">        values in a list.</span>
+
+<span class="sd">    min_network_size : int</span>
+<span class="sd">        threshold so we can filter networks that are &gt;= the threshold</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">filter_obj</span><span class="o">.</span><span class="n">ibd_pd</span> <span class="o">=</span> <span class="n">filter_obj</span><span class="o">.</span><span class="n">ibd_pd</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="n">centimorgan_indx</span><span class="p">:</span> <span class="s2">&quot;cm&quot;</span><span class="p">})</span>
+    <span class="c1"># filtering the edges dataframe to the correct columns</span>
+    <span class="n">ibd_pd</span> <span class="o">=</span> <span class="n">filter_obj</span><span class="o">.</span><span class="n">ibd_pd</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="p">[</span><span class="s2">&quot;idnum1&quot;</span><span class="p">,</span> <span class="s2">&quot;idnum2&quot;</span><span class="p">,</span> <span class="s2">&quot;cm&quot;</span><span class="p">]]</span>
+
+    <span class="n">ibd_vs</span> <span class="o">=</span> <span class="n">filter_obj</span><span class="o">.</span><span class="n">ibd_vs</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># Generate the first pass networks</span>
+    <span class="n">network_graph</span> <span class="o">=</span> <span class="n">cluster_obj</span><span class="o">.</span><span class="n">generate_graph</span><span class="p">(</span>
+        <span class="n">ibd_pd</span><span class="p">,</span>
+        <span class="n">ibd_vs</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">random_walk_results</span> <span class="o">=</span> <span class="n">cluster_obj</span><span class="o">.</span><span class="n">random_walk</span><span class="p">(</span><span class="n">network_graph</span><span class="p">)</span>
+
+    <span class="n">allclst</span> <span class="o">=</span> <span class="n">cluster_obj</span><span class="o">.</span><span class="n">filter_cluster_size</span><span class="p">(</span><span class="n">random_walk_results</span><span class="o">.</span><span class="n">sizes</span><span class="p">())</span>
+
+    <span class="n">cluster_obj</span><span class="o">.</span><span class="n">gather_cluster_info</span><span class="p">(</span><span class="n">network_graph</span><span class="p">,</span> <span class="n">allclst</span><span class="p">,</span> <span class="n">random_walk_results</span><span class="p">)</span>
+
+    <span class="k">while</span> <span class="p">(</span>
+        <span class="n">cluster_obj</span><span class="o">.</span><span class="n">check_times</span> <span class="o">&lt;</span> <span class="n">cluster_obj</span><span class="o">.</span><span class="n">max_rechecks</span>
+        <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">cluster_obj</span><span class="o">.</span><span class="n">recheck_clsts</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">cluster_obj</span><span class="o">.</span><span class="n">check_times</span><span class="p">,</span> <span class="p">[]))</span> <span class="o">&gt;</span> <span class="mi">0</span>
+    <span class="p">):</span>
+        <span class="n">cluster_obj</span><span class="o">.</span><span class="n">check_times</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">verbose</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;recheck: </span><span class="si">{</span><span class="n">cluster_obj</span><span class="o">.</span><span class="n">check_times</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="n">_</span> <span class="o">=</span> <span class="n">cluster_obj</span><span class="o">.</span><span class="n">recheck_clsts</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">cluster_obj</span><span class="o">.</span><span class="n">check_times</span><span class="p">,</span> <span class="p">[])</span>
+
+        <span class="k">for</span> <span class="n">network</span> <span class="ow">in</span> <span class="n">cluster_obj</span><span class="o">.</span><span class="n">recheck_clsts</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">cluster_obj</span><span class="o">.</span><span class="n">check_times</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">cluster_obj</span><span class="o">.</span><span class="n">redo_clustering</span><span class="p">(</span><span class="n">network</span><span class="p">,</span> <span class="n">ibd_pd</span><span class="p">,</span> <span class="n">ibd_vs</span><span class="p">)</span>
+    <span class="c1"># logginng the number of segments, haplotypes, and clusters</span>
+    <span class="c1"># identified in the analysis</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;Identified </span><span class="si">{</span><span class="n">network_graph</span><span class="o">.</span><span class="n">ecount</span><span class="p">()</span><span class="si">}</span><span class="s2"> IBD segments from </span><span class="si">{</span><span class="n">network_graph</span><span class="o">.</span><span class="n">vcount</span><span class="p">()</span><span class="si">}</span><span class="s2"> haplotypes&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="p">)</span>
+
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Identified </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">cluster_obj</span><span class="o">.</span><span class="n">final_clusters</span><span class="p">)</span><span class="si">}</span><span class="s2"> IBD clusters&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">cluster_obj</span><span class="o">.</span><span class="n">final_clusters</span></div>
+</pre></div>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By James Baker, Hung-Hsin Chen, David Samuels, Jennifer Piper-Below
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023, James Baker, Hung-Hsin Chen, David Samuels, Jennifer Piper-Below.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

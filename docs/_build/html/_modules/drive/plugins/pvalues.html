@@ -1,0 +1,771 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>drive.plugins.pvalues &#8212; DRIVE</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/drive/plugins/pvalues';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">DRIVE</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../index.html">
+                    Welcome to DRIVE’s documentation!
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">User's Guide</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../about/about.html">About DRIVE</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../installation/installation.html">DRIVE Installation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation/pip_installation.html">Installing DRIVE from Pip</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation/github_installation.html">Installing DRIVE from Github</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation/docker.html">Using DRIVE with Docker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation/testing.html">Testing DRIVE</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../inputs_and_outputs/inputs.html">DRIVE Inputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../inputs_and_outputs/outputs.html">DRIVE Output</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tutorial</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/examples_command_format.html">Example command format</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Developer's Guide</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../contributing/contributing.html">Contributing</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../contributing/how_to_contribute.html">How to contribute</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../contributing/code_style.html">Code Styling Tips</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../contributing/testing.html">Testing</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../plugin_descriptions/extending_drive.html">Extending Drive</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../plugin_descriptions/plugin_architecture.html">How is DRIVE extensible</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../plugin_descriptions/data_container_api.html">Structure of the Data container</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../plugin_descriptions/factory_plugins.html">Pre-Installed Plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../plugin_descriptions/expected_plugin_structure.html">Custom Plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../plugin_descriptions/plugin_configuration.html">Configuring DRIVE to use the plugins</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../modules/modules.html">drive</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../modules/drive.html">drive package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../modules/drive.cluster.html">drive.cluster package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../modules/drive.factory.html">drive.factory package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../modules/drive.filters.html">drive.filters package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../modules/drive.models.html">drive.models package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../modules/drive.plugins.html">drive.plugins package</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/belowlab/drive" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for drive.plugins.pvalues</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">log</span><span class="w"> </span><span class="kn">import</span> <span class="n">CustomLogger</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="kn">import</span> <span class="n">float64</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.stats</span><span class="w"> </span><span class="kn">import</span> <span class="n">binomtest</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">drive.network.factory</span><span class="w"> </span><span class="kn">import</span> <span class="n">factory_register</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">drive.network.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">Data_Interface</span><span class="p">,</span> <span class="n">Network_Interface</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">CustomLogger</span><span class="o">.</span><span class="n">get_logger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="Pvalues"><a class="viewcode-back" href="../../../modules/drive.plugins.html#drive.plugins.pvalues.Pvalues">[docs]</a><span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Pvalues</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Class that is responsible for determining the pvalues for each network&quot;&quot;&quot;</span>
+
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Pvalue plugin&quot;</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_determine_pvalue</span><span class="p">(</span>
+        <span class="n">phenotype</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">phenotype_percent</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">carriers_count</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">network_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">float64</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Function that will determine the pvalue for each network</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        phenotype : str</span>
+<span class="sd">            id for the phenotype</span>
+
+<span class="sd">        phenotype_percent : float</span>
+<span class="sd">            float that tells what the prevalence of the phenotype in the</span>
+<span class="sd">            cohort population is</span>
+
+<span class="sd">        carriers_count : int</span>
+<span class="sd">            number of carriers in the network</span>
+
+<span class="sd">        network_size : int</span>
+<span class="sd">            size of the network</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float</span>
+<span class="sd">            Returns the calculated pvalue</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># the probability is 1 if the carrier count is zero because it is chances of</span>
+        <span class="c1"># finding 0 or higher which is everyone</span>
+        <span class="k">if</span> <span class="n">carriers_count</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;carrier count = 0 therefore pvalue for </span><span class="si">{</span><span class="n">phenotype</span><span class="si">}</span><span class="s2"> = 1&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="mi">1</span>
+
+        <span class="n">result</span> <span class="o">=</span> <span class="n">binomtest</span><span class="p">(</span><span class="n">carriers_count</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">network_size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">phenotype_percent</span><span class="p">)</span>
+
+        <span class="n">pvalue</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">pvalue</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;pvalue for </span><span class="si">{</span><span class="n">phenotype</span><span class="si">}</span><span class="s2"> = </span><span class="si">{</span><span class="n">pvalue</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">pvalue</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_determine_phenotype_frequency</span><span class="p">(</span>
+        <span class="n">phecode</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">phenotype_counts</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;calculate the phenotype frequency in the cohort</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        phecode : str</span>
+<span class="sd">            phecode id. This value will only be used for a logging statement</span>
+
+<span class="sd">        phenotype_counts : Dict[str, List[str]]</span>
+<span class="sd">            Dictionary that has list for individuals who are</span>
+<span class="sd">            cases, controls, or exclusions.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float</span>
+<span class="sd">            returns the phenotype frequency as a float</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># We need to first check if there are even controls in the file</span>
+        <span class="n">phenotype_frequency</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">phenotype_counts</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;cases&quot;</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span>
+            <span class="nb">len</span><span class="p">(</span><span class="n">phenotype_counts</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;controls&quot;</span><span class="p">))</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">phenotype_counts</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;cases&quot;</span><span class="p">))</span>
+        <span class="p">)</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">verbose</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;For PheCode, </span><span class="si">{</span><span class="n">phecode</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">phenotype_counts</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;cases&#39;</span><span class="p">))</span><span class="si">}</span><span class="s2"> cases and </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">phenotype_counts</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;controls&#39;</span><span class="p">))</span><span class="si">}</span><span class="s2"> were identified giving a phenotype frequency of </span><span class="si">{</span><span class="n">phenotype_frequency</span><span class="si">}</span><span class="s2">&quot;</span>  <span class="c1"># noqa: E501</span>
+        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">phenotype_frequency</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_carrier_count_in_network</span><span class="p">(</span>
+        <span class="n">phenotype_counts</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span> <span class="n">network</span><span class="p">:</span> <span class="n">Network_Interface</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Determine the number of individual cases that are</span>
+<span class="sd">        also in the network</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        phenotype_counts : Dict[str, List[str]]</span>
+<span class="sd">            Dictionary that has list for individuals who are</span>
+<span class="sd">            cases, controls, or exclusions.</span>
+
+<span class="sd">        network : Network_Interface</span>
+<span class="sd">            Network object with information about members of</span>
+<span class="sd">            the networks and what haplotypes are in the network</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        int</span>
+<span class="sd">            returns the number of carriers in the network</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># determine the number of carriers in the network</span>
+
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">network</span><span class="o">.</span><span class="n">members</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">phenotype_counts</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;cases&quot;</span><span class="p">)))</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_carriers_in_network</span><span class="p">(</span>
+        <span class="n">phenotype_counts</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span> <span class="n">network</span><span class="p">:</span> <span class="n">Network_Interface</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Generate a set of cases that are in the network</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        phenotype_counts : Dict[str, List[str]]</span>
+<span class="sd">            Dictionary that has list for individuals who are</span>
+<span class="sd">            cases, controls, or exclusions.</span>
+
+<span class="sd">        network : Network_Interface</span>
+<span class="sd">            Network object with information about members of</span>
+<span class="sd">            the networks and what haplotypes are in the network</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        str</span>
+<span class="sd">            returns a string of individuals that are in both the phenotype_counts</span>
+<span class="sd">            case set and the network members set. If this interection is empty</span>
+<span class="sd">            then it returns a str &quot;N/A&quot;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># determine the number of carriers in the network</span>
+        <span class="n">case_individuals</span> <span class="o">=</span> <span class="n">network</span><span class="o">.</span><span class="n">members</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">phenotype_counts</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;cases&quot;</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">case_individuals</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                <span class="n">network</span><span class="o">.</span><span class="n">members</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">phenotype_counts</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;cases&quot;</span><span class="p">))</span>
+            <span class="p">)</span>  <span class="c1"># noqa: E501</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;N/A&quot;</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_exclusions_in_network</span><span class="p">(</span>
+        <span class="n">phenotype_counts</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span> <span class="n">network</span><span class="p">:</span> <span class="n">Network_Interface</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Generate a set of cases that are in the network</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        phenotype_counts : Dict[str, List[str]]</span>
+<span class="sd">            Dictionary that has list for individuals who are</span>
+<span class="sd">            cases, controls, or exclusions.</span>
+
+<span class="sd">        network : Network_Interface</span>
+<span class="sd">            Network object with information about members of</span>
+<span class="sd">            the networks and what haplotypes are in the network</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        str</span>
+<span class="sd">            returns a string of individuals that are in both the phenotype_counts</span>
+<span class="sd">            exclusion set and the network members set. If this interection is</span>
+<span class="sd">            empty then it returns a str &quot;N/A&quot;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># determine the number of carriers in the network</span>
+        <span class="n">excluded_individuals</span> <span class="o">=</span> <span class="n">network</span><span class="o">.</span><span class="n">members</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span>
+            <span class="n">phenotype_counts</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;excluded&quot;</span><span class="p">)</span>
+        <span class="p">)</span>  <span class="c1"># noqa: E501</span>
+
+        <span class="k">if</span> <span class="n">excluded_individuals</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                <span class="n">network</span><span class="o">.</span><span class="n">members</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">phenotype_counts</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;excluded&quot;</span><span class="p">))</span>
+            <span class="p">)</span>  <span class="c1"># noqa: E501</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="s2">&quot;N/A&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_remove_exclusions</span><span class="p">(</span>
+        <span class="n">phenotype_counts</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span> <span class="n">network</span><span class="p">:</span> <span class="n">Network_Interface</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;determine size of network after removing excluded</span>
+<span class="sd">        individuals</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        phenotype_counts : Dict[str, List[str]]</span>
+<span class="sd">            Dictionary that has list for individuals who are</span>
+<span class="sd">            cases, controls, or exclusions.</span>
+
+<span class="sd">        network : Network_Interface</span>
+<span class="sd">            Network object with information about members of</span>
+<span class="sd">            the networks and what haplotypes are in the network</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Tuple[int, int]</span>
+<span class="sd">            returns the number of individuals in the network,</span>
+<span class="sd">            not counting those individuals classified as</span>
+<span class="sd">            excluded in the phenotype_counts dictionary. Also</span>
+<span class="sd">            returns the number of individuals excluded. Also returns the</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="nb">len</span><span class="p">(</span><span class="n">network</span><span class="o">.</span><span class="n">members</span><span class="o">.</span><span class="n">difference</span><span class="p">(</span><span class="n">phenotype_counts</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;excluded&quot;</span><span class="p">))),</span>
+            <span class="nb">len</span><span class="p">(</span><span class="n">network</span><span class="o">.</span><span class="n">members</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">phenotype_counts</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;excluded&quot;</span><span class="p">))),</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_gather_network_information</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">network</span><span class="p">:</span> <span class="n">Network_Interface</span><span class="p">,</span>
+        <span class="n">cohort_carriers</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]],</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Determine information about how many</span>
+<span class="sd">        carriers are in each network, the percentage, the IIDs of</span>
+<span class="sd">        the carriers in the network, and use this to calculate the</span>
+<span class="sd">        pvalue for the network. The function keeps track of the</span>
+<span class="sd">        smallest non-zero pvalue and returns it or NA</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+
+<span class="sd">        network : Network</span>
+<span class="sd">            Network object attributes for iids, pairs, and haplotypes</span>
+
+<span class="sd">        cohort_carriers : Dict[str, Dict[str, List[str]]]</span>
+<span class="sd">            dictionary where the keys are phenotype ids and the values are a dictionary</span>
+<span class="sd">            with the list of cases/controls/exclusions</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Tuple[str, str, Dict[str, str]]</span>
+<span class="sd">            returns a tuple where the first element is the string of the</span>
+<span class="sd">            minimum phenotype code. The second value is the description</span>
+<span class="sd">            of the minimum phenotype. The third value is a dictionary</span>
+<span class="sd">            that for each phenotype has a string with the number of</span>
+<span class="sd">            cases, number of excluded individuals, and the p-values.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># setting null values for the output string and the cur_min_phecode string.</span>
+        <span class="c1"># Also setting a value of 1 for the cur_min_pvalue because this will be the</span>
+        <span class="c1"># largest pvalue possible</span>
+
+        <span class="n">cur_min_pvalue</span> <span class="o">=</span> <span class="mi">1</span>
+
+        <span class="n">cur_min_phenotype</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+        <span class="n">phenotype_pvalues</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="c1"># iterating over each phenotype</span>
+        <span class="k">for</span> <span class="n">phenotype</span><span class="p">,</span> <span class="n">phenotype_counts</span> <span class="ow">in</span> <span class="n">cohort_carriers</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="c1"># if there are no controls then we can&#39;t do the</span>
+            <span class="c1"># stats and should just return a string of N/A for all values</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">phenotype_counts</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;controls&quot;</span><span class="p">))</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">phenotype_pvalues</span><span class="p">[</span><span class="n">phenotype</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;N/A</span><span class="se">\t</span><span class="s2">N/A</span><span class="se">\t</span><span class="s2">N/A</span><span class="se">\t</span><span class="s2">N/A&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">phenotype_freq</span> <span class="o">=</span> <span class="n">Pvalues</span><span class="o">.</span><span class="n">_determine_phenotype_frequency</span><span class="p">(</span>
+                    <span class="n">phenotype</span><span class="p">,</span> <span class="n">phenotype_counts</span>
+                <span class="p">)</span>
+
+                <span class="n">num_carriers_in_network</span> <span class="o">=</span> <span class="n">Pvalues</span><span class="o">.</span><span class="n">_get_carrier_count_in_network</span><span class="p">(</span>
+                    <span class="n">phenotype_counts</span><span class="p">,</span> <span class="n">network</span>
+                <span class="p">)</span>
+
+                <span class="n">carrier_str</span> <span class="o">=</span> <span class="n">Pvalues</span><span class="o">.</span><span class="n">_get_carriers_in_network</span><span class="p">(</span>
+                    <span class="n">phenotype_counts</span><span class="p">,</span> <span class="n">network</span>
+                <span class="p">)</span>
+
+                <span class="n">exclusion_str</span> <span class="o">=</span> <span class="n">Pvalues</span><span class="o">.</span><span class="n">_get_exclusions_in_network</span><span class="p">(</span>
+                    <span class="n">phenotype_counts</span><span class="p">,</span> <span class="n">network</span>
+                <span class="p">)</span>
+
+                <span class="p">(</span>
+                    <span class="n">network_size_after_exclusions</span><span class="p">,</span>
+                    <span class="n">excluded_count</span><span class="p">,</span>
+                <span class="p">)</span> <span class="o">=</span> <span class="n">Pvalues</span><span class="o">.</span><span class="n">_remove_exclusions</span><span class="p">(</span><span class="n">phenotype_counts</span><span class="p">,</span> <span class="n">network</span><span class="p">)</span>
+
+                <span class="c1"># calling the sub function that determines the pvalue</span>
+                <span class="n">pvalue</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">Pvalues</span><span class="o">.</span><span class="n">_determine_pvalue</span><span class="p">(</span>
+                    <span class="n">phenotype</span><span class="p">,</span>
+                    <span class="n">phenotype_freq</span><span class="p">,</span>
+                    <span class="n">num_carriers_in_network</span><span class="p">,</span>
+                    <span class="n">network_size_after_exclusions</span><span class="p">,</span>
+                <span class="p">)</span>
+
+                <span class="c1"># Next two lines create the string and then concats it to the output_str</span>
+
+                <span class="n">phenotype_str</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">num_carriers_in_network</span><span class="si">}</span><span class="se">\t</span><span class="si">{</span><span class="n">carrier_str</span><span class="si">}</span><span class="se">\t</span><span class="si">{</span><span class="n">excluded_count</span><span class="si">}</span><span class="se">\t</span><span class="si">{</span><span class="n">exclusion_str</span><span class="si">}</span><span class="se">\t</span><span class="si">{</span><span class="n">pvalue</span><span class="si">}</span><span class="s2">&quot;</span>  <span class="c1"># noqa: E501</span>
+
+                <span class="n">phenotype_pvalues</span><span class="p">[</span><span class="n">phenotype</span><span class="p">]</span> <span class="o">=</span> <span class="n">phenotype_str</span>
+
+                <span class="c1"># Now we will see if the phecode is lower then the cur_min_pvalue.</span>
+                <span class="c1"># If it is then we will change the cur_min_pvalue and we will</span>
+                <span class="c1"># update the cur_min_phecode</span>
+                <span class="k">if</span> <span class="n">pvalue</span> <span class="o">&lt;</span> <span class="n">cur_min_pvalue</span> <span class="ow">and</span> <span class="n">pvalue</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">cur_min_pvalue</span> <span class="o">=</span> <span class="n">pvalue</span>
+
+                    <span class="n">cur_min_phenotype</span> <span class="o">=</span> <span class="n">phenotype</span>
+
+        <span class="c1"># if a minimum phecode is identified then we need to create a string, otherwise</span>
+        <span class="c1"># we use N/A&#39;s</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">cur_min_phenotype</span><span class="p">:</span>
+            <span class="n">cur_min_phenotype</span> <span class="o">=</span> <span class="s2">&quot;N/A&quot;</span>
+            <span class="n">cur_min_pvalue</span> <span class="o">=</span> <span class="s2">&quot;N/A&quot;</span>
+
+        <span class="c1"># return the pvalue_output string first and either a tuple of N/As or the min</span>
+        <span class="c1"># pvalue/min_phecode</span>
+        <span class="k">return</span> <span class="n">cur_min_pvalue</span><span class="p">,</span> <span class="n">cur_min_phenotype</span><span class="p">,</span> <span class="n">phenotype_pvalues</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_descriptions</span><span class="p">(</span>
+        <span class="n">phecode_description</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]],</span> <span class="n">min_phecode</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Method to get the description for the minimum phecode</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        phecode_descriptions : dict[str, dict[str, str]]</span>
+<span class="sd">            dictionary with descriptions of each phecode. The outer key is the</span>
+<span class="sd">            phenotype id. The inner key is the string phenotype and the value is a</span>
+<span class="sd">            string that describes the phenotype</span>
+
+<span class="sd">        min_phecode : str</span>
+<span class="sd">            minimum phecode string</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        str</span>
+<span class="sd">            returns a string that has the phecode description</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># getting the description</span>
+        <span class="n">desc_dict</span> <span class="o">=</span> <span class="n">phecode_description</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">min_phecode</span><span class="p">,</span> <span class="p">{})</span>
+
+        <span class="c1"># getting the phenotype string if key exists,</span>
+        <span class="c1"># otherwise returns an empty string</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;description_str = </span><span class="si">{</span><span class="n">desc_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;phenotype&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;N/A&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">desc_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;phenotype&quot;</span><span class="p">,</span> <span class="s2">&quot;N/A&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Pvalues.analyze"><a class="viewcode-back" href="../../../modules/drive.plugins.html#drive.plugins.pvalues.Pvalues.analyze">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">analyze</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="c1"># this is the DataHolder model. We will use the networks, the</span>
+        <span class="c1"># affected_inds, and the phenotype_prevalances attribute</span>
+        <span class="n">data</span><span class="p">:</span> <span class="n">Data_Interface</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">carriers</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">network</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">networks</span><span class="p">:</span>
+                <span class="c1"># Determining the pvalues for the network</span>
+                <span class="p">(</span>
+                    <span class="n">min_pvalue_str</span><span class="p">,</span>
+                    <span class="n">min_phenotype_code</span><span class="p">,</span>
+                    <span class="n">phenotype_pvalues</span><span class="p">,</span>
+                <span class="p">)</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gather_network_information</span><span class="p">(</span><span class="n">network</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">carriers</span><span class="p">)</span>
+
+                <span class="n">min_phecode_description</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_descriptions</span><span class="p">(</span>
+                    <span class="n">data</span><span class="o">.</span><span class="n">phenotype_descriptions</span><span class="p">,</span> <span class="n">min_phenotype_code</span>
+                <span class="p">)</span>
+
+                <span class="c1"># create an attribute that has all the strings for what is the</span>
+                <span class="c1"># min_pvalue, the min_phenotype_code, and the description of the</span>
+                <span class="c1"># phenotype</span>
+                <span class="n">network</span><span class="o">.</span><span class="n">min_pvalue_str</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">min_pvalue_str</span><span class="si">}</span><span class="se">\t</span><span class="si">{</span><span class="n">min_phenotype_code</span><span class="si">}</span><span class="se">\t</span><span class="si">{</span><span class="n">min_phecode_description</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
+
+                <span class="c1"># adding the dictionary of phenotype values to the attribute</span>
+                <span class="c1"># pvalues</span>
+                <span class="n">network</span><span class="o">.</span><span class="n">pvalues</span> <span class="o">=</span> <span class="n">phenotype_pvalues</span></div></div>
+
+
+<div class="viewcode-block" id="initialize"><a class="viewcode-back" href="../../../modules/drive.plugins.html#drive.plugins.pvalues.initialize">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">initialize</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">factory_register</span><span class="p">(</span><span class="s2">&quot;pvalues&quot;</span><span class="p">,</span> <span class="n">Pvalues</span><span class="p">)</span></div>
+</pre></div>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By James Baker, Hung-Hsin Chen, David Samuels, Jennifer Piper-Below
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023, James Baker, Hung-Hsin Chen, David Samuels, Jennifer Piper-Below.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
