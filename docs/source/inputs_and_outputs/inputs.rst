@@ -3,7 +3,9 @@ DRIVE Inputs
 
 The DRIVE program has several command line arguments shown in the image below. 
 
-.. ![image](https://belowlab.github.io/drive/assets/images/DRIVE_cli_options.png)
+.. image:: /assets/images/drive_help_message.png
+    :height: 300
+    :align: center
 
 ----------
 

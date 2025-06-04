@@ -19,11 +19,3 @@ drive.factory.loader module
    :members:
    :undoc-members:
    :show-inheritance:
-
-Module contents
----------------
-
-.. automodule:: drive.factory
-   :members:
-   :undoc-members:
-   :show-inheritance:

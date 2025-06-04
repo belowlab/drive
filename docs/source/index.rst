@@ -35,6 +35,7 @@ If you have any questions about DRIVE, you can either post an issue on the Githu
    :caption: User's Guide
    :hidden:
 
+   /about/about
    /installation/installation
    /inputs_and_outputs/inputs
    /inputs_and_outputs/outputs
