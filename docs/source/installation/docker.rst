@@ -1,6 +1,6 @@
 Using DRIVE with Docker
 =======================
-DRIVE now has a working docker image as of v2.7.1. This image is available on DockerHub and can be pulled with the following command:
+DRIVE now has a working docker image on DockerHub. This image can be pulled with the following command:
 
 .. code::
 
