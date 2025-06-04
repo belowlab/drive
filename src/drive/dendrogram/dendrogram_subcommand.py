@@ -414,7 +414,7 @@ def load_networks(
                 raise NetworkIDNotFound(network_id)
         else:
             logger.verbose(
-                f"No network id passed to program. Reading in data for all of the networks identified by DRIVE."
+                "No network id passed to program. Reading in data for all of the networks identified by DRIVE."
             )
             logger.verbose(
                 f"For the sake of drawing efficiency, only gathering dendrograms that are between size {min_network_size} and {max_network_size}"

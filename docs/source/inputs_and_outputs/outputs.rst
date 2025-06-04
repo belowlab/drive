@@ -1,10 +1,13 @@
 DRIVE Output
 ============
 
-DRIVE currently outputs two files. These files are described below.
+DRIVE cluster command outputs:
+------------------------------
 
-Networks File
--------------
+The cluster subcommand currently outputs two files. These files are described below.
+
+*Networks File*
+```````````````
 DRIVE creates a file with the suffix ".drive_networks.txt". This file has the results from the clustering analysis with information such as number of members, members ids, haplotype ids how connected the graph is internally, and the binomial test statistics. This file has at a minimum of 11 columns depending on where the user provides a phenotype file or not. These columns, plus the possible additional columns are described below.
 
 Column descriptions:
@@ -69,7 +72,15 @@ Column descriptions:
     The final three columns, "\*_cases_in_network, \*_excluded_in_network, \*_pvalue" are only created if the user provides a case file, otherwise the output file will only have the first 11 columns. If the user provides a case file then these three columns will be created for each phenotype so if you provided 3 phenotypes then 9 columns would be added to the output file.
 
 
-Log File
---------
+*Log File*
+``````````
 
 DRIVE creates a log file with whatever name the user provides. This file has the suffix ".log". This file has information about the arguments the user passed and then runtime information from the program such as how many networks were identified and how many haplotypes were identified. The amount of information written to this file will vary depending on what level of verbosity the user chooses.
+
+
+DRIVE dendrogram command output:
+--------------------------------
+
+The dendrogram subcommand also outputs two files. One of which is the same log file as described in the previous section. The other file is a png image called "network\_#_dendrogram.png" made for either the network of interest or all the networks in the input file. These images are saved in the specified output directory.
+
+If the user provides the "--keep-temp" flag then an extra directory is create inside the output directory called "network\_#_temp". This subdirectory will contain the network specific distance matrix that is used to generate the dendrogram.

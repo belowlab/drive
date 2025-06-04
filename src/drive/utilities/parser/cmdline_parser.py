@@ -237,7 +237,7 @@ def generate_cmd_parser() -> argparse.ArgumentParser:
     dendrogram_parser.add_argument(
         "--output",
         "-o",
-        help="directory to write output to",
+        help="directory to write output to. Default value: %(default)s",
         default=Path("./"),
         type=Path,
     )

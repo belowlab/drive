@@ -43,7 +43,11 @@ Within this directory there are two files of interest:
 * test_phenotype_file_withNAs.txt - This file has simulated case/control data for 3 phenotypes indicated by 1/0. The first column is "GRID" and then the following columns are "phenoA", "phenoB", "phenoC".
 
 **test_integration.py**:
-pytest uses the test_integration.py script to run the integration test. This script contains the integration tests "test_drive_full_run_no_phenotypes" and "test_drive_full_run_with_phenotypes". One of these functions test the behavior when only the network identification algorithm of DRIVE is used and the other test the behavior when also the enrichment plugin is used due to phenotype information being provided.
+pytest uses the test_integration.py script to run the integration test. This script contains the integration tests "test_drive_full_run_no_phenotypes", "test_drive_full_run_with_phenotypes", and "test_drive_dendrogram_single_network". The purpose of each test is explained below:
+
+* *test_drive_full_run_no_phenotypes*: test the behavior when only the network identification algorithm of DRIVE is used 
+* *test_drive_full_run_with_phenotypes*: test the behavior of the enrichment plugin by also providing phenotype information.
+* *test_drive_dendrogram_single_network*: test to make sure a dendrogram is formed for a network. This test uses the inputs from the 1st test.
 
 Commands to test successful installation:
 -----------------------------------------
@@ -65,13 +69,21 @@ If DRIVE was installed from pip or if it was installed from github, then it is a
 
 Command to run DRIVE on simulated Data:
 ---------------------------------------
+*Running the clustering subcommand*:
 The test data in the tests/test_inputs folder illustrates how the inputs for the phenotype file and the segment data should be formatted for DRIVE. The following command will run those files and show what the DRIVE output file should look like:
 
 .. code::
 
-    drive -i tests/test_inputs/simulated_ibd_test_data_v2_chr20.ibd.gz  -f hapibd -t 20:4666882-4682236 --recluster --min-cm 3 --log-to-console
+    drive cluster -i tests/test_inputs/simulated_ibd_test_data_v2_chr20.ibd.gz  -f hapibd -t 20:4666882-4682236 -o test --recluster --min-cm 3 --log-to-console
 
 For this example, we used the gene *PRNP* on chromosome 20. We used gnomAD v2.2.1 to get the position of this gene because the simulated data is in build GRCh37. Variants within this gene has been implicated for Fatal Familial Insomnia, Gerstmann-Straussler Disease, and Huntington Disease. 
+
+*Running the dendrogram subcommand*:
+It is expected that the user will first run the above cluster command and has generated an output file called test.drive_networks.txt in their current directory. This file will be used as input in the dendrogram subcommand. The following command will generate a dendrogram for network 0.
+
+.. code::
+
+    drive dendrogram -i test.drive_networks.txt --ibd tests/test_inputs/simulated_ibd_test_data_v2_chr20.ibd.gz -f hapibd -t 20:4666882-4682236 --min-cm 3 -n 0 --log-to-console
 
 .. hint::
 
