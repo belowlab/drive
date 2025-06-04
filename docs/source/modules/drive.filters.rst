@@ -1,13 +1,13 @@
-drive.filters package
-=====================
+drive.network.filters package
+=============================
 
 Submodules
 ----------
 
-drive.filters.filter module
----------------------------
+drive.network.filters.filter module
+-----------------------------------
 
-.. automodule:: drive.filters.filter
+.. automodule:: drive.network.filters.filter
    :members:
    :undoc-members:
    :show-inheritance:

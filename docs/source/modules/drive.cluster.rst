@@ -1,10 +1,10 @@
-drive.cluster package
-=====================
+drive.network.cluster package
+=============================
 
-.. autoclass:: drive.cluster.ClusterHandler
+.. autoclass:: drive.network.cluster.ClusterHandler
    :members:
 
-.. autofunction:: drive.cluster.cluster
+.. autofunction:: drive.network.cluster.cluster
 
 
 

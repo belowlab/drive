@@ -1,21 +1,21 @@
-drive.factory package
-=====================
+drive.network.factory package
+=============================
 
 Submodules
 ----------
 
-drive.factory.factory module
-----------------------------
+drive.network.factory.factory module
+------------------------------------
 
-.. automodule:: drive.factory.factory
+.. automodule:: drive.network.factory.factory
    :members:
    :undoc-members:
    :show-inheritance:
 
-drive.factory.loader module
----------------------------
+drive.network.factory.loader module
+-----------------------------------
 
-.. automodule:: drive.factory.loader
+.. automodule:: drive.network.factory.loader
    :members:
    :undoc-members:
    :show-inheritance:

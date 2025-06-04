@@ -5,8 +5,8 @@ from log import CustomLogger
 from numpy import float64
 from scipy.stats import binomtest
 
-from drive.factory import factory_register
-from drive.models import Data_Interface, Network_Interface
+from drive.network.factory import factory_register
+from drive.network.models import Data_Interface, Network_Interface
 
 logger = CustomLogger.get_logger(__name__)
 

@@ -19,6 +19,7 @@ def system_args_no_pheno(monkeypatch):
     monkeypatch.setattr("sys.argv", 
         [
             "drive", 
+            "cluster",
             "-i",
             "./tests/test_inputs/simulated_ibd_test_data_v2_chr20.ibd.gz",
             "-f",
@@ -39,6 +40,7 @@ def system_args_with_pheno(monkeypatch):
     monkeypatch.setattr("sys.argv", 
         [
             "drive", 
+            "cluster",
             "-i",
             "./tests/test_inputs/simulated_ibd_test_data_v2_chr20.ibd.gz",
             "-f",
@@ -54,6 +56,30 @@ def system_args_with_pheno(monkeypatch):
             "--recluster",
             "--log-file",
             "integration_test_results_with_pheno.log"
+            ])
+    
+@pytest.fixture()
+def system_args_for_dendrogram(monkeypatch):
+    monkeypatch.setattr("sys.argv", 
+        [
+            "drive", 
+            "dendrogram",
+            "-i",
+            "./tests/test_inputs/integration_dendrogram_test_results_no_pheno.drive_networks.txt",
+            "-f",
+            "hapibd",
+            "-t",
+            "20:4666882-4682236",
+            "-o",
+            "./tests/test_output/",
+            "-n",
+            "0",
+            "-m",
+            "3",
+            "--ibd",
+            "./tests/test_inputs/simulated_ibd_test_data_v2_chr20.ibd.gz",
+            "--log-file",
+            "integration_dendrogram_test_results.log"
             ])
 
 
@@ -114,3 +140,13 @@ def test_drive_full_run_with_phenotypes(system_args_with_pheno):
         errors.append(f"Expected the output to have the columns: {','.join(expected_colnames)}, instead these columns were found: {','.join(output.columns)}")
         
     assert not errors, "errors occured:\n{}".format("\n".join(errors))
+
+@pytest.mark.integtest
+def test_drive_dendrogram_single_network(system_args_for_dendrogram):
+    Path("./tests/test_output").mkdir(exist_ok=True)
+    
+    drive.main()
+
+    output_path = Path("./tests/test_output/network_0_dendrogram.png")
+
+    assert output_path.exists(), f"An error occurred while running the integration test for the dendrogram functionality. This error prevented the appropriate output from being generated."
