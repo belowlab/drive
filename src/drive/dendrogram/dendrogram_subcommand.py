@@ -115,7 +115,7 @@ def make_distance_matrix(
     pairs_df: pd.DataFrame,
     min_cM: int,
     distance_function: Callable = _determine_distances,
-) -> tuple[List[str] | None, npt.NDArray]:
+) -> tuple[Union[List[str],  None], npt.NDArray]:
     """Function that will make the distance matrix
 
     Parameters
