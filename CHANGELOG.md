@@ -1,8 +1,20 @@
+## Unreleased
+
+## v3.0.0 (2025-06-04)
+
+### Feat
+
+- **generate_dendrogram.py**: finished implementing the dendrogram subcommand
+- **generate_dendrogram.py**: Began to create the logic to construct dendrograms from the DRIVE output files
+- **network_algorithm.py**: moved relevant code for the network algorithm into its own folder
+- **dendrogram**: Adding the ability to generate a dendrogram from the drive networks
+
+### Fix
+
+- **dendrogram_subcommand.py**: fixed a type annotation to be compatible with python 3.9
+- **testing-and-parser/__init__.py**: added integration test for dendrogram functionality and fixed bug where isort messed up imports
+
 ## v2.7.15 (2025-04-25)
-
-### Build
-
-- **DockerFile and pyproject.toml**:  Updated DRIVE from the pre-release to 2.7.15 and also republished to PYPI and to docker under the new version
 
 ## v2.7.15b1 (2025-04-24)
 
@@ -143,6 +155,12 @@
 
 ## 2.0.8 (2023-07-03)
 
+### Refactor
+
+- **filter.py**: removed unnecessary print statements
+
+## 1.0.0 (2023-06-30)
+
 ### Feat
 
 - Added an overlap filter
@@ -154,10 +172,6 @@
 - **generate_indices.py**: fixed the index for the cM column in ILASH model to be correct
 - **network_writer**: correct how the output file name is made when it contains a period
 - **pvalue**: fixed a bug in pvalue.py where the phenotype percentage was not calculated properly
-
-### Refactor
-
-- **filter.py**: removed unnecessary print statements
 
 ## v2.0.2 (2023-05-15)
 
