@@ -1,19 +1,14 @@
-drive.cluster package
-=====================
+drive.network.cluster package
+=============================
 
-Submodules
-----------
-
-drive.cluster.cluster module
-----------------------------
-
-.. automodule:: cluster.cluster
+.. autoclass:: drive.network.cluster.ClusterHandler
    :members:
 
+.. autofunction:: drive.network.cluster.cluster
 
-Module contents
----------------
 
-.. automodule:: cluster
-   :members:
+
+
+
+
 

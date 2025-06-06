@@ -20,10 +20,3 @@ drive.plugins.pvalues module
    :undoc-members:
    :show-inheritance:
 
-Module contents
----------------
-
-.. automodule:: drive.plugins
-   :members:
-   :undoc-members:
-   :show-inheritance:

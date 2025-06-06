@@ -8,7 +8,7 @@ import numpy as np
 from log import CustomLogger
 from pandas import DataFrame, concat, read_csv
 
-from drive.models import FileIndices, Genes
+from drive.network.models import FileIndices, Genes
 
 logger = CustomLogger.get_logger(__name__)
 
@@ -19,7 +19,50 @@ T = TypeVar("T", bound="IbdFilter")
 
 @dataclass
 class IbdFilter:
-    ibd_file: Iterator[DataFrame]
+    """
+    class handling the filtering of the IBD files provided
+
+    Parameters
+    ----------
+    ibd_file : iterator[DataFrame]
+        pandas dataframe being read in chunk by chunk. This data represents
+        the pairwise IBD segments from hap-IBD, GERMLINE, RaPID, or iLASH
+
+    indices : FileIndices
+        object that abstracts away the indices needed based on the IBD program
+        used
+
+    target_gene : Genes
+        namedTuple that has fields for the chromosome and the start and end
+        region of the target locus
+
+    filter : Optional[Callable] = None
+        Function that will be used to filter the provided segments. Default
+        functions will either filter to segments containing the target locus
+        or those that overlap
+
+    ibd_vs : DataFrame
+        dataframe representing all the potential vertices in the graph. Each
+        vertex is a haplotype
+
+    ibd_pd : DataFrame
+        dataframe representing the pairwise segments. Each row is the pair ids
+        and the length of the segment
+
+    hapid_map : Dict[str, int]
+        dictionary mapping the haplotype to a unique integer id
+
+    all_haplotypes : List[str]
+        list of all the different haplotypes in the IBD data
+
+    haplotype_id : int = 0
+        This value is used as the counter and is incremented as the program runs
+
+    """
+
+    ibd_file: Iterator[
+        DataFrame
+    ]  # IBD segments being read in by chunks making the pandas dataframe an iterator
     indices: FileIndices
     target_gene: Genes
     filter: Optional[Callable] = None

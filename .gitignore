@@ -25,10 +25,12 @@ IBDCluster/log/README.md
 # BUILD DIRECTORIES
 /dist/
 /docs/build/
+/docs/_build/
 
 # FILES THAT CAN'T BE UPLOADED
 ./tests/test_true_results/biovu_longQT.DRIVE.txt
 tests/test_kcne_inputs/
+./test_true_results/
 
 
 

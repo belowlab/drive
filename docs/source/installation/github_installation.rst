@@ -12,7 +12,7 @@ This installation method assumes that you are familiar with Git and Github, the 
 
 .. admonition:: Optional Tip
 
-    You can also use Poetry to install the program. Poetry is a python package manager (another alternative to Pip and Conda and all the other package manages) that has good dependency resolution to create a reproducible environment. You can read more about the project here [Poetry documentation](https://python-poetry.org/) and the steps to install it are described here [Poetry Installation](https://python-poetry.org/docs/#installation). For individuals wishing to contribute to DRIVE development, Poetry is the current recommended way to install DRIVE. Poetry allows for individuals to install the necessary development dependencies to properly format and commit the code so that they can contribute to the repository. 
+    You can also use PDM to install the program. PDM is a python package manager (another alternative to Pip and Conda and all the other package manages) that has good dependency resolution to create a reproducible environment. You can read more about the project here and the steps to install here [PDM Installation](https://pdm-project.org/en/latest/). For individuals wishing to contribute to DRIVE development, PDM is the current recommended way to install DRIVE. PDM allows for individuals to install the necessary development dependencies to properly format and commit the code so that they can contribute to the repository. 
 
 Steps to installing DRIVE:
 --------------------------
@@ -45,34 +45,36 @@ If you see a directory file tree then the program cloned correctly. If you recei
 
 Step 2: Installing necessary dependencies:
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-*if not using Poetry or are not interested in developing the project:* 
+*if not using PDM or are not interested in developing the project:*  
 
-If you are not using Poetry than you can directly clone the conda environment.yml file using the following command:
+If you are not using PDM than you can directly clone the conda environment.yml file using the following command:
 
 .. code::
 
     conda env create -f DRIVE_envi.yml
 
 
-Make sure that you are in the drive directory. This command will create a virtual environment called DRIVE using python 3.6 with all the required dependencies. 
+Make sure that you are in the drive directory. This command will create a virtual environment called DRIVE using python 3.9 or newer with all the required dependencies. 
 
-*If using Poetry:* 
+*If using PDM:* 
 
-If you are using poetry you will first have to create a new [conda environment](https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html) or [virtual environment using venv](https://docs.python.org/3/library/venv.html) and then activate the environment.
-
+PDM can install specific python versions `(documentation) <https://pdm-project.org/en/latest/usage/project/#install-python-interpreters-with-pdm>`_ and create virtual environments using a number of backends
 
 .. warning::
 
-    DRIVE has only been tested with python >= 3.6 and python <= 3.9. Other version of python may not work. For this reason it is currently recommended to specify the python version within this range.
+    DRIVE has only been tested with python >= 3.9 and python <= 3.12. Other version of python may not work. For this reason it is currently recommended to specify the python version within this range.
 
 Once you have created and activated the environment, you can install the necessary dependencies using the following command:
 
 .. code::
 
-    poetry install --without dev, docs
+    pdm install --without dev,docs
 
+    or
 
-.. image:: /screencasts/poetry_dependency_install.gif
+    pdm install --prod
+
+.. image:: /screencasts/pdm_installation.gif
     :height: 300
     :align: center
     :alt: screencast of installing dependencies using poetry
@@ -82,9 +84,10 @@ This command will install all of the runtime dependencies and not the developer 
 
 .. code:: 
     
-    poetry install --with dev
+    pdm install --with dev
 
 
+*After Successful Install*
 If successful you will have all the dependencies you need to run the program. You can check this by running the command:
 
 .. code:: 
@@ -94,7 +97,10 @@ If successful you will have all the dependencies you need to run the program. Yo
 
 you should see the DRIVE cli as shown below: 
 
-.. image:: /screencasts/drive_cli.gif
+.. image:: /screencasts/drive_help_message.gif
     :height: 300
     :align: center
     :alt: help message displayed by successful install of DRIVE
+
+.. note::
+    If you also want to work on the Documentation then you need to install the docs group with PDM.
