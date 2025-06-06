@@ -46,7 +46,7 @@ text = "Apache-2.0"
 
 [project.scripts]
 drive = "drive.drive:main"
-docs = "sphinx-autobuild docs/ docs/_build/html"
+# docs = "sphinx-autobuild docs/ docs/_build/html"
 
 [build-system]
 requires = [
