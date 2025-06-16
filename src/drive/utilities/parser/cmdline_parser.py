@@ -205,6 +205,13 @@ def generate_cmd_parser() -> argparse.ArgumentParser:
         help="whether or not the user wishes the program to automically recluster based on things like hub threshold, max network size and how connected the graph is. ",  # noqa: E501
     )
 
+    cluster_parser.add_argument(
+        "--chunksize",
+        type=int,
+        default=100_000,
+        help="change the chunksize used to read in the shared segment data. Larger chunksizes will speed up the analysis but will use more memory. There is a asymptotic limit on the speed up still. Due to how pandas reads in data, trying to read in the whole file at once will still be slower than chunking if the file is really big. (default: %(default)s)",
+    )
+
     cluster_parser.set_defaults(func=run_network_identification)
 
     # This is where we will define all of the necessary arguments to make

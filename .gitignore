@@ -8,6 +8,7 @@
 # TEST FILES
 *.ipynb
 *.txt
+test_output/
 
 # IDE FILES
 .vscode

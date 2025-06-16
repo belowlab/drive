@@ -78,6 +78,7 @@ class IbdFilter:
         ibd_file: Path,
         indices: FileIndices,
         target_gene: Genes,
+        chunksize: int = 100_000,
     ) -> T:
         """Factory method that returns the IBDFilter model
         This method makes sure that the ibd file exists
@@ -99,6 +100,11 @@ class IbdFilter:
             chromosome, the gene start position, and the
             gene end position.
 
+        chunksize : int
+            number of rows of the dataframe to read in a 1 time.
+            Larger chunksize will mean the data is loaded faster
+            but memory also increases.
+
         Returns
         -------
         IbdFilter
@@ -119,7 +125,7 @@ class IbdFilter:
             ibd_file,
             sep="\t",
             header=None,
-            chunksize=100_100,
+            chunksize=chunksize,
             dtype={indices.id1_indx: str, indices.id2_indx: str},
         )
 
