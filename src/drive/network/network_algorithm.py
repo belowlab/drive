@@ -81,7 +81,9 @@ def run_network_identification(args) -> None:
 
     logger.debug(f"Identified a target region: {target_gene}")
 
-    filter_obj: IbdFilter = IbdFilter.load_file(args.input, indices, target_gene)
+    filter_obj: IbdFilter = IbdFilter.load_file(
+        args.input, indices, target_gene, args.chunksize
+    )
 
     # choosing the proper way to filter the ibd files
     filter_obj.set_filter(args.segment_overlap)

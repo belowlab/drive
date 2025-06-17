@@ -51,6 +51,11 @@ class Pvalues:
         if carriers_count == 0:
             logger.debug(f"carrier count = 0 therefore pvalue for {phenotype} = 1")
             return 1
+        elif carriers_count - 1 == 0:
+            logger.debug(
+                "When the proband was removed, there were no more carriers who remained in the network. Therefore returning a p-value of 1"
+            )
+            return 1
 
         result = binomtest(carriers_count - 1, network_size - 1, phenotype_percent)
 
@@ -86,9 +91,9 @@ class Pvalues:
             len(phenotype_counts.get("controls")) + len(phenotype_counts.get("cases"))
         )
 
-        logger.verbose(
-            f"For PheCode, {phecode}, {len(phenotype_counts.get('cases'))} cases and {len(phenotype_counts.get('controls'))} were identified giving a phenotype frequency of {phenotype_frequency}"  # noqa: E501
-        )
+        # logger.verbose(
+        #     f"For PheCode, {phecode}, {len(phenotype_counts.get('cases'))} cases and {len(phenotype_counts.get('controls'))} were identified giving a phenotype frequency of {phenotype_frequency}"  # noqa: E501
+        # )
 
         return phenotype_frequency
 
