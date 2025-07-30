@@ -8,8 +8,7 @@ from pandas import DataFrame
 class FileIndices(Protocol):
     def get_haplotype_id(
         self, data: DataFrame, ind_id_indx: int, phase_col_indx: int, col_name: str
-    ) -> None:
-        ...
+    ) -> None: ...
 
 
 @dataclass

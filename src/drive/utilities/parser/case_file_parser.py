@@ -1,4 +1,4 @@
-"""Module to faciliate the user in parsing the phenotype file by incorporating multiple 
+"""Module to faciliate the user in parsing the phenotype file by incorporating multiple
 ecodings, separators, and by handling multiple errors."""
 
 from logging import Logger

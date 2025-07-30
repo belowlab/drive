@@ -5,7 +5,7 @@ from pandas import read_csv
 
 
 def load_phenotype_descriptions(
-    phecode_desc_file: Union[Path, str]
+    phecode_desc_file: Union[Path, str],
 ) -> Dict[str, Dict[str, str]]:
     """Function that will load the phecode_description file
     and then turn that into a dictionary

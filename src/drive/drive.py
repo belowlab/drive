@@ -1,5 +1,6 @@
 from datetime import datetime
 from importlib.metadata import version
+import sys
 
 from log import CustomLogger
 
@@ -27,6 +28,8 @@ def main() -> None:
         )
 
     logger.info(f"DRIVE version: {version('drive-ibd')}")
+
+    logger.info(f"command passed to DRIVE: {' '.join(sys.argv)}")
 
     # record the input parameters using a method from the logger object that
     # takes the parser as an argument
