@@ -150,3 +150,54 @@ def test_drive_dendrogram_single_network(system_args_for_dendrogram):
     output_path = Path("./tests/test_output/network_0_dendrogram.png")
 
     assert output_path.exists(), f"An error occurred while running the integration test for the dendrogram functionality. This error prevented the appropriate output from being generated."
+
+@pytest.fixture()
+def system_args_for_pull_samples(monkeypatch):
+    monkeypatch.setattr("sys.argv", 
+        [
+            "drive", 
+            "utilities",
+            "pull-samples",
+            "-i",
+            "./tests/test_inputs/integration_dendrogram_test_results_no_pheno.drive_networks.txt",
+            "-o",
+            "./tests/test_output/test_sample_list.txt",
+            "-n",
+            "4",
+            ])
+    
+@pytest.mark.integtest
+def test_pull_samples_success(system_args_for_pull_samples):
+    Path("./tests/test_output").mkdir(exist_ok=True)
+
+    # run the drive function
+    drive.main()
+
+    samples_filepath = Path("./tests/test_output/test_sample_list.txt")
+
+    assert samples_filepath.exists(), f"An error occurred while running the integration test for the utilties 'pull-samples' subcommand. the output file, {samples_filepath}, was not found."
+
+@pytest.mark.integtest
+def test_for_correct_samples(system_args_for_pull_samples):
+    Path("./tests/test_output").mkdir(exist_ok=True)
+
+    # run the drive function
+    drive.main()
+
+    samples_filepath = Path("./tests/test_output/test_sample_list.txt")
+
+    # we are going to make a set of samples to look for and use this to check if all of the samples are in the file
+    samples_to_find = {"535","574","94","210","676"}
+
+    samples_in_file = set()
+
+    with open(samples_filepath, "r") as samples_file:
+        # we are making the assumption that each line in the file is a single id
+        for line in samples_file:
+            samples_in_file.add(line.strip())
+
+    sample_differences = samples_to_find.difference(samples_in_file)
+
+    assert not sample_differences, f"The samples, {','.join(sample_differences)}, were expected to be found within the file but were not. Instead, only these values were found, {','.join(samples_in_file)}"
+
+

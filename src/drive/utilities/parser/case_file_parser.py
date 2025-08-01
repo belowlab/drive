@@ -176,9 +176,9 @@ class PhenotypeFileParser:
                 "excluded": exclusions,
             }
 
-        logger.info(
-            f"For PheCode, {phecode_name}, identified {len(phenotype_dict[phecode_name]['cases'])} cases, {len(phenotype_dict[phecode_name]['controls'])} controls, and {len(phenotype_dict[phecode_name]['excluded'])} exclusions"
-        )  # noqa: E501
+            logger.info(
+                f"For PheCode, {phecode_name}, identified {len(phenotype_dict[phecode_name]['cases'])} cases, {len(phenotype_dict[phecode_name]['controls'])} controls, and {len(phenotype_dict[phecode_name]['excluded'])} exclusions"
+            )  # noqa: E501
         return phenotype_dict, grids.values.tolist()
 
     def parse_cases_and_controls(
