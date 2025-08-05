@@ -127,6 +127,7 @@ class IbdFilter:
             header=None,
             chunksize=chunksize,
             dtype={indices.id1_indx: str, indices.id2_indx: str},
+            engine="c"
         )
 
         return cls(input_file_chunks, indices, target_gene)

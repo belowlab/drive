@@ -1,6 +1,6 @@
 [project]
 name = "drive-ibd"
-version = "3.0.2a1"
+version = "3.0.2a2"
 description = "Python CLI using graph theory to identify networks of individuals who share IBD segments overlapping loci of interest"
 authors = [
     { name = "James Baker", email = "james.baker@vanderbilt.edu" },
@@ -21,6 +21,7 @@ dependencies = [
     "modified-logger>=1.0.0",
     "pytest>=8.4.1",
     "matplotlib>=3.9.4",
+    "pyarrow>=21.0.0",
 ]
 readme = "README.md"
 keywords = [
