@@ -120,13 +120,21 @@ class IbdFilter:
         if not ibd_file.is_file():
             raise FileNotFoundError(f"The file, {ibd_file}, was not found")
 
+        # we can set column types
+        col_dtypes = {
+            indices.id1_indx: "string[pyarrow]", 
+            indices.id2_indx: "string[pyarrow]",
+            indices.str_indx: "int32",
+            indices.end_indx: "int32",
+            indices.cM_indx: "float32"
+        }
         # we need to make sure that the id columns read in as strings no matter what
         input_file_chunks = read_csv(
             ibd_file,
             sep="\t",
             header=None,
             chunksize=chunksize,
-            dtype={indices.id1_indx: str, indices.id2_indx: str},
+            dtype=col_dtypes,
             engine="c"
         )
 
