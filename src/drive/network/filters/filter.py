@@ -122,11 +122,11 @@ class IbdFilter:
 
         # we can set column types
         col_dtypes = {
-            indices.id1_indx: "string[pyarrow]", 
+            indices.id1_indx: "string[pyarrow]",
             indices.id2_indx: "string[pyarrow]",
             indices.str_indx: "int32",
             indices.end_indx: "int32",
-            indices.cM_indx: "float32"
+            indices.cM_indx: "float32",
         }
         # we need to make sure that the id columns read in as strings no matter what
         input_file_chunks = read_csv(
@@ -135,7 +135,7 @@ class IbdFilter:
             header=None,
             chunksize=chunksize,
             dtype=col_dtypes,
-            engine="c"
+            engine="c",
         )
 
         return cls(input_file_chunks, indices, target_gene)

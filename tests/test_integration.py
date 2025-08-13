@@ -125,7 +125,7 @@ def test_drive_full_run_with_phenotypes(system_args_with_pheno):
     with open("./tests/test_inputs/test_phenotype_file_withNAs.txt", "r") as pheno_input:
         grid_col, pheno1, pheno2, pheno3 = pheno_input.readline().strip().split("\t")
         
-        col_combinations = list(itertools.product([pheno1,pheno2, pheno3], ["_case_count_in_network", "cases_in_network", "_excluded_count_in_network", "excluded_in_network", "_pvalue"]))
+        col_combinations = list(itertools.product([pheno1,pheno2, pheno3], ["_case_count_in_network", "_cases_in_network", "_excluded_count_in_network", "_excluded_in_network", "_pvalue"]))
 
         phenotype_cols = ["min_pvalue", "min_phenotype", "min_phenotype_description"] + ["".join(val) for val in col_combinations]
 

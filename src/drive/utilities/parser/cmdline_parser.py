@@ -379,6 +379,19 @@ def generate_cmd_parser() -> argparse.ArgumentParser:
     )
 
     pull_samples_parser.add_argument(
+        "--cases-only",
+        default=False,
+        help="Optional flag that indicates if the user wants to pull the ids for all samples in a network or just the cases. If this flag is provided then the user also needs to provide the '--case-col' flag. (default: %(default)s)",
+        action="store_true",
+    )
+
+    pull_samples_parser.add_argument(
+        "--case-col",
+        type=str,
+        help="This is the column that list the cases in the network of interest. This flag should only be used if the '--cases-",
+    )
+
+    pull_samples_parser.add_argument(
         "-o",
         "--output",
         type=Path,

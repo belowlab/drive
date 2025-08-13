@@ -43,7 +43,7 @@ class NetworkWriter:
             # of cases in the network, The case ids in the network the number of
             # excluded individuals in the network, and the pvalue for the phenotype
             for column in phenotypes:
-                header_str += f"\t{column + '_case_count_in_network'}\t{column + 'cases_in_network'}\t{column + '_excluded_count_in_network'}\t{column + 'excluded_in_network'}\t{column + '_pvalue'}"  # noqa: E501
+                header_str += f"\t{column + '_case_count_in_network'}\t{column + '_cases_in_network'}\t{column + '_excluded_count_in_network'}\t{column + '_excluded_in_network'}\t{column + '_pvalue'}"  # noqa: E501
 
             return header_str + "\n"
 
