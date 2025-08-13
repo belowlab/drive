@@ -1,6 +1,6 @@
 [project]
 name = "drive-ibd"
-version = "3.0.2a2"
+version = "3.0.2a3"
 description = "Python CLI using graph theory to identify networks of individuals who share IBD segments overlapping loci of interest"
 authors = [
     { name = "James Baker", email = "james.baker@vanderbilt.edu" },
@@ -121,6 +121,7 @@ dev = [
     "isort>=6.0.1",
     "ruff>=0.12.1",
     "scalene>=1.5.51",
+    "polars>=1.32.0",
 ]
 notebook = [
     "ipykernel>=6.29.5",
