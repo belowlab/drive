@@ -6,6 +6,7 @@ from rich_argparse import RichHelpFormatter
 
 from drive.dendrogram import generate_dendrograms
 from drive.network import run_network_identification
+from drive.utilities.pull_samples import run_pull_samples
 from drive.utilities.callbacks import CheckInputExist
 
 
@@ -336,5 +337,68 @@ def generate_cmd_parser() -> argparse.ArgumentParser:
     )
 
     dendrogram_parser.set_defaults(func=generate_dendrograms)
+
+    # The utilities parser is going to be used to create help commands
+    # that can process the file. This can be used as follows: drive utilities <subcommand> ...
+    utilities_parser = subparser.add_parser(
+        name="utilities",
+        help="Run subcommands that help process the drive file",
+        formatter_class=RichHelpFormatter,
+        parents=[common_parser],
+        description="utilities",
+    )
+
+    utility_cmd_subparser = utilities_parser.add_subparsers(
+        title="utility commands",
+        description="helper functions that help process the DRIVE file",
+    )
+
+    # This command will be used to pull samples from a network of interest and provide that to
+    pull_samples_parser = utility_cmd_subparser.add_parser(
+        name="pull-samples",
+        help="pull sample ids from a network of interest",
+        formatter_class=RichHelpFormatter,
+        parents=[common_parser],
+        description="pull-samples",
+    )
+
+    pull_samples_parser.add_argument(
+        "-n",
+        "--network-id",
+        type=str,
+        required=True,
+        help="ID of the network to pull from the DRIVE results file",
+    )
+
+    pull_samples_parser.add_argument(
+        "-i",
+        "--input",
+        type=Path,
+        required=True,
+        help="filepath to a tab separated file that described each of the network from the drive analysis. This command is designed to work with the output from the drive cluster command. You can use the output file from DRIVE as input or a file with the same columns and structure.",
+    )
+
+    pull_samples_parser.add_argument(
+        "--cases-only",
+        default=False,
+        help="Optional flag that indicates if the user wants to pull the ids for all samples in a network or just the cases. If this flag is provided then the user also needs to provide the '--case-col' flag. (default: %(default)s)",
+        action="store_true",
+    )
+
+    pull_samples_parser.add_argument(
+        "--case-col",
+        type=str,
+        help="This is the column that list the cases in the network of interest. This flag should only be used if the '--cases-",
+    )
+
+    pull_samples_parser.add_argument(
+        "-o",
+        "--output",
+        type=Path,
+        default=Path("samples.txt"),
+        help="Output tab separated text file with one column where each row is a sample id. This file is designed to work with bcftools. (default: %(default)s)",
+    )
+
+    pull_samples_parser.set_defaults(func=run_pull_samples)
 
     return parser

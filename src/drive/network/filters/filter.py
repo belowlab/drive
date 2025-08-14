@@ -120,13 +120,22 @@ class IbdFilter:
         if not ibd_file.is_file():
             raise FileNotFoundError(f"The file, {ibd_file}, was not found")
 
+        # we can set column types
+        col_dtypes = {
+            indices.id1_indx: "string[pyarrow]",
+            indices.id2_indx: "string[pyarrow]",
+            indices.str_indx: "int32",
+            indices.end_indx: "int32",
+            indices.cM_indx: "float32",
+        }
         # we need to make sure that the id columns read in as strings no matter what
         input_file_chunks = read_csv(
             ibd_file,
             sep="\t",
             header=None,
             chunksize=chunksize,
-            dtype={indices.id1_indx: str, indices.id2_indx: str},
+            dtype=col_dtypes,
+            engine="c",
         )
 
         return cls(input_file_chunks, indices, target_gene)
@@ -265,9 +274,11 @@ class IbdFilter:
         """
 
         if filter_option == "contains":
+            print(f"setting the filter: {self._contains_filter.__name__}")
             logger.info("Identifying IBD segments that contain the target region")
             self.filter = self._contains_filter
         elif filter_option == "overlaps":
+            print(f"setting the filter: {self._overlaps_filter.__name__}")
             logger.info("Identifying IBD segments that overlap the target region")
             self.filter = self._overlaps_filter
         else:
@@ -275,6 +286,7 @@ class IbdFilter:
                 "Non-recognized filter option selected. Allowed values are 'contains' and 'overlaps'. Exiting program now..."  # noqa: E501
             )
             sys.exit(0)
+        print(self.filter.__name__)
 
     def _remove_dups(self, data: DataFrame) -> DataFrame:
         """Filters out rows where the haplotype ids are the

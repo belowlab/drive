@@ -19,6 +19,10 @@ test_output/
 .mypy_cache
 # LOG FILES
 *.log
+
+# VENV
+*venv
+.venv
 # SUBMODULES
 IBDCluster/log/README.md
 # PROFILES
