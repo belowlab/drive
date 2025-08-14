@@ -11,11 +11,15 @@ Distant Relatedness for Identification and Variant Evaluation (DRIVE) is a novel
 
 Quick Installation:
 -------------------
-The easiest way to install DRIVE is from the PYPI register. Users can use the following command to install the program. This method ensures that all the necessary dependencies are installed.
+The easiest way to install DRIVE is from the PYPI register. Users can use the following command to install the program. This method ensures that all the necessary dependencies are installed. To read more about this install method go to the :doc:`Pip Installation <installation/pip_installation>`
 
 .. code:: bash
 
    pip install drive-ibd
+
+.. important:: 
+
+   DRIVE supports Python versions >=3.9 and not 3.11.0 (other versions of 3.11 work fine) for compatibility between packages. It is expected that your python version falls within this range when attempting to install the software. You can check the python version using the 'python --version' command. If the version number is outside of the acceptable range then you must install an appropriate version from sources such as `Python.org <https://www.python.org/downloads/>`_, or a package manager such as `Homebrew <https://brew.sh/>`_ on MacOS, `Conda <https://anaconda.org/anaconda/conda>`_, or the appropriate Linux package manage if you are running Linux. *Additionally*, DRIVE doesn't support the development version of python 3.13t that allows users to disable the GIL due to some packages not being fully compatible yet.
 
 .. note::
 
@@ -23,12 +27,12 @@ The easiest way to install DRIVE is from the PYPI register. Users can use the fo
 
 Citation:
 ---------
-The paper that originally discusses DRIVE can be found here: `<https://www.medrxiv.org/content/10.1101/2023.04.19.23288831v1>`_
+The following paper discusses an initial implementation of the clustering algorithm of DRIVE (1.0.0) and can be citied if you use the tool: `Detection of distant relatedness in biobaks to identify undiagnosed cases of Mendelian disease as applied to Long QT Syndrome <https://doi-org.proxy.library.vanderbilt.edu/10.1038/s41467-024-51977-4>`_.
 
 
 Contact:
 --------
-If you have any questions about DRIVE, you can either post an issue on the Github issues page or you can contact us at the email address, insert email here.
+If you have any questions about DRIVE or run into issues, you can either post an issue on the Github issues page or you can contact us at the email address, insert email here.
 
 .. toctree::
    :maxdepth: 2
@@ -39,6 +43,7 @@ If you have any questions about DRIVE, you can either post an issue on the Githu
    /installation/installation
    /inputs_and_outputs/inputs
    /inputs_and_outputs/outputs
+   faq.rst
    
    
 

@@ -5,7 +5,7 @@
 groups = ["default", "dev", "docs", "notebook"]
 strategy = ["inherit_metadata"]
 lock_version = "4.5.0"
-content_hash = "sha256:bc12f358b416117cbc0c007219e6f56f1e9d80092bc51bc2841df73f180b1594"
+content_hash = "sha256:7bf4ce78903c4e744346468a770bc70eec07c9e381f0684b31b83df69cb7918b"
 
 [[metadata.targets]]
 requires_python = ">=3.9,<3.11.0||>3.11.0"
@@ -2353,6 +2353,20 @@ dependencies = [
 files = [
     {file = "sphinx-copybutton-0.5.2.tar.gz", hash = "sha256:4cf17c82fb9646d1bc9ca92ac280813a3b605d8c421225fd9913154103ee1fbd"},
     {file = "sphinx_copybutton-0.5.2-py3-none-any.whl", hash = "sha256:fb543fd386d917746c9a2c50360c7905b605726b9355cd26e9974857afeae06e"},
+]
+
+[[package]]
+name = "sphinx-design"
+version = "0.6.1"
+requires_python = ">=3.9"
+summary = "A sphinx extension for designing beautiful, view size responsive web components."
+groups = ["docs"]
+dependencies = [
+    "sphinx<9,>=6",
+]
+files = [
+    {file = "sphinx_design-0.6.1-py3-none-any.whl", hash = "sha256:b11f37db1a802a183d61b159d9a202314d4d2fe29c163437001324fe2f19549c"},
+    {file = "sphinx_design-0.6.1.tar.gz", hash = "sha256:b44eea3719386d04d765c1a8257caca2b3e6f8421d7b3a5e742c0fd45f84e632"},
 ]
 
 [[package]]
