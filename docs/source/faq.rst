@@ -24,10 +24,23 @@ This section attempts to answer questions that people have commonly had or provi
 
       DRIVE v3 is designed to interface with existing analytical pipelines through an flexible and extensible backend. This backend relies on the plugin architecture described in more detail here :doc:`Plugin Description </plugin_descriptions/plugin_architecture>`. Users can create their own "plugins" to perform additional analyses or output data in a more convenient format. This flexibility allows users to adjust DRIVE to their use cases without having to wait for formal updates to DRIVE from the Belowlab. You can click on this links to read more information about the way DRIVE stores the network data in the :doc:`Data API </plugin_descriptions/data_container_api>` or to view an example of a valid plugin :doc:`plugin template </plugin_descriptions/expected_plugin_structure>`
 
-
     * **Performance increases**
 
-      In designing DRIVE v3, we took advantage of features of common data science libraries such as Pandas and PyArrow to boost performance. Current profiling shows a 10 fold improvement when running only the clustering algorithm over the CFTR locus in pairwise IBD segments for 250,000 individuals, DRIVE v1 took [insert time here] as compared to DRIVE v3 which took 1 hour 38 minutes with 32Gb of memory. The increase in memory comes from reading the data in in large chunks of dataframes rather than reading the file line by line. Since DRIVE was designed to be used primarily on servers or the cloud we figured this to be an acceptable increase (although you can control the size of chunks being read in using the chunksize argument.)
+      In designing DRIVE v3, we took advantage of features of common data science libraries such as Pandas and PyArrow to boost performance. Current profiling shows a 10 fold improvement when running only the clustering algorithm over the CFTR locus in pairwise IBD segments for 250,000 individuals. The increase in memory comes from reading the data in in large chunks of dataframes rather than reading the file line by line. Since DRIVE was designed to be used primarily on servers or the cloud we figured this to be an acceptable increase (although you can control the size of chunks being read in using the chunksize argument.)
+
+      .. list-table:: DRIVE v1 performance compared to DRIVE v3
+          :widths: 25 50 25
+          :header-rows: 1
+
+          * - DRIVE version
+            - Runtime
+            - Memory
+          * - v1
+            - 37 hours and 14 minutes
+            - 3 Gb
+          * - v3
+            - 1 hour and 38 minutes
+            - 32 Gb
 
     * **Improved logging and error handling**
 
