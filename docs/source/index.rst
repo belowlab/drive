@@ -61,7 +61,6 @@ If you have any questions about DRIVE or run into issues, you can either post an
 
    /contributing/contributing
    /plugin_descriptions/extending_drive
-   /modules/modules
 
 
 

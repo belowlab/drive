@@ -2,6 +2,8 @@ Testing DRIVE
 ====================
 Once DRIVE is installed, the user can use the provided test data to better understand how to run the program and to see examples of the inputs. This test data can be found in the tests folder on github `(test data location) <https://github.com/belowlab/drive/tree/main/tests>`_. At the moment, only integration test have been implemented for DRIVE. This documentation will only files pertaining to the integration tests. 
 
+The following two sections describe how we simulated the IBD data to use for the integration tests and then how the test folder is structured. If you only wish to know how to run the test data then you can skip to the "Commands to test successful installation" section.
+
 Simulating IBD Data:
 --------------------
 In order to provide test data, we needed to simulate pairwise IBD segments as inputs. To accomplish this we followed a similar procedure as described in the paper, `Open-source benchmarking of IBD segment detection methods for biobank-scale cohorts <https://doi.org/10.1093/gigascience/giac111>`_, by Tang et al. In this paper, the authors wished to compare several IBD detection programs so they developed a python pipeline using `msprime <https://tskit.dev/msprime/docs/stable/intro.html>`_, which can simulate pairwise IBD segments. We used their script `msprime_simulation.py <https://github.com/ZhiGroup/IBD_benchmark/blob/main/Simulation/msprime_simulation.py>`_ which generates a vcf file mimicking spares array data. For simplicity we used the same genetic map file and simulated data for the same chromosome (chromosome 20). The following command was used to run that script:
@@ -32,8 +34,8 @@ After we phased the data, we converted it back to a vcf file and then used hap-I
 
 DRIVE uses the \*.ibd.gz file generated from hap-IBD, so this file was placed in the subdirectory called "test_inputs".
 
-Files/Directories:
-------------------
+Files/Directories found within the tests directory:
+---------------------------------------------------
 The test data directory has a subdirectory called "test_inputs" and a python script called "test_integration.py" that are essential to running the integration test. They are discribed in further detail below.
 
 **test_inputs directory**:
@@ -57,18 +59,28 @@ If DRIVE was installed using PDM to install the project you can run pytest using
 
     pdm run pytest -v ./tests/test_integration.py
 
-If DRIVE was installed from pip or if it was installed from github, then it is assumed that it was installed into either a virtualenv, venv, or conda environment. The following command can then be used to run the integration test.
+If DRIVE was installed from pip or in a conda environment (using pip) or if it was installed from github, then the following command can be used to run the integration test.
 
 .. code::
 
     pytest -v ./tests/test_integration.py
 
-.. hint::
+If you receive an error saying "pytest not found", but DRIVE seems to be installed correctly then pytest the pytest dependency may not have been installed since it is not essential for testing. You can remedy this by running the following command:
 
-    All of these commands make the assumption that you are running them from the drive parent directory.
+.. code::
 
-Command to run DRIVE on simulated Data:
----------------------------------------
+    pip install pytest
+
+.. note::
+
+    All of these commands make the assumption that you are running them from the drive parent directory and the commands only work if you are using pdm or pip to install the tool.
+
+Command to run DRIVE (v3.0.0+) on simulated Data:
+-------------------------------------------------
+.. important::
+
+  The following examples of running the test data assume that you have installed DRIVE v3 or greater. Prior to v3, DRIVE did not have integration test and had a different CLI structure so these exact commands will not work. Read the bottom section titled "Command to test legacy versions of DRIVE" to run test for versions of DRIVE prior to v3.
+
 *Running the clustering subcommand*:
 The test data in the tests/test_inputs folder illustrates how the inputs for the phenotype file and the segment data should be formatted for DRIVE. The following command will run those files and show what the DRIVE output file should look like:
 
@@ -89,4 +101,31 @@ It is expected that the user will first run the above cluster command and has ge
 
     This example code assumes that you cloned the tests subdirectory from github or that you created a similar directory structure.
 
-More information about the output from DRIVE can found in the outputs section
+More information about the output from DRIVE can found in the outputs section.
+
+Command to test legacy versions of DRIVE (before v3.0.0):
+---------------------------------------------------------
+Prior to DRIVE v3, the tool went through 2 stages involving significant changes to the CLI structure and functionality (v1 & v2). Both versions can still use the test data to run the clustering algorithm. The commands to test each version can be found below.
+
+**Running example data for DRIVE v1**
+
+DRIVE v1 was an initial implementation of the DRIVE tooling that only performed clustering and had more limited runtime options but it can still run the test data using the following commands:
+
+.. code::
+
+   drive -i tests/test_inputs/simulated_ibd_test_data_v2_chr20.ibd.gz -f hapIBD -t 7:117287120-117715971 -o ./test -m 3 
+
+If successful, this command will produce an output file called test.drive_networks.txt.
+
+
+**Running example data for DRIVE v2**
+
+Although DRIVE v2 was only a development version and was never truely released for external use, it is still avaliable on PYPI (Although there is no guarantee that there may not be bugs that were worked out in later development). There were no subcommands in the CLI so only the clustering and phenomewide enrichment functionality is avaliable. You can still run the test data using the following commands:
+
+.. code::
+
+  drive -i tests/test_inputs/simulated_ibd_test_data_v2_chr20.ibd.gz  -f hapibd -t 20:4666882-4682236 -o test --recluster --min-cm 3 --log-to-console
+
+This command if successful will generate a output file called test.drive_networks.txt.
+
+
