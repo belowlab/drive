@@ -274,11 +274,9 @@ class IbdFilter:
         """
 
         if filter_option == "contains":
-            print(f"setting the filter: {self._contains_filter.__name__}")
             logger.info("Identifying IBD segments that contain the target region")
             self.filter = self._contains_filter
         elif filter_option == "overlaps":
-            print(f"setting the filter: {self._overlaps_filter.__name__}")
             logger.info("Identifying IBD segments that overlap the target region")
             self.filter = self._overlaps_filter
         else:
@@ -286,7 +284,6 @@ class IbdFilter:
                 "Non-recognized filter option selected. Allowed values are 'contains' and 'overlaps'. Exiting program now..."  # noqa: E501
             )
             sys.exit(0)
-        print(self.filter.__name__)
 
     def _remove_dups(self, data: DataFrame) -> DataFrame:
         """Filters out rows where the haplotype ids are the
