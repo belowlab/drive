@@ -401,4 +401,12 @@ def generate_cmd_parser() -> argparse.ArgumentParser:
 
     pull_samples_parser.set_defaults(func=run_pull_samples)
 
+    testing_parser = utility_cmd_subparser.add_parser(
+        name="run-integration-test",
+        help="run the integration test to ensure that DRIVE was installed correctly",
+        formatter_class=RichHelpFormatter,
+        parents=[common_parser],
+        description="run-integration-test",
+    )
+
     return parser
