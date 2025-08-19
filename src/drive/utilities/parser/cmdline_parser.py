@@ -290,6 +290,13 @@ def generate_cmd_parser() -> argparse.ArgumentParser:
         help="minimum centimorgan threshold. The program expects this to be an integer value. (default: %(default)s)",
     )
 
+    dendrogram_parser.add_argument(
+        "--map-ids",
+        default=False,
+        help="Map the ids in the network to an anonymous ID of the form patient_X. This labelling is mainly used for publication to change internal identifiers. The mapping will be saved in the output directory as the dendrogram as a file called 'network_{clstID}_id_mappings.txt' (default: %(default)s)",
+        action="store_true",
+    )
+
     # Add a mutually exclusive group that requires you to either provide the
     # argument for the network id or the generate-all flag
     exclusive_group = dendrogram_parser.add_mutually_exclusive_group(required=True)
