@@ -58,3 +58,7 @@ This section attempts to answer questions that people have commonly had or provi
 .. dropdown:: How was the test data generated? 
 
       The simulated IBD segments used as input for DRIVE were generate using a similar procedure as described here in this paper Open-source by Tang et al: `Open-source benchmarking of IBD segment detection methods for biobank-scale cohorts <https://doi.org/10.1093/gigascience/giac111>`_. You can read a detailed description of how we generated the testing data under the section called :doc:`Simulating IBD Data: </installation/testing>`.
+
+.. dropdown:: How can I report any issues that I find with DRIVE?
+
+      To keep track of issues with DRIVE we ask that you open a github issue. We have provided a template that can be found at ".github/ISSUE_TEMPLATE" within the repository. We ask that you use this format because it helps us to understand your issue and to reproduce it.
