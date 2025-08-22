@@ -11,7 +11,7 @@ maintainers = [
   { name = "James Baker", email = "james.baker@vanderbilt.edu" },
   { name = "Hung-Hsin Chen", email = "hung-hsin.chen.1@vumc.org" },
 ]
-requires-python = "!=3.11.0,>=3.9"
+requires-python = "!=3.11.0,>=3.10"
 dependencies = [
   "pandas>=2.3.0",
   "numpy>=2.0.2",
