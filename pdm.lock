@@ -5,7 +5,7 @@
 groups = ["default", "dev", "docs", "notebook"]
 strategy = ["inherit_metadata"]
 lock_version = "4.5.0"
-content_hash = "sha256:7bf4ce78903c4e744346468a770bc70eec07c9e381f0684b31b83df69cb7918b"
+content_hash = "sha256:d6abfcb16ba8a1878cad49b030ade30413d5e478a3b3f7ea2ebc9beaf3e77182"
 
 [[metadata.targets]]
 requires_python = ">=3.9,<3.11.0||>3.11.0"
@@ -1143,13 +1143,13 @@ files = [
 
 [[package]]
 name = "modified-logger"
-version = "1.0.0"
+version = "1.1.2"
 requires_python = ">=3.8"
 summary = "Personal logging abstract from python's logging library that fits my needs"
 groups = ["default"]
 files = [
-    {file = "modified_logger-1.0.0-py3-none-any.whl", hash = "sha256:a2ef6e22fbe9d58609085173839ec130e063d6fbd2acc2b1d1fce19bb9cf8068"},
-    {file = "modified_logger-1.0.0.tar.gz", hash = "sha256:06fdc091b6ba0e9f2e1ba345517c4bfb737988451dff43d6c1aa83c833a3e42e"},
+    {file = "modified_logger-1.1.2-py3-none-any.whl", hash = "sha256:f04c3b98a5e7e87270d2eddaf90986a64783ec6e1262af670965330d80f48fc4"},
+    {file = "modified_logger-1.1.2.tar.gz", hash = "sha256:417b3bb80e567f8a40fc5a9cdfc5c9fc27294775da6825798dc146931aa93238"},
 ]
 
 [[package]]
@@ -1533,22 +1533,6 @@ groups = ["default"]
 files = [
     {file = "pluggy-1.6.0-py3-none-any.whl", hash = "sha256:e920276dd6813095e9377c0bc5566d94c932c33b27a3e3945d8389c374dd4746"},
     {file = "pluggy-1.6.0.tar.gz", hash = "sha256:7dcc130b76258d33b90f61b658791dede3486c3e6bfb003ee5c9bfb396dd22f3"},
-]
-
-[[package]]
-name = "polars"
-version = "1.32.0"
-requires_python = ">=3.9"
-summary = "Blazingly fast DataFrame library"
-groups = ["dev"]
-files = [
-    {file = "polars-1.32.0-cp39-abi3-macosx_10_12_x86_64.whl", hash = "sha256:94f7c6a3b30bc99bc6b682ea42bb1ae983e33a302ca21aacbac50ae19e34fcf2"},
-    {file = "polars-1.32.0-cp39-abi3-macosx_11_0_arm64.whl", hash = "sha256:8bf14c16164839e62c741a863942a94a9a463db21e797452fca996c8afaf8827"},
-    {file = "polars-1.32.0-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:f4c15adb97d44766d30c759f5cebbdb64d361e8349ef10b5afc7413f71bf4b72"},
-    {file = "polars-1.32.0-cp39-abi3-manylinux_2_24_aarch64.whl", hash = "sha256:13af55890734f89b76016a395fb2e7460e7d9feecf50ed2f55cf0f05a1c0c991"},
-    {file = "polars-1.32.0-cp39-abi3-win_amd64.whl", hash = "sha256:0397fc2501a5d5f1bb3fe8d27e0c26c7a5349b4110157c0fb7833cd3f5921c9e"},
-    {file = "polars-1.32.0-cp39-abi3-win_arm64.whl", hash = "sha256:dd84e24422509e1ec9be46f67f758d0bd9944d1ae4eacecee4f53adaa8ecd822"},
-    {file = "polars-1.32.0.tar.gz", hash = "sha256:b01045981c0f23eeccfbfc870b782f93e73b74b29212fdfc8aae0be9024bc1fb"},
 ]
 
 [[package]]

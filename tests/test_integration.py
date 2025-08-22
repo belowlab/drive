@@ -2,6 +2,7 @@ import itertools
 import pytest
 import sys
 import pandas as pd
+import sysconfig
 from pathlib import Path
 
 sys.path.append("./src")
@@ -9,24 +10,35 @@ sys.path.append("./src")
 from drive import drive
 
 
+site_packages_path = Path(sysconfig.get_paths().get("platlib"))
+
+
 # @pytest.mark.integtest
 # def test_drive_full_run():
 #     assert 1==1
 @pytest.fixture()
 def system_args_no_pheno(monkeypatch):
+    input_file = (
+        site_packages_path / "tests/test_inputs/simulated_ibd_test_data_v2_chr20.ibd.gz"
+    )
+
+    output_file = (
+        site_packages_path / "tests/test_output/integration_test_results_no_pheno"
+    )
+
     monkeypatch.setattr(
         "sys.argv",
         [
             "drive",
             "cluster",
             "-i",
-            "./tests/test_inputs/simulated_ibd_test_data_v2_chr20.ibd.gz",
+            str(input_file.absolute()),
             "-f",
             "hapibd",
             "-t",
             "20:4666882-4682236",
             "-o",
-            "./tests/test_output/integration_test_results_no_pheno",
+            str(output_file.absolute()),
             "-m",
             "3",
             "--recluster",
@@ -38,23 +50,35 @@ def system_args_no_pheno(monkeypatch):
 
 @pytest.fixture()
 def system_args_with_pheno(monkeypatch):
+    input_file = (
+        site_packages_path / "tests/test_inputs/simulated_ibd_test_data_v2_chr20.ibd.gz"
+    )
+
+    output_file = (
+        site_packages_path / "tests/test_output/integration_test_results_with_pheno"
+    )
+
+    carrier_file = (
+        site_packages_path / "tests/test_inputs/test_phenotype_file_withNAs.txt"
+    )
+
     monkeypatch.setattr(
         "sys.argv",
         [
             "drive",
             "cluster",
             "-i",
-            "./tests/test_inputs/simulated_ibd_test_data_v2_chr20.ibd.gz",
+            str(input_file.absolute()),
             "-f",
             "hapibd",
             "-t",
             "20:4666882-4682236",
             "-o",
-            "./tests/test_output/integration_test_results_with_pheno",
+            str(output_file.absolute()),
             "-m",
             "3",
             "-c",
-            "./tests/test_inputs/test_phenotype_file_withNAs.txt",
+            str(carrier_file.absolute()),
             "--recluster",
             "--log-file",
             "integration_test_results_with_pheno.log",
@@ -64,41 +88,53 @@ def system_args_with_pheno(monkeypatch):
 
 @pytest.fixture()
 def system_args_for_dendrogram(monkeypatch):
+    input_file = (
+        site_packages_path
+        / "tests/test_inputs/integration_dendrogram_test_results_no_pheno.drive_networks.txt"
+    )
+
+    output_path = site_packages_path / "tests/test_output/"
+
+    ibd_file = (
+        site_packages_path / "tests/test_inputs/simulated_ibd_test_data_v2_chr20.ibd.gz"
+    )
+
     monkeypatch.setattr(
         "sys.argv",
         [
             "drive",
             "dendrogram",
             "-i",
-            "./tests/test_inputs/integration_dendrogram_test_results_no_pheno.drive_networks.txt",
+            str(input_file.absolute()),
             "-f",
             "hapibd",
             "-t",
             "20:4666882-4682236",
             "-o",
-            "./tests/test_output/",
+            str(output_path.absolute()),
             "-n",
             "0",
             "-m",
             "3",
             "--ibd",
-            "./tests/test_inputs/simulated_ibd_test_data_v2_chr20.ibd.gz",
+            str(ibd_file.absolute()),
             "--log-file",
             "integration_dendrogram_test_results.log",
         ],
     )
 
 
-@pytest.mark.integtest
 def test_drive_full_run_no_phenotypes(system_args_no_pheno):
     # Make sure the output directory exists
-    Path("./tests/test_output").mkdir(exist_ok=True)
+    output_path = site_packages_path / "tests/test_output"
+    output_path.mkdir(exist_ok=True)
 
     drive.main()
 
     # we need to make sure the output was properly formed
     output = pd.read_csv(
-        "./tests/test_output/integration_test_results_no_pheno.drive_networks.txt",
+        site_packages_path
+        / "tests/test_output/integration_test_results_no_pheno.drive_networks.txt",
         sep="\t",
     )
     # list of errors to keep
@@ -128,16 +164,17 @@ def test_drive_full_run_no_phenotypes(system_args_no_pheno):
     assert not errors, "errors occured:\n{}".format("\n".join(errors))
 
 
-@pytest.mark.integtest
 def test_drive_full_run_with_phenotypes(system_args_with_pheno):
     # Make sure the output directory exists
-    Path("./tests/test_output").mkdir(exist_ok=True)
+    output_path = site_packages_path / "tests/test_output"
+    output_path.mkdir(exist_ok=True)
 
     drive.main()
 
     # we need to make sure the output was properly formed
     output = pd.read_csv(
-        "./tests/test_output/integration_test_results_with_pheno.drive_networks.txt",
+        site_packages_path
+        / "tests/test_output/integration_test_results_with_pheno.drive_networks.txt",
         sep="\t",
     )
 
@@ -146,7 +183,7 @@ def test_drive_full_run_with_phenotypes(system_args_with_pheno):
 
     # lets read in the header of the phenotype file so that we can form the additional columns
     with open(
-        "./tests/test_inputs/test_phenotype_file_withNAs.txt", "r"
+        site_packages_path / "tests/test_inputs/test_phenotype_file_withNAs.txt", "r"
     ) as pheno_input:
         grid_col, pheno1, pheno2, pheno3 = pheno_input.readline().strip().split("\t")
 
@@ -193,13 +230,13 @@ def test_drive_full_run_with_phenotypes(system_args_with_pheno):
     assert not errors, "errors occured:\n{}".format("\n".join(errors))
 
 
-@pytest.mark.integtest
 def test_drive_dendrogram_single_network(system_args_for_dendrogram):
-    Path("./tests/test_output").mkdir(exist_ok=True)
+    output_path = site_packages_path / "tests/test_output"
+    output_path.mkdir(exist_ok=True)
 
     drive.main()
 
-    output_path = Path("./tests/test_output/network_0_dendrogram.png")
+    output_path = output_path / "network_0_dendrogram.png"
 
     assert output_path.exists(), (
         "An error occurred while running the integration test for the dendrogram functionality. This error prevented the appropriate output from being generated."
@@ -208,6 +245,12 @@ def test_drive_dendrogram_single_network(system_args_for_dendrogram):
 
 @pytest.fixture()
 def system_args_for_pull_samples(monkeypatch):
+    input_path = (
+        site_packages_path
+        / "tests/test_inputs/integration_dendrogram_test_results_no_pheno.drive_networks.txt"
+    )
+    output_path = site_packages_path / "tests/test_output/test_sample_list.txt"
+
     monkeypatch.setattr(
         "sys.argv",
         [
@@ -215,37 +258,37 @@ def system_args_for_pull_samples(monkeypatch):
             "utilities",
             "pull-samples",
             "-i",
-            "./tests/test_inputs/integration_dendrogram_test_results_no_pheno.drive_networks.txt",
+            str(input_path.absolute()),
             "-o",
-            "./tests/test_output/test_sample_list.txt",
+            str(output_path.absolute()),
             "-n",
             "4",
         ],
     )
 
 
-@pytest.mark.integtest
 def test_pull_samples_success(system_args_for_pull_samples):
-    Path("./tests/test_output").mkdir(exist_ok=True)
+    output_path = site_packages_path / "tests/test_output"
+    output_path.mkdir(exist_ok=True)
 
     # run the drive function
     drive.main()
 
-    samples_filepath = Path("./tests/test_output/test_sample_list.txt")
+    samples_filepath = output_path / "test_sample_list.txt"
 
     assert samples_filepath.exists(), (
         f"An error occurred while running the integration test for the utilties 'pull-samples' subcommand. the output file, {samples_filepath}, was not found."
     )
 
 
-@pytest.mark.integtest
 def test_for_correct_samples(system_args_for_pull_samples):
-    Path("./tests/test_output").mkdir(exist_ok=True)
+    output_path = site_packages_path / "tests/test_output"
+    output_path.mkdir(exist_ok=True)
 
     # run the drive function
     drive.main()
 
-    samples_filepath = Path("./tests/test_output/test_sample_list.txt")
+    samples_filepath = output_path / "test_sample_list.txt"
 
     # we are going to make a set of samples to look for and use this to check if all of the samples are in the file
     samples_to_find = {"535", "574", "94", "210", "676"}

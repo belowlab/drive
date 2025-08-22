@@ -8,6 +8,7 @@ from drive.dendrogram import generate_dendrograms
 from drive.network import run_network_identification
 from drive.utilities.pull_samples import run_pull_samples
 from drive.utilities.callbacks import CheckInputExist
+from drive.utilities.testing import run_integration_test
 
 
 def generate_cmd_parser() -> argparse.ArgumentParser:
@@ -409,11 +410,20 @@ def generate_cmd_parser() -> argparse.ArgumentParser:
     pull_samples_parser.set_defaults(func=run_pull_samples)
 
     testing_parser = utility_cmd_subparser.add_parser(
-        name="run-integration-test",
+        name="test",
         help="run the integration test to ensure that DRIVE was installed correctly",
         formatter_class=RichHelpFormatter,
         parents=[common_parser],
         description="run-integration-test",
     )
+
+    testing_parser.add_argument(
+        "--run-integration-test",
+        default=True,
+        help="Flag that indicates the user wishes to run the integration test. (default: %(default)s)",
+        action="store_true",
+    )
+
+    testing_parser.set_defaults(func=run_integration_test)
 
     return parser
