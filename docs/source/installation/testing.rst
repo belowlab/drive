@@ -1,12 +1,12 @@
 Testing DRIVE 
 ====================
-Once DRIVE is installed, the user can use the provided test data to better understand how to run the program and to see examples of the inputs. This test data can be found in the tests folder on github `(test data location) <https://github.com/belowlab/drive/tree/main/tests>`_. At the moment, only integration test have been implemented for DRIVE. This documentation will only files pertaining to the integration tests. 
+Once DRIVE is installed, the user can use the provided test data to better understand how to run the program and to see examples of the inputs. This test data can be found in the tests folder on github `(test data location) <https://github.com/belowlab/drive/tree/main/tests>`_. At the moment, only integration test have been implemented for DRIVE. This section of the documentation will only provide information relevant to the integration tests. 
 
 The following two sections describe how we simulated the IBD data to use for the integration tests and then how the test folder is structured. If you only wish to know how to run the test data then you can skip to the "Commands to test successful installation" section.
 
 Simulating IBD Data:
 --------------------
-In order to provide test data, we needed to simulate pairwise IBD segments as inputs. To accomplish this we followed a similar procedure as described in the paper, `Open-source benchmarking of IBD segment detection methods for biobank-scale cohorts <https://doi.org/10.1093/gigascience/giac111>`_, by Tang et al. In this paper, the authors wished to compare several IBD detection programs so they developed a python pipeline using `msprime <https://tskit.dev/msprime/docs/stable/intro.html>`_, which can simulate pairwise IBD segments. We used their script `msprime_simulation.py <https://github.com/ZhiGroup/IBD_benchmark/blob/main/Simulation/msprime_simulation.py>`_ which generates a vcf file mimicking spares array data. For simplicity we used the same genetic map file and simulated data for the same chromosome (chromosome 20). The following command was used to run that script:
+In order to provide test data, we needed to simulate pairwise IBD segments as inputs. To accomplish this we followed a similar procedure as described in the paper, `Open-source benchmarking of IBD segment detection methods for biobank-scale cohorts <https://doi.org/10.1093/gigascience/giac111>`_, by Tang et al. In this paper, the authors wished to compare several IBD detection programs so they developed a python pipeline using `msprime <https://tskit.dev/msprime/docs/stable/intro.html>`_, which can simulate pairwise IBD segments. We used their script `msprime_simulation.py <https://github.com/ZhiGroup/IBD_benchmark/blob/main/Simulation/msprime_simulation.py>`_ which generates a vcf file mimicking sparse array data. For simplicity, we used the same genetic map file and simulated data for the same chromosome (chromosome 20). The following command was used to run that script:
 
 .. code::
 
@@ -45,87 +45,115 @@ Within this directory there are two files of interest:
 * test_phenotype_file_withNAs.txt - This file has simulated case/control data for 3 phenotypes indicated by 1/0. The first column is "GRID" and then the following columns are "phenoA", "phenoB", "phenoC".
 
 **test_integration.py**:
-pytest uses the test_integration.py script to run the integration test. This script contains the integration tests "test_drive_full_run_no_phenotypes", "test_drive_full_run_with_phenotypes", and "test_drive_dendrogram_single_network". The purpose of each test is explained below:
+pytest uses the test_integration.py script to run the integration test. This script contains 5 integration tests which are described below.
 
 * *test_drive_full_run_no_phenotypes*: test the behavior when only the network identification algorithm of DRIVE is used 
 * *test_drive_full_run_with_phenotypes*: test the behavior of the enrichment plugin by also providing phenotype information.
 * *test_drive_dendrogram_single_network*: test to make sure a dendrogram is formed for a network. This test uses the inputs from the 1st test.
+* *test_pull_samples_success*: test to make sure that DRIVE correctly forms an output file when trying to pull specific samples.
+* *test_for_correct_samples*: test to make sure that DRIVE pulled the correct samples from the right network.
 
-Commands to test successful installation:
------------------------------------------
-If DRIVE was installed using PDM to install the project you can run pytest using the following command:
+Commands to run the test data:
+------------------------------
+Depending how DRIVE was installed, the commands to run the test data can be different.
 
-.. code::
+.. tab-set:: 
+   :sync-group: run-test
 
-    pdm run pytest -v ./tests/test_integration.py
+   .. tab-item:: PIP installation 
+      :sync: key1
 
-If DRIVE was installed from pip or in a conda environment (using pip) or if it was installed from github, then the following command can be used to run the integration test.
+      As of v3.0.2, the Python testing framework "Pytest" has been bundled with DRIVE now so that users can run the test data directly from the DRIVE CLI. If DRIVE was installed directly from PYPI into either a virtualenv or a conda environment, then you can run the test data with the following command:
 
-.. code::
+      .. code:: bash
 
-    pytest -v ./tests/test_integration.py
+        drive utilities test
 
-If you receive an error saying "pytest not found", but DRIVE seems to be installed correctly then pytest the pytest dependency may not have been installed since it is not essential for testing. You can remedy this by running the following command:
+   .. tab-item:: PDM installation
+      :sync: key2
 
-.. code::
+      PDM has the ability to run commands within the created virtual environment if the prefix "pdm run" is used. The following command will run the test data using pdm, ensuring that the correct dependencies are being used.
+      
+      .. code::
 
-    pip install pytest
+         pdm run pytest -v ./tests/test_integration.py
 
-.. note::
+   .. tab-item:: GitHub installation
+      :sync: key3
 
-    All of these commands make the assumption that you are running them from the drive parent directory and the commands only work if you are using pdm or pip to install the tool.
+      If the user cloned the GitHub repository and then installed all the dependencies using the conda .yaml file or the pyproject.toml file then the following command can be used to run the integration test
 
-Command to run DRIVE (v3.0.0+) on simulated Data:
--------------------------------------------------
+      .. code::
+
+         pytest -v ./tests/test_integration.py
+
+         or 
+
+         python -m drive.drive utilities test  
+
+      .. note::
+
+         If you receive an error saying "pytest not found", but DRIVE seems to be installed correctly then pytest dependency may not have install correctly. You can remedy this by running the following command:
+
+         .. code::
+
+            pip install pytest
+
+   
+   .. tab-item:: Manually run tests
+      :sync: key4
+ 
+      Users can also manually run the test data. This option is usually only useful if the other testing options are not working or if you wish to compare new versions of DRIVE to older versions of DRIVE. 
+
+      DRIVE underwent major changes between v1 and v3. There are additional command flags that were added that are not present. For this reason, the below section describes how to run the test data for DRIVE v3 and then how to run the legacy commands for DRIVE v1 and DRIVE v2. These commands assume that you have either cloned the github repository or you have downloaded the "tests" directory from Github.
+
+      **Command to run DRIVE (v3.0.0+) on simulated Data:**
+
+      *Running the clustering subcommand*:
+
+      The test data in the tests/test_inputs folder illustrates how the inputs for the phenotype file and the segment data should be formatted for DRIVE. The following command will run those files and show what the DRIVE output file should look like:
+
+      .. code::
+
+         drive cluster -i tests/test_inputs/simulated_ibd_test_data_v2_chr20.ibd.gz  -f hapibd -t 20:4666882-4682236 -o test --recluster --min-cm 3 --log-to-console
+
+      
+      For this example, we used the gene *PRNP* on chromosome 20. We used gnomAD v2.2.1 to get the position of this gene because the simulated data is in build GRCh37. Variants within this gene have been implicated for Fatal Familial Insomnia, Gerstmann-Straussler Disease, and Huntington Disease. 
+      
+      *Running the dendrogram subcommand*:
+      
+      It is expected that the user will first run the above cluster command and has generated an output file called test.drive_networks.txt in their current directory. This file will be used as input in the dendrogram subcommand. The following command will generate a dendrogram for network 0.
+
+      .. code::
+
+         drive dendrogram -i test.drive_networks.txt --ibd tests/test_inputs/simulated_ibd_test_data_v2_chr20.ibd.gz -f hapibd -t 20:4666882-4682236 --min-cm 3 -n 0 --log-to-console
+
+
+      **Command to test legacy versions of DRIVE (before v3.0.0):**
+
+      Prior to DRIVE v3, the tool went through 2 stages involving significant changes to the CLI structure and functionality (v1 & v2). Both versions can still use the test data to run the clustering algorithm. The commands to test each version can be found below.
+
+      *Running example data for DRIVE v1:*
+
+      DRIVE v1 was an initial implementation of the DRIVE tooling that only performed clustering and had more limited runtime options but it can still run the test data using the following commands:
+
+      .. code::
+
+         drive -i tests/test_inputs/simulated_ibd_test_data_v2_chr20.ibd.gz -f hapIBD -t 7:117287120-117715971 -o ./test -m 3 
+
+      If successful, this command will produce an output file called test.drive_networks.txt.
+
+
+      **Running example data for DRIVE v2**
+
+      Although DRIVE v2 was only a development version and was never truely released for external use, it is still avaliable on PYPI (Although there is no guarantee that there may not be bugs that were worked out in later development). There were no subcommands in the CLI so only the clustering and phenomewide enrichment functionality is avaliable. You can still run the test data using the following commands:
+
+      .. code::
+
+         drive -i tests/test_inputs/simulated_ibd_test_data_v2_chr20.ibd.gz  -f hapibd -t 20:4666882-4682236 -o test --recluster --min-cm 3 --log-to-console
+
+      If successful, this command will generate a output file called test.drive_networks.txt.
+
 .. important::
 
-  The following examples of running the test data assume that you have installed DRIVE v3 or greater. Prior to v3, DRIVE did not have integration test and had a different CLI structure so these exact commands will not work. Read the bottom section titled "Command to test legacy versions of DRIVE" to run test for versions of DRIVE prior to v3.
-
-*Running the clustering subcommand*:
-The test data in the tests/test_inputs folder illustrates how the inputs for the phenotype file and the segment data should be formatted for DRIVE. The following command will run those files and show what the DRIVE output file should look like:
-
-.. code::
-
-    drive cluster -i tests/test_inputs/simulated_ibd_test_data_v2_chr20.ibd.gz  -f hapibd -t 20:4666882-4682236 -o test --recluster --min-cm 3 --log-to-console
-
-For this example, we used the gene *PRNP* on chromosome 20. We used gnomAD v2.2.1 to get the position of this gene because the simulated data is in build GRCh37. Variants within this gene has been implicated for Fatal Familial Insomnia, Gerstmann-Straussler Disease, and Huntington Disease. 
-
-*Running the dendrogram subcommand*:
-It is expected that the user will first run the above cluster command and has generated an output file called test.drive_networks.txt in their current directory. This file will be used as input in the dendrogram subcommand. The following command will generate a dendrogram for network 0.
-
-.. code::
-
-    drive dendrogram -i test.drive_networks.txt --ibd tests/test_inputs/simulated_ibd_test_data_v2_chr20.ibd.gz -f hapibd -t 20:4666882-4682236 --min-cm 3 -n 0 --log-to-console
-
-.. hint::
-
-    This example code assumes that you cloned the tests subdirectory from github or that you created a similar directory structure.
-
-More information about the output from DRIVE can found in the outputs section.
-
-Command to test legacy versions of DRIVE (before v3.0.0):
----------------------------------------------------------
-Prior to DRIVE v3, the tool went through 2 stages involving significant changes to the CLI structure and functionality (v1 & v2). Both versions can still use the test data to run the clustering algorithm. The commands to test each version can be found below.
-
-**Running example data for DRIVE v1**
-
-DRIVE v1 was an initial implementation of the DRIVE tooling that only performed clustering and had more limited runtime options but it can still run the test data using the following commands:
-
-.. code::
-
-   drive -i tests/test_inputs/simulated_ibd_test_data_v2_chr20.ibd.gz -f hapIBD -t 7:117287120-117715971 -o ./test -m 3 
-
-If successful, this command will produce an output file called test.drive_networks.txt.
-
-
-**Running example data for DRIVE v2**
-
-Although DRIVE v2 was only a development version and was never truely released for external use, it is still avaliable on PYPI (Although there is no guarantee that there may not be bugs that were worked out in later development). There were no subcommands in the CLI so only the clustering and phenomewide enrichment functionality is avaliable. You can still run the test data using the following commands:
-
-.. code::
-
-  drive -i tests/test_inputs/simulated_ibd_test_data_v2_chr20.ibd.gz  -f hapibd -t 20:4666882-4682236 -o test --recluster --min-cm 3 --log-to-console
-
-This command if successful will generate a output file called test.drive_networks.txt.
-
-
+   The commands for the "PDM installation" and "GitHub installation" that you are running them from the drive repository parent directory. 

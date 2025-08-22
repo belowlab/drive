@@ -1,6 +1,6 @@
 Installing DRIVE from Github
 ============================
-This installation method assumes that you are familiar with Git, Github, the commandline, venv, and a python package manager (either PDM or the Anaconda package manager). It is also assumed that these programs are installed/can be install on whatever computing environment you are using. You will have to use all of these tools so you will need to be familiar enough with each one to run the example commands. If you wish to read the documentation for each of these then they will be listed below:
+This installation method assumes that you are familiar with Git, Github, the commandline, venv, and a python package manager (either PDM or the Anaconda package manager). It is also assumed that these programs are installed/can be install on whatever computing environment you are using. You will have to use all of these tools so you will need to be familiar enough with each one to run the example commands. If you wish to learn more about these tools then you can read the links below:
 
 * .. card:: Git
     :link: https://git-scm.com/doc
@@ -35,12 +35,12 @@ This installation method assumes that you are familiar with Git, Github, the com
     :link: https://www.anaconda.com/
     :shadow: sm
 
-    Anaconda website that describes the installation and 
+    Anaconda website that describes how to install Conda and how to use it
 
 
 .. admonition:: For Developers
 
-    For individuals wishing to contribute to DRIVE, PDM is the current recommended way to install DRIVE. PDM allows for individuals to install not only the necessary runtime dependencies but also the necessary development dependencies to properly format and commit the code so that they can follow the required standards while committing to the project. 
+    For individuals wishing to contribute to DRIVE, PDM is the current required way to install DRIVE. PDM allows for individuals to install not only the necessary runtime dependencies but also the necessary development dependencies to format and commit the code so that they can follow the required standards while committing to the project. 
 
 Steps to installing DRIVE:
 --------------------------
@@ -69,79 +69,102 @@ The process should look similar to the screencasts below:
     :alt: github cloning screencast
 
 
-
-If you see a directory file tree then the program cloned correctly. If you receive an error saying that the directory does not exist, then you will have to debug the error to move onto step 2.
+If you see a directory file tree then the program cloned correctly. If you receive an error saying that the directory does not exist, then you will have to debug the error to move onto step 2. All steps after this section assume that you have moved into the parent directory of the cloned github repository.
 
 Step 2: Installing necessary dependencies:
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-To install the necessary dependencies for DRIVE you have to use a python compatible package manager. For this documentation, we are going to assume you are using Conda, PDM, or PIP. There are other packages managers such as uv and Poetry which you are welcome to use but we make no guarantee that they can install DRIVE correctly. 
+To install the necessary dependencies for DRIVE you have to use a python compatible package manager. For this documentation, we are going to assume you are using Conda, PDM, or PIP. 
 
 .. important:: 
 
-   DRIVE supports Python versions >=3.9 and not 3.11.0 (other versions of 3.11 work fine) for compatibility between packages. It is expected that your python version falls within this range when attempting to install the software. You can read more about this version requirement and how to check if you have the right python version :doc:`here </faq>` under the dropdown section 'What versions of Python is DRIVE compatible with?'
+   DRIVE supports Python versions >=3.10 (but not Python version 3.11.0 specifically) for compatibility between packages. It is expected that your python version falls within this range when attempting to install the software. You can read more about this version requirement and how to check if you have the right python version :doc:`here </faq>` under the dropdown section 'What versions of Python is DRIVE compatible with?'
 
-**if not using PDM or are not interested in developing the project:**
+.. tab-set::
+   :sync-group: installation-types
 
-If you are not using PDM than you can directly clone the conda environment.yml file using the following command:
+   .. tab-item:: Conda
+      :sync: key1 
 
-.. code::
+      This installation is only recommanded for those not looking to contribute to DRIVE and those who do not prefer to directly install DRIVE using the :doc:`Pip installation method </installation/pip_installation>`. Everything described here would also work with `Mamba <https://mamba.readthedocs.io/en/latest/index.html>`_ (a faster version of conda) if you replace 'conda' with 'mamba'.
 
-    conda env create -f DRIVE_envi.yml
+      Users can recreate an appropriate environment using the following command. The DRIVE_envi.yml file will be in the root directory of the cloned github repository.
 
+      .. code::
 
-Make sure that you are in the drive directory. This command will create a virtual environment called DRIVE using python 3.9 or newer with all the required dependencies. 
-
-**If using PDM:**
-
-PDM can install specific python versions `(documentation) <https://pdm-project.org/en/latest/usage/project/#install-python-interpreters-with-pdm>`_ and create virtual environments using a number of backends
-
-.. warning::
-
-    DRIVE has only been tested with python >= 3.9 and python <= 3.12. Other version of python may not work. For this reason it is currently recommended to specify the python version within this range.
-
-Once you have created and activated the environment, you can install the necessary dependencies using the following command:
-
-.. code::
-
-    pdm install --without dev,docs
-
-    or
-
-    pdm install --prod
-
-.. image:: /screencasts/pdm_installation.gif
-    :height: 300
-    :align: center
-    :alt: screencast of installing dependencies using poetry
+         conda env create -f DRIVE_envi.yml
 
 
-This command will install all of the runtime dependencies and not the developer dependencies. If you are developing the tool then you can use the command
+      Make sure that you are in the drive directory. This command will create a virtual environment called DRIVE using python 3.10 or newer with all the required dependencies. Once the environment is created, it can be activated using the following command:
 
-.. code:: 
+      .. code::
+
+        conda activate DRIVE
+
+
+   .. tab-item:: PDM
+      :sync: key2
+
+      *This method is required if you are contributing to DRIVE development*
+
+      **Using PDM to install Python:**
+      PDM can install specific python versions `(documentation) <https://pdm-project.org/en/latest/usage/project/#install-python-interpreters-with-pdm>`_ and creates virtual environments using a number of backends. We recommend installing the newest stable version of python (currently 3.13) for development and using venv for the virtual environemnt backend. 
+
+      Once you have installed the appropriate version of Python, then you can create a new virtual environment named drive-ibd and then instruct PDM to use this environment. The commands to do this are shown below:
+
+      .. code::
+
+        pdm venv create -n drive-ibd -w venv --force 3.13
+
+        pdm use --venv drive-ibd
     
-    pdm install --with dev
+      
+      Once you have created and activated the environment, PDM can then be used to install the necessary dependencies using the following commands:
 
-.. note::
-    If you also want to work on the Documentation then you need to install the docs group with PDM.
+      .. code::
 
-**If using PIP**
+          pdm install --without dev,docs
 
-Pip is able to install dependencies from the pyproject.toml file. It is recommended that you first create a python virtualenv (venv) using the appropriate python version and then use Pip to install dependencies into that venv. The following command will install all dependencies.
+          or
 
-.. code::
+          pdm install --prod
 
-    pip install .
+      .. image:: /screencasts/pdm_installation.gif
+          :height: 300
+          :align: center
+          :alt: screencast of installing dependencies using PDM
 
-**After Successful Install**
+
+      The above command will install all of the runtime dependencies and not the developer dependencies. If you are developing the tool then you can use the command
+
+      .. code:: 
+          
+          pdm install --with dev,docs
+
+
+   .. tab-item:: Pip
+      :sync: key3
+
+      **If using PIP**
+
+      Pip is able to install dependencies from the pyproject.toml file. It is recommended that you first create a python virtualenv using the appropriate version of Python and then use Pip to install dependencies into that environment.. The following command will install all dependencies.
+
+      .. code::
+
+          pip install .
+
+
+**After all the dependencies are installed:**
 
 If successful you will have all the dependencies you need to run the program. You can check this by running the command:
 
 .. code:: 
 
-    python drive/drive.py -h
+    python -m drive.drive --help
+
+The above command runs DRIVE in module mode which is required to ensure that all packages are correctly imported in DRIVE.
 
 
-you should see the DRIVE cli as shown below: 
+Users should see the DRIVE cli as shown below: 
 
 .. image:: /screencasts/drive_help_message.gif
     :height: 300
@@ -153,6 +176,20 @@ You can additionally check to make sure you have the correct version of DRIVE us
 
 .. code::
 
-    drive --version
+    python -m drive.drive --version
 
 The most up to date version of DRIVE can be found in the pyproject.toml file under the section "version". If your version is older than what is listed in the pyproject.toml than something went wrong during the install (Unless you purposefully installed an older version).
+
+**Running test data:**
+
+Users can also run DRIVE against the provided test data to ensure a successful installation using the following command:
+
+.. code::
+
+  python -m drive.drive utilities test
+
+.. note::
+  
+  If you are contributing to DRIVE or you installed all of the dependencies using PDM then you should read the following section to run the test data: :doc:`testing for contributors </contributing/testing>`.
+
+
