@@ -24,12 +24,13 @@ COPY ./README.md /app/README.md
 RUN curl -sSL https://pdm-project.org/install-pdm.py | python3.11 - 
 
 ENV PATH=/root/.local/bin:$PATH
-# # # disable update check
+# # # # disable update check
 ENV PDM_CHECK_UPDATE=false
-
-# Now we can create the runtime container and just copy the virtualenv to this container
-RUN pdm install --check --prod --no-editable -v
-RUN pdm run pytest ./tests/test_integration.py -v
+#
+# # Now we can create the runtime container and just copy the virtualenv to this container
+RUN pdm install --check --prod --no-editable -v 
+RUN pdm run drive utilities test
+# RUN pdm run pytest -v tests/test_integration.py
 
 # # Now we can create the runtime container and just copy the virtualenv to this container
 FROM debian:bookworm-slim AS runtime-container
@@ -39,8 +40,11 @@ RUN apt-get update \
   && rm -rf /var/lib/apt/lists/* 
 
 LABEL maintainer="belowlab"
-LABEL version="3.0.0"
+LABEL version="3.0.2"
 
 # # Copy and activate the virtualenv
 COPY --from=build-container /app/.venv/ /app/.venv
+COPY --from=build-container /app/LICENSE /app/LICENSE
+COPY --from=build-container /app/tests /app/tests
+
 ENV PATH="/app/.venv/bin:$PATH"
