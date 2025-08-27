@@ -13,9 +13,7 @@ def check_for_file(file_path: Path) -> bool:
     return file_path.exists()
 
 
-def run_integration_test(args: argparse.Namespace) -> None:
-    logger.info("Running integration test to ensure that DRIVE was installed correctly")
-
+def get_sysconfig_path() -> Path:
     site_packages_path = sysconfig.get_paths().get("platlib")
 
     # if the sites package doesn't exist then we need to tell the user.
@@ -26,8 +24,14 @@ def run_integration_test(args: argparse.Namespace) -> None:
         system_paths = ", ".join(sysconfig.get_paths())
         logger.debug(f"Current System paths are: {system_paths}")
         sys.exit(1)
-    else:
-        test_path = Path(site_packages_path) / "tests"
+
+    return Path(site_packages_path) / "tests"
+
+
+def run_integration_test(args: argparse.Namespace) -> None:
+    logger.info("Running integration test to ensure that DRIVE was installed correctly")
+
+    test_path = get_sysconfig_path()
 
     possible_file_paths = [
         test_path / "test_integration.py",
@@ -53,6 +57,7 @@ def run_integration_test(args: argparse.Namespace) -> None:
 
             test_ran = True
             break
+
     # if we don't find the test in the site package directory then we can test for it in different places
     if not test_ran:
         search_paths = ", ".join([str(path) for path in possible_file_paths])
