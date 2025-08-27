@@ -5,7 +5,7 @@ This section attempts to answer questions that people have commonly had or provi
 
 .. dropdown:: What versions of Python is DRIVE compatible with?
 
-    DRIVE supports Python versions >=3.9 except for Python 3.11.0 (Any other version of Python 3.11.* works fine). The allowed python version can always be found in the pyproject.toml file under the section "requires-python". 
+    DRIVE supports Python versions >=3.10 (but not Python version 3.11.0 specifically). The allowed python version can always be found in the pyproject.toml file under the section "requires-python". 
 
     In the past, there was a bug that if you installed outside of the supported Python versions using either PYPI or Conda, then an old version of DRIVE would be installed and it would break the integration test. This bug is now rectified and, as long as you are within the aforementioned range, DRIVE should be able to be installed correctly. 
 
@@ -53,3 +53,12 @@ This section attempts to answer questions that people have commonly had or provi
 .. dropdown:: Not familar with Object-Oriented Programming so how do I design a plugin?
 
       DRIVE relies very heavily on the object-oriented programming (OOP) paradigm to implement the plugin architecture. We are not expecting every one to be an expert in OOP to design their own plugins. For that reason we have provided a template of the plugin structure :doc:`here </plugin_descriptions/expected_plugin_structure>`. The user can add their code in the analyze function. The user will also have to give the plugin a name in the name field right above the analyze function and they will have to python file name (without the .py suffix) in the quoted section of the initialize function.
+
+
+.. dropdown:: How was the test data generated? 
+
+      The simulated IBD segments used as input for DRIVE were generate using a similar procedure as described here in this paper Open-source by Tang et al: `Open-source benchmarking of IBD segment detection methods for biobank-scale cohorts <https://doi.org/10.1093/gigascience/giac111>`_. You can read a detailed description of how we generated the testing data under the section called :doc:`Simulating IBD Data: </installation/testing>`.
+
+.. dropdown:: How can I report any issues that I find with DRIVE?
+
+      To keep track of issues with DRIVE we ask that you open a github issue. We have provided a template that can be found at ".github/ISSUE_TEMPLATE" within the repository. We ask that you use this format because it helps us to understand your issue and to reproduce it.

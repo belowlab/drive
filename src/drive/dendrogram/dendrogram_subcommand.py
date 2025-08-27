@@ -1,3 +1,4 @@
+from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Callable, Dict, List, Optional, Union
 
@@ -7,6 +8,7 @@ import pandas as pd
 import scipy.cluster.hierarchy as sch
 from log import CustomLogger
 from numpy import zeros
+from scipy.spatial import distance
 from scipy.spatial.distance import squareform
 
 from drive.network.filters import IbdFilter
@@ -59,7 +61,7 @@ def _determine_distances(**kwargs) -> tuple[Optional[str], float]:
     # returning an error if it doesn't
     err = check_kwargs(kwargs)
 
-    if err != None:
+    if err is not None:
         return err, 0.0
 
     # getting all the necessary values out of the kwargs dict
@@ -79,10 +81,6 @@ def _determine_distances(**kwargs) -> tuple[Optional[str], float]:
 
     if filtered_pairs.empty:
         ibd_length: float = min_cM / 2
-
-        # print(
-        #     f"no pairwise sharing for grids {pair_1} and {pair_2}. Using an ibd length of {ibd_length}cM instead"
-        # )
 
     else:
         ibd_length: float = filtered_pairs.iloc[0]["length"]
@@ -111,11 +109,42 @@ def record_matrix(output: Union[Path, str], matrix, pair_list: List[str]) -> Non
             output_file.write(f"{pair_list[i]}\t{distance_str}\n")
 
 
+def map_network_ids(id_list: List[str]) -> Dict[str, str]:
+    """Map the IDs from the original network to random patient ids (Ex: IDA -> Patient_1).
+    This is mainly useful for publication
+
+    Parameters
+    ----------
+    id_list : List[str]
+        list of strings representing the people in the network that the
+        distance matrix will be calculated for.
+
+    Returns
+    -------
+    Dict[str, str]
+        Returns a list where the original ids are the keys and the strings they were mapped
+            :withto 'Patient_1, Patient_2, etc...' are values"
+    """
+
+    return {
+        original_id: f"patient_{indx}"
+        for indx, original_id in enumerate(id_list, start=1)
+    }
+
+
+@dataclass
+class DistanceMatrixResults:
+    distance_matrix_id_mapping: Union[List[str], None]
+    distance_matrix: npt.NDArray
+    id_mapping: Union[Dict[str, str], None] = field(default_factory=dict)
+
+
 def make_distance_matrix(
     pairs_df: pd.DataFrame,
     min_cM: int,
+    map_ids: bool,
     distance_function: Callable = _determine_distances,
-) -> tuple[Union[List[str], None], npt.NDArray]:
+) -> DistanceMatrixResults:
     """Function that will make the distance matrix
 
     Parameters
@@ -128,6 +157,9 @@ def make_distance_matrix(
         This is the minimum centimorgan threshold that will be divided in half to
         get the ibd segment length when pairs do not share a segment
 
+    map_ids : bool
+        Boolean indication whether we want to map the ids to an random mapping or not
+
     Returns
     -------
     Dict[str, Dict[str, float]]
@@ -139,6 +171,15 @@ def make_distance_matrix(
     id_list = list(
         set(pairs_df.pair_1.values.tolist() + pairs_df.pair_2.values.tolist())
     )
+
+    if map_ids:
+        # dictionary that has the mappign from the original id to the new ids
+        id_mapping = map_network_ids(id_list)
+
+        # We need to save the new ids as the id_list for later code to work out
+        id_list = list(id_mapping.values())
+    else:
+        id_mapping = None
 
     matrix = zeros((len(id_list), len(id_list)), dtype=float)
 
@@ -154,13 +195,13 @@ def make_distance_matrix(
                 pairs_df=pairs_df,
                 cm_threshold=min_cM,
             )
-            if err != None:
+            if err is not None:
                 print(err)
-                return None, None
+                return DistanceMatrixResults(None, None, {})
 
             matrix[i][j] = distance
 
-    return ids_index, matrix
+    return DistanceMatrixResults(ids_index, matrix, id_mapping)
 
 
 def generate_dendrogram(matrix: npt.NDArray) -> npt.NDArray:
@@ -493,11 +534,24 @@ def generate_dendrograms(args) -> None:
             }
         )
 
-        print(haplotype_filtered_ibd_segments)
-
-        matrix_id_list, distance_matrix = make_distance_matrix(
-            haplotype_filtered_ibd_segments[["pair_1", "pair_2", "length"]], args.min_cm
+        # matrix_id_list, distance_matrix = make_distance_matrix(
+        #     haplotype_filtered_ibd_segments[["pair_1", "pair_2", "length"]],
+        #     args.min_cm,
+        #     args.map_ids,
+        # )
+        distanceMatrixObj = make_distance_matrix(
+            haplotype_filtered_ibd_segments[["pair_1", "pair_2", "length"]],
+            args.min_cm,
+            args.map_ids,
         )
+
+        if distanceMatrixObj.id_mapping:
+            with open(
+                args.output / f"network_{clstID}_id_mapping.txt", "w", encoding="utf-8"
+            ) as mapping_fh:
+                mapping_fh.write("Original_ID\tMapped_ID\n")
+                for orig_id, new_id in distanceMatrixObj.id_mapping.items():
+                    mapping_fh.write(f"{orig_id}\t{new_id}\n")
 
         if args.keep_temp:
             temp_dir = args.output / f"network_{clstID}_temp"
@@ -509,15 +563,19 @@ def generate_dendrograms(args) -> None:
                 f"recorded the distance matrix to the following path: {full_output_matrix_path}"
             )
 
-            record_matrix(full_output_matrix_path, distance_matrix, matrix_id_list)
+            record_matrix(
+                full_output_matrix_path,
+                distanceMatrixObj.distance_matrix,
+                distanceMatrixObj.distance_matrix_id_mapping,
+            )
 
-        dendrogram_array = generate_dendrogram(distance_matrix)
+        dendrogram_array = generate_dendrogram(distanceMatrixObj.distance_matrix)
 
         logger.info(f"writing the output dendrogram to {full_output_path}")
 
         _ = draw_dendrogram(
             dendrogram_array,
-            matrix_id_list,
+            distanceMatrixObj.distance_matrix_id_mapping,
             full_output_path,
             args.title,
             args.font_size,

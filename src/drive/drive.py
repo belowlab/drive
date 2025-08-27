@@ -18,7 +18,9 @@ def main() -> None:
     # creating and configuring the logger and then recording user inputs
     logger = CustomLogger.create_logger()
 
-    if args.output.is_dir():
+    if not hasattr(args, "output"):
+        logger.configure("", None, args.verbose, args.log_to_console)
+    elif args.output.is_dir():
         logger.configure(
             args.output, args.log_filename, args.verbose, args.log_to_console
         )
@@ -34,8 +36,9 @@ def main() -> None:
     # record the input parameters using a method from the logger object that
     # takes the parser as an argument
     logger.record_namespace(args)
-
-    logger.debug(f"Parent directory for log files and output: {args.output.parent}")
+    # We need to record the output directory when we run DRIVE unless its for unit test
+    if hasattr(args, "output"):
+        logger.debug(f"Parent directory for log files and output: {args.output.parent}")
 
     logger.info(f"Analysis start time: {start_time}")
 

@@ -501,7 +501,7 @@ class IbdFilter:
 
         if len(cohort_ids) != 0:
             logger.info(
-                f"{ids_in_ibd_pd} out of the {len(cohort_ids)} ids provided were found within the IBD data file after filtering"
+                f"{ids_in_ibd_pd} out of the {len(cohort_ids)} ids provided were found within the IBD data file after filtering for minimum shared segment size and filtering to the locus chr{self.target_gene.chr}:{self.target_gene.start}-{self.target_gene.end}"
             )
         else:
             logger.info(

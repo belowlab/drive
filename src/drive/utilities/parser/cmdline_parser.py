@@ -8,6 +8,7 @@ from drive.dendrogram import generate_dendrograms
 from drive.network import run_network_identification
 from drive.utilities.pull_samples import run_pull_samples
 from drive.utilities.callbacks import CheckInputExist
+from drive.utilities.testing import run_integration_test
 
 
 def generate_cmd_parser() -> argparse.ArgumentParser:
@@ -290,6 +291,13 @@ def generate_cmd_parser() -> argparse.ArgumentParser:
         help="minimum centimorgan threshold. The program expects this to be an integer value. (default: %(default)s)",
     )
 
+    dendrogram_parser.add_argument(
+        "--map-ids",
+        default=False,
+        help="Map the ids in the network to an anonymous ID of the form patient_X. This labelling is mainly used for publication to change internal identifiers. The mapping will be saved in the output directory as the dendrogram as a file called 'network_{clstID}_id_mappings.txt' (default: %(default)s)",
+        action="store_true",
+    )
+
     # Add a mutually exclusive group that requires you to either provide the
     # argument for the network id or the generate-all flag
     exclusive_group = dendrogram_parser.add_mutually_exclusive_group(required=True)
@@ -400,5 +408,22 @@ def generate_cmd_parser() -> argparse.ArgumentParser:
     )
 
     pull_samples_parser.set_defaults(func=run_pull_samples)
+
+    testing_parser = utility_cmd_subparser.add_parser(
+        name="test",
+        help="run the integration test to ensure that DRIVE was installed correctly",
+        formatter_class=RichHelpFormatter,
+        parents=[common_parser],
+        description="run-integration-test",
+    )
+
+    testing_parser.add_argument(
+        "--run-integration-test",
+        default=True,
+        help="Flag that indicates the user wishes to run the integration test. (default: %(default)s)",
+        action="store_true",
+    )
+
+    testing_parser.set_defaults(func=run_integration_test)
 
     return parser
