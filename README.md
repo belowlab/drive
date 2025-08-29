@@ -49,7 +49,7 @@ DRIVE is available on PyPI and can easily be installed using the following comma
 pip install drive-ibd
 ```
 
-It is recommended to install DRIVE within a virtual environment such as venv, or conda. More information about this process can be found within the documentation (https://drive-ibd.readthedocs.io/en/latest/index.html).
+It is recommended to install DRIVE within a virtual environment such as venv, or conda. More information about this process can be found within the [documentation](https://drive-ibd.readthedocs.io/en/latest/index.html).
 
 **Github Installation/Installing from source:**
 If the user wishes to develop DRIVE or install the program from source then they can clone the repository. This process is described under the section called "Github Installation" in the documentation.
