@@ -80,11 +80,13 @@ python -m drive.drive utilities test
 docker run -it --rm drive-image-tag drive utilities test
 ```
 
-Because singularity is a read-only file system for security, the commands to run the test data are different. Users can't run the built in testing framework because it will not have permissions to write to the filesystem (filesystem meaning the directory in the singularity image). Instead users can still run the following command where they replace 'singularity-image-path.sif' with the correct image path.
+Because singularity is a read-only file system for security, the commands to run the test data are different. Users can't run the built in testing framework because it will not have permissions to write to the filesystem (filesystem meaning the directory in the singularity image). Instead users can run the following commands to run the test data. First a writable "sandbox" has to be created. Users can replace the phrase "singularity-sandbox" with a name of their choosing. After that step, users can exec the sandbox. All other commands can use the normal singularity image (not the sandbox).
 
 ```bash
-# Using singularity
-singularity exec -w --no-home singularity-image-path.sif drive utilities test
+# Using singularity to make a sandbox
+singularity build --sandbox singularity-sandbox singularity-image-path.sif
+# Now you can run the unit test using the sandbox image
+singularity exec -w --no-home singularity-sandox drive utilities test
 ```
 
 *Note*: We expected only people who are contributing to DRIVE to be using PDM. The provided testing command for PDM allows us to ensure that the correct PDM virtual environment is being used. For this reason the PDM command is the most different from the others.
