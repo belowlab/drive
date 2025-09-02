@@ -1,7 +1,7 @@
 Configuring DRIVE to use the plugins
 ====================================
 
-After the plugin is create, DRIVE still has to be configured to use the plugin. This configuration is done through a json file. This file by default is placed within the source code directory for DRIVE. This file by default looks like this:
+After the plugin is created, DRIVE still has to be configured to use the plugin. This configuration is done through a json file. This file by default is placed within the source code directory for DRIVE. This file by default looks like this:
 
 .. code:: json
 
