@@ -22,11 +22,11 @@ This section attempts to answer questions that people have commonly had or provi
 
     * **Extensibility through the plugins**
 
-      DRIVE v3 is designed to interface with existing analytical pipelines through an flexible and extensible backend. This backend relies on the plugin architecture described in more detail here :doc:`Plugin Description </plugin_descriptions/plugin_architecture>`. Users can create their own "plugins" to perform additional analyses or output data in a more convenient format. This flexibility allows users to adjust DRIVE to their use cases without having to wait for formal updates to DRIVE from the Belowlab. You can click on this links to read more information about the way DRIVE stores the network data in the :doc:`Data API </plugin_descriptions/data_container_api>` or to view an example of a valid plugin :doc:`plugin template </plugin_descriptions/expected_plugin_structure>`
+      DRIVE v3 is designed to interface with existing analytical pipelines through an flexible and extensible backend. This backend relies on the plugin architecture described in more detail here :doc:`Plugin Description </plugin_descriptions/plugin_architecture>`. Users can create their own "plugins" to perform additional analyses or output data in a more convenient format. This flexibility allows users to adjust DRIVE to their use cases without having to wait for formal updates to DRIVE from the Belowlab. You can click on this link to read more information about the way DRIVE stores the network data in the :doc:`Data API </plugin_descriptions/data_container_api>` or to view an example of a valid plugin :doc:`plugin template </plugin_descriptions/expected_plugin_structure>`
 
     * **Performance increases**
 
-      In designing DRIVE v3, we took advantage of features of common data science libraries such as Pandas and PyArrow to boost performance. Current profiling shows a 10 fold improvement when running only the clustering algorithm over the CFTR locus in pairwise IBD segments for 250,000 individuals. The increase in memory comes from reading the data in in large chunks of dataframes rather than reading the file line by line. Since DRIVE was designed to be used primarily on servers or the cloud we figured this to be an acceptable increase (although you can control the size of chunks being read in using the chunksize argument.)
+      In designing DRIVE v3, we took advantage of features of common data science libraries such as Pandas and PyArrow to boost performance. Current profiling shows a 10 fold improvement when running only the clustering algorithm over the CFTR locus in pairwise IBD segments for 250,000 individuals. The increase in memory comes from reading the data in using large chunks of dataframes rather than reading the file line by line. Since DRIVE was designed to be used primarily on servers or the cloud we figured this to be an acceptable increase (although you can control the size of chunks being read in using the chunksize argument.)
 
       .. list-table:: DRIVE v1 performance compared to DRIVE v3
           :widths: 25 50 25
@@ -52,12 +52,12 @@ This section attempts to answer questions that people have commonly had or provi
 
 .. dropdown:: Not familar with Object-Oriented Programming so how do I design a plugin?
 
-      DRIVE relies very heavily on the object-oriented programming (OOP) paradigm to implement the plugin architecture. We are not expecting every one to be an expert in OOP to design their own plugins. For that reason we have provided a template of the plugin structure :doc:`here </plugin_descriptions/expected_plugin_structure>`. The user can add their code in the analyze function. The user will also have to give the plugin a name in the name field right above the analyze function and they will have to python file name (without the .py suffix) in the quoted section of the initialize function.
+      DRIVE relies very heavily on the object-oriented programming (OOP) paradigm to implement the plugin architecture. We are not expecting everyone to be an expert in OOP to design their own plugins. For that reason we have provided a template of the plugin structure :doc:`here </plugin_descriptions/expected_plugin_structure>`. The user can add their code in the analyze function. The user will also have to give the plugin a name in the name field right above the analyze function and they will have to provie a python file name (without the .py suffix) in the quoted section of the initialize function.
 
 
 .. dropdown:: How was the test data generated? 
 
-      The simulated IBD segments used as input for DRIVE were generate using a similar procedure as described here in this paper Open-source by Tang et al: `Open-source benchmarking of IBD segment detection methods for biobank-scale cohorts <https://doi.org/10.1093/gigascience/giac111>`_. You can read a detailed description of how we generated the testing data under the section called :doc:`Simulating IBD Data: </installation/testing>`.
+      The simulated IBD segments used as input for DRIVE were generated using a similar procedure as described here in this paper Open-source by Tang et al: `Open-source benchmarking of IBD segment detection methods for biobank-scale cohorts <https://doi.org/10.1093/gigascience/giac111>`_. You can read a detailed description of how we generated the testing data under the section called :doc:`Simulating IBD Data: </installation/testing>`.
 
 .. dropdown:: How can I report any issues that I find with DRIVE?
 

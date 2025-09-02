@@ -26,14 +26,14 @@ Explanation of command:
 * **input ibd filepath**: filepath to the output from a program like hap-IBD, iLASH, or GERMLINE. This file should correspond to the chromosome that the locus of interest is on.
 
 
-* **chromosome position to cluster around**: string indicating the target region of interest should be of the form chromosome:start position-end position (An example is chrX:XXXX-XXXX).
+* **chromosome position to cluster around**: string indicating the target region of interest should be of the form chromosome:start_position-end_position (An example is chrX:XXXX-XXXX).
 
 
 * **output filepath**: filepath to write an output file to. This value should not include a suffix. DRIVE will automatically append the suffix ".DRIVE.txt".
 
 dendrogram command format:
 --------------------------
-The same assumptions as were stated for the cluster command are also assumed here. This command is the bare minimum that needs to be provided in order to run the dendrogram subcommand. All text in brackets is just a placeholder to indicate the type of argument the user needs to provide. 
+The same assumptions as were stated for the cluster command are also made here. This command is the bare minimum that needs to be provided in order to run the dendrogram subcommand. All text in brackets is just a placeholder to indicate the type of argument the user needs to provide. 
 
 .. code::
 
