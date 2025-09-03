@@ -90,7 +90,12 @@ Inputs for the clustering subcommand:
 
 ----
 
+* **compress-output**: When DRIVE is run PhenomeWide (especially using the newer PheCode X definitions) the output file from the clustering can become quite large. To help manage file storage the user can compress the output. The output file will be gzipped.
+
+----
+
 * **recluster**: Flag indicating if the user wishes to recluster networks or if they wish to only return the initial networks without redoing the clustering algorithm. If the user wishes to use reclustering then DRIVE will use the values for hub-threshold, segment-distribution-threshold, min-connected-threshold, and max-network-size. If the user wishes to not perform reclustering, then they should pass the flag "*--no-recluster*".
+
 
 ----
 

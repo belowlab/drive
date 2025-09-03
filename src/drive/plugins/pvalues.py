@@ -6,7 +6,7 @@ from numpy import float64
 from scipy.stats import binomtest
 
 from drive.network.factory import factory_register
-from drive.network.models import Data_Interface, Network_Interface
+from drive.network.models import Network_Interface, RuntimeState
 
 logger = CustomLogger.get_logger(__name__)
 
@@ -353,7 +353,7 @@ class Pvalues:
     def analyze(self, **kwargs) -> None:
         # this is the DataHolder model. We will use the networks, the
         # affected_inds, and the phenotype_prevalances attribute
-        data: Data_Interface = kwargs["data"]
+        data: RuntimeState = kwargs["data"]
 
         if data.carriers:
             for network in data.networks:
