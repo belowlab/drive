@@ -4,6 +4,7 @@ import sys
 import pandas as pd
 import sysconfig
 from pathlib import Path
+import os
 
 sys.path.append("./src")
 
@@ -44,6 +45,40 @@ def system_args_no_pheno(monkeypatch):
             "--recluster",
             "--log-filename",
             "integration_test_results_no_pheno.log",
+        ],
+    )
+
+
+@pytest.fixture()
+def with_compression_flag(monkeypatch):
+    input_file = (
+        site_packages_path / "tests/test_inputs/simulated_ibd_test_data_v2_chr20.ibd.gz"
+    )
+
+    output_file = (
+        site_packages_path
+        / "tests/test_output/integration_test_results_with_compression_flag"
+    )
+
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "drive",
+            "cluster",
+            "-i",
+            str(input_file.absolute()),
+            "-f",
+            "hapibd",
+            "-t",
+            "20:4666882-4682236",
+            "-o",
+            str(output_file.absolute()),
+            "-m",
+            "3",
+            "--recluster",
+            "--log-filename",
+            "integration_test_results_no_pheno.log",
+            "--compress-output",
         ],
     )
 
@@ -164,6 +199,36 @@ def test_drive_full_run_no_phenotypes(system_args_no_pheno):
     assert not errors, "errors occured:\n{}".format("\n".join(errors))
 
 
+def test_drive_with_compression_flag(with_compression_flag):
+    # Make sure the output directory exists
+    output_path = site_packages_path / "tests/test_output"
+    output_path.mkdir(exist_ok=True)
+
+    drive.main()
+
+    errors = []
+
+    output_file = (
+        site_packages_path
+        / "tests/test_output/integration_test_results_with_compression_flag.drive_networks.txt.gz"
+    )
+
+    uncompressed_output_file = (
+        site_packages_path
+        / "tests/test_output/integration_test_results_with_compression_flag.drive_networks.txt"
+    )
+
+    if not os.path.exists(output_file):
+        errors.append(
+            f"Expected to find the output file, {output_file}. This file was not found"
+        )
+    if os.path.exists(uncompressed_output_file):
+        errors.append(
+            f"Expected to find a compressed file, {output_file}. Instead we found the uncompressed output file, {uncompressed_output_file}"
+        )
+    assert not errors, "errors occured:\n{}".format("\n".join(errors))
+
+
 def test_drive_full_run_with_phenotypes(system_args_with_pheno):
     # Make sure the output directory exists
     output_path = site_packages_path / "tests/test_output"
@@ -238,9 +303,9 @@ def test_drive_dendrogram_single_network(system_args_for_dendrogram):
 
     output_path = output_path / "network_0_dendrogram.png"
 
-    assert output_path.exists(), (
-        "An error occurred while running the integration test for the dendrogram functionality. This error prevented the appropriate output from being generated."
-    )
+    assert (
+        output_path.exists()
+    ), "An error occurred while running the integration test for the dendrogram functionality. This error prevented the appropriate output from being generated."
 
 
 @pytest.fixture()
@@ -276,9 +341,9 @@ def test_pull_samples_success(system_args_for_pull_samples):
 
     samples_filepath = output_path / "test_sample_list.txt"
 
-    assert samples_filepath.exists(), (
-        f"An error occurred while running the integration test for the utilties 'pull-samples' subcommand. the output file, {samples_filepath}, was not found."
-    )
+    assert (
+        samples_filepath.exists()
+    ), f"An error occurred while running the integration test for the utilties 'pull-samples' subcommand. the output file, {samples_filepath}, was not found."
 
 
 def test_for_correct_samples(system_args_for_pull_samples):
@@ -302,6 +367,6 @@ def test_for_correct_samples(system_args_for_pull_samples):
 
     sample_differences = samples_to_find.difference(samples_in_file)
 
-    assert not sample_differences, (
-        f"The samples, {','.join(sample_differences)}, were expected to be found within the file but were not. Instead, only these values were found, {','.join(samples_in_file)}"
-    )
+    assert (
+        not sample_differences
+    ), f"The samples, {','.join(sample_differences)}, were expected to be found within the file but were not. Instead, only these values were found, {','.join(samples_in_file)}"

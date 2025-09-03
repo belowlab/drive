@@ -1,10 +1,11 @@
 from dataclasses import dataclass
 from typing import List
+import gzip
 
 from log import CustomLogger
 
 from drive.network.factory import factory_register
-from drive.network.models import Data_Interface, Network_Interface
+from drive.network.models import RuntimeState, Network_Interface
 
 logger = CustomLogger.get_logger(__name__)
 
@@ -86,13 +87,25 @@ class NetworkWriter:
         """main function of the plugin that will create the
         output path and then use helper functions to write
         information to a file"""
+        # We need to pull out the data to write to a file
+        # and then the configuration options to use
+        data: RuntimeState = kwargs["data"]
+        config_options = data.config_options
+        compress_data = config_options.get("compress", False)
 
-        data: Data_Interface = kwargs["data"]
-
-        # creating the full output path for the output file
+        # Create the output path for the file
         network_file_output = data.output_path.parent / (
             data.output_path.name + ".drive_networks.txt"
         )  # noqa: E501
+
+        writer = open
+
+        # Append the gzip suffix if we are going to compress the output
+        if compress_data:
+            network_file_output = (
+                network_file_output.parent / f"{network_file_output.name}.gz"
+            )
+            writer = gzip.open
 
         logger.debug(
             f"The output in the network_writer plugin is being written to: {network_file_output}"  # noqa: E501
@@ -102,7 +115,7 @@ class NetworkWriter:
         # are guarenteed to maintain order as we are creating the rows
         phenotypes = list(data.carriers.keys())
 
-        with open(network_file_output, "w", encoding="utf-8") as networks_output:
+        with writer(network_file_output, "wt") as networks_output:
             header_str = NetworkWriter._form_header(phenotypes)
             # iterate over each network and pull out the appropriate
             # information into strings

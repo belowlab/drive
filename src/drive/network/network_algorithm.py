@@ -7,7 +7,7 @@ from log import CustomLogger
 import drive.network.factory as factory
 from drive.network.cluster import ClusterHandler, cluster
 from drive.network.filters import IbdFilter
-from drive.network.models import Data, create_indices
+from drive.network.models import RuntimeState, create_indices
 from drive.utilities.functions import split_target_string
 from drive.utilities.parser import PhenotypeFileParser, load_phenotype_descriptions
 
@@ -111,7 +111,13 @@ def run_network_identification(args) -> None:
     networks = cluster(filter_obj, cluster_handler, indices.cM_indx)
 
     # creating the data container that all the plugins can interact with
-    plugin_api = Data(networks, args.output, phenotype_counts, desc_dict)
+    plugin_api = RuntimeState(
+        networks,
+        args.output,
+        phenotype_counts,
+        desc_dict,
+        config_options={"compress": args.compress_output},
+    )
 
     logger.debug(f"Data container: {plugin_api}")
 
