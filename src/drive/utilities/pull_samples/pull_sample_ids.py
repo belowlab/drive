@@ -1,4 +1,5 @@
 import sys
+import gzip
 from log import CustomLogger
 
 logger = CustomLogger.get_logger(__name__)
@@ -23,7 +24,17 @@ def run_pull_samples(args) -> None:
             "Expect arguments to be passed to the case-col flag since the cases-only flag was used. If you intend to pull only cases please provide both the cases-only flag and the column name to pull using the case-col flag."
         )
 
-    with open(args.input, "r", encoding="utf-8") as drive_results:
+    # we are going to alias the open function to another variable. This aliasing is used
+    # so that we can appropriately select the gzip reader if the file is compressed.
+    writer = open
+    # Alias the gzip writer instead if the file is compressed
+    if args.input.suffix == ".gz":
+        logger.debug(
+            f"detected that the input file, {args.input}, was compressed. Using the gzip reader instead of standard open function"
+        )
+        writer = gzip.open
+
+    with writer(args.input, "rt") as drive_results:
         samples = []
         # map the header line to an index
         header_map = map_header_cols_to_indx(next(drive_results))
