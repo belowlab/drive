@@ -1,19 +1,20 @@
 Structure of the Data container
 ===============================
 
-There is a specific class that the clustering module of DRIVE creates. This class is called "Data" and is passed to each plugin (see code block below). This class has no methods. The following section will describe the class attributes so the user understands what information each plugin can access by default.
+There is a specific class that the clustering module of DRIVE creates. This class is called "RuntimeState" and is passed to each plugin (see code block below). This class has no methods and is used to convey and share state of the application including both data and configuration options. The following section will describe the class attributes so the user understands what information each plugin can access by default.
 
 
 .. code:: python
 
     @dataclass
-    class Data:
+    class RuntimeState:
         """main class to hold the data from the network analysis and the different pvalues"""
 
         networks: List[Network_Interface]
         output_path: Path
         carriers: Dict[str, Dict[str, List[str]]]
         phenotype_descriptions: Dict[str, Dict[str, str]]
+        config_options: dict[str, Any] = field(default_factory=dict)
 
 .. admonition:: Changing the Data class attributes
 
@@ -74,3 +75,5 @@ Data class attributes:
 - **carriers**: This attribute is a dictionary of dictionaries that tells who cases, controls, and exclusions are for each phenotype. The outer key is the phenotype id. The inner dictionary has 3 keys: "cases", "controls", "excluded". The values for each of these keys are a list that contains the individual ids for each case, control, or excluded individual, respectively.
 
 - **phenotype_descriptions**: This attribute is another dictionary of dictionaries that has a description of each phenotype. The outer key is the phenotype id. The inner key is the string phenotype and has the phenotype description as a value.
+
+- **config_options**: This attribute is a dictionary where the keys represent runtime options that the plugin can use and the values are the state for the runtime option. For example the network writer plugin checks to see if there is a key "compress" and decides whether or not to compress the output file based on the value of this key.
