@@ -116,7 +116,10 @@ def run_network_identification(args) -> None:
         args.output,
         phenotype_counts,
         desc_dict,
-        config_options={"compress": args.compress_output},
+        config_options={
+            "compress": args.compress_output,
+            "phecode_categories_to_keep": args.phecode_categories_to_keep,
+        },
     )
 
     logger.debug(f"Data container: {plugin_api}")

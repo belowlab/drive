@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from typing import List
 import gzip
+import sys
 
 from log import CustomLogger
 
@@ -92,6 +93,7 @@ class NetworkWriter:
         data: RuntimeState = kwargs["data"]
         config_options = data.config_options
         compress_data = config_options.get("compress", False)
+        phecodes_to_keep = config_options.get("phecode_categories_to_keep", [])
 
         # Create the output path for the file
         network_file_output = data.output_path.parent / (
@@ -113,7 +115,26 @@ class NetworkWriter:
 
         # we are going to pull out the phenotypes into a list so that we
         # are guarenteed to maintain order as we are creating the rows
-        phenotypes = list(data.carriers.keys())
+        if phecodes_to_keep:
+            # We are going to find all of the phecodes that are in this additional string
+            phecode_categories = ", ".join(phecodes_to_keep)
+            logger.info(
+                f"Gathering the results for the phecodes in the categories: {phecode_categories}"
+            )
+
+            phenotypes = [
+                value
+                for value in data.carriers.keys()
+                if any(phecode_prefix in value for phecode_prefix in phecodes_to_keep)
+            ]
+
+            if len(phenotypes) == 0:
+                logger.fatal(
+                    f"There were no phenotypes found in the categories: {phecode_categories}. This probably indicates a typo in the flag provided. No output will be written and program will be terminated."
+                )
+                sys.exit(1)
+        else:
+            phenotypes = list(data.carriers.keys())
 
         with writer(network_file_output, "wt") as networks_output:
             header_str = NetworkWriter._form_header(phenotypes)

@@ -14,9 +14,6 @@ from drive import drive
 site_packages_path = Path(sysconfig.get_paths().get("platlib"))
 
 
-# @pytest.mark.integtest
-# def test_drive_full_run():
-#     assert 1==1
 @pytest.fixture()
 def system_args_no_pheno(monkeypatch):
     input_file = (
@@ -162,6 +159,7 @@ def system_args_for_dendrogram(monkeypatch):
 def test_drive_full_run_no_phenotypes(system_args_no_pheno):
     # Make sure the output directory exists
     output_path = site_packages_path / "tests/test_output"
+    print(output_path)
     output_path.mkdir(exist_ok=True)
 
     drive.main()
