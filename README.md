@@ -89,7 +89,7 @@ singularity build --sandbox singularity-sandbox singularity-image-path.sif
 singularity exec -w --no-home singularity-sandox drive utilities test
 ```
 
-*Note*: We expected only people who are contributing to DRIVE to be using PDM. The provided testing command for PDM allows us to ensure that the correct PDM virtual environment is being used. For this reason the PDM command is the most different from the others.
+*Note*: We expect only people who are contributing to DRIVE to be using PDM. The provided testing command for PDM allows us to ensure that the correct PDM virtual environment is being used. For this reason the PDM command is the most different from the others.
 
 ### Reporting issues
 

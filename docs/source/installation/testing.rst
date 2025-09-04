@@ -60,7 +60,7 @@ Depending how DRIVE was installed, the commands to run the test data can be diff
 .. tab-set:: 
    :sync-group: run-test
 
-   .. tab-item:: PIP installation 
+   .. tab-item:: PIP 
       :sync: key1
 
       As of v3.0.2, the Python testing framework "Pytest" has been bundled with DRIVE now so that users can run the test data directly from the DRIVE CLI. If DRIVE was installed directly from PYPI into either a virtualenv or a conda environment, then you can run the test data with the following command:
@@ -69,7 +69,7 @@ Depending how DRIVE was installed, the commands to run the test data can be diff
 
         drive utilities test
 
-   .. tab-item:: PDM installation
+   .. tab-item:: PDM 
       :sync: key2
 
       PDM has the ability to run commands within the created virtual environment if the prefix "pdm run" is used. The following command will run the test data using pdm, ensuring that the correct dependencies are being used.
@@ -78,7 +78,7 @@ Depending how DRIVE was installed, the commands to run the test data can be diff
 
          pdm run pytest -v ./tests/test_integration.py
 
-   .. tab-item:: GitHub installation
+   .. tab-item:: GitHub 
       :sync: key3
 
       If the user cloned the GitHub repository and then installed all the dependencies using the conda .yaml file or the pyproject.toml file then the following command can be used to run the integration test
@@ -99,9 +99,27 @@ Depending how DRIVE was installed, the commands to run the test data can be diff
 
             pip install pytest
 
-   
-   .. tab-item:: Manually run tests
+   .. tab-item:: Docker
       :sync: key4
+
+      Once the user has pulled the docker image from DockerHub, they can use the following command to run the test data. This command also works for other container software such as Podman, only replace the phrase "docker" with "podman".
+      
+      .. code::
+        
+        docker run -it --rm drive-image-tag drive utilities test
+        
+
+      Singularity is a read-only file system for security. Due to this, the commands to run the test data are different. Users can't run the built in testing framework because it will not have permissions to write to the filesystem (filesystem meaning the directory in the singularity image). Instead users can run the following commands to run the test data. First a writable "sandbox" has to be created. Users can replace the phrase "singularity-sandbox" with a name of their choosing. After that step, users can exec the sandbox. All other commands can use the normal singularity image (not the sandbox).
+
+      .. code::
+
+        # Using singularity to make a sandbox
+        singularity build --sandbox singularity-sandbox singularity-image-path.sif
+        # Now you can run the unit test using the sandbox image
+        singularity exec -w --no-home singularity-sandox drive utilities test
+        
+   .. tab-item:: Manual
+      :sync: key5
  
       Users can also manually run the test data. This option is usually only useful if the other testing options are not working or if you wish to compare new versions of DRIVE to older versions of DRIVE. 
 
