@@ -119,7 +119,7 @@ class NetworkWriter:
             output_str = ", ".join(category_not_found)
             available_vals = ", ".join(phecodeDesc.category_groups.keys())
             logger.critical(
-                f"categories, {output_str} not found in the list of categories. Allowed values are: {available_vals}"
+                f"categories, {output_str}, were not found in the list of categories. Allowed values are: {available_vals}"
             )
             raise ValueError(
                 f"categories {output_str} not found. Please check spelling of the phecode category"
@@ -138,6 +138,12 @@ class NetworkWriter:
                 [value for value in phecode_cols if value in phecodes_in_category]
             )
 
+        if len(return_list) == 0:
+            phecode_str = ", ".join(categories_to_keep)
+            logger.fatal(
+                f"There were no phecodes from the provided phenotype file that fell into the PheWAS defined categories: {phecode_str}. This error probably indicates you are using multiple custom phecode columns and DRIVE is unable to filter for custom phecode columns"
+            )
+            sys.exit(1)
         return return_list
 
     def analyze(self, **kwargs) -> None:

@@ -45,9 +45,14 @@ def load_phenotype_descriptions(
 
     for file in phecode_map_files:
         with open(file, "r") as phecode_file:
+            header = next(phecode_file)
             csvreader = csv.reader(phecode_file, delimiter="\t", quotechar='"')
             for line in csvreader:
                 phecodeid, desc, category = line
+                # There are phecodes in the 1000+ range that have no category.
+                # We will use the phrase other here
+                if category == "NULL":
+                    category = "Other"
                 phecode_container.phecode_names[phecodeid] = desc
                 phecode_container.category_groups.setdefault(category, []).append(
                     phecodeid
