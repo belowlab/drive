@@ -2,6 +2,7 @@ import json
 import re
 from pathlib import Path
 
+from drive.utilities.parser.phenotype_descriptions_parser import PhecodesMapper
 from log import CustomLogger
 
 import drive.network.factory as factory
@@ -9,7 +10,11 @@ from drive.network.cluster import ClusterHandler, cluster
 from drive.network.filters import IbdFilter
 from drive.network.models import RuntimeState, create_indices
 from drive.utilities.functions import split_target_string
-from drive.utilities.parser import PhenotypeFileParser, load_phenotype_descriptions
+from drive.utilities.parser import (
+    PhenotypeFileParser,
+    load_phenotype_descriptions,
+    PhecodesMapper,
+)
 
 logger = CustomLogger.get_logger(__name__)
 
@@ -48,12 +53,12 @@ def run_network_identification(args) -> None:
 
     # we need to load in the phenotype descriptions file to get
     # descriptions of each phenotype
-    if args.descriptions:
-        logger.verbose(f"Using the phenotype descriptions file at: {args.descriptions}")
-        desc_dict = load_phenotype_descriptions(args.descriptions)
-    else:
-        logger.verbose("No phenotype descriptions provided")
-        desc_dict = {}
+    logger.debug("Loading all phecode mappings for versions 1.2 and X")
+    phecodeDescriptions = PhecodesMapper()
+    desc_dict = load_phenotype_descriptions(phecodeDescriptions)
+    logger.debug(
+        f"Loading in mappings for {len(phecodeDescriptions.phecode_names)} phecodes from both versions 1.2 and X"
+    )
 
     # if the user has provided a phenotype file then we will determine case/control/
     # exclusion counts. Otherwise we return an empty dictionary
@@ -115,7 +120,7 @@ def run_network_identification(args) -> None:
         networks,
         args.output,
         phenotype_counts,
-        desc_dict,
+        phecodeDescriptions,
         config_options={
             "compress": args.compress_output,
             "phecode_categories_to_keep": args.phecode_categories_to_keep,

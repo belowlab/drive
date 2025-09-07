@@ -159,7 +159,6 @@ def system_args_for_dendrogram(monkeypatch):
 def test_drive_full_run_no_phenotypes(system_args_no_pheno):
     # Make sure the output directory exists
     output_path = site_packages_path / "tests/test_output"
-    print(output_path)
     output_path.mkdir(exist_ok=True)
 
     drive.main()

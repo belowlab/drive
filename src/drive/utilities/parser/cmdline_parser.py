@@ -143,13 +143,6 @@ def generate_cmd_parser() -> argparse.ArgumentParser:
     )
 
     cluster_parser.add_argument(
-        "--descriptions",
-        "-d",
-        type=Path,
-        help="tab delimited text file that has descriptions for each phecode. this file should have two columns called phecode and phenotype",  # noqa: E501
-    )
-
-    cluster_parser.add_argument(
         "--max-network-size",
         default=30,
         type=int,

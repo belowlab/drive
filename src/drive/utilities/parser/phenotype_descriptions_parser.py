@@ -1,32 +1,54 @@
 from pathlib import Path
-from typing import Dict, Union
+from dataclasses import dataclass, field
+import csv
+import sys
+
+from log import CustomLogger
 
 from pandas import read_csv
 
+logger = CustomLogger.get_logger(__name__)
+
+
+@dataclass
+class PhecodesMapper:
+    phecode_names: dict[str, str] = field(default_factory=dict)
+    category_groups: dict[str, list[str]] = field(default_factory=dict)
+
 
 def load_phenotype_descriptions(
-    phecode_desc_file: Union[Path, str],
-) -> Dict[str, Dict[str, str]]:
-    """Function that will load the phecode_description file
-    and then turn that into a dictionary
+    phecode_container: PhecodesMapper,
+) -> None:
+    """Function that will loads information about the phecode id names and the categories into a dictionary
 
     Parameters
     ----------
-    phecode_desc_file : str
-        descriptions of each phecode
+    phecode_container : PhecodesMapper
+        class that contains 2 maps. One map has key value
+        pairs mapping the phecode id to the phecode name.
+        The other map stores all the phecode categories as
+        keys and a list of the phecode ids within that
+        category as values
 
-    Returns
-    -------
-    Dict[str, Dict[str, str]]
-        returns a dictionary where the first key is the
-        phecode and value is a dictionary where the inner key
-        is 'phenotype' and the value is the descriptions
     """
+    # We need to find the path to each phecode file
 
-    desc_df = read_csv(phecode_desc_file, sep="\t", usecols=["phecode", "phenotype"])
+    phecode_filepaths = Path(__file__).parent.parent.parent / "phecode_mappings"
 
-    # making sure that the phecode keys are a string
-    desc_df.phecode = desc_df.phecode.astype(str)
+    phecode_map_files = list(phecode_filepaths.glob("*.txt"))
 
-    # converting the dataframe into a dictionar
-    return desc_df.set_index("phecode").T.to_dict()
+    if len(phecode_map_files) != 2:
+        logger.critical(
+            f"Unable to detect the files for the PheCode 1.2 & PheCode X mappings. This error probably means they were deleted. Attempted search in this directory: {phecode_filepaths}."
+        )
+        sys.exit(1)
+
+    for file in phecode_map_files:
+        with open(file, "r") as phecode_file:
+            csvreader = csv.reader(phecode_file, delimiter="\t", quotechar='"')
+            for line in csvreader:
+                phecodeid, desc, category = line
+                phecode_container.phecode_names[phecodeid] = desc
+                phecode_container.category_groups.setdefault(category, []).append(
+                    phecodeid
+                )

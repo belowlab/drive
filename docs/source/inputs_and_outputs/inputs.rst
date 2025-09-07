@@ -54,10 +54,6 @@ Inputs for the clustering subcommand:
 
 ----
 
-* **descriptions**: This argument provides the path to a tab separated text file that contains a text description of each phenotype. This file is typically supplied when the user is running the program phenomewide with PheCodes but can be provided for any phenotype. This file is expected to have two columns called "phecode" and "phenotype"
-
-----
-
 * **max-network-size**: This argument provides one of the thresholds that determines if a network needs to be re-clustered. max-network-size indicates the largest size of a network that is permitted. If a network is bigger than the max-network-size argument and it is smaller than the min-connected-threshold argument then the network will be re-clustered. 
 
 -----
@@ -91,6 +87,10 @@ Inputs for the clustering subcommand:
 ----
 
 * **compress-output**: When DRIVE is run PhenomeWide (especially using the newer PheCode X definitions) the output file from the clustering can become quite large. To help manage file storage the user can compress the output. The output file will be gzipped.
+
+----
+
+* **phecode-categories-to-keep**: This flag is another way for the user to restrict the output of DRIVE. This flag is only really useful if DRIVE is being run phenomewide and for PheCode X. The user can provided the phecode category group and it will keep only phecodes from that category. The value must be spelled exactly how it is spelled in the info files provided by the PheWAS catalogue. DRIVE will still output a minimum phecode column that represents the minimum phecode across all categories. Users can still use their own phecode definitions, DRIVE will just not provide a description name for the custom phenotyping and it can't filter custom phenotyping columns.
 
 ----
 

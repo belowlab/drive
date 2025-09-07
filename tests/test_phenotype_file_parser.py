@@ -25,7 +25,7 @@ def test_check_separator(test_str: str, expected: str) -> None:
 
 
 @pytest.mark.unit
-@pytest.mark.parametrize("test_str", [("ID1\n1")])
+@pytest.mark.parametrize("test_str", ["ID1\n1"])
 def test_check_separator_error(test_str: str) -> None:
     """Test that the method _check_separator raises a ValueError if it cannot identify the separator."""
     with pytest.raises(ValueError):
