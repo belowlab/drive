@@ -1,4 +1,4 @@
-GRID	phenoA	phenoB	phenoC
+GRID	CV_414	NS_324.11	phenoC
 905	0	0	0
 865	0	0	0
 890	0	1	0

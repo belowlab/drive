@@ -1,7 +1,9 @@
 from dataclasses import dataclass
-from typing import List
+from typing import List, Iterable
 import gzip
+import sys
 
+from drive.utilities.parser.phenotype_descriptions_parser import PhecodesMapper
 from log import CustomLogger
 
 from drive.network.factory import factory_register
@@ -83,6 +85,67 @@ class NetworkWriter:
 
             return output_str + "\n"
 
+    @staticmethod
+    def check_keep_categories(
+        categories_to_keep: list[str], phecodeDesc: PhecodesMapper
+    ) -> None:
+        """Check if the phecode categories that the user
+        provided exist in our mappings file. This step will
+        hopefully catch typos
+
+        Parameters
+        ----------
+        categories_to_keep : list[str]
+            list of phecode categories that the user wishes to
+            keep
+
+        phecodeDesc : PhecodesMapper
+            object that maps the phecode ids to their
+            descriptions and it maps which phecodes are in which
+            categories
+
+        Raises
+        ------
+        ValueError
+            raises a value error if there are any categories
+            that were not in the mapping file
+        """
+
+        category_not_found = []
+        for category in categories_to_keep:
+            if category not in phecodeDesc.category_groups.keys():
+                category_not_found.append(category)
+        if len(category_not_found) > 0:
+            output_str = ", ".join(category_not_found)
+            available_vals = ", ".join(phecodeDesc.category_groups.keys())
+            logger.critical(
+                f"categories, {output_str}, were not found in the list of categories. Allowed values are: {available_vals}"
+            )
+            raise ValueError(
+                f"categories {output_str} not found. Please check spelling of the phecode category"
+            )
+
+    @staticmethod
+    def collect_phenotypes(
+        categories_to_keep: list[str],
+        phecode_cols: Iterable[str],
+        phecodeDesc: PhecodesMapper,
+    ) -> list[str]:
+        return_list = []
+        for category in categories_to_keep:
+            phecodes_in_category = phecodeDesc.category_groups.get(category, [])
+            return_list.extend(
+                [value for value in phecode_cols if value in phecodes_in_category]
+            )
+
+        if len(return_list) == 0:
+            phecode_str = ", ".join(categories_to_keep)
+            logger.fatal(
+                f"There were no phecodes from the provided phenotype file that fell into the PheWAS defined categories: {phecode_str}. This error probably indicates you are using multiple custom phecode columns and DRIVE is unable to filter for custom phecode columns"
+            )
+            sys.exit(1)
+        return return_list
+
     def analyze(self, **kwargs) -> None:
         """main function of the plugin that will create the
         output path and then use helper functions to write
@@ -92,6 +155,7 @@ class NetworkWriter:
         data: RuntimeState = kwargs["data"]
         config_options = data.config_options
         compress_data = config_options.get("compress", False)
+        phecodes_to_keep = config_options.get("phecode_categories_to_keep", [])
 
         # Create the output path for the file
         network_file_output = data.output_path.parent / (
@@ -113,7 +177,27 @@ class NetworkWriter:
 
         # we are going to pull out the phenotypes into a list so that we
         # are guarenteed to maintain order as we are creating the rows
-        phenotypes = list(data.carriers.keys())
+        if phecodes_to_keep:
+            # make sure the categories exist
+            self.check_keep_categories(phecodes_to_keep, data.phenotype_descriptions)
+
+            # We are going to find all of the phecodes that are in this additional string
+            phecode_categories = ", ".join(phecodes_to_keep)
+            logger.info(
+                f"Gathering the results for the phecodes in the categories: {phecode_categories}"
+            )
+
+            phenotypes = self.collect_phenotypes(
+                phecodes_to_keep, data.carriers.keys(), data.phenotype_descriptions
+            )
+
+            if len(phenotypes) == 0:
+                logger.fatal(
+                    f"There were no phenotypes found in the categories: {phecode_categories}. This probably indicates a typo in the flag provided. No output will be written and program will be terminated."
+                )
+                sys.exit(1)
+        else:
+            phenotypes = list(data.carriers.keys())
 
         with writer(network_file_output, "wt") as networks_output:
             header_str = NetworkWriter._form_header(phenotypes)

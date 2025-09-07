@@ -14,9 +14,6 @@ from drive import drive
 site_packages_path = Path(sysconfig.get_paths().get("platlib"))
 
 
-# @pytest.mark.integtest
-# def test_drive_full_run():
-#     assert 1==1
 @pytest.fixture()
 def system_args_no_pheno(monkeypatch):
     input_file = (

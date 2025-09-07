@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from typing import Dict, List, Tuple
 
+from drive.utilities.parser.phenotype_descriptions_parser import PhecodesMapper
 from log import CustomLogger
 from numpy import float64
 from scipy.stats import binomtest
@@ -322,9 +323,7 @@ class Pvalues:
         return cur_min_pvalue, cur_min_phenotype, phenotype_pvalues
 
     @staticmethod
-    def _get_descriptions(
-        phecode_description: dict[str, dict[str, str]], min_phecode: str
-    ) -> str:
+    def _get_descriptions(phecode_description: PhecodesMapper, min_phecode: str) -> str:
         """Method to get the description for the minimum phecode
         Parameters
         ----------
@@ -342,13 +341,7 @@ class Pvalues:
             returns a string that has the phecode description
         """
         # getting the description
-        desc_dict = phecode_description.get(min_phecode, {})
-
-        # getting the phenotype string if key exists,
-        # otherwise returns an empty string
-        logger.debug(f"description_str = {desc_dict.get('phenotype', 'N/A')}")
-
-        return desc_dict.get("phenotype", "N/A")
+        return phecode_description.phecode_names.get(min_phecode, "N/A")
 
     def analyze(self, **kwargs) -> None:
         # this is the DataHolder model. We will use the networks, the

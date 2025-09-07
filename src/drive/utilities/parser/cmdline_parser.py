@@ -143,13 +143,6 @@ def generate_cmd_parser() -> argparse.ArgumentParser:
     )
 
     cluster_parser.add_argument(
-        "--descriptions",
-        "-d",
-        type=Path,
-        help="tab delimited text file that has descriptions for each phecode. this file should have two columns called phecode and phenotype",  # noqa: E501
-    )
-
-    cluster_parser.add_argument(
         "--max-network-size",
         default=30,
         type=int,
@@ -220,6 +213,14 @@ def generate_cmd_parser() -> argparse.ArgumentParser:
         default=False,
         action=argparse.BooleanOptionalAction,
         help="whether or not to compress the output file from the DRIVE clustering output file. When the program is run PhenomeWide, the output file can be quite large. This option helps make file storage more managable",
+    )
+
+    cluster_parser.add_argument(
+        "--phecode-categories-to-keep",
+        required=False,
+        nargs="+",
+        type=str,
+        help="List of phecode categories to write to the output file. This flag is only useful if you are running DRIVE phenomewide and if you are running DRIVE with phecodeX. DRIVE will calculate pvalues for all phecodes by default. This flag will check to see if the PheCode Category prefix (such as the CV prefix for cardiovascular phecodes) and only return those phecodes that match. Even with this flag, DRIVE will still return the phenomewide minimum phecode across all the different phecodes.",
     )
 
     cluster_parser.set_defaults(func=run_network_identification)
