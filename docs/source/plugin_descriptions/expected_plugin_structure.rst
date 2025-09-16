@@ -41,7 +41,8 @@ A template for the plugin class is shown below. The example uses dataclasses but
 
         def analyze(self, **kwargs) -> None:
             """This is the main function that DRIVE will use to interact with 
-            the plugin. This function is required and has to be called analyze"""
+            the plugin. This function is required and has to be called analyze. 
+            Users should fill in this section to create their own plugin"""
 
             ...
 
@@ -49,10 +50,10 @@ A template for the plugin class is shown below. The example uses dataclasses but
     # The pluging file needs to have a function at the end called initialize. This 
     # function is used by the plugin factory to dynamically run the code at runtime.
     def initialize() -> None:
-        factory_register("plugin_name from the file name", PluginName)
+        factory_register("plugin_name from the file name", PluginName) #If the file is CustomPlugin.py then the plugin name here would be "CustomPlugin"
 
-Where the plugins have to be place:
------------------------------------
+Where the plugins have to be located in the file system:
+--------------------------------------------------------
 DRIVE expects the code for the plugins to be located in a module within the DRIVE source code directory. Within this source code there is a subdirectory call plugins. This directory is where DRIVE will look for the plugin code.
 
 .. attention::
