@@ -124,6 +124,7 @@ def run_network_identification(args) -> None:
         config_options={
             "compress": args.compress_output,
             "phecode_categories_to_keep": args.phecode_categories_to_keep,
+            "split_phecode_output": args.split_phecode_categories,
         },
     )
 

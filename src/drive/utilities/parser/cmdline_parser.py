@@ -223,6 +223,15 @@ def generate_cmd_parser() -> argparse.ArgumentParser:
         help="List of phecode categories to write to the output file. This flag is only useful if you are running DRIVE phenomewide and if you are running DRIVE with phecodeX. DRIVE will calculate pvalues for all phecodes by default. This flag will check to see if the PheCode Category prefix (such as the CV prefix for cardiovascular phecodes) and only return those phecodes that match. Even with this flag, DRIVE will still return the phenomewide minimum phecode across all the different phecodes.",
     )
 
+    cluster_parser.add_argument(
+        "--split-phecode-categories",
+        required=False,
+        type=bool,
+        default=False,
+        action=argparse.BooleanOptionalAction,
+        help="if this flag is provided by the user then the output will be broken up into a file for each phecode category. Each file will still contain the columns that give the network information and the minimum phecode for each network. Output files will all be written to the same output directory. This flag should only be used if the user is running the analysis phenomewide. It shouldn't be used with the phecode-categories-to-keep flag.",
+    )
+
     cluster_parser.set_defaults(func=run_network_identification)
 
     # This is where we will define all of the necessary arguments to make
