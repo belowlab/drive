@@ -2,7 +2,6 @@ import json
 import re
 from pathlib import Path
 
-from drive.utilities.parser.phenotype_descriptions_parser import PhecodesMapper
 from log import CustomLogger
 
 import drive.network.factory as factory
@@ -55,7 +54,7 @@ def run_network_identification(args) -> None:
     # descriptions of each phenotype
     logger.debug("Loading all phecode mappings for versions 1.2 and X")
     phecodeDescriptions = PhecodesMapper()
-    desc_dict = load_phenotype_descriptions(phecodeDescriptions)
+    load_phenotype_descriptions(phecodeDescriptions)
     logger.debug(
         f"Loading in mappings for {len(phecodeDescriptions.phecode_names)} phecodes from both versions 1.2 and X"
     )
@@ -124,6 +123,7 @@ def run_network_identification(args) -> None:
         config_options={
             "compress": args.compress_output,
             "phecode_categories_to_keep": args.phecode_categories_to_keep,
+            "split_phecode_categories": args.split_phecode_categories,
         },
     )
 

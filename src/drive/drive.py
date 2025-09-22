@@ -31,7 +31,7 @@ def main() -> None:
 
     logger.info(f"DRIVE version: {version('drive-ibd')}")
 
-    logger.info(f"command passed to DRIVE: {' '.join(sys.argv)}")
+    logger.info(f"command passed to DRIVE: {' '.join(sys.argv)}\n")
 
     # record the input parameters using a method from the logger object that
     # takes the parser as an argument
