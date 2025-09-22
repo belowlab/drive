@@ -90,12 +90,15 @@ Inputs for the clustering subcommand:
 
 ----
 
-* **phecode-categories-to-keep**: This flag is another way for the user to restrict the output of DRIVE. This flag is only really useful if DRIVE is being run phenomewide and for PheCode X. The user can provided the phecode category group and it will keep only phecodes from that category. The value must be spelled exactly how it is spelled in the info files provided by the PheWAS catalogue. DRIVE will still output a minimum phecode column that represents the minimum phecode across all categories. Users can still use their own phecode definitions, DRIVE will just not provide a description name for the custom phenotyping and it can't filter custom phenotyping columns.
+* **phecode-categories-to-keep**: This flag is another way for the user to restrict the output of DRIVE. This flag is only really useful if DRIVE is being run phenomewide. The user can provide the phecode category group and it will keep only phecodes from that category. The value must be spelled exactly how it is spelled in the info files provided by the PheWAS catalogue. Multiple categories can be chosen by a comma separated list. DRIVE will still output a minimum phecode column that represents the minimum phecode across all categories. Users can still use their own phecode definitions, DRIVE will just not provide a description name for the custom phenotyping and it can't filter custom phenotyping columns.
+
+----
+
+* **split-phecode-categories**: if this flag is provided by the user then the output will be broken up into a file for each phecode category. Each file will still contain the columns that give the network information and the minimum phecode for each network. Output files will all be written to the same output directory. This flag should only be used if the user is running the analysis phenomewide for either PhecodeX or Phecode 1.2. It shouldn't be used with the phecode-categories-to-keep flag
 
 ----
 
 * **recluster**: Flag indicating if the user wishes to recluster networks or if they wish to only return the initial networks without redoing the clustering algorithm. If the user wishes to use reclustering then DRIVE will use the values for hub-threshold, segment-distribution-threshold, min-connected-threshold, and max-network-size. If the user wishes to not perform reclustering, then they should pass the flag "*--no-recluster*".
-
 
 ----
 
