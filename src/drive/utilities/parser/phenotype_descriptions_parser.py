@@ -49,6 +49,8 @@ def load_phenotype_descriptions(
             csvreader = csv.reader(phecode_file, delimiter="\t", quotechar='"')
             for line in csvreader:
                 phecodeid, desc, category = line
+                if "/" in category:
+                    category = category.replace("/", "_")
                 # There are phecodes in the 1000+ range that have no category.
                 # We will use the phrase other here
                 if category == "NULL":

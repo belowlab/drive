@@ -174,8 +174,28 @@ class NetworkWriter:
             indicates whether the user wants to compress the output or not
         """
 
+        logger.info(
+            "Writing output for each phecode category to a separate output file within the output directory"
+        )
+
         # We need to iterate over each group
         for category, phecodes in phenotypes.category_groups.items():
+
+            phecodes_in_analysis = [
+                phecode for phecode in phecodes if phecode in data.carriers.keys()
+            ]
+            # The phenotypes.category_groups contains phecodes for both 1.2 and X so we should expect if the user provides only PheCode X classifications then it will not find any phecodes from the 1.2 categories and vice versa. Because of this fact we can just use continue in the loop if there are no phecodes found for a group
+            if len(phecodes_in_analysis) == 0:
+                continue
+            # We should warn the user though if the number of phecodes used in the analysis does
+            if len(phecodes_in_analysis) != len(phecodes):
+                logger.debug(
+                    f"Using {len(phecodes_in_analysis)} from the original {len(phecodes)} in the category {category}. Any difference between the two counts is the results of the original file containing all the possible phecodes while the input matrix only contains a subset of the phecodes"
+                )
+
+            # we are going to replace the spaces if there are any in the category and replace
+            # it with an underscore. This just helps with file naming
+            category = category.replace(" ", "_")
 
             network_file_output = data.output_path.parent / (
                 data.output_path.name + f".{category}" + ".drive_networks.txt"
@@ -186,19 +206,23 @@ class NetworkWriter:
                     network_file_output.parent / f"{network_file_output.name}.gz"
                 )
 
-            logger.debug(
+            logger.verbose(
                 f"The output in the network_writer plugin is being written to: {network_file_output}"  # noqa: E501
             )
 
             with writer(network_file_output, "wt") as networks_output:
-                header_str = NetworkWriter._form_header(phecodes)
+                # The phecodes from the category_groups includes every single phecode that is
+                # defined in the pheWAS catelogue. Sometimes our matrix might not have all of
+                # those codes. We need to make sure that we only use the codes that match ours
+
+                header_str = NetworkWriter._form_header(phecodes_in_analysis)
                 # iterate over each network and pull out the appropriate
                 # information into strings
                 _ = networks_output.write(header_str)
 
                 for network in data.networks:
                     network_info_str = NetworkWriter._create_network_info_str(
-                        network, phecodes
+                        network, phecodes_in_analysis
                     )
 
                     networks_output.write(network_info_str)

@@ -220,7 +220,7 @@ def generate_cmd_parser() -> argparse.ArgumentParser:
         required=False,
         nargs="+",
         type=str,
-        help="List of phecode categories to write to the output file. This flag is only useful if you are running DRIVE phenomewide and if you are running DRIVE with phecodeX. DRIVE will calculate pvalues for all phecodes by default. This flag will check to see if the PheCode Category prefix (such as the CV prefix for cardiovascular phecodes) and only return those phecodes that match. Even with this flag, DRIVE will still return the phenomewide minimum phecode across all the different phecodes.",
+        help="List of phecode categories to write to the output file. This flag is only useful if you are running DRIVE phenomewide and if you are running DRIVE with phecodeX. DRIVE will calculate pvalues for all phecodes by default. This flag will check to see if the PheCode Category prefix (such as the CV prefix for cardiovascular phecodes) and only return those phecodes that match. Even with this flag, DRIVE will still return the phenomewide minimum phecode across all the different phecodes. If there is a '/' in the category name please replace this with a underscore",
     )
 
     cluster_parser.add_argument(
