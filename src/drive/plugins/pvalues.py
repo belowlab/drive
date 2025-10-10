@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-from typing import Dict, List, Tuple
 
 from drive.utilities.parser.phenotype_descriptions_parser import PhecodesMapper
 from log import CustomLogger
@@ -7,7 +6,8 @@ from numpy import float64
 from scipy.stats import binomtest
 
 from drive.network.factory import factory_register
-from drive.network.models import Network_Interface, RuntimeState
+from drive.network.models import RuntimeState
+from drive.network.types import Network_Interface
 
 logger = CustomLogger.get_logger(__name__)
 
@@ -51,12 +51,12 @@ class Pvalues:
         # finding 0 or higher which is everyone
         if carriers_count == 0:
             logger.debug(f"carrier count = 0 therefore pvalue for {phenotype} = 1")
-            return 1
+            return 1.0
         elif carriers_count - 1 == 0:
             logger.debug(
                 "When the proband was removed, there were no more carriers who remained in the network. Therefore returning a p-value of 1"
             )
-            return 1
+            return 1.0
 
         result = binomtest(carriers_count - 1, network_size - 1, phenotype_percent)
 
@@ -68,7 +68,7 @@ class Pvalues:
 
     @staticmethod
     def _determine_phenotype_frequency(
-        phecode: str, phenotype_counts: Dict[str, List[str]]
+        phecode: str, phenotype_counts: dict[str, list[str]]
     ) -> float:
         """calculate the phenotype frequency in the cohort
 
@@ -77,7 +77,7 @@ class Pvalues:
         phecode : str
             phecode id. This value will only be used for a logging statement
 
-        phenotype_counts : Dict[str, List[str]]
+        phenotype_counts : dict[str, list[str]]
             Dictionary that has list for individuals who are
             cases, controls, or exclusions.
 
@@ -100,14 +100,14 @@ class Pvalues:
 
     @staticmethod
     def _get_carrier_count_in_network(
-        phenotype_counts: Dict[str, List[str]], network: Network_Interface
+        phenotype_counts: dict[str, list[str]], network: Network_Interface
     ) -> int:
         """Determine the number of individual cases that are
         also in the network
 
         Parameters
         ----------
-        phenotype_counts : Dict[str, List[str]]
+        phenotype_counts : dict[str, list[str]]
             Dictionary that has list for individuals who are
             cases, controls, or exclusions.
 
@@ -126,13 +126,13 @@ class Pvalues:
 
     @staticmethod
     def _get_carriers_in_network(
-        phenotype_counts: Dict[str, List[str]], network: Network_Interface
+        phenotype_counts: dict[str, list[str]], network: Network_Interface
     ) -> str:
         """Generate a set of cases that are in the network
 
         Parameters
         ----------
-        phenotype_counts : Dict[str, List[str]]
+        phenotype_counts : dict[str, list[str]]
             Dictionary that has list for individuals who are
             cases, controls, or exclusions.
 
@@ -159,13 +159,13 @@ class Pvalues:
 
     @staticmethod
     def _get_exclusions_in_network(
-        phenotype_counts: Dict[str, List[str]], network: Network_Interface
+        phenotype_counts: dict[str, list[str]], network: Network_Interface
     ) -> str:
         """Generate a set of cases that are in the network
 
         Parameters
         ----------
-        phenotype_counts : Dict[str, List[str]]
+        phenotype_counts : dict[str, list[str]]
             Dictionary that has list for individuals who are
             cases, controls, or exclusions.
 
@@ -192,15 +192,16 @@ class Pvalues:
         else:
             "N/A"
 
+    @staticmethod
     def _remove_exclusions(
-        phenotype_counts: Dict[str, List[str]], network: Network_Interface
-    ) -> Tuple[int, int]:
+        phenotype_counts: dict[str, list[str]], network: Network_Interface
+    ) -> tuple[int, int]:
         """determine size of network after removing excluded
         individuals
 
         Parameters
         ----------
-        phenotype_counts : Dict[str, List[str]]
+        phenotype_counts : dict[str, list[str]]
             Dictionary that has list for individuals who are
             cases, controls, or exclusions.
 
@@ -210,7 +211,7 @@ class Pvalues:
 
         Returns
         -------
-        Tuple[int, int]
+        tuple[int, int]
             returns the number of individuals in the network,
             not counting those individuals classified as
             excluded in the phenotype_counts dictionary. Also
@@ -225,8 +226,8 @@ class Pvalues:
     def _gather_network_information(
         self,
         network: Network_Interface,
-        cohort_carriers: Dict[str, Dict[str, List[str]]],
-    ) -> tuple[str, str, Dict[str, str]]:
+        cohort_carriers: dict[str, dict[str, list[str]]],
+    ) -> tuple[str, str, dict[str, str]]:
         """Determine information about how many
         carriers are in each network, the percentage, the IIDs of
         the carriers in the network, and use this to calculate the
@@ -239,13 +240,13 @@ class Pvalues:
         network : Network
             Network object attributes for iids, pairs, and haplotypes
 
-        cohort_carriers : Dict[str, Dict[str, List[str]]]
+        cohort_carriers : dict[str, dict[str, list[str]]]
             dictionary where the keys are phenotype ids and the values are a dictionary
             with the list of cases/controls/exclusions
 
         Returns
         -------
-        Tuple[str, str, Dict[str, str]]
+        tuple[str, str, dict[str, str]]
             returns a tuple where the first element is the string of the
             minimum phenotype code. The second value is the description
             of the minimum phenotype. The third value is a dictionary
@@ -349,7 +350,7 @@ class Pvalues:
         data: RuntimeState = kwargs["data"]
 
         if data.carriers:
-            for network in data.networks:
+            for network in data.networks["final_clusters"]:
                 # Determining the pvalues for the network
                 (
                     min_pvalue_str,

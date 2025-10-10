@@ -6,7 +6,8 @@ from typing import Callable, Iterable, List
 from log import CustomLogger
 
 from drive.network.factory import factory_register
-from drive.network.models import Network_Interface, RuntimeState
+from drive.network.models import RuntimeState
+from drive.network.types import Network_Interface
 from drive.utilities.parser.phenotype_descriptions_parser import PhecodesMapper
 
 logger = CustomLogger.get_logger(__name__)
@@ -220,7 +221,7 @@ class NetworkWriter:
                 # information into strings
                 _ = networks_output.write(header_str)
 
-                for network in data.networks:
+                for network in data.networks["final_clusters"]:
                     network_info_str = NetworkWriter._create_network_info_str(
                         network, phecodes_in_analysis
                     )
@@ -276,7 +277,7 @@ class NetworkWriter:
             # information into strings
             _ = networks_output.write(header_str)
 
-            for network in data.networks:
+            for network in data.networks["final_clusters"]:
                 network_info_str = NetworkWriter._create_network_info_str(
                     network, phenotypes
                 )

@@ -10,7 +10,7 @@ There is a specific class that the clustering module of DRIVE creates. This clas
     class RuntimeState:
         """main class to hold the data from the network analysis and the different pvalues"""
 
-        networks: List[Network_Interface]
+        networks: NetworkResults
         output_path: Path
         carriers: Dict[str, Dict[str, List[str]]]
         phenotype_descriptions: Dict[str, Dict[str, str]]

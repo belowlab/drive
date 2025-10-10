@@ -1,6 +1,6 @@
 [project]
 name = "drive-ibd"
-version = "3.0.2"
+version = "3.0.3a1"
 description = "Python CLI using graph theory to identify networks of individuals who share IBD segments overlapping loci of interest"
 authors = [
   { name = "James Baker", email = "james.baker@vanderbilt.edu" },
@@ -63,7 +63,6 @@ markers = [
 ]
 testpaths = ["tests"]
 addopts = ["--import-mode=importlib"]
-
 filterwarnings = ["ignore::DeprecationWarning"]
 
 [tool.isort]
@@ -96,32 +95,25 @@ quote-style = "double"
 
 [tool.pdm]
 distribution = true
-# packages = [
-#     { include = "src", from = "src" },
-#     { include = "tests", from = "tests" }
-# ]
 
 [tool.pdm.build]
 package-dir = "src"
 includes = ["src/", "tests/**", "tests/test_integration.py"]
-
-# [tool.pdm.build.wheel-data]
-# include = [{ path = "tests/test_integration.py", relative-to = "." }]
 
 [tool.pdm.scripts.clean]
 shell = "rm ./tests/test_output/*"
 
 [dependency-groups]
 dev = [
-    "commitizen>=4.8.3",
-    "black>=25.1.0",
-    "mypy>=1.16.1",
-    "data-science-types>=0.2.23",
-    "pydocstyle>=6.3.0",
-    "isort>=6.0.1",
-    "ruff>=0.12.1",
-    "scalene>=1.5.51",
-    "snakeviz>=2.2.2",
+  "commitizen>=4.8.3",
+  "black>=25.1.0",
+  "mypy>=1.16.1",
+  "data-science-types>=0.2.23",
+  "pydocstyle>=6.3.0",
+  "isort>=6.0.1",
+  "ruff>=0.12.1",
+  "scalene>=1.5.51",
+  "snakeviz>=2.2.2",
 ]
 notebook = ["ipykernel>=6.29.5"]
 docs = [

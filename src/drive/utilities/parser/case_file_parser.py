@@ -201,3 +201,44 @@ class PhenotypeFileParser:
         phenotyping_dictionary, cohort_ids = self._process_matrix(cols_to_keep)
 
         return phenotyping_dictionary, cohort_ids
+
+    @staticmethod
+    def filter_cases_and_controls(
+        phenotype_dictionary: dict[str, dict[str, set[str]]], keep_id_list: set[str]
+    ) -> dict[str, dict[str, set[str]]]:
+        """filter the case/control/exclusion list for each phenotype to only
+        individuals in networks. This will only be used if the user enables
+        the experimental feature to calculate phenotype frequencies only using
+        the related set
+
+        Parameters
+        ----------
+        phenotype_dictionary : dict[str, dict[str, set[str]]]
+            dictionary where the outer keys are the phenotypes of interest and
+            the values are a dictionary containing list of cases, controls, and
+            exclusions for each phenotype
+
+        keep_id_list : set[str]
+            Set containing the ids to filter each phecode to
+
+        Returns
+        -------
+        dict[str, dict[str, set[str]]]
+            returns a dictionary where the keys are phecodes and the values are
+            the case, control, and exclusions sets of individuals filtered to
+            the individuals in the filter_id_list argument
+        """
+        logger.info(
+            f"Filtering cases and controls for {len(phenotype_dictionary.keys())} phenotypes to only related individuals that were clustered into networks"
+        )
+        filtered_counts = {}
+
+        for phenotype, phenotype_counts in phenotype_dictionary.items():
+            inner_counts_dict = filtered_counts.setdefault(
+                phenotype, {}
+            )  # This will return the new dictionary counts
+            for status_category, original_id_set in phenotype_counts.items():
+                filtered_id_set = original_id_set.intersection(keep_id_list)
+                inner_counts_dict[status_category] = filtered_id_set
+
+        return filtered_counts

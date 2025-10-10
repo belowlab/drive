@@ -4,29 +4,6 @@ from typing import Any, Dict, List, Protocol, Set, TypeVar, Union
 T = TypeVar("T", bound="Network")
 
 
-class Network_Interface(Protocol):
-    clst_id: float  # I don't like this attribute being a float but for now it has to remain this way for backwards compatibility
-    true_positive_count: int
-    true_positive_percent: float
-    false_negative_edges: List[int]
-    false_negative_count: int
-    members: Set[int]
-    haplotypes: List[int]
-    min_pvalue_str: str = ""
-    pvalues: Dict[str, str] = field(default_factory=dict)
-
-    def print_members_list(self) -> str:
-        """Returns a string that has all of the members ids separated by space
-
-        Returns
-        -------
-        str
-            returns a string where the members list attribute
-            is formatted as a string for the output file. Individuals strings are joined by comma.
-        """
-        ...
-
-
 @dataclass
 class Network:
     clst_id: float
