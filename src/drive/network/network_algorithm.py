@@ -1,5 +1,4 @@
 import json
-import re
 from pathlib import Path
 
 from log import CustomLogger
@@ -101,22 +100,27 @@ def run_network_identification(args) -> None:
 
     # creating the object that will handle clustering within the networks
     cluster_handler = ClusterHandler(
-        args.min_connected_threshold,
-        args.max_network_size,
-        args.max_recheck,
-        args.step,
-        args.min_network_size,
-        args.segment_distribution_threshold,
-        args.hub_threshold,
-        hapid_inverted,
-        args.recluster,
+        minimum_connected_thres=args.min_connected_threshold,
+        max_network_size=args.max_network_size,
+        max_rechecks=args.max_recheck,
+        random_walk_step_size=args.step,
+        min_cluster_size=args.min_network_size,
+        segment_dist_threshold=args.segment_distribution_threshold,
+        hub_threshold=args.hub_threshold,
+        haplotype_mappings=hapid_inverted,
+        recluster=args.recluster,
     )
 
-    networks = cluster(filter_obj, cluster_handler, indices.cM_indx)
+    network_results = cluster(filter_obj, cluster_handler, indices.cM_indx)
+
+    if args.use_related_pheno_freq:
+        phenotype_counts = PhenotypeFileParser.filter_cases_and_controls(
+            phenotype_counts, network_results.get("related_samples")
+        )
 
     # creating the data container that all the plugins can interact with
     plugin_api = RuntimeState(
-        networks,
+        network_results,
         args.output,
         phenotype_counts,
         phecodeDescriptions,

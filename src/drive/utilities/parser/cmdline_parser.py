@@ -229,7 +229,16 @@ def generate_cmd_parser() -> argparse.ArgumentParser:
         type=bool,
         default=False,
         action=argparse.BooleanOptionalAction,
-        help="if this flag is provided by the user then the output will be broken up into a file for each phecode category. Each file will still contain the columns that give the network information and the minimum phecode for each network. Output files will all be written to the same output directory. This flag should only be used if the user is running the analysis phenomewide. It shouldn't be used with the phecode-categories-to-keep flag.",
+        help="If this flag is provided by the user then the output will be broken up into a file for each phecode category. Each file will still contain the columns that give the network information and the minimum phecode for each network. Output files will all be written to the same output directory. This flag should only be used if the user is running the analysis phenomewide. It shouldn't be used with the phecode-categories-to-keep flag.",
+    )
+
+    cluster_parser.add_argument(
+        "--use-related-pheno-freq",
+        required=False,
+        type=bool,
+        default=False,
+        action=argparse.BooleanOptionalAction,
+        help="Sometimes it seems like the enrichment test might be identifying echo symbols in phenomewide analyses. Potentially these singals are a result of the phenotype frequency being calculated in the whole cohort. This is an EXPERIMENTAL feature starting in v3.0.3 that allows the user to only calculate the phenotype frequency in related individuals. (default: %(default)s)",
     )
 
     cluster_parser.set_defaults(func=run_network_identification)

@@ -1,19 +1,17 @@
 import itertools
 import logging
-import sys
 from dataclasses import dataclass, field
-from typing import Dict, List, Optional, Set, Tuple
+from typing import Optional, Set, Tuple
 
 import igraph as ig
 from log import CustomLogger
 from pandas import DataFrame
 
-from drive.network.models import Filter, Network, Network_Interface
+from drive.network.models import Network
+from drive.network.types import Network_Interface, Filter, NetworkResults
 
 # creating a logger
 logger: logging.Logger = CustomLogger.get_logger(__name__)
-
-# Create a generic variable that can represents the class from the
 
 
 @dataclass
@@ -27,11 +25,16 @@ class ClusterHandler:
     min_cluster_size: int
     segment_dist_threshold: int
     hub_threshold: float
-    haplotype_mappings: Dict[str, int]
+    haplotype_mappings: dict[str, int]
     recluster: bool
+    cluster_results: NetworkResults = field(
+        default_factory=lambda: {"related_samples": set(), "final_clusters": []}
+    )
     check_times: int = 0
-    recheck_clsts: Dict[int, List[Network_Interface]] = field(default_factory=dict)
-    final_clusters: List[Network_Interface] = field(default_factory=list)
+    recheck_clsts: dict[int, list[Network_Interface]] = field(default_factory=dict)
+    # final_clusters: list[Network_Interface] = field(
+    #     default_factory=list
+    # )  # TODO: change this to a dictionary to represent that ids in network and the list of clusters
 
     @staticmethod
     def generate_graph(
@@ -92,18 +95,18 @@ class ClusterHandler:
 
         return random_walk_clusters
 
-    def filter_cluster_size(self, random_walk_clusters_sizes: List[int]) -> List[int]:
+    def filter_cluster_size(self, random_walk_clusters_sizes: list[int]) -> list[int]:
         """Method to filter networks that are smaller than the min_cluster_size from
         the analysis
 
         Parameters
         ----------
-        random_walk_clusters_sizes : List[int]
+        random_walk_clusters_sizes : list[int]
             size of each cluster from the random walk results
 
         Returns
         -------
-        List[int]
+        list[int]
             returns a list of integers where each integer
             represents a cluster id. Each cluster in the
             network will be >= to the min_cluster_size
@@ -117,13 +120,13 @@ class ClusterHandler:
 
     @staticmethod
     def _gather_members(
-        random_walk_members: List[int], clst_id: int, graph: ig.Graph
-    ) -> Tuple[List[int], List[int]]:
+        random_walk_members: list[int], clst_id: int, graph: ig.Graph
+    ) -> tuple[list[int], list[int]]:
         """Generate a list of individuals ids in the network
 
         Parameters
         ----------
-        random_walk_members : List[int]
+        random_walk_members : list[int]
             list of all members from the random walk results
 
         clst_id : int
@@ -135,7 +138,7 @@ class ClusterHandler:
 
         Returns
         -------
-        Tuple[List[int], List[int]]
+        Tuple[list[int], list[int]]
             returns a list of ids of individuals in the network and then
             a list of vertex ids. The individual ids are just the index
             of the element in the membership list and the vertex ids are
@@ -156,13 +159,13 @@ class ClusterHandler:
 
     @staticmethod
     def _determine_true_positive_edges(
-        member_list: List[int], clst_id: int, random_walk_results: ig.VertexClustering
+        member_list: list[int], clst_id: int, random_walk_results: ig.VertexClustering
     ) -> Tuple[int, float]:
         """determining the number of true positive edges
 
         Parameters
         ----------
-        member_list : List[int]
+        member_list : list[int]
             list of ids within the specific network
 
         clst_id : int
@@ -190,9 +193,10 @@ class ClusterHandler:
 
         return cluster_edge_count, cluster_edge_count / theoretical_edge_count
 
+    @staticmethod
     def _determine_false_positive_edges(
-        graph: ig.Graph, vertex_list: List[int]
-    ) -> Tuple[int, List[int]]:
+        graph: ig.Graph, vertex_list: list[int]
+    ) -> Tuple[int, list[int]]:
         """determine the number of false positive edges
 
         Parameters
@@ -200,12 +204,12 @@ class ClusterHandler:
         graph : ig.Graph
             graph object returned from ig.Graph.DataFrame
 
-        vertex_list : List[int]
+        vertex_list : list[int]
             list of vertex ids within the specific network
 
         Returns
         -------
-        Tuple[int, List[int]]
+        Tuple[int, list[int]]
             returns a tuple where the first element is the
             number of edges in the graph and the second
             element is a list of false positive edges.
@@ -229,20 +233,20 @@ class ClusterHandler:
         return len(false_negative_edges), false_negative_edges
 
     def _map_ids_back_to_haplotypes(
-        self, members: List[int]
-    ) -> Tuple[List[str], Set[str]]:
+        self, members: list[int]
+    ) -> Tuple[list[str], Set[str]]:
         """remap the haplotype integer ids back to the haplotype
         strings for the output file
 
         Parameters
         ----------
-        members : List[int]
+        members : list[int]
             list of integers that represent the name of each vertex in the network
             corresponding the the graph
 
         Returns
         -------
-        Tuple[List[str], List[str]]
+        Tuple[list[str], list[str]]
             returns a list of haplotype id strings in the network. These
             strings include the phase number. Also returns a list of ids
             within the networks. This will be the same as the haplotype
@@ -257,7 +261,7 @@ class ClusterHandler:
     def gather_cluster_info(
         self,
         graph: ig.Graph,
-        cluster_ids: List[int],
+        cluster_ids: list[int],
         random_walk_clusters: ig.VertexClustering,
         parent_cluster_id: Optional[str] = None,
     ) -> None:
@@ -270,7 +274,7 @@ class ClusterHandler:
         graph : ig.Graph
             Graph object generated by ig.Graph.DataFrame
 
-        cluster_ids : List[int]
+        cluster_ids : list[int]
             list of integers for each cluster id
 
         random_walk_clusters : ig.VertexClustering
@@ -353,8 +357,10 @@ class ClusterHandler:
                     haplotype_ids,
                 )
                 # logger.info(f"members: {member_ids}\nhaplotypes: {haplotype_ids}")
-
-                self.final_clusters.append(network)
+                # This line of code is what actually records the clusters to the output
+                # object. We can also record the members who are related here
+                self.cluster_results["related_samples"].update(member_ids)
+                self.cluster_results["final_clusters"].append(network)
 
     def redo_clustering(
         self, network: Network_Interface, ibd_pd: DataFrame, ibd_vs: DataFrame
@@ -484,7 +490,7 @@ def cluster(
     filter_obj: Filter,
     cluster_obj: ClusterHandler,
     centimorgan_indx: int,
-) -> List[Network_Interface]:
+) -> NetworkResults:
     """Main function that will perform the clustering using igraph
 
     Parameters
@@ -502,7 +508,13 @@ def cluster(
     min_network_size : int
         threshold so we can filter networks that are >= the threshold
 
-        Returns
+    Returns
+    -------
+    NetworkResults
+        returns a dictionary with a key called "related_samples" and a key called
+        "final_clusters". "related_samples" is a set of all individuals that are
+        clustered into networks. "final_clusters" is a list of Networks objects
+        identified by DRIVE
     """
     filter_obj.ibd_pd = filter_obj.ibd_pd.rename(columns={centimorgan_indx: "cm"})
     # filtering the edges dataframe to the correct columns
@@ -531,7 +543,7 @@ def cluster(
 
         _ = cluster_obj.recheck_clsts.setdefault(cluster_obj.check_times, [])
 
-        for network in cluster_obj.recheck_clsts.get(cluster_obj.check_times - 1):
+        for network in cluster_obj.recheck_clsts.get(cluster_obj.check_times - 1, []):
             cluster_obj.redo_clustering(network, ibd_pd, ibd_vs)
     # logginng the number of segments, haplotypes, and clusters
     # identified in the analysis
@@ -539,6 +551,12 @@ def cluster(
         f"Identified {network_graph.ecount()} IBD segments from {network_graph.vcount()} haplotypes"  # noqa: E501
     )
 
-    logger.info(f"Identified {len(cluster_obj.final_clusters)} IBD clusters")
+    logger.info(
+        f"Identified {len(cluster_obj.cluster_results['final_clusters'])} IBD clusters"
+    )
 
-    return cluster_obj.final_clusters
+    logger.info(
+        f"# of related individuals in cluster: {len(cluster_obj.cluster_results['related_samples'])}"
+    )
+
+    return cluster_obj.cluster_results

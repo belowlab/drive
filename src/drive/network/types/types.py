@@ -2,7 +2,7 @@
 
 from collections import namedtuple
 from dataclasses import dataclass, field
-from typing import Protocol
+from typing import Protocol, TypedDict
 
 from pandas import DataFrame
 
@@ -42,4 +42,6 @@ class Filter(Protocol):
 
 
 # This variable will represent our return type from the clustering
-NetworkResults = dict[list[str], list[Network_Interface]]
+class NetworkResults(TypedDict):
+    related_samples: set[str]
+    final_clusters: list[Network_Interface]
