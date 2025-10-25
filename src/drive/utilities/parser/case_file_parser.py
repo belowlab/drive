@@ -21,7 +21,10 @@ class PhenotypeFileParser:
     different delimiters in files as well as catch errors."""
 
     def __init__(
-        self, filepath: Union[Path, str], phenotype_name: Optional[str] = None
+        self,
+        filepath: Union[Path, str],
+        phenotype_name: Optional[str] = None,
+        output_dir: Path = "./",
     ) -> None:
         """Initialize the PhenotypeFileParser class.
 
@@ -34,11 +37,17 @@ class PhenotypeFileParser:
             Phenotype name that can be used specify a specific column in a
             phenotype matrix if the user only wants ot focus on 1 phenotype.
 
+        output_dir : Path
+            path that output will be written to. This value serves more as state for the
+            object that can be used in optional file operations. Default value is the current
+            directory.
+
         Raises
         ------
         FileNotFoundError
         """
-        self.specific_phenotype: str = phenotype_name
+        self.specific_phenotype: str | None = phenotype_name
+        self.output_dir: Path = output_dir
         # we are going to make sure the filepath variable is a
         # PosixPath
         filepath = Path(filepath)
@@ -202,9 +211,11 @@ class PhenotypeFileParser:
 
         return phenotyping_dictionary, cohort_ids
 
-    @staticmethod
     def filter_cases_and_controls(
-        phenotype_dictionary: dict[str, dict[str, set[str]]], keep_id_list: set[str]
+        self,
+        phenotype_dictionary: dict[str, dict[str, set[str]]],
+        keep_id_list: set[str],
+        record_frequencies: bool,
     ) -> dict[str, dict[str, set[str]]]:
         """filter the case/control/exclusion list for each phenotype to only
         individuals in networks. This will only be used if the user enables
@@ -220,6 +231,10 @@ class PhenotypeFileParser:
 
         keep_id_list : set[str]
             Set containing the ids to filter each phecode to
+
+        record_frequencies : bool
+            whether to record the phenotype frequencies of the cohort that consist
+            of only related individuals. This file will be written to the output directory specified by self.output_dir
 
         Returns
         -------
@@ -240,5 +255,20 @@ class PhenotypeFileParser:
             for status_category, original_id_set in phenotype_counts.items():
                 filtered_id_set = original_id_set.intersection(keep_id_list)
                 inner_counts_dict[status_category] = filtered_id_set
+
+        if record_frequencies:
+            logger.info(
+                f"Recording the phenotype counts for the cohort of related individuals to the file: {self.output_dir / "cohort_frequencies.txt"}"
+            )
+            with open(
+                self.output_dir / "cohort_frequencies.txt", "w"
+            ) as cohort_freq_fh:
+                cohort_freq_fh.write(
+                    "phecode\tcases\tcontrols\texclusions\tfrequency\n"
+                )
+                for phenotype, phenotype_counts in filtered_counts.items():
+                    cohort_freq_fh.write(
+                        f"{phenotype}\t{phenotype_counts.get("cases", "N/A")}\t{phenotype_counts.get("controls", "N/A")}\t{phenotype_counts.get("excluded", "N/A")}\t{phenotype_counts.get("cases")/phenotype_counts.get("controls")}\n"
+                    )
 
         return filtered_counts

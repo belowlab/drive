@@ -241,6 +241,15 @@ def generate_cmd_parser() -> argparse.ArgumentParser:
         help="Sometimes it seems like the enrichment test might be identifying echo symbols in phenomewide analyses. Potentially these singals are a result of the phenotype frequency being calculated in the whole cohort. This is an EXPERIMENTAL feature starting in v3.0.3 that allows the user to only calculate the phenotype frequency in related individuals. (default: %(default)s)",
     )
 
+    cluster_parser.add_argument(
+        "--record-case-frequencies",
+        required=False,
+        type=bool,
+        default=False,
+        action=argparse.BooleanOptionalAction,
+        help="Whether or not to record the cohort phenotype after we filter the cohort to only related individuals. This flag should only be used if the user also passes the '--use-related-pheno-freq', otherwise it will be ignored. (default: %(default)s)",
+    )
+
     cluster_parser.set_defaults(func=run_network_identification)
 
     # This is where we will define all of the necessary arguments to make

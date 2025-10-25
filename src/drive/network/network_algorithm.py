@@ -115,7 +115,9 @@ def run_network_identification(args) -> None:
 
     if args.use_related_pheno_freq:
         phenotype_counts = PhenotypeFileParser.filter_cases_and_controls(
-            phenotype_counts, network_results.get("related_samples")
+            phenotype_counts,
+            network_results.get("related_samples"),
+            args.record_case_frequencies,
         )
 
     # creating the data container that all the plugins can interact with
