@@ -258,7 +258,7 @@ class PhenotypeFileParser:
 
         if record_frequencies:
             logger.info(
-                f"Recording the phenotype counts for the cohort of related individuals to the file: {self.output_dir / "cohort_frequencies.txt"}"
+                f"Recording the phenotype counts for the cohort of related individuals to the file: {self.output_dir / 'cohort_frequencies.txt'}"
             )
             with open(
                 self.output_dir / "cohort_frequencies.txt", "w"
@@ -268,7 +268,7 @@ class PhenotypeFileParser:
                 )
                 for phenotype, phenotype_counts in filtered_counts.items():
                     cohort_freq_fh.write(
-                        f"{phenotype}\t{phenotype_counts.get("cases", "N/A")}\t{phenotype_counts.get("controls", "N/A")}\t{phenotype_counts.get("excluded", "N/A")}\t{phenotype_counts.get("cases")/phenotype_counts.get("controls")}\n"
+                        f"{phenotype}\t{phenotype_counts.get('cases', 'N/A')}\t{phenotype_counts.get('controls', 'N/A')}\t{phenotype_counts.get('excluded', 'N/A')}\t{phenotype_counts.get('cases')/phenotype_counts.get('controls')}\n"
                     )
 
         return filtered_counts
