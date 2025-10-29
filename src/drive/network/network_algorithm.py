@@ -117,10 +117,6 @@ def run_network_identification(args) -> None:
 
     network_results = cluster(filter_obj, cluster_handler, indices.cM_indx)
 
-    logger.info(
-        f"{len(network_results.get("related_samples"))} participates were clustered into networks"
-    )
-
     # creating the data container that all the plugins can interact with
     plugin_api = RuntimeState(
         network_results,
