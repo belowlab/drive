@@ -197,7 +197,7 @@ def generate_cmd_parser() -> argparse.ArgumentParser:
         type=bool,
         default=True,
         action=argparse.BooleanOptionalAction,
-        help="whether or not the user wishes the program to automically recluster based on things like hub threshold, max network size and how connected the graph is. ",  # noqa: E501
+        help="whether or not the user wishes the program to automically recluster based on things like hub threshold, max network size and how connected the graph is. (default: %(default)s)",  # noqa: E501
     )
 
     cluster_parser.add_argument(
@@ -212,7 +212,7 @@ def generate_cmd_parser() -> argparse.ArgumentParser:
         type=bool,
         default=False,
         action=argparse.BooleanOptionalAction,
-        help="whether or not to compress the output file from the DRIVE clustering output file. When the program is run PhenomeWide, the output file can be quite large. This option helps make file storage more managable",
+        help="whether or not to compress the output file from the DRIVE clustering output file. When the program is run PhenomeWide, the output file can be quite large. This option helps make file storage more managable. (default: %(default)s)",
     )
 
     cluster_parser.add_argument(
@@ -229,25 +229,16 @@ def generate_cmd_parser() -> argparse.ArgumentParser:
         type=bool,
         default=False,
         action=argparse.BooleanOptionalAction,
-        help="If this flag is provided by the user then the output will be broken up into a file for each phecode category. Each file will still contain the columns that give the network information and the minimum phecode for each network. Output files will all be written to the same output directory. This flag should only be used if the user is running the analysis phenomewide. It shouldn't be used with the phecode-categories-to-keep flag.",
+        help="If this flag is provided by the user then the output will be broken up into a file for each phecode category. Each file will still contain the columns that give the network information and the minimum phecode for each network. Output files will all be written to the same output directory. This flag should only be used if the user is running the analysis phenomewide. It shouldn't be used with the phecode-categories-to-keep flag. (default: %(default)s)",
     )
 
     cluster_parser.add_argument(
-        "--use-related-pheno-freq",
+        "--record-pheno-frequencies",
         required=False,
         type=bool,
         default=False,
         action=argparse.BooleanOptionalAction,
-        help="Sometimes it seems like the enrichment test might be identifying echo symbols in phenomewide analyses. Potentially these singals are a result of the phenotype frequency being calculated in the whole cohort. This is an EXPERIMENTAL feature starting in v3.0.3 that allows the user to only calculate the phenotype frequency in related individuals. (default: %(default)s)",
-    )
-
-    cluster_parser.add_argument(
-        "--record-case-frequencies",
-        required=False,
-        type=bool,
-        default=False,
-        action=argparse.BooleanOptionalAction,
-        help="Whether or not to record the cohort phenotype after we filter the cohort to only related individuals. This flag should only be used if the user also passes the '--use-related-pheno-freq', otherwise it will be ignored. (default: %(default)s)",
+        help="Whether or not to record the cohort phenotype frequencies. (default: %(default)s)",
     )
 
     cluster_parser.set_defaults(func=run_network_identification)

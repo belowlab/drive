@@ -4,9 +4,12 @@ ecodings, separators, and by handling multiple errors."""
 from logging import Logger
 from pathlib import Path
 from typing import Dict, List, Optional, Set, Tuple, TypeVar, Union
+import gzip
 
 import pandas as pd
 from log import CustomLogger
+
+from .types import PhenotypeStatus
 
 logger: Logger = CustomLogger.get_logger(__name__)
 
@@ -24,7 +27,7 @@ class PhenotypeFileParser:
         self,
         filepath: Union[Path, str],
         phenotype_name: Optional[str] = None,
-        output_dir: Path = "./",
+        record_frequencies: bool = False,
     ) -> None:
         """Initialize the PhenotypeFileParser class.
 
@@ -37,17 +40,12 @@ class PhenotypeFileParser:
             Phenotype name that can be used specify a specific column in a
             phenotype matrix if the user only wants ot focus on 1 phenotype.
 
-        output_dir : Path
-            path that output will be written to. This value serves more as state for the
-            object that can be used in optional file operations. Default value is the current
-            directory.
-
         Raises
         ------
         FileNotFoundError
         """
         self.specific_phenotype: str | None = phenotype_name
-        self.output_dir: Path = output_dir
+        self.record_frequencies = record_frequencies
         # we are going to make sure the filepath variable is a
         # PosixPath
         filepath = Path(filepath)
@@ -128,9 +126,7 @@ class PhenotypeFileParser:
         else:
             return list(self.phenotype_df.columns[1:])
 
-    def _process_matrix(
-        self, columns: List[str]
-    ) -> Tuple[Dict[str, Dict[str, Set[str]]], List[str]]:
+    def _process_matrix(self, columns: List[str]) -> Tuple[PhenotypeStatus, List[str]]:
         """Function that will generate a dictionary where the keys are
         phenotypes and the values are lists of the cases/exclusions/controls
 
@@ -155,7 +151,7 @@ class PhenotypeFileParser:
 
         # we need to create the dictionary that will have the case/control/exclusion
         # ids for each phecode
-        phenotype_dict = {phecode: None for phecode in columns}
+        phenotype_dict: PhenotypeStatus = {phecode: None for phecode in columns}
 
         # we need to create a dictionary that will map the index of the phenotype
 
@@ -167,15 +163,15 @@ class PhenotypeFileParser:
         for phecode_name, phenotyping_status in self.phenotype_df.loc[
             :, columns
         ].items():
-            cases = set(
+            cases: set[str] = set(
                 grids[phenotyping_status[phenotyping_status == 1].index].unique()
             )
 
-            controls = set(
+            controls: set[str] = set(
                 grids[phenotyping_status[phenotyping_status == 0].index].unique()
             )
 
-            exclusions = set(
+            exclusions: set[str] = set(
                 grids[phenotyping_status[phenotyping_status == -1].index].unique()
             )
 
@@ -188,11 +184,42 @@ class PhenotypeFileParser:
             logger.info(
                 f"For PheCode, {phecode_name}, identified {len(phenotype_dict[phecode_name]['cases'])} cases, {len(phenotype_dict[phecode_name]['controls'])} controls, and {len(phenotype_dict[phecode_name]['excluded'])} exclusions"
             )  # noqa: E501
+
         return phenotype_dict, grids.values.tolist()
+
+    @staticmethod
+    def record_phenotype_frequencies(
+        phenotype_dict: PhenotypeStatus, output_dir: Path
+    ) -> None:
+        """record the counts of individuals who are cases/controls/exclusions and
+        the frequencies for the phenotypes in the analysis
+
+        Parameter
+        ---------
+        phenotype_dict : PhenotypeStatus
+            dictionary where the outer keys are phenotype ids (the columns in the provided
+            phenotype file) and the values are a nested dictionary where the keys are
+            'cases', 'controls', or 'excluded' and the values are sets of individuals who
+            are classified as that status
+
+        output_dir : Path
+        """
+
+        logger.info(
+            f"Recording the phenotype counts for the cohort of related individuals to the file: {output_dir / 'cohort_frequencies.txt'}"
+        )
+        with gzip.open(
+            output_dir / "cohort_frequencies.txt.gz", "wt"
+        ) as cohort_freq_fh:
+            cohort_freq_fh.write("phecode\tcases\tcontrols\texclusions\tfrequency\n")
+            for phenotype, phenotype_counts in phenotype_dict.items():
+                cohort_freq_fh.write(
+                    f"{phenotype}\t{len(phenotype_counts.get('cases', 'N/A'))}\t{len(phenotype_counts.get('controls', 'N/A'))}\t{len(phenotype_counts.get('excluded', 'N/A'))}\t{len(phenotype_counts.get('cases'))/len(phenotype_counts.get('controls'))}\n"
+                )
 
     def parse_cases_and_controls(
         self,
-    ) -> Tuple[Dict[str, Dict[str, Set[str]]], Dict[int, str]]:
+    ) -> Tuple[PhenotypeStatus, list[str]]:
         """Generate a list for cases, controls, and excluded individuals.
 
         Returns
@@ -210,65 +237,3 @@ class PhenotypeFileParser:
         phenotyping_dictionary, cohort_ids = self._process_matrix(cols_to_keep)
 
         return phenotyping_dictionary, cohort_ids
-
-    def filter_cases_and_controls(
-        self,
-        phenotype_dictionary: dict[str, dict[str, set[str]]],
-        keep_id_list: set[str],
-        record_frequencies: bool,
-    ) -> dict[str, dict[str, set[str]]]:
-        """filter the case/control/exclusion list for each phenotype to only
-        individuals in networks. This will only be used if the user enables
-        the experimental feature to calculate phenotype frequencies only using
-        the related set
-
-        Parameters
-        ----------
-        phenotype_dictionary : dict[str, dict[str, set[str]]]
-            dictionary where the outer keys are the phenotypes of interest and
-            the values are a dictionary containing list of cases, controls, and
-            exclusions for each phenotype
-
-        keep_id_list : set[str]
-            Set containing the ids to filter each phecode to
-
-        record_frequencies : bool
-            whether to record the phenotype frequencies of the cohort that consist
-            of only related individuals. This file will be written to the output directory specified by self.output_dir
-
-        Returns
-        -------
-        dict[str, dict[str, set[str]]]
-            returns a dictionary where the keys are phecodes and the values are
-            the case, control, and exclusions sets of individuals filtered to
-            the individuals in the filter_id_list argument
-        """
-        logger.info(
-            f"Filtering cases and controls for {len(phenotype_dictionary.keys())} phenotypes to only related individuals that were clustered into networks"
-        )
-        filtered_counts = {}
-
-        for phenotype, phenotype_counts in phenotype_dictionary.items():
-            inner_counts_dict = filtered_counts.setdefault(
-                phenotype, {}
-            )  # This will return the new dictionary counts
-            for status_category, original_id_set in phenotype_counts.items():
-                filtered_id_set = original_id_set.intersection(keep_id_list)
-                inner_counts_dict[status_category] = filtered_id_set
-
-        if record_frequencies:
-            logger.info(
-                f"Recording the phenotype counts for the cohort of related individuals to the file: {self.output_dir / 'cohort_frequencies.txt'}"
-            )
-            with open(
-                self.output_dir / "cohort_frequencies.txt", "w"
-            ) as cohort_freq_fh:
-                cohort_freq_fh.write(
-                    "phecode\tcases\tcontrols\texclusions\tfrequency\n"
-                )
-                for phenotype, phenotype_counts in filtered_counts.items():
-                    cohort_freq_fh.write(
-                        f"{phenotype}\t{phenotype_counts.get('cases', 'N/A')}\t{phenotype_counts.get('controls', 'N/A')}\t{phenotype_counts.get('excluded', 'N/A')}\t{phenotype_counts.get('cases')/phenotype_counts.get('controls')}\n"
-                    )
-
-        return filtered_counts

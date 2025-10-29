@@ -67,6 +67,10 @@ def run_network_identification(args) -> None:
             logger.info(
                 f"identified {len(phenotype_counts.keys())} phenotypes within the file {args.cases}"  # noqa: E501
             )
+            if args.record_pheno_frequencies:
+                PhenotypeFileParser.record_phenotype_frequencies(
+                    phenotype_counts, args.output.parent
+                )
     else:
         logger.info(
             "No phenotype information provided. Only the clustering step of the analysis will be performed"  # noqa: E501
@@ -113,12 +117,9 @@ def run_network_identification(args) -> None:
 
     network_results = cluster(filter_obj, cluster_handler, indices.cM_indx)
 
-    if args.use_related_pheno_freq:
-        phenotype_counts = PhenotypeFileParser.filter_cases_and_controls(
-            phenotype_counts,
-            network_results.get("related_samples"),
-            args.record_case_frequencies,
-        )
+    logger.info(
+        f"{len(network_results.get("related_samples"))} participates were clustered into networks"
+    )
 
     # creating the data container that all the plugins can interact with
     plugin_api = RuntimeState(
