@@ -194,7 +194,6 @@ def generate_cmd_parser() -> argparse.ArgumentParser:
 
     cluster_parser.add_argument(
         "--recluster",
-        type=bool,
         default=True,
         action=argparse.BooleanOptionalAction,
         help="whether or not the user wishes the program to automically recluster based on things like hub threshold, max network size and how connected the graph is. ",  # noqa: E501
@@ -209,7 +208,6 @@ def generate_cmd_parser() -> argparse.ArgumentParser:
 
     cluster_parser.add_argument(
         "--compress-output",
-        type=bool,
         default=False,
         action=argparse.BooleanOptionalAction,
         help="whether or not to compress the output file from the DRIVE clustering output file. When the program is run PhenomeWide, the output file can be quite large. This option helps make file storage more managable",
@@ -226,7 +224,6 @@ def generate_cmd_parser() -> argparse.ArgumentParser:
     cluster_parser.add_argument(
         "--split-phecode-categories",
         required=False,
-        type=bool,
         default=False,
         action=argparse.BooleanOptionalAction,
         help="if this flag is provided by the user then the output will be broken up into a file for each phecode category. Each file will still contain the columns that give the network information and the minimum phecode for each network. Output files will all be written to the same output directory. This flag should only be used if the user is running the analysis phenomewide. It shouldn't be used with the phecode-categories-to-keep flag.",
