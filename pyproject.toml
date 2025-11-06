@@ -1,6 +1,6 @@
 [project]
 name = "drive-ibd"
-version = "3.0.2"
+version = "3.0.3"
 description = "Python CLI using graph theory to identify networks of individuals who share IBD segments overlapping loci of interest"
 authors = [
   { name = "James Baker", email = "james.baker@vanderbilt.edu" },
@@ -28,11 +28,11 @@ keywords = ["python", "genetics", "identity by descent", "relatedness"]
 classifiers = [
   "Development Status :: 5 - Production/Stable",
   "Operating System :: Unix",
-  "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14"
 ]
 
 [project.urls]
