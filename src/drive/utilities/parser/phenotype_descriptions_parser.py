@@ -47,7 +47,7 @@ def validate_header(header_str: list[str]) -> None:
 
 
 def load_phenotype_descriptions(
-    phecode_container: PhecodesMapper, phecode_filepaths: Path
+    phecode_container: PhecodesMapper, phecode_filepaths: list[Path]
 ) -> None:
     """Function that will loads information about the phecode id names and the categories into a dictionary
 
@@ -65,17 +65,15 @@ def load_phenotype_descriptions(
 
     # phecode_filepaths = Path(__file__).parent.parent.parent / "phecode_mappings"
 
-    phecode_map_files = list(phecode_filepaths.glob("*.txt"))
-
-    if len(phecode_map_files) != 2:
+    if len(phecode_filepaths) != 2:
         logger.critical(
-            f"Unable to detect the files for the PheCode 1.2 & PheCode X mappings. This error probably means they were deleted or the cloning of the github repository partially failed. Attempted search in this directory: {phecode_filepaths}."
+            f"Unable to detect both of the files for the PheCode 1.2 & PheCode X mappings. This error probably means they were deleted or the cloning of the github repository partially failed. Attempted search in this directory: {phecode_filepaths}."
         )
         raise FileNotFoundError(
-            f"Unable to detect the files for the PheCode 1.2 & PheCode X mappings. This error probably means they were deleted or the cloning of the github repository partially failed.. Attempted search in this directory: {phecode_filepaths}."
+            f"Unable to detect both of the files for the PheCode 1.2 & PheCode X mappings. This error probably means they were deleted or the cloning of the github repository partially failed.. Attempted search in this directory: {phecode_filepaths}."
         )
 
-    for file in phecode_map_files:
+    for file in phecode_filepaths:
         with open(file, "r") as phecode_file:
             header = next(phecode_file)
             validate_header(header.strip().split("\t"))

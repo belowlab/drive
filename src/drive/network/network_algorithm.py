@@ -51,6 +51,8 @@ def run_network_identification(args) -> None:
     json_config = args.json_config if args.json_config else find_json_file()
 
     phecode_filepaths = Path(__file__).parent.parent / "phecode_mappings"
+
+    phecode_map_files = list(phecode_filepaths.glob("*.txt"))
     # we need to load in the phenotype descriptions file to get
     # descriptions of each phenotype
     logger.debug(
@@ -58,7 +60,9 @@ def run_network_identification(args) -> None:
     )
 
     phecodeDescriptions = PhecodesMapper()
-    load_phenotype_descriptions(phecodeDescriptions, phecode_filepaths)
+
+    load_phenotype_descriptions(phecodeDescriptions, phecode_map_files)
+
     logger.debug(
         f"Loading in mappings for {len(phecodeDescriptions.phecode_names)} phecodes from both versions 1.2 and X"
     )
