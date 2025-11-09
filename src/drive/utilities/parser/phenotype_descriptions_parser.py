@@ -1,11 +1,9 @@
 from pathlib import Path
 from dataclasses import dataclass, field
 import csv
-import sys
 
 from log import CustomLogger
 
-from pandas import read_csv
 
 logger = CustomLogger.get_logger(__name__)
 
