@@ -1,0 +1,17 @@
+phenotype	phecode	category
+008	Intestinal infection	infectious diseases
+008.5	Bacterial enteritis	infectious diseases
+008.51	Intestinal e.coli	infectious diseases
+008.52	Intestinal infection due to C. difficile	infectious diseases
+008.6	Viral Enteritis	infectious diseases
+008.7	Intestinal infection due to protozoa	infectious diseases
+010	Tuberculosis	infectious diseases
+031	Diseases due to other mycobacteria	infectious diseases
+031.1	Leprosy	infectious diseases
+038	Septicemia	infectious diseases
+038.1	Gram negative septicemia	infectious diseases
+038.2	Gram positive septicemia	infectious diseases
+038.3	Bacteremia	infectious diseases
+041	Bacterial infection NOS	infectious diseases
+041.1	Staphylococcus infections	infectious diseases
+041.11	Methicillin sensitive Staphylococcus aureus	infectious diseases
