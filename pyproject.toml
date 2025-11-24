@@ -22,6 +22,8 @@ dependencies = [
   "pytest>=8.4.1",
   "matplotlib>=3.9.4",
   "pyarrow>=21.0.0",
+  "xopen>=2.0.2",
+  "pytest-benchmark>=5.2.3",
 ]
 readme = "README.md"
 keywords = ["python", "genetics", "identity by descent", "relatedness"]
@@ -122,6 +124,7 @@ dev = [
     "ruff>=0.12.1",
     "scalene>=1.5.51",
     "snakeviz>=2.2.2",
+    "pytest-benchmark>=5.2.3",
 ]
 notebook = ["ipykernel>=6.29.5"]
 docs = [
