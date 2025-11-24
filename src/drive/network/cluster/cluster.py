@@ -1,14 +1,13 @@
 import itertools
 import logging
-import sys
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Set, Tuple
 
 import igraph as ig
 from log import CustomLogger
 from pandas import DataFrame
-
-from drive.network.models import Filter, Network, Network_Interface
+from drive.models import Filter
+from drive.network.models import Network, Network_Interface
 
 # creating a logger
 logger: logging.Logger = CustomLogger.get_logger(__name__)

@@ -123,6 +123,10 @@ dev = [
     "ruff>=0.12.1",
     "scalene>=1.5.51",
     "snakeviz>=2.2.2",
+    "pytest-benchmark>=5.2.3",
+    "dotenv>=0.9.9",
+    "pytest-memray>=1.8.0",
+    "polars>=1.35.2",
 ]
 notebook = ["ipykernel>=6.29.5"]
 docs = [

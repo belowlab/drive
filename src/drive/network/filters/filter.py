@@ -8,7 +8,7 @@ import numpy as np
 from log import CustomLogger
 from pandas import DataFrame, concat, read_csv
 
-from drive.network.models import FileIndices, Genes
+from drive.models import FileIndices, Genes
 
 logger = CustomLogger.get_logger(__name__)
 

@@ -8,7 +8,7 @@ from drive.dendrogram import generate_dendrograms
 from drive.network import run_network_identification
 from drive.utilities.callbacks.callbacks import CheckPvalRange
 from drive.utilities.pull_samples import run_pull_samples
-from drive.utilities.callbacks import CheckInputExist
+from drive.parser.callbacks import CheckInputExist
 from drive.utilities.testing import run_integration_test
 
 

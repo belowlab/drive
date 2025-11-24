@@ -7,9 +7,10 @@ from log import CustomLogger
 import drive.network.factory as factory
 from drive.network.cluster import ClusterHandler, cluster
 from drive.network.filters import IbdFilter
-from drive.network.models import RuntimeState, create_indices
-from drive.utilities.functions import split_target_string
-from drive.utilities.parser import (
+from drive.models import create_indices
+from drive.network.models import RuntimeState
+from drive.helper_funcs import split_target_string
+from drive.parser import (
     PhenotypeFileParser,
     load_phenotype_descriptions,
     PhecodesMapper,

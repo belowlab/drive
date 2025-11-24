@@ -8,12 +8,11 @@ import pandas as pd
 import scipy.cluster.hierarchy as sch
 from log import CustomLogger
 from numpy import zeros
-from scipy.spatial import distance
 from scipy.spatial.distance import squareform
 
 from drive.network.filters import IbdFilter
-from drive.network.models import create_indices
-from drive.utilities.functions import split_target_string
+from drive.models import create_indices
+from drive.helper_funcs import split_target_string
 
 logger = CustomLogger.get_logger(__name__)
 

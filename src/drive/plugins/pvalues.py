@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from typing import Dict, List, Tuple
 
-from drive.utilities.parser.phenotype_descriptions_parser import PhecodesMapper
+from drive.parser.phenotype_descriptions_parser import PhecodesMapper
 from log import CustomLogger
 from numpy import float64
 from scipy.stats import binomtest
