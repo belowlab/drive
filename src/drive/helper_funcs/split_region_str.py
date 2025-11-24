@@ -1,6 +1,6 @@
 import re
 
-from drive.network.models import Genes
+from drive.models import Genes
 
 
 def split_target_string(chromo_pos_str: str) -> Genes:

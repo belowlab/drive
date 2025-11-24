@@ -2,7 +2,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Dict, List, Set, Any
 
-from drive.utilities.parser.phenotype_descriptions_parser import PhecodesMapper
+from drive.parser.phenotype_descriptions_parser import PhecodesMapper
 
 from .networks import Network_Interface
 

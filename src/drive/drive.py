@@ -4,7 +4,7 @@ import sys
 
 from log import CustomLogger
 
-from drive.utilities.parser import generate_cmd_parser
+from drive.parser import generate_cmd_parser
 
 
 def main() -> None:
