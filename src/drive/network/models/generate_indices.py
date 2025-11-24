@@ -1,7 +1,10 @@
 from dataclasses import dataclass
 from typing import Protocol
+from log import CustomLogger
 
 from pandas import DataFrame
+
+logger = CustomLogger.get_logger(__name__)
 
 
 # general protocol that defines that every class needs the get_haplotype_id method
@@ -128,4 +131,7 @@ def create_indices(ibd_file_format: str) -> FileIndices:
         "rapid": Rapid(),
     }
 
-    return format_selector.get(ibd_file_format)
+    logger.debug(
+        f"creating an object with the correct indices for the output from {ibd_file_format}"
+    )
+    return format_selector[ibd_file_format]

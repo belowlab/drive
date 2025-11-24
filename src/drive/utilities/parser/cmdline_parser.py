@@ -6,6 +6,7 @@ from rich_argparse import RichHelpFormatter
 
 from drive.dendrogram import generate_dendrograms
 from drive.network import run_network_identification
+from drive.utilities.callbacks.callbacks import CheckPvalRange
 from drive.utilities.pull_samples import run_pull_samples
 from drive.utilities.callbacks import CheckInputExist
 from drive.utilities.testing import run_integration_test
@@ -440,5 +441,87 @@ def generate_cmd_parser() -> argparse.ArgumentParser:
     )
 
     testing_parser.set_defaults(func=run_integration_test)
+
+    segments_parser = utility_cmd_subparser.add_parser(
+        name="pull-segments",
+        help="pull the pairwise ibd segments associated with the networks identified by DRIVE",
+        formatter_class=RichHelpFormatter,
+        parents=[common_parser],
+        description="pull pairwise IBD segments associated with networks identified by DRIVE",
+    )
+
+    segments_parser.add_argument(
+        "--ibd-file",
+        type=Path,
+        help="file containing the pairwise IBD segments detected by either GERMLINE, hap-IBD, iLASH, or RapID. This file should be in the format that they come out of the program.",
+        required=True,
+        action=CheckInputExist,
+    )
+
+    segments_parser.add_argument(
+        "--drive-results",
+        type=Path,
+        help="filepath to the output from running DRIVE",
+        required=True,
+        action=CheckInputExist,
+    )
+
+    segments_parser.add_argument(
+        "--format",
+        "-f",
+        default="hapibd",
+        type=str,
+        help="IBD program used to detect segments. Allowed values are hapibd, ilash, germline, rapid. Program expects for value to be lowercase. (default: %(default)s)",
+        choices=["hapibd", "ilash", "germline", "rapid"],
+    )
+
+    segments_parser.add_argument(
+        "--target",
+        "-t",
+        type=str,
+        help="Target region or position, chr:start-end or chr:pos. this argument will be used to filter the pairwise segments down to just a region that the user is interested in",
+        required=True,
+    )
+
+    segments_parser.add_argument(
+        "--output",
+        "-o",
+        type=Path,
+        default=Path("test_segments.txt"),
+        help="Output filepath. This file will have the segments per network and will have a column to indicate which segments belong to which network. (default: %(default)s)",
+    )
+
+    segments_parser.add_argument(
+        "--min-cm",
+        "-m",
+        default=3,
+        type=int,
+        help="minimum centimorgan threshold. The program expects this to be an integer value. This value will be used to filter out any pairwise segments that are shorter than the minimum cM threshold. (default: %(default)s)",
+    )
+
+    segments_parser.add_argument(
+        "--pval-threshold",
+        type=float,
+        required=False,
+        help="significance value to filter networks to. This value can used to only output for the segments for networks above a significance threshold",
+        action=CheckPvalRange,
+    )
+
+    segments_parser.add_argument(
+        "--pval-column",
+        type=str,
+        default="min_pvalue",
+        required=False,
+        help="column that has the pvalues that we will use to filter on. This we will only filter on this column if the --pval-threshold argument is also provided (default: %(default)s).",
+    )
+
+    segments_parser.add_argument(
+        "--network-id",
+        type=str,
+        required=False,
+        help="id of the network that we are interested in getting the segments for. By default the program will return segemnts for all the networks in the file but if the user wishes to only look aat one network then they can provide this value.",
+    )
+
+    segments_parser.set_defaults(func=...)
 
     return parser

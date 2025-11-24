@@ -22,6 +22,7 @@ dependencies = [
   "pytest>=8.4.1",
   "matplotlib>=3.9.4",
   "pyarrow>=21.0.0",
+  "xopen>=2.0.2",
 ]
 readme = "README.md"
 keywords = ["python", "genetics", "identity by descent", "relatedness"]
