@@ -65,10 +65,10 @@ def load_drive_data(
         # header line
         if "clstID" not in header_line or "ID.haplotype" not in header_line:
             print(
-                f"The header line does not contain the values that we expected in the file indicating a typo, or the file has either been changed since DRIVE has run, or the file is corrupted. Please verify that the file has the columns, clstID, ID.haplotype, and {pval_col}."
+                "The header line does not contain the values that we expected in the file indicating a typo, or the file has either been changed since DRIVE has run, or the file is corrupted. Please verify that the file has the columns, clstID, ID.haplotype."
             )
             raise ValueError(
-                f"Malformed DRIVE file. Ensure the columns, clstID, ID.haplotype, and {pval_col} are in the file"
+                "Malformed DRIVE file. Ensure the columns, clstID, ID.haplotypeare in the file"
             )
         split_header = header_line.strip().split("\t")
 
