@@ -1,12 +1,13 @@
+from tabnanny import check
 from typing import Callable
 import polars as pl
-from collections import namedtuple
 from xopen import xopen
 from itertools import chain, combinations
 from pathlib import Path
 import argparse
 
-Genes = namedtuple("Genes", ["chromosome", "start", "end"])
+from drive.helper_funcs import split_target_string
+from drive.models import Genes
 
 
 def load_drive_data(
@@ -62,22 +63,23 @@ def load_drive_data(
         header_line = results_input.readline()
         # We need to make sure that certain conditions are met in the
         # header line
-        if (
-            "clstID" not in header_line
-            or pval_col not in header_line
-            or "ID.haplotype" not in header_line
-        ):
+        if "clstID" not in header_line or "ID.haplotype" not in header_line:
             print(
                 f"The header line does not contain the values that we expected in the file indicating a typo, or the file has either been changed since DRIVE has run, or the file is corrupted. Please verify that the file has the columns, clstID, ID.haplotype, and {pval_col}."
             )
             raise ValueError(
                 f"Malformed DRIVE file. Ensure the columns, clstID, ID.haplotype, and {pval_col} are in the file"
             )
-        # Pull out the indices that we will need from the header
         split_header = header_line.strip().split("\t")
 
+        if pval_col in header_line:
+            pval_col_indx = split_header.index(pval_col)
+        else:
+            pval_col_indx = -1
+        # Pull out the indices that we will need from the header
+
         clstid_col_indx = split_header.index("clstID")
-        pval_col_indx = split_header.index(pval_col)
+
         haplotype_col_indx = split_header.index("ID.haplotype")
 
         for line in results_input:
@@ -90,7 +92,7 @@ def load_drive_data(
             # without evaluating the rest and the code will not break
             if network_id and split_line[clstid_col_indx] != network_id:
                 continue
-            if pval_threshold and split_line[pval_col_indx] > pval_threshold:
+            if pval_threshold and float(split_line[pval_col_indx]) > pval_threshold:
                 continue
             # making it here means we either short circuited the if statement
             # or we failed the negative checks
@@ -209,10 +211,12 @@ class filter_obj:
         return filters[filter_options]
 
 
-def filter_ibd_segments_new(ibd_segment_file: Path, drive_results: Path, filter_type: str, target_gene: Genes) -> None:
+def filter_ibd_segments_new(
+    ibd_segment_file: Path, drive_results: Path, filter_type: str, target_gene: Genes
+) -> None:
     """main function that will used for testing the polars filtering"""
 
-    drive_network_mapping = load_drive_data(drive_results)
+    drive_network_mapping = load_drive_data(drive_results, pval_col="min_pvalue")
 
     indices = {
         "id1_indx": "column_1",
@@ -261,30 +265,34 @@ def filter_ibd_segments_new(ibd_segment_file: Path, drive_results: Path, filter_
         .collect()
     )
 
-    print(df)
-    
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
 
     parser.add_argument(
-        "--ibd-file",
-        type=Path,
-        required=True,
-        help="Path to an ibd file from hap-IBD"
+        "--ibd-file", type=Path, required=True, help="Path to an ibd file from hap-IBD"
     )
 
     parser.add_argument(
         "--drive-results",
-        reqired=True,
+        required=True,
         type=Path,
-        help="output file from running the clustering step of DRIVE"
+        help="output file from running the clustering step of DRIVE",
+    )
+
+    parser.add_argument(
+        "--segment-overlap",
+        default="contains",
+        choices=["contains", "overlaps"],
+        type=str,
+        help="Indicates if the user wants the gene to contain the whole target region or if it just needs to overlap the segment. (default: %(default)s)",  # noqa: E501
     )
 
     parser.add_argument(
         "--min-cm",
         type=float,
         default=3.0,
-        help="minimum centimorgan threshold that will be used to filter the IBD segments"
+        help="minimum centimorgan threshold that will be used to filter the IBD segments",
     )
 
     parser.add_argument(
@@ -305,3 +313,9 @@ if __name__ == "__main__":
     )
 
     args = parser.parse_args()
+
+    gene_target = split_target_string(args.target)
+
+    filter_ibd_segments_new(
+        args.ibd_file, args.drive_results, args.segment_overlap, gene_target
+    )
