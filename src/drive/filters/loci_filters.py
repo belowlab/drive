@@ -7,20 +7,24 @@ from drive.models import Genes, IbdFileIndices
 
 logger = CustomLogger.get_logger(__name__)
 
-# The following filters control behavior for how to filter to 
-# specific IBD segments that overlap or contain the region of 
-# interest. Everything that implements the FilterProtocol will have this as an overarching 
+
+# The following filters control behavior for how to filter to
+# specific IBD segments that overlap or contain the region of
+# interest. Everything that implements the FilterProtocol will have this as an overarching
 class FilterProtocol(Protocol):
     """each implementation will choose how to implement the filters but they should have a method to set them"""
-    def set_filter(self, filter_options: str) -> Callable:
-        ...
+
+    def set_filter(self, filter_options: str) -> Callable: ...
+
 
 class PandasFilter(FilterProtocol):
-    def __init__(self, indices: IbdFileIndices, target_gene: Genes, filter_type: str) -> None:
+    def __init__(
+        self, indices: IbdFileIndices, target_gene: Genes, filter_type: str
+    ) -> None:
         self.indices = indices
         self.target_gene = target_gene
         self.filter: Callable = self.set_filter(filter_type)
-    
+
     def contains_filter(self, data_chunk: DataFrame, min_cm: int) -> DataFrame:
         """Method that will filter the ibd file on four conditions: Chromosome number is the same, segment start position is <= target start position, segment end position is >= to the start position, and the size of the segment is >= to the minimum centimorgan threshold.
 
@@ -128,7 +132,6 @@ class PandasFilter(FilterProtocol):
         return filters[filter_options]
 
 
-
 class PolarsFilter(FilterProtocol):
 
     def __init__(
@@ -227,7 +230,8 @@ class PolarsFilter(FilterProtocol):
         filters = {"contains": self.contains_filter, "overlaps": self.overlaps_filter}
 
         return filters[filter_options]
-    
+
+
 class DuckDBFilter(FilterProtocol):
 
     def __init__(
@@ -237,7 +241,7 @@ class DuckDBFilter(FilterProtocol):
         self.target_gene = target_gene
         self.filter: Callable = self.set_filter(filter_type)
 
-    def contains_filter(self) ->str:
+    def contains_filter(self) -> str:
         """
         This method works for both DataFrame (eager) and LazyFrame (lazy).
         When passed a LazyFrame, it adds a filter node to the query plan.

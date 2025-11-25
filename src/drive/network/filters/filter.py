@@ -8,7 +8,8 @@ import numpy as np
 from log import CustomLogger
 from pandas import DataFrame, concat, read_csv
 
-from drive.models import FileIndices, Genes
+from drive.models import IbdFileIndices, Genes
+from drive.filters import add_haplotype_id
 
 logger = CustomLogger.get_logger(__name__)
 
@@ -28,7 +29,7 @@ class IbdFilter:
         pandas dataframe being read in chunk by chunk. This data represents
         the pairwise IBD segments from hap-IBD, GERMLINE, RaPID, or iLASH
 
-    indices : FileIndices
+    indices : IbdFileIndices
         object that abstracts away the indices needed based on the IBD program
         used
 
@@ -63,7 +64,7 @@ class IbdFilter:
     ibd_file: Iterator[
         DataFrame
     ]  # IBD segments being read in by chunks making the pandas dataframe an iterator
-    indices: FileIndices
+    indices: IbdFileIndices
     target_gene: Genes
     filter: Optional[Callable] = None
     ibd_vs: DataFrame = field(default_factory=DataFrame)
@@ -76,7 +77,7 @@ class IbdFilter:
     def load_file(
         cls,
         ibd_file: Path,
-        indices: FileIndices,
+        indices: IbdFileIndices,
         target_gene: Genes,
         chunksize: int = 100_000,
     ) -> T:
@@ -89,7 +90,7 @@ class IbdFilter:
             Path object containing the filepath for the ibd
             file from hapibd, iLASH, etc...
 
-        indices: FileIndices
+        indices: IbdFileIndices
             Object that has all the indices for the necessary
             columns in the ibd file. This object also has a
             get_haplotype_ids method that will form the
@@ -312,7 +313,7 @@ class IbdFilter:
             logger.critical(
                 f"Expected the keys hapid1 and hapid2 to be in the dataframe. Instead the only keys were: {', '.join(data.columns)}"  # noqa: E501
             )
-            raise e(
+            raise KeyError(
                 f"Expected the keys hapid1 and hapid2 to be in the dataframe. Instead the only keys were: {', '.join(data.columns)}"  # noqa: E501
             )
 
@@ -369,6 +370,7 @@ class IbdFilter:
                 & (chunk[self.indices.id2_indx].isin(cohort_ids))
             ]
 
+    @staticmethod
     def _check_for_no_shared_segments(ibd_pd: DataFrame, ibd_vs: DataFrame) -> None:
         """Check to ensure that there were shared IBD segments
         found based on the input conditions
@@ -421,6 +423,7 @@ class IbdFilter:
     def preprocess(
         self,
         min_centimorgan: int,
+        ibd_file_format: str,
         cohort_ids: Optional[List[str]] = None,
     ) -> None:
         """Method that will filter the ibd file.
@@ -457,19 +460,22 @@ class IbdFilter:
 
             if not size_filtered_chunk.empty:
                 # We have to add two column with the haplotype ids
-                self.indices.get_haplotype_id(
+                add_haplotype_id(
                     size_filtered_chunk,
                     self.indices.id1_indx,
                     self.indices.hap1_indx,
                     "hapid1",
+                    ibd_file_format,
                 )
 
-                self.indices.get_haplotype_id(
+                add_haplotype_id(
                     size_filtered_chunk,
                     self.indices.id2_indx,
                     self.indices.hap2_indx,
                     "hapid2",
+                    ibd_file_format,
                 )
+
                 # We then need to make sure that there are no
                 # duplicates in the dataframe
                 removed_dups = self._remove_dups(size_filtered_chunk)

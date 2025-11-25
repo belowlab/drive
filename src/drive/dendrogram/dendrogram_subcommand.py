@@ -513,7 +513,7 @@ def generate_dendrograms(args) -> None:
         # choosing the proper way to filter the ibd files
         filter_obj.set_filter(args.segment_overlap)
         # Filter the IBD data to only the sites that were used in the DRIVE analysis
-        filter_obj.preprocess(args.min_cm, id_list)
+        filter_obj.preprocess(args.min_cm, args.format, id_list)
 
         ibd_segments = filter_obj.ibd_pd
         print(ibd_segments)
@@ -533,11 +533,6 @@ def generate_dendrograms(args) -> None:
             }
         )
 
-        # matrix_id_list, distance_matrix = make_distance_matrix(
-        #     haplotype_filtered_ibd_segments[["pair_1", "pair_2", "length"]],
-        #     args.min_cm,
-        #     args.map_ids,
-        # )
         distanceMatrixObj = make_distance_matrix(
             haplotype_filtered_ibd_segments[["pair_1", "pair_2", "length"]],
             args.min_cm,

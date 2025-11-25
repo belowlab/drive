@@ -93,7 +93,7 @@ def run_network_identification(args) -> None:
     # choosing the proper way to filter the ibd files
     filter_obj.set_filter(args.segment_overlap)
 
-    filter_obj.preprocess(args.min_cm, cohort_ids)
+    filter_obj.preprocess(args.min_cm, args.format, cohort_ids)
 
     # We need to invert the hapid_map dictionary so that the
     # integer mappings are keys and the values are the
