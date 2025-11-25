@@ -127,6 +127,7 @@ dev = [
     "dotenv>=0.9.9",
     "pytest-memray>=1.8.0",
     "polars>=1.35.2",
+    "duckdb>=1.4.2",
 ]
 notebook = ["ipykernel>=6.29.5"]
 docs = [
