@@ -5,7 +5,7 @@
 groups = ["default", "dev", "docs", "notebook"]
 strategy = ["inherit_metadata"]
 lock_version = "4.5.0"
-content_hash = "sha256:f4e36441919d16e0bce497d8871a704cc55f342ccc28076df9dffd41bb60c549"
+content_hash = "sha256:8797858407de3c8ed3777048bc49594a5b46b2571f75cd513356beb64ecb1472"
 
 [[metadata.targets]]
 requires_python = ">=3.10,<3.11.0||>3.11.0"
@@ -519,7 +519,7 @@ name = "duckdb"
 version = "1.4.2"
 requires_python = ">=3.9.0"
 summary = "DuckDB in-process database"
-groups = ["dev"]
+groups = ["default"]
 files = [
     {file = "duckdb-1.4.2-cp310-cp310-macosx_10_9_universal2.whl", hash = "sha256:85f0c36c1b5f378d96dd7d8c6d312317f4f547a567e8b76cacb2590a31d931f3"},
     {file = "duckdb-1.4.2-cp310-cp310-macosx_10_9_x86_64.whl", hash = "sha256:125cd89dbfd40846f216032b11e5eeaf2be13ee4d6745b82413ddd213ddc4d99"},
@@ -1587,7 +1587,7 @@ name = "polars"
 version = "1.35.2"
 requires_python = ">=3.9"
 summary = "Blazingly fast DataFrame library"
-groups = ["dev"]
+groups = ["default"]
 dependencies = [
     "polars-runtime-32==1.35.2",
 ]
@@ -1601,7 +1601,7 @@ name = "polars-runtime-32"
 version = "1.35.2"
 requires_python = ">=3.9"
 summary = "Blazingly fast DataFrame library"
-groups = ["dev"]
+groups = ["default"]
 files = [
     {file = "polars_runtime_32-1.35.2-cp39-abi3-macosx_10_12_x86_64.whl", hash = "sha256:e465d12a29e8df06ea78947e50bd361cdf77535cd904fd562666a8a9374e7e3a"},
     {file = "polars_runtime_32-1.35.2-cp39-abi3-macosx_11_0_arm64.whl", hash = "sha256:ef2b029b78f64fb53f126654c0bfa654045c7546bd0de3009d08bd52d660e8cc"},
