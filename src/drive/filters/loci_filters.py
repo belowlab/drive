@@ -285,7 +285,7 @@ class DuckDBFilter(FilterProtocol):
             (
                 (t.{self.indices.str_indx} <= {self.target_gene.start} AND t.{self.indices.end_indx} >= {self.target_gene.start}) OR
                 (t.{self.indices.str_indx} >= {self.target_gene.start} AND t.{self.indices.end_indx} <= {self.target_gene.end}) OR
-                (t.{self.indices.str_indx} <= {self.target_gene.end}   AND t.{self.indices.end_indx} >= {self.target_gene.end})
+                (t.{self.indices.str_indx} <= {self.target_gene.end} AND t.{self.indices.end_indx} >= {self.target_gene.end})
             )
         """
 

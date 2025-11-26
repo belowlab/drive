@@ -50,7 +50,7 @@ class DuckdbTemplate:
         condition_str = " AND ".join(condition)
 
         query_str = f"""
-        SELECT DISTINCT
+        SELECT
             t.*
         FROM read_csv(
             '{self.ibd_file}',
