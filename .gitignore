@@ -9,6 +9,7 @@
 *.ipynb
 *.txt
 test_output/
+.benchmark/
 
 # IDE FILES
 .vscode
@@ -17,6 +18,7 @@ test_output/
 # CACHES
 *__pycache__/
 .mypy_cache
+
 # LOG FILES
 *.log
 

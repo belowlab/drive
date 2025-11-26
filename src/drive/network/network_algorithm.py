@@ -2,6 +2,7 @@ import json
 from pathlib import Path
 import polars as pl
 from datetime import datetime
+import sys
 
 from log import CustomLogger
 
@@ -152,6 +153,13 @@ def run_network_identification(args) -> None:
     assert (
         json_config is not None
     ), "No configuration file was detected for DRIVE. This means that the configuration file packaged with DRIVE has been deleted. Please re-download this file from the Github"
+
+    # we also need to make sure that the input file exists
+    if not args.input.exists():
+        logger.critical(
+            f"The input file, {args.input}, was not found. Please make sure that this file exists. Terminating program..."
+        )
+        sys.exit(1)
 
     # we need to load in the phenotype descriptions file to get
     # descriptions of each phenotype

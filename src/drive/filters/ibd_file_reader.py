@@ -136,8 +136,13 @@ def filter_ibd_file(
         logger.info(
             f"filtering the ibd segments to only include {keep_df.shape[0]} participants"
         )
-
-    filtered_df = conn.execute(sql_query).pl()
+    try:
+        filtered_df = conn.execute(sql_query).pl()
+    except duckdb.InvalidInputException as e:
+        logger.critical(
+            f"Encountered the following exception while trying to run the following query:\nQUERY:\n{sql_query}\n.EXCEPTION:{e}\n"
+        )
+        sys.exit(1)
 
     samples_with_segments = _get_unique_id_count(
         filtered_df, indices.id1_indx, indices.id2_indx
