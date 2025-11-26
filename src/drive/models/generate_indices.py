@@ -1,11 +1,10 @@
-from dataclasses import dataclass
-from typing import Protocol
 from collections import namedtuple
-from pandas import DataFrame
 
+# Ever value in this named tuple will be a string because the column names are strings
 IbdFileIndices = namedtuple(
     "IbdFileIndices",
     [
+        "prog_name",
         "id1_indx",
         "hap1_indx",
         "id2_indx",
@@ -29,10 +28,8 @@ def create_indices(ibd_file_format: str) -> IbdFileIndices:
 
     Returns
     -------
-    FileIndices
-        returns an object that conforms to the FileIndices protocol. It will have the
-        method getHAPID. It will also have the correct indices for the ibd program
-
+    IbdFileIndices
+        returns a named tuple with the appropriate indices for each column fo interest in the file
     Raises
     ------
     AssertionError
@@ -44,13 +41,53 @@ def create_indices(ibd_file_format: str) -> IbdFileIndices:
     """
     match ibd_file_format:
         case "germline":
-            indices = [0, 1, 2, 3, 4, 5, 6, 10]
+            indices = [
+                "germline",
+                "column0",
+                "column1",
+                "column2",
+                "column3",
+                "column4",
+                "column5",
+                "column6",
+                "column10",
+            ]
         case "hapibd":
-            indices = [0, 1, 2, 3, 4, 5, 6, 7]
+            indices = [
+                "hapibd",
+                "column0",
+                "column1",
+                "column2",
+                "column3",
+                "column4",
+                "column5",
+                "column6",
+                "column7",
+            ]
         case "ilash":
-            indices = [0, 1, 2, 3, 4, 5, 6, 9]
+            indices = [
+                "ilash",
+                "column0",
+                "column1",
+                "column2",
+                "column3",
+                "column4",
+                "column5",
+                "column6",
+                "column9",
+            ]
         case "rapid":
-            indices = [1, 3, 2, 4, 0, 5, 6, 7]
+            indices = [
+                "rapid",
+                "column1",
+                "column3",
+                "column2",
+                "column4",
+                "column0",
+                "column5",
+                "column6",
+                "column7",
+            ]
         case _:
             assert ibd_file_format in [
                 "hapibd",

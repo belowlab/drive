@@ -6,7 +6,6 @@ from typing import Dict, List, Optional, Set, Tuple
 import igraph as ig
 from log import CustomLogger
 from pandas import DataFrame
-from drive.models import Filter
 from drive.network.models import Network, Network_Interface
 
 # creating a logger
@@ -26,7 +25,7 @@ class ClusterHandler:
     min_cluster_size: int
     segment_dist_threshold: int
     hub_threshold: float
-    haplotype_mappings: Dict[str, int]
+    haplotype_mappings: Dict[int, str]
     recluster: bool
     check_times: int = 0
     recheck_clsts: Dict[int, List[Network_Interface]] = field(default_factory=dict)
@@ -258,7 +257,7 @@ class ClusterHandler:
         graph: ig.Graph,
         cluster_ids: List[int],
         random_walk_clusters: ig.VertexClustering,
-        parent_cluster_id: Optional[str] = None,
+        parent_cluster_id: Optional[str | float] = None,
     ) -> None:
         """Method for getting the information about membership,
         true.positive, false.positives, etc... from the random
@@ -376,19 +375,21 @@ class ClusterHandler:
         original_id = network.clst_id
         # logger.debug("In redo_clustering section")
         # filters for the specific cluster
-        redopd = ibd_pd[
+        redopd = ibd_pd.loc[
             (ibd_pd["idnum1"].isin(network.haplotypes))
             & (ibd_pd["idnum2"].isin(network.haplotypes))
         ]
 
-        redo_vs = ibd_vs[ibd_vs.idnum.isin(network.haplotypes)]
+        redo_vs = ibd_vs.loc[ibd_vs.idnum.isin(network.haplotypes)]
 
         # If the redopd or redo_vs is empty it causes strange behavior and the code will
         # usually fail. The desired behavior is for the program to tell teh user that
         # the graph could not be constructed and then for it to move on.
         if not redopd.empty and not redo_vs.empty:
             # We are going to generate a new Networks object using the redo graph
-            redo_networks = ClusterHandler.generate_graph(redopd, redo_vs)
+            redo_networks = ClusterHandler.generate_graph(
+                redopd, redo_vs
+            )  # pyright: ignore[reportArgumentType]
             # redo_networks = ClusterHandler.generate_graph(redopd)
             # performing the random walk
             redo_walktrap_clusters = self.random_walk(redo_networks)
@@ -458,14 +459,9 @@ class ClusterHandler:
                     (~redopd["idnum1"].isin(rmID)) & (~redopd["idnum2"].isin(rmID))
                 ]
                 redo_graph = self.generate_graph(
-                    redopd,
+                    redopd,  # pyright: ignore[reportArgumentType]
                 )
-                # redo_g = ig.Graph.DataFrame(redopd, directed=False)
                 redo_walktrap_clusters = self.random_walk(redo_graph)
-                # redo_walktrap = ig.Graph.community_walktrap(
-                #     redo_g, weights="cm", steps=self.random_walk_step_size
-                # )
-                # redo_walktrap_clusters = redo_walktrap.as_clustering()
 
             # Filter to the clusters that are llarger than the minimum size
             allclst = self.filter_cluster_size(redo_walktrap_clusters.sizes())
@@ -480,18 +476,16 @@ class ClusterHandler:
 
 
 def cluster(
-    filter_obj: Filter,
+    edge_info_df: DataFrame,
+    vertix_info_df: DataFrame,
     cluster_obj: ClusterHandler,
-    centimorgan_indx: int,
 ) -> List[Network_Interface]:
     """Main function that will perform the clustering using igraph
 
     Parameters
     ----------
-    filter_obj : Filter
-        Filter object that has two attributes: ibd_pd and ibd_vs. These
-        attributes are two dataframes that have information about the
-        edges and information about the vertices.
+    edge_info_df : DataFrame
+        pandas dataframe that represents all of the edges in the cohort. The dataframe has the columns
 
     cluster_obj : ClusterHandler
         Object that contains information about how the random walk
@@ -503,16 +497,10 @@ def cluster(
 
         Returns
     """
-    filter_obj.ibd_pd = filter_obj.ibd_pd.rename(columns={centimorgan_indx: "cm"})
-    # filtering the edges dataframe to the correct columns
-    ibd_pd = filter_obj.ibd_pd.loc[:, ["idnum1", "idnum2", "cm"]]
-
-    ibd_vs = filter_obj.ibd_vs.reset_index(drop=True)
-
     # Generate the first pass networks
     network_graph = cluster_obj.generate_graph(
-        ibd_pd,
-        ibd_vs,
+        edge_info_df,
+        vertix_info_df,
     )
 
     random_walk_results = cluster_obj.random_walk(network_graph)
@@ -529,9 +517,10 @@ def cluster(
         logger.verbose(f"recheck: {cluster_obj.check_times}")
 
         _ = cluster_obj.recheck_clsts.setdefault(cluster_obj.check_times, [])
-
-        for network in cluster_obj.recheck_clsts.get(cluster_obj.check_times - 1):
-            cluster_obj.redo_clustering(network, ibd_pd, ibd_vs)
+        # We can use bracket syntax here since we add 1 to cluster_obj.
+        # check_times 4 lines earlier
+        for network in cluster_obj.recheck_clsts[cluster_obj.check_times - 1]:
+            cluster_obj.redo_clustering(network, edge_info_df, vertix_info_df)
     # logginng the number of segments, haplotypes, and clusters
     # identified in the analysis
     logger.info(

@@ -1,36 +1,65 @@
-from pandas import DataFrame
 import polars as pl
 from datetime import datetime
 from log import CustomLogger
 import duckdb
+import sys
 from drive.models import IbdFileIndices
 
 
 logger = CustomLogger.get_logger(__name__)
 
 
-def add_haplotype_id(
-    data: DataFrame,
-    ind_id_indx: int,
-    phase_col_indx: int,
-    col_name: str,
-    ibd_file_format: str,
-) -> None:
-    """function to add the haplotype id to the dataframe"""
-    match ibd_file_format:
+def add_haplotype_id(data: pl.DataFrame, indices: IbdFileIndices) -> pl.DataFrame:
+    """function to add the haplotype id to the dataframe
+
+    Parameters
+    ----------
+    data : pl.DataFrame
+        polars dataframe that was read in with duckdb. It should have two columns
+        for individual ids and then two columns representing the haplotype phase
+
+    indices : IbdFileIndices
+        namedtuple that holds the correct column name for different information in the file
+
+    Returns
+    -------
+    pl.DataFrame
+        returns the dataframe with two more columns representing ids for each haplotype
+
+    Raises
+    ------
+    AssertionError
+        if for some reason the ibd program name is not one of the four
+        acceptable values then the program will throw an AssertionError and
+        terminate because something has gone wrong at that point
+    """
+    match indices.prog_name:
         case "hapibd" | "rapid":
-            data.loc[:, col_name] = (
-                data[ind_id_indx] + "." + data[phase_col_indx].astype(str)
+            hap1_expr = pl.format(
+                "{}.{}", pl.col(indices.id1_indx), pl.col(indices.hap1_indx)
             )
+
+            hap2_expr = pl.format(
+                "{}.{}", pl.col(indices.id2_indx), pl.col(indices.hap2_indx)
+            )
+
         case "germline" | "ilash":
-            data.loc[:, col_name] = data[phase_col_indx]
+            # Define logic for copying: Just select the columns
+            hap1_expr = pl.col(indices.id1_indx)
+            hap2_expr = pl.col(indices.id2_indx)
         case _:
-            assert ibd_file_format in [
+            assert indices.prog_name in [
                 "hapibd",
                 "ilash",
                 "germline",
                 "rapid",
-            ], f"The ibd format value provided, {ibd_file_format}, is not one of the allowed values ['hapibd', 'ilash', 'germline', 'rapid']"
+            ], f"The ibd format value provided, {indices.prog_name}, is not one of the allowed values ['hapibd', 'ilash', 'germline', 'rapid']"
+            logger.critical(
+                "unable to create haplotype ids even though . This behavior is unexpected and should be reported because it likely indicates there is a bug"
+            )
+            sys.exit(1)
+
+    return data.with_columns(hap1_expr.alias("hapid1"), hap2_expr.alias("hapid2"))
 
 
 def _get_unique_id_count(df: pl.DataFrame, col1_name: str, col2_name: str) -> int:
@@ -61,6 +90,22 @@ def _get_unique_id_count(df: pl.DataFrame, col1_name: str, col2_name: str) -> in
     ).n_unique()
 
 
+def _check_for_no_segments(data: pl.DataFrame) -> None:
+    """check if the dataframe is empty and logger a message and terminate program if it is
+
+    Parameters
+    ----------
+    data : pl.DataFrame
+        polars dataframe containing information about the IBD segments in the
+        cohort
+    """
+    if data.is_empty():
+        logger.critical(
+            "There were no ibd segments found in the target loci once the file was read in"
+        )
+        sys.exit(0)
+
+
 def filter_ibd_file(
     sql_query: str, keep_df: pl.DataFrame, indices: IbdFileIndices
 ) -> pl.DataFrame:
@@ -85,11 +130,12 @@ def filter_ibd_file(
 
     conn = duckdb.connect()
 
-    conn.register("ids_df", keep_df)
+    if keep_df.shape[0]:
+        conn.register("ids_df", keep_df)
 
-    logger.info(
-        f"filtering the ibd segments to only include {keep_df.shape[0]} participants"
-    )
+        logger.info(
+            f"filtering the ibd segments to only include {keep_df.shape[0]} participants"
+        )
 
     filtered_df = conn.execute(sql_query).pl()
 
@@ -97,30 +143,33 @@ def filter_ibd_file(
         filtered_df, indices.id1_indx, indices.id2_indx
     )
 
-    logger.info(
-        f"Identified IBD segments for {samples_with_segments}/{keep_df.shape[0]} sample in the cohort"
-    )
+    if keep_df.shape[0]:
+        logger.info(
+            f"Identified IBD segments for {samples_with_segments}/{keep_df.shape[0]} sample in the cohort"
+        )
+    else:
+        logger.info(
+            f"Identified IBD segments for {samples_with_segments} samples in the cohort"
+        )
 
     # we need to generate the haplotype ids and drop duplicated
     # rows or rows where the ids are the same (This shouldn't
     # happen). Then we can only keep the new hapid* columns
-    filtered_df = (
-        filtered_df.with_columns(
-            (pl.col(indices.id1_indx) + pl.col(indices.hap1_indx)).alias("hapid1"),
-            (pl.col(indices.id2_indx) + pl.col(indices.hap2_indx)).alias("hapid2"),
-        )
-        .drop(
-            [indices.id1_indx, indices.hap1_indx, indices.id2_indx, indices.hap2_indx]
-        )
-        .filter(pl.col("hapid1") != pl.col("hapid2"))
-        .unique()
-    )
+    logger.verbose("Creating ids for each each haplotype")
+
+    filtered_df = add_haplotype_id(data=filtered_df, indices=indices)
+    # Now that we have the haplotype ids we can drop other columns
+    filtered_df.drop([indices.hap1_indx, indices.hap2_indx]).filter(
+        pl.col("hapid1") != pl.col("hapid2")
+    ).unique()
 
     logger.verbose(
-        f"identified {_get_unique_id_count(filtered_df, 'hapid1', 'hapid2')}"
+        f"identified {_get_unique_id_count(filtered_df, 'hapid1', 'hapid2')} haplotypes in the cohort"
     )
 
     logger.info(f"read in {filtered_df.shape[0]} ibd segments for the cohort")
+
+    _check_for_no_segments(filtered_df)
 
     end_time = datetime.now()
 
