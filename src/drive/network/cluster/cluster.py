@@ -187,7 +187,8 @@ class ClusterHandler:
         cluster_edge_count = len(random_walk_results.subgraph(clst_id).get_edgelist())
 
         return cluster_edge_count, cluster_edge_count / theoretical_edge_count
-
+    
+    @staticmethod
     def _determine_false_positive_edges(
         graph: ig.Graph, vertex_list: List[int]
     ) -> Tuple[int, List[int]]:
