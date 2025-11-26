@@ -9,7 +9,7 @@ from drive.models import IbdFileIndices
 logger = CustomLogger.get_logger(__name__)
 
 
-def add_haplotype_id(data: pl.DataFrame, indices: IbdFileIndices) -> pl.DataFrame:
+def _add_haplotype_id(data: pl.DataFrame, indices: IbdFileIndices) -> pl.DataFrame:
     """function to add the haplotype id to the dataframe
 
     Parameters
@@ -157,7 +157,7 @@ def filter_ibd_file(
     # happen). Then we can only keep the new hapid* columns
     logger.verbose("Creating ids for each each haplotype")
 
-    filtered_df = add_haplotype_id(data=filtered_df, indices=indices)
+    filtered_df = _add_haplotype_id(data=filtered_df, indices=indices)
     # Now that we have the haplotype ids we can drop other columns
     filtered_df.drop([indices.hap1_indx, indices.hap2_indx]).filter(
         pl.col("hapid1") != pl.col("hapid2")

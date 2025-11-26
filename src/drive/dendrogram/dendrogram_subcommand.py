@@ -1,17 +1,18 @@
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any, Callable, Dict, List, Optional, Union
+from typing import Any, Callable
 
 import matplotlib.pyplot as plt
 import numpy.typing as npt
 import pandas as pd
+import polars as pl
 import scipy.cluster.hierarchy as sch
 from log import CustomLogger
 from numpy import zeros
 from scipy.spatial.distance import squareform
 
-from drive.network.filters import IbdFilter
 from drive.models import create_indices
+from drive.filters import DuckDBFilter, DuckdbTemplate, filter_ibd_file
 from drive.helper_funcs import split_target_string
 
 logger = CustomLogger.get_logger(__name__)
@@ -23,7 +24,7 @@ class NetworkIDNotFound(Exception):
         super().__init__(self.msg)
 
 
-def check_kwargs(args_dict: dict[str, Any]) -> Optional[str]:
+def check_kwargs(args_dict: dict[str, Any]) -> str | None:
     """Function that will make sure that the necessary arguments are passed to distance function
 
     Parameters
@@ -41,7 +42,7 @@ def check_kwargs(args_dict: dict[str, Any]) -> Optional[str]:
             Expected pair_1, pair_2, pairs_df, cm_threshold"
 
 
-def _determine_distances(**kwargs) -> tuple[Optional[str], float]:
+def _determine_distances(**kwargs) -> tuple[str | None, float]:
     """Function that will determine the distances between the main grid and then \
         each connected grid. It will use a value of 2.5 for all grids that don't \
             share a segment. This is just the min cM value, 5cM, divided in half
@@ -87,7 +88,7 @@ def _determine_distances(**kwargs) -> tuple[Optional[str], float]:
     return None, 1 / ibd_length
 
 
-def record_matrix(output: Union[Path, str], matrix, pair_list: List[str]) -> None:
+def record_matrix(output: Path | str, matrix, pair_list: list[str]) -> None:
     """Function that will write the distance matrix to a file
 
     Parameters
@@ -100,7 +101,15 @@ def record_matrix(output: Union[Path, str], matrix, pair_list: List[str]) -> Non
 
     pair_list : List[str]
         list of ids that represent each row of the pair_list
+
+    Raises
+    ------
+    AssertionError
+        raises an AssertionError if the pair_list has no values in it because this means no individuals were identified within the pair_list
     """
+    assert (
+        len(pair_list) != 0
+    ), "There were no pairs recorded into the pair list. This error likely means there is a bug within the make_distance_matrix_function."
 
     with open(output, "w") as output_file:
         for i in range(len(pair_list)):
@@ -108,38 +117,15 @@ def record_matrix(output: Union[Path, str], matrix, pair_list: List[str]) -> Non
             output_file.write(f"{pair_list[i]}\t{distance_str}\n")
 
 
-def map_network_ids(id_list: List[str]) -> Dict[str, str]:
-    """Map the IDs from the original network to random patient ids (Ex: IDA -> Patient_1).
-    This is mainly useful for publication
-
-    Parameters
-    ----------
-    id_list : List[str]
-        list of strings representing the people in the network that the
-        distance matrix will be calculated for.
-
-    Returns
-    -------
-    Dict[str, str]
-        Returns a list where the original ids are the keys and the strings they were mapped
-            :withto 'Patient_1, Patient_2, etc...' are values"
-    """
-
-    return {
-        original_id: f"patient_{indx}"
-        for indx, original_id in enumerate(id_list, start=1)
-    }
-
-
 @dataclass
 class DistanceMatrixResults:
-    distance_matrix_id_mapping: Union[List[str], None]
+    distance_matrix_id_mapping: list[str]
     distance_matrix: npt.NDArray
-    id_mapping: Union[Dict[str, str], None] = field(default_factory=dict)
+    id_mapping: dict[str, str] = field(default_factory=dict)
 
 
 def make_distance_matrix(
-    pairs_df: pd.DataFrame,
+    pairs_df: pl.DataFrame,
     min_cM: int,
     map_ids: bool,
     distance_function: Callable = _determine_distances,
@@ -166,19 +152,30 @@ def make_distance_matrix(
         individual id that corresponds to each row. The second object is the
         distance matrix
     """
-    # get a list of all the unique ids in the pairs_df
-    id_list = list(
-        set(pairs_df.pair_1.values.tolist() + pairs_df.pair_2.values.tolist())
+
+    id_mapping_df = (
+        pl.concat(
+            [
+                pairs_df.select(pl.col("pair_1").alias("ID")),
+                pairs_df.select(pl.col("pair_2").alias("ID")),
+            ]
+        )
+        .unique()
+        .with_row_index("ID_mapping", offset=1)
     )
 
+    # We need to pull out the list of ids to use in the analysis
     if map_ids:
-        # dictionary that has the mappign from the original id to the new ids
-        id_mapping = map_network_ids(id_list)
-
-        # We need to save the new ids as the id_list for later code to work out
-        id_list = list(id_mapping.values())
+        id_list = id_mapping_df.get_column("ID_mapping").to_list()
+        id_mapping: dict[str, str] = dict(
+            zip(
+                id_mapping_df.get_column("ID_mapping"),
+                id_mapping_df.get_column("ID"),
+            )
+        )
     else:
-        id_mapping = None
+        id_list = id_mapping_df.get_column("ID").to_list()
+        id_mapping = {}
 
     matrix = zeros((len(id_list), len(id_list)), dtype=float)
 
@@ -191,12 +188,12 @@ def make_distance_matrix(
             err, distance = distance_function(
                 pair_1=id_list[i],
                 pair_2=id_list[j],
-                pairs_df=pairs_df,
+                pairs_df=pairs_df.to_pandas(),
                 cm_threshold=min_cM,
             )
             if err is not None:
-                print(err)
-                return DistanceMatrixResults(None, None, {})
+                logger.critical(err)
+                return DistanceMatrixResults([], None, {})
 
             matrix[i][j] = distance
 
@@ -294,13 +291,11 @@ def generate_dendrogram(matrix: npt.NDArray) -> npt.NDArray:
 
 def draw_dendrogram(
     clustering_results: npt.NDArray,
-    grids: List[str],
-    output_name: Union[Path, str],
-    # cases: Optional[List[str]] = None,
-    # exclusions: List[str] = [],
-    title: Optional[str] = None,
+    grids: list[str],
+    output_name: Path | str,
+    title: str | None = None,
     node_font_size: int = 10,
-) -> tuple[plt.Figure, plt.Axes, Dict[str, Any]]:
+) -> tuple[plt.Figure, plt.Axes, dict[str, Any]]:
     """Function that will draw the dendrogram
 
     Parameters
@@ -388,8 +383,8 @@ def load_networks(
     drive_results: Path,
     max_network_size: int,
     min_network_size: int,
-    network_id: str = Optional[str],
-) -> dict[str, List[str]]:
+    network_id: str | None = None,
+) -> dict[str, dict[str, list[str]]]:
     """method reads the drive networks into a dictionary. If the user chooses to
     generate dendrograms for all the networks then DRIVe only returns those
     networks that are between a certain size range
@@ -498,6 +493,21 @@ def generate_dendrograms(args) -> None:
     ##target gene region or variant position
     target_gene = split_target_string(args.target)
 
+    # Lets load the segment data into memory
+    segment_filter = DuckDBFilter(indices, target_gene, args.segment_overlap)
+
+    sql_query = DuckdbTemplate(
+        ibd_segment_file=args.ibd,
+        filterObj=segment_filter,
+        indices=indices,
+        min_cm=args.min_cm,
+    ).get_network_filter(add_sample_filter=False)
+
+    filtered_ibd_df = filter_ibd_file(
+        sql_query=sql_query, keep_df=pl.DataFrame(), indices=indices
+    )
+    # At this point in the code the filtered_ibd_df has columns for the id1 & id2 string, the chromosome, start and end position of the segment, cm length, and hapid1 & hapid2.
+
     for clstID, id_dict in network_ids.items():
         # generate output path for the dendrogram image
         logger.info(f"generating dendrogram for network {clstID}")
@@ -505,36 +515,25 @@ def generate_dendrograms(args) -> None:
 
         full_output_path = args.output / f"network_{clstID}_dendrogram.png"
 
-        id_list = id_dict["ids"]
         haplotype_list = id_dict["haplotypes"]
 
-        filter_obj: IbdFilter = IbdFilter.load_file(args.ibd, indices, target_gene)
-
-        # choosing the proper way to filter the ibd files
-        filter_obj.set_filter(args.segment_overlap)
-        # Filter the IBD data to only the sites that were used in the DRIVE analysis
-        filter_obj.preprocess(args.min_cm, args.format, id_list)
-
-        ibd_segments = filter_obj.ibd_pd
-        print(ibd_segments)
-
-        # We need to make sure that the we are look at only the
-        # right haplotypes
-        haplotype_filtered_ibd_segments = ibd_segments[
-            (ibd_segments.hapid1.isin(haplotype_list))
-            & (ibd_segments.hapid2.isin(haplotype_list))
-        ]
-
-        haplotype_filtered_ibd_segments = haplotype_filtered_ibd_segments.rename(
-            columns={
-                indices.id1_indx: "pair_1",
-                indices.id2_indx: "pair_2",
-                indices.cM_indx: "length",
-            }
+        network_ibd_df = (
+            filtered_ibd_df.filter(
+                pl.col("hapid1").is_in(haplotype_list),
+                pl.col("hapid2").is_in(haplotype_list),
+            )
+            .rename(
+                {
+                    indices.id1_indx: "pair_1",
+                    indices.id2_indx: "pair_2",
+                    indices.cM_indx: "length",
+                }
+            )
+            .select(pl.col(["pair_1", "pair_2", "length"]))
         )
 
         distanceMatrixObj = make_distance_matrix(
-            haplotype_filtered_ibd_segments[["pair_1", "pair_2", "length"]],
+            network_ibd_df,
             args.min_cm,
             args.map_ids,
         )
