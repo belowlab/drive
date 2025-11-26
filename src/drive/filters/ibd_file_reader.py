@@ -101,6 +101,9 @@ def filter_ibd_file(
         f"Identified IBD segments for {samples_with_segments}/{keep_df.shape[0]} sample in the cohort"
     )
 
+    # we need to generate the haplotype ids and drop duplicated
+    # rows or rows where the ids are the same (This shouldn't
+    # happen). Then we can only keep the new hapid* columns
     filtered_df = (
         filtered_df.with_columns(
             (pl.col(indices.id1_indx) + pl.col(indices.hap1_indx)).alias("hapid1"),
@@ -109,11 +112,12 @@ def filter_ibd_file(
         .drop(
             [indices.id1_indx, indices.hap1_indx, indices.id2_indx, indices.hap2_indx]
         )
+        .filter(pl.col("hapid1") != pl.col("hapid2"))
         .unique()
     )
 
     logger.verbose(
-        f"identified {_get_unique_id_count(filtered_df, "hapid1", "hapid2")}"
+        f"identified {_get_unique_id_count(filtered_df, 'hapid1', 'hapid2')}"
     )
 
     logger.info(f"read in {filtered_df.shape[0]} ibd segments for the cohort")
