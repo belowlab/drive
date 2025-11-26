@@ -75,7 +75,7 @@ def run_network_identification(args) -> None:
         )
 
         phenotype_counts = {}
-        cohort_ids = {}
+        cohort_ids = []
 
     indices = create_indices(args.format.lower())
 
