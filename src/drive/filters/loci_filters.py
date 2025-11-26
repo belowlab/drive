@@ -14,6 +14,8 @@ logger = CustomLogger.get_logger(__name__)
 class FilterProtocol(Protocol):
     """each implementation will choose how to implement the filters but they should have a method to set them"""
 
+    filter: Callable
+
     def set_filter(self, filter_options: str) -> Callable: ...
 
 
