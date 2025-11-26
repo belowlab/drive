@@ -36,14 +36,14 @@ class DuckdbTemplate:
         # for clarity we are goin to write out all of the conditions here
         if add_sample_filter:
             condition = [
-                f"t.{self.indices.id1_indx} IN (SELECT ID FROM ids_df)",
-                f"t.{self.indices.id2_indx} IN (SELECT ID FROM ids_df)",
-                {self.filter.filter()},
+                f"t.{self.indices.id1_indx} IN (SELECT IDs FROM ids_df)",
+                f"t.{self.indices.id2_indx} IN (SELECT IDs FROM ids_df)",
+                f"{self.filter.filter()}",
                 f"t.{self.indices.cM_indx} >= {self.min_cm}",
             ]
         else:
             condition = [
-                {self.filter.filter()},
+                f"{self.filter.filter()}",
                 f"t.{self.indices.cM_indx} >= {self.min_cm}",
             ]
 
@@ -71,7 +71,6 @@ class DuckdbTemplate:
         WHERE
             {condition_str}
         """
-
         logger.debug(f"Returning the following query_str:\n{query_str}\n")
 
         return query_str

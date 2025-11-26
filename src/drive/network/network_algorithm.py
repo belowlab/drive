@@ -117,7 +117,15 @@ def generate_edge_info_df(
         .join(unique_mapping, left_on="hapid2", right_on="IDs", how="left")
         .rename({"haplotype_mapping": "id2_new"})
         .select(
-            ["id1_new", "id2_new", indices.cM_indx, indices.id1_indx, indices.id2_indx]
+            [
+                "id1_new",
+                "id2_new",
+                "hapid1",
+                "hapid2",
+                indices.cM_indx,
+                indices.id1_indx,
+                indices.id2_indx,
+            ]
         )
         .rename(
             {"id1_new": "idnum1", "id2_new": "idnum2", indices.cM_indx: "cm"}
@@ -230,7 +238,7 @@ def run_network_identification(args) -> None:
 
     # igraph accepts pandas df not polars so we need to convert the polars
     # df to pandas df.
-    edge_pandas_df = edge_info_df.drop([indices.id1_indx, indices.id2_indx]).to_pandas()
+    edge_pandas_df = edge_info_df.select(pl.col(["idnum1", "idnum2", "cm"])).to_pandas()
 
     vertex_pandas_df = vertex_info_df.to_pandas()
 

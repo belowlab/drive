@@ -1,41 +1,46 @@
 [project]
 name = "drive-ibd"
-version = "3.0.3"
+version = "3.1.0"
 description = "Python CLI using graph theory to identify networks of individuals who share IBD segments overlapping loci of interest"
 authors = [
-  { name = "James Baker", email = "james.baker@vanderbilt.edu" },
-  { name = "Hung-Hsin Chen", email = "hung-hsin.chen.1@vumc.org" },
-  { name = "Jennifer E. Below", email = "jennifer.e.below@vumc.org" },
+    { name = "James Baker", email = "james.baker@vanderbilt.edu" },
+    { name = "Hung-Hsin Chen", email = "hung-hsin.chen.1@vumc.org" },
+    { name = "Jennifer E. Below", email = "jennifer.e.below@vumc.org" },
 ]
 maintainers = [
-  { name = "James Baker", email = "james.baker@vanderbilt.edu" },
-  { name = "Hung-Hsin Chen", email = "hung-hsin.chen.1@vumc.org" },
+    { name = "James Baker", email = "james.baker@vanderbilt.edu" },
+    { name = "Hung-Hsin Chen", email = "hung-hsin.chen.1@vumc.org" },
 ]
 requires-python = "!=3.11.0,>=3.10"
 dependencies = [
-  "pandas>=2.3.0",
-  "numpy>=2.0.2",
-  "igraph>=0.11.9",
-  "scipy>=1.13.1",
-  "rich-argparse>=1.7.1",
-  "modified-logger>=1.1.2",
-  "pytest>=8.4.1",
-  "matplotlib>=3.9.4",
-  "pyarrow>=21.0.0",
-  "xopen>=2.0.2",
-  "polars>=1.35.2",
-  "duckdb>=1.4.2",
+    "pandas>=2.3.0",
+    "numpy>=2.0.2",
+    "igraph>=0.11.9",
+    "scipy>=1.13.1",
+    "rich-argparse>=1.7.1",
+    "modified-logger>=1.1.2",
+    "pytest>=8.4.1",
+    "matplotlib>=3.9.4",
+    "pyarrow>=21.0.0",
+    "xopen>=2.0.2",
+    "polars>=1.35.2",
+    "duckdb>=1.4.2",
 ]
 readme = "README.md"
-keywords = ["python", "genetics", "identity by descent", "relatedness"]
+keywords = [
+    "python",
+    "genetics",
+    "identity by descent",
+    "relatedness",
+]
 classifiers = [
-  "Development Status :: 5 - Production/Stable",
-  "Operating System :: Unix",
-  "Programming Language :: Python :: 3.10",
-  "Programming Language :: Python :: 3.11",
-  "Programming Language :: Python :: 3.12",
-  "Programming Language :: Python :: 3.13",
-  "Programming Language :: Python :: 3.14"
+    "Development Status :: 5 - Production/Stable",
+    "Operating System :: Unix",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
 ]
 
 [project.urls]
@@ -49,7 +54,9 @@ text = "Apache-2.0"
 drive = "drive.drive:main"
 
 [build-system]
-requires = ["pdm-backend"]
+requires = [
+    "pdm-backend",
+]
 build-backend = "pdm.backend"
 
 [tool.commitizen]
@@ -60,14 +67,19 @@ update_changelog_on_bump = true
 
 [tool.pytest.ini_options]
 markers = [
-  "integtest: marks test as integration test (deselected with '-m \"not integration\"')",
-  "unit: marks test as unit test (deslected with '-m \"not unit\"')",
-  "kcne1: marks test as testing backwards compatibility for kcne1 results (deselected with '-m \"not knce1\"')",
+    "integtest: marks test as integration test (deselected with '-m \"not integration\"')",
+    "unit: marks test as unit test (deslected with '-m \"not unit\"')",
+    "kcne1: marks test as testing backwards compatibility for kcne1 results (deselected with '-m \"not knce1\"')",
 ]
-testpaths = ["tests"]
-addopts = ["--import-mode=importlib"]
-
-filterwarnings = ["ignore::DeprecationWarning"]
+testpaths = [
+    "tests",
+]
+addopts = [
+    "--import-mode=importlib",
+]
+filterwarnings = [
+    "ignore::DeprecationWarning",
+]
 
 [tool.isort]
 profile = "black"
@@ -77,39 +89,38 @@ max-line-length = "88"
 
 [tool.ruff]
 exclude = [
-  ".mypy_cache",
-  ".git",
-  ".ipynb_checkpoints",
-  ".pytest_cache",
-  ".venv",
-  ".vscode",
-  "build",
-  "dist",
-  "venv",
-  "site-packages",
-  ".github",
-  ".ruff_cache",
+    ".mypy_cache",
+    ".git",
+    ".ipynb_checkpoints",
+    ".pytest_cache",
+    ".venv",
+    ".vscode",
+    "build",
+    "dist",
+    "venv",
+    "site-packages",
+    ".github",
+    ".ruff_cache",
 ]
 
 [tool.ruff.lint]
-ignore = ["E501"]
+ignore = [
+    "E501",
+]
 
 [tool.ruff.format]
 quote-style = "double"
 
 [tool.pdm]
 distribution = true
-# packages = [
-#     { include = "src", from = "src" },
-#     { include = "tests", from = "tests" }
-# ]
 
 [tool.pdm.build]
 package-dir = "src"
-includes = ["src/", "tests/**", "tests/test_integration.py"]
-
-# [tool.pdm.build.wheel-data]
-# include = [{ path = "tests/test_integration.py", relative-to = "." }]
+includes = [
+    "src/",
+    "tests/**",
+    "tests/test_integration.py",
+]
 
 [tool.pdm.scripts.clean]
 shell = "rm ./tests/test_output/*"
@@ -129,12 +140,14 @@ dev = [
     "dotenv>=0.9.9",
     "pytest-memray>=1.8.0",
 ]
-notebook = ["ipykernel>=6.29.5"]
+notebook = [
+    "ipykernel>=6.29.5",
+]
 docs = [
-  "sphinx>=7.4.7",
-  "sphinx-autobuild<2022.0.0,>=2021.3.14",
-  "sphinx-autodocgen>=1.4",
-  "sphinx-copybutton>=0.5.2",
-  "sphinx-book-theme>=1.1.4",
-  "sphinx-design>=0.6.1",
+    "sphinx>=7.4.7",
+    "sphinx-autobuild<2022.0.0,>=2021.3.14",
+    "sphinx-autodocgen>=1.4",
+    "sphinx-copybutton>=0.5.2",
+    "sphinx-book-theme>=1.1.4",
+    "sphinx-design>=0.6.1",
 ]
