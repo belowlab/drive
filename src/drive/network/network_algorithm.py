@@ -222,7 +222,7 @@ def run_network_identification(args) -> None:
     logger.verbose(
         f"Gathered information for {vertex_info_df.shape[0]} vertices within the dataset"
     )
-
+    logger.info("Beginning clustering analysis")
     # creating the object that will handle clustering within the networks
     cluster_handler = ClusterHandler(
         args.min_connected_threshold,
