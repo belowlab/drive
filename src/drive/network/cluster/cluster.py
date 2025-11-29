@@ -30,6 +30,7 @@ class ClusterHandler:
     check_times: int = 0
     recheck_clsts: Dict[int, List[Network_Interface]] = field(default_factory=dict)
     final_clusters: List[Network_Interface] = field(default_factory=list)
+    print_dict: dict[int, int] = field(default_factory=dict)
 
     @staticmethod
     def generate_graph(
@@ -318,6 +319,9 @@ class ClusterHandler:
                 and len(member_list) > self.max_network_size
                 and self.recluster
             ):
+                haplotype_ids, member_ids = self._map_ids_back_to_haplotypes(
+                    member_list
+                )
                 # We can put all of this information into a network class. Here the
                 # member list will still be in integers
                 network = Network(
@@ -327,7 +331,7 @@ class ClusterHandler:
                     false_neg_list,
                     false_neg_count,
                     member_list,
-                    vertex_ids,
+                    member_list,
                 )
                 # debug statement if we want to see the members and the haplotypes
                 logger.debug(f"members: {member_list}\nhaplotypes: {vertex_ids}")
@@ -388,14 +392,12 @@ class ClusterHandler:
         # the graph could not be constructed and then for it to move on.
         if not redopd.empty and not redo_vs.empty:
             # We are going to generate a new Networks object using the redo graph
-            redo_networks = ClusterHandler.generate_graph(
-                redopd, redo_vs
-            )  # pyright: ignore[reportArgumentType]
-            # redo_networks = ClusterHandler.generate_graph(redopd)
+            redo_networks = self.generate_graph(
+                redopd, redo_vs  # pyright: ignore[reportArgumentType]
+            )
+
             # performing the random walk
             redo_walktrap_clusters = self.random_walk(redo_networks)
-            # logger.info(redo_networks)
-            # logger.info(redo_walktrap_clusters)
 
             # If only one cluster is found
             if len(redo_walktrap_clusters.sizes()) == 1:
@@ -404,7 +406,7 @@ class ClusterHandler:
                 # iterate over each member id
                 # for idnum in network.haplotypes:
 
-                for idnum in network.members:
+                for idnum in sorted(list(network.members)):
                     conn = sum(
                         list(
                             map(
@@ -455,14 +457,17 @@ class ClusterHandler:
                         )
                     ]["idnum"]
                 )
-
+                # refilter the redopd and redo_vs to not include the hub nodes
                 redopd = redopd.loc[
                     (~redopd["idnum1"].isin(rmID)) & (~redopd["idnum2"].isin(rmID))
                 ]
-                redo_graph = self.generate_graph(
-                    redopd,  # pyright: ignore[reportArgumentType]
+
+                redo_vs = ibd_vs.loc[~redo_vs["idnum"].isin(rmID)]
+
+                redo_networks = self.generate_graph(
+                    redopd, redo_vs  # pyright: ignore[reportArgumentType]
                 )
-                redo_walktrap_clusters = self.random_walk(redo_graph)
+                redo_walktrap_clusters = self.random_walk(redo_networks)
 
             # Filter to the clusters that are llarger than the minimum size
             allclst = self.filter_cluster_size(redo_walktrap_clusters.sizes())
@@ -504,6 +509,10 @@ def cluster(
         vertix_info_df,
     )
 
+    logger.info(
+        f"Identified {network_graph.ecount()} IBD segments from {network_graph.vcount()} haplotypes"  # noqa: E501
+    )
+
     random_walk_results = cluster_obj.random_walk(network_graph)
 
     allclst = cluster_obj.filter_cluster_size(random_walk_results.sizes())
@@ -515,6 +524,7 @@ def cluster(
         and len(cluster_obj.recheck_clsts.get(cluster_obj.check_times, [])) > 0
     ):
         cluster_obj.check_times += 1
+
         logger.verbose(f"recheck: {cluster_obj.check_times}")
 
         _ = cluster_obj.recheck_clsts.setdefault(cluster_obj.check_times, [])
@@ -522,11 +532,9 @@ def cluster(
         # check_times 4 lines earlier
         for network in cluster_obj.recheck_clsts[cluster_obj.check_times - 1]:
             cluster_obj.redo_clustering(network, edge_info_df, vertix_info_df)
+
     # logginng the number of segments, haplotypes, and clusters
     # identified in the analysis
-    logger.info(
-        f"Identified {network_graph.ecount()} IBD segments from {network_graph.vcount()} haplotypes"  # noqa: E501
-    )
 
     logger.info(f"Identified {len(cluster_obj.final_clusters)} IBD clusters")
 

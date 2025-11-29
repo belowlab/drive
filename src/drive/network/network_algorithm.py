@@ -128,8 +128,11 @@ def generate_edge_info_df(
                 indices.id2_indx,
             ]
         )
-        .rename(
-            {"id1_new": "idnum1", "id2_new": "idnum2", indices.cM_indx: "cm"}
+        .rename({"id1_new": "idnum1", "id2_new": "idnum2", indices.cM_indx: "cm"})
+        .with_columns(
+            pl.col("idnum1").cast(pl.Int64),
+            pl.col("idnum2").cast(pl.Int64),
+            pl.col("cm").cast(pl.Float32),
         )  # These are the columns we need to use in igraph
     )
 
@@ -140,7 +143,8 @@ def generate_edge_info_df(
             unique_mapping.get_column("IDs"),
         )
     )
-    return edge_list_df, haplotype_mapping_dict
+
+    return edge_list_df.sort(by=["idnum1", "idnum2"]), haplotype_mapping_dict
 
 
 def run_network_identification(args) -> None:
@@ -249,6 +253,9 @@ def run_network_identification(args) -> None:
     edge_pandas_df = edge_info_df.select(pl.col(["idnum1", "idnum2", "cm"])).to_pandas()
 
     vertex_pandas_df = vertex_info_df.to_pandas()
+
+    vertex_pandas_df["hapID"] = vertex_pandas_df["hapID"].astype("string[pyarrow]")
+    vertex_pandas_df["IID"] = vertex_pandas_df["IID"].astype("string[pyarrow]")
 
     networks = cluster(
         edge_info_df=edge_pandas_df,

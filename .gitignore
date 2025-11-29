@@ -9,7 +9,8 @@
 *.ipynb
 *.txt
 test_output/
-.benchmark/
+.benchmarks/
+*.parquet
 
 # IDE FILES
 .vscode
@@ -29,6 +30,7 @@ test_output/
 IBDCluster/log/README.md
 # PROFILES
 /profiles/
+
 # BUILD DIRECTORIES
 /dist/
 /docs/build/

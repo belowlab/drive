@@ -143,6 +143,7 @@ def filter_ibd_file(
             f"Encountered the following exception while trying to run the following query:\nQUERY:\n{sql_query}\n.EXCEPTION:{e}\n"
         )
         sys.exit(1)
+    filtered_df.sort(by=indices.end_indx)
 
     samples_with_segments = _get_unique_id_count(
         filtered_df, indices.id1_indx, indices.id2_indx
