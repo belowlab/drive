@@ -1,3 +1,4 @@
+from datetime import datetime
 import itertools
 import logging
 from dataclasses import dataclass, field
@@ -503,6 +504,7 @@ def cluster(
 
         Returns
     """
+    start_time = datetime.now()
     # Generate the first pass networks
     network_graph = cluster_obj.generate_graph(
         edge_info_df,
@@ -537,5 +539,9 @@ def cluster(
     # identified in the analysis
 
     logger.info(f"Identified {len(cluster_obj.final_clusters)} IBD clusters")
+
+    end_time = datetime.now()
+
+    logger.verbose(f"clustering analysis finished. Time taken: {end_time-start_time}")
 
     return cluster_obj.final_clusters

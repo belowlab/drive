@@ -144,7 +144,7 @@ def generate_edge_info_df(
         )
     )
 
-    return edge_list_df.sort(by=["idnum1", "idnum2"]), haplotype_mapping_dict
+    return edge_list_df, haplotype_mapping_dict
 
 
 def run_network_identification(args) -> None:
@@ -203,6 +203,8 @@ def run_network_identification(args) -> None:
 
     logger.debug(f"Identified a target region: {target_gene}")
 
+    start_time = datetime.now()
+
     # Now we need to connect the new filtering process
     # generate filter with overlaps or contains logic
     segment_filter = DuckDBFilter(indices, target_gene, args.segment_overlap)
@@ -221,6 +223,12 @@ def run_network_identification(args) -> None:
         sql_query=sql_query, keep_df=cohort_id_df, indices=indices
     )
 
+    end_time = datetime.now()
+
+    logger.verbose(
+        f"finished reading in and filtering the pairwise IBD segments. Time took: {end_time - start_time}"
+    )
+
     edge_info_df, haplotype_mappings = generate_edge_info_df(
         data=filtered_ibd_df, indices=indices
     )
@@ -234,7 +242,7 @@ def run_network_identification(args) -> None:
     logger.verbose(
         f"Gathered information for {vertex_info_df.shape[0]} vertices within the dataset"
     )
-    logger.info("Beginning clustering analysis")
+
     # creating the object that will handle clustering within the networks
     cluster_handler = ClusterHandler(
         args.min_connected_threshold,
@@ -254,20 +262,10 @@ def run_network_identification(args) -> None:
 
     vertex_pandas_df = vertex_info_df.to_pandas()
 
-    vertex_pandas_df["hapID"] = vertex_pandas_df["hapID"].astype("string[pyarrow]")
-    vertex_pandas_df["IID"] = vertex_pandas_df["IID"].astype("string[pyarrow]")
-
     networks = cluster(
         edge_info_df=edge_pandas_df,
         vertix_info_df=vertex_pandas_df,
         cluster_obj=cluster_handler,
-    )
-
-    # Record information about how long the clustering process took
-    end_time = datetime.now()
-
-    logger.verbose(
-        f"Finished the clustering analysis. Time took: {end_time - start_time}"
     )
 
     # creating the data container that all the plugins can interact with
