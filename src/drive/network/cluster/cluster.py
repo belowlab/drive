@@ -543,5 +543,8 @@ def cluster(
     end_time = datetime.now()
 
     logger.verbose(f"clustering analysis finished. Time taken: {end_time-start_time}")
+    logger.verbose(
+        f"Number of reclustering iterations performed: {cluster_obj.check_times}"
+    )
 
     return cluster_obj.final_clusters
