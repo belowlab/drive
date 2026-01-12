@@ -4,8 +4,8 @@ import sys
 
 from log import CustomLogger
 
-from drive.utilities.parser import generate_cmd_parser
-from drive.utilities.functions import generate_random_logfile_suffix
+from drive.parser import generate_cmd_parser
+from drive.helper_funcs import generate_random_logfile_suffix
 
 
 def main() -> None:
