@@ -13,7 +13,7 @@ def main() -> None:
 
     args = parser.parse_args()
 
-    # getting the programs start time
+    # Getting the program's start time
     start_time = datetime.now()
 
     # creating and configuring the logger and then recording user inputs
@@ -45,7 +45,7 @@ def main() -> None:
     # record the input parameters using a method from the logger object that
     # takes the parser as an argument
     logger.record_namespace(args)
-    # We need to record the output directory when we run DRIVE unless its for unit test
+    # We need to record the output directory when we run DRIVE unless it's for unit test
     if hasattr(args, "output"):
         logger.debug(f"Parent directory for log files and output: {args.output.parent}")
 

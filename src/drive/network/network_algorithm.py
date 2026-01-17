@@ -51,7 +51,7 @@ def find_json_file() -> Path:
 def generate_vertex_info_df(
     data: pl.DataFrame, indices: IbdFileIndices
 ) -> pl.DataFrame:
-    """create a dataframe that has just the the idnum, the hapid, and the grid id
+    """create a dataframe that has just the idnum, the hapid, and the grid id
 
     Parameters
     ----------
@@ -60,7 +60,7 @@ def generate_vertex_info_df(
         in the code it should have the following columns 'hapid1', 'hapid2', 'idnum1',
         and 'idnum2'
 
-    indice: IbdFileIndices
+    indices: IbdFileIndices
         namedtuple where each attribute is the right name of columns in the dataframe
 
     Returns
@@ -87,7 +87,7 @@ def generate_vertex_info_df(
 def generate_edge_info_df(
     data: pl.DataFrame, indices: IbdFileIndices
 ) -> tuple[pl.DataFrame, dict[int, str]]:
-    """map the hapids columns to a unique integer id that is needed for igraph
+    """map the hapid columns to a unique integer id that is needed for igraph
 
     Parameters
     ----------
@@ -136,7 +136,7 @@ def generate_edge_info_df(
         )  # These are the columns we need to use in igraph
     )
 
-    # Lets also generate a dictionary map of the haplotpes to there ids for later on in the code
+    # Lets also generate a dictionary map of the haplotypes to their ids for later on in the code
     haplotype_mapping_dict = dict(
         zip(
             unique_mapping.get_column("haplotype_mapping"),
@@ -264,7 +264,7 @@ def run_network_identification(args) -> None:
 
     networks = cluster(
         edge_info_df=edge_pandas_df,
-        vertix_info_df=vertex_pandas_df,
+        vertex_info_df=vertex_pandas_df,
         cluster_obj=cluster_handler,
     )
 

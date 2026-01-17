@@ -50,8 +50,8 @@ class PandasFilter(FilterProtocol):
         ValueError
             raises a ValueError if the target chromosome number is not
             found within the provided IBD file. This situation will
-            lead to a error later in the program which is why the
-            exception is raised. It is assumed to be due the user
+            lead to an error later in the program which is why the
+            exception is raised. It is assumed to be due to the user
             providing the incorrect file by accident
         """  # noqa: E501
         # We are going to filter the data and then make a copy
@@ -87,8 +87,8 @@ class PandasFilter(FilterProtocol):
         ValueError
             raises a ValueError if the target chromosome number is not
             found within the provided IBD file. This situation will
-            lead to a error later in the program which is why the
-            exception is raised. It is assumed to be due the user
+            lead to an error later in the program which is why the
+            exception is raised. It is assumed to be due to the user
             providing the incorrect file by accident
         """  # noqa: E501
 
@@ -182,8 +182,8 @@ class PolarsFilter(FilterProtocol):
         ValueError
             raises a ValueError if the target chromosome number is not
             found within the provided IBD file. This situation will
-            lead to a error later in the program which is why the
-            exception is raised. It is assumed to be due the user
+            lead to an error later in the program which is why the
+            exception is raised. It is assumed to be due to the user
             providing the incorrect file by accident
         """  # noqa: E501
 
@@ -216,7 +216,7 @@ class PolarsFilter(FilterProtocol):
         ----------
         filter_options : str
             string that indicates which type of filtering to use.
-            Options are 'contains' or 'overlaps'. We know for certain that this value should be either
+            Options are 'contains' or 'overlaps'.
 
         Raises
         ------
@@ -275,8 +275,8 @@ class DuckDBFilter(FilterProtocol):
         ValueError
             raises a ValueError if the target chromosome number is not
             found within the provided IBD file. This situation will
-            lead to a error later in the program which is why the
-            exception is raised. It is assumed to be due the user
+            lead to an error later in the program which is why the
+            exception is raised. It is assumed to be due to the user
             providing the incorrect file by accident
         """  # noqa: E501
 
@@ -296,7 +296,7 @@ class DuckDBFilter(FilterProtocol):
         ----------
         filter_options : str
             string that indicates which type of filtering to use.
-            Options are 'contains' or 'overlaps'. We know for certain that this value should be either
+            Options are 'contains' or 'overlaps'.
 
         Raises
         ------

@@ -47,7 +47,7 @@ def test_SQL_statment_sample_query_and_overlaps(make_query_statement) -> None:
     make_query_statement
         pytest fixture that adds the path to the test ibd file
     """
-    ## Lets create the actually string that will want
+    ## Lets create the actual string that we want
     expected_SQL = f"""
         SELECT
             t.*
@@ -108,7 +108,7 @@ def test_SQL_statment_sample_query_and_contains(make_query_statement) -> None:
     make_query_statement
         pytest fixture that adds the path to the test ibd file
     """
-    ## Lets create the actually string that will want
+    ## Lets create the actual string that we want
     expected_SQL = f"""
         SELECT
             t.*
@@ -165,7 +165,7 @@ def test_SQL_statment_no_sample_query_and_overlaps(make_query_statement) -> None
     make_query_statement
         pytest fixture that adds the path to the test ibd file
     """
-    ## Lets create the actually string that will want
+    ## Lets create the actual string that we want
     expected_SQL = f"""
         SELECT
             t.*
@@ -225,7 +225,7 @@ def test_SQL_statment_no_sample_query_and_contains(make_query_statement) -> None
     make_query_statement
         pytest fixture that adds the path to the test ibd file
     """
-    ## Lets create the actually string that will want
+    ## Lets create the actual string that we want
     expected_SQL = f"""
         SELECT
             t.*

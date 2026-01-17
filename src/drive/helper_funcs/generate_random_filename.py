@@ -6,7 +6,7 @@ from pathlib import Path
 def generate_random_logfile_suffix(log_filename: str) -> str:
     """add a unique suffix to the end of the log filename if the
     log file already exist. This will prevent weird writing race
-    conditions when multiple RIVE jobs are run in slurm using the
+    conditions when multiple DRIVE jobs are run in slurm using the
     default log filename
 
     Parameters

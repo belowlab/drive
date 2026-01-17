@@ -143,7 +143,7 @@ def make_distance_matrix(
         get the ibd segment length when pairs do not share a segment
 
     map_ids : bool
-        Boolean indication whether we want to map the ids to an random mapping or not
+        Boolean indicating whether we want to map the ids to a random mapping or not
 
     Returns
     -------
@@ -311,13 +311,13 @@ def draw_dendrogram(
         dendrogram will be saved to.
 
     # cases : list[str] | None
-    #     list of case ids. If the user doesn't provided this
+    #     list of case ids. If the user doesn't provide this
     #     value then all of the labels on the dendrogram will
     #     be black. If the user provides a value then the case
     #     labels will be red. Value defaults to None
 
     # exclusions : List[str]
-    #     list of individuals who are consider exclusions and are
+    #     list of individuals who are considered exclusions and are
     #     indicated as N/A or -1 by the phenotype file. This value
     #     defaults to None
 
@@ -414,7 +414,7 @@ def load_networks(
 
     Raises
     ------
-    NetworkIDNotFount
+    NetworkIDNotFound
         raises a KeyError if the network_id value is not found in the drive file
     """
     return_dict = {}
@@ -483,7 +483,7 @@ def load_networks(
 
 
 def generate_dendrograms(args) -> None:
-    # need to add read in the drive networks to get the appropriate ids
+    # Need to read in the drive networks to get the appropriate ids
     network_ids = load_networks(
         args.input, args.max_network_size, args.min_network_size, args.network_id
     )

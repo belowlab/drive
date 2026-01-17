@@ -12,12 +12,10 @@ from drive.network.models import Network, Network_Interface
 # creating a logger
 logger: logging.Logger = CustomLogger.get_logger(__name__)
 
-# Create a generic variable that can represents the class from the
-
 
 @dataclass
 class ClusterHandler:
-    """Class responsible for performing the cluster on the network objects"""
+    """Class responsible for performing the clustering on the network objects"""
 
     minimum_connected_thres: float
     max_network_size: int
@@ -48,7 +46,7 @@ class ClusterHandler:
             of the edges.
 
         ibd_vertices : Optional[DataFrame]
-            DataFrame that has information for each vertice in the
+            DataFrame that has information for each vertex in the
             graph. This value will be none when we are redoing the clustering
         """
         if ibd_vertices is not None:
@@ -119,7 +117,7 @@ class ClusterHandler:
     def _gather_members(
         random_walk_members: List[int], clst_id: int, graph: ig.Graph
     ) -> Tuple[List[int], List[int]]:
-        """Generate a list of individuals ids in the network
+        """Generate a list of individual ids in the network
 
         Parameters
         ----------
@@ -139,7 +137,7 @@ class ClusterHandler:
             returns a list of ids of individuals in the network and then
             a list of vertex ids. The individual ids are just the index
             of the element in the membership list and the vertex ids are
-            the list of ids provided by nme label in the vs() property.
+            the list of ids provided by name label in the vs() property.
         """
         member_list = []
         # this list has the ids. It is sometimes the same as the
@@ -177,7 +175,7 @@ class ClusterHandler:
         Tuple[int, float]
             returns a tuple where the first element is the
             number of edges in the graph and the second
-            element is the ratio of actually edges in the
+            element is the ratio of actual edges in the
             graph compared to the theoretical maximum number
             of edges in the graph.
         """
@@ -239,7 +237,7 @@ class ClusterHandler:
         ----------
         members : List[int]
             list of integers that represent the name of each vertex in the network
-            corresponding the the graph
+            corresponding to the graph
 
         Returns
         -------
@@ -263,7 +261,7 @@ class ClusterHandler:
         parent_cluster_id: Optional[str | float] = None,
     ) -> None:
         """Method for getting the information about membership,
-        true.positive, false.positives, etc... from the random
+        true positive, false positives, etc... from the random
         walk
 
         Parameters
@@ -369,7 +367,7 @@ class ClusterHandler:
 
         Parameters
         ----------
-        network : Network_InterFace
+        network : Network_Interface
             object that represents each cluster. These objects have information
             about the cluster id, number and ratio of edges, true_positive_percent,
             false_negative_edges, false_negative_count
@@ -389,7 +387,7 @@ class ClusterHandler:
         redo_vs = ibd_vs.loc[ibd_vs.idnum.isin(network.haplotypes)]
 
         # If the redopd or redo_vs is empty it causes strange behavior and the code will
-        # usually fail. The desired behavior is for the program to tell teh user that
+        # usually fail. The desired behavior is for the program to tell the user that
         # the graph could not be constructed and then for it to move on.
         if not redopd.empty and not redo_vs.empty:
             # We are going to generate a new Networks object using the redo graph
@@ -470,7 +468,7 @@ class ClusterHandler:
                 )
                 redo_walktrap_clusters = self.random_walk(redo_networks)
 
-            # Filter to the clusters that are llarger than the minimum size
+            # Filter to the clusters that are larger than the minimum size
             allclst = self.filter_cluster_size(redo_walktrap_clusters.sizes())
 
             self.gather_cluster_info(
@@ -478,13 +476,13 @@ class ClusterHandler:
             )
         else:
             logger.debug(
-                f"A graph was not able to be generated when we attempted to recluster the network: {original_id}. This error probably indicates that there were There were none of the {len(network.haplotypes)} individuals in that specific network that shared ibd segments with one another."
+                f"A graph was not able to be generated when we attempted to recluster the network: {original_id}. This error probably indicates that there were none of the {len(network.haplotypes)} individuals in that specific network that shared ibd segments with one another."
             )
 
 
 def cluster(
     edge_info_df: DataFrame,
-    vertix_info_df: DataFrame,
+    vertex_info_df: DataFrame,
     cluster_obj: ClusterHandler,
 ) -> List[Network_Interface]:
     """Main function that will perform the clustering using igraph
@@ -508,7 +506,7 @@ def cluster(
     # Generate the first pass networks
     network_graph = cluster_obj.generate_graph(
         edge_info_df,
-        vertix_info_df,
+        vertex_info_df,
     )
 
     logger.info(
@@ -533,9 +531,9 @@ def cluster(
         # We can use bracket syntax here since we add 1 to cluster_obj.
         # check_times 4 lines earlier
         for network in cluster_obj.recheck_clsts[cluster_obj.check_times - 1]:
-            cluster_obj.redo_clustering(network, edge_info_df, vertix_info_df)
+            cluster_obj.redo_clustering(network, edge_info_df, vertex_info_df)
 
-    # logginng the number of segments, haplotypes, and clusters
+    # logging the number of segments, haplotypes, and clusters
     # identified in the analysis
 
     logger.info(f"Identified {len(cluster_obj.final_clusters)} IBD clusters")

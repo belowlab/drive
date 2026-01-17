@@ -144,7 +144,7 @@ class Pvalues:
         -------
         str
             returns a string of individuals that are in both the phenotype_counts
-            case set and the network members set. If this interection is empty
+            case set and the network members set. If this intersection is empty
             then it returns a str "N/A"
         """
         # determine the number of carriers in the network
@@ -161,7 +161,7 @@ class Pvalues:
     def _get_exclusions_in_network(
         phenotype_counts: Dict[str, List[str]], network: Network_Interface
     ) -> str:
-        """Generate a set of cases that are in the network
+        """Generate a set of excluded individuals that are in the network
 
         Parameters
         ----------
@@ -177,7 +177,7 @@ class Pvalues:
         -------
         str
             returns a string of individuals that are in both the phenotype_counts
-            exclusion set and the network members set. If this interection is
+            exclusion set and the network members set. If this intersection is
             empty then it returns a str "N/A"
         """
         # determine the number of carriers in the network
@@ -190,7 +190,7 @@ class Pvalues:
                 network.members.intersection(phenotype_counts.get("excluded"))
             )  # noqa: E501
         else:
-            "N/A"
+            return "N/A"
 
     def _remove_exclusions(
         phenotype_counts: Dict[str, List[str]], network: Network_Interface
@@ -214,7 +214,7 @@ class Pvalues:
             returns the number of individuals in the network,
             not counting those individuals classified as
             excluded in the phenotype_counts dictionary. Also
-            returns the number of individuals excluded. Also returns the
+            returns the number of individuals excluded.
         """
 
         return (
@@ -304,7 +304,7 @@ class Pvalues:
 
                 phenotype_pvalues[phenotype] = phenotype_str
 
-                # Now we will see if the phecode is lower then the cur_min_pvalue.
+                # Now we will see if the phecode is lower than the cur_min_pvalue.
                 # If it is then we will change the cur_min_pvalue and we will
                 # update the cur_min_phecode
                 if pvalue < cur_min_pvalue and pvalue != 0:
@@ -345,7 +345,7 @@ class Pvalues:
 
     def analyze(self, **kwargs) -> None:
         # this is the DataHolder model. We will use the networks, the
-        # affected_inds, and the phenotype_prevalances attribute
+        # affected_inds, and the phenotype_prevalences attribute
         data: RuntimeState = kwargs["data"]
 
         if data.carriers:

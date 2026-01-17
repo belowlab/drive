@@ -8,7 +8,7 @@ from drive.utilities.parser import PhenotypeFileParser
 
 @pytest.mark.unit
 def test_file_not_found() -> None:
-    """Test that the parsers raises a FileNotFoundError if the phenotype file doesn't exist."""
+    """Test that the parser raises a FileNotFoundError if the phenotype file doesn't exist."""
     with pytest.raises(FileNotFoundError):
         with PhenotypeFileParser("./NotRealFile.txt") as pheno_file:
             ...
@@ -19,7 +19,7 @@ def test_file_not_found() -> None:
     "test_str,expected", [("ID1\t1", "\t"), ("ID1,1", ","), ("ID1|0", "|")]
 )
 def test_check_separator(test_str: str, expected: str) -> None:
-    """Test that the method _check_separator to see if it returns proper separator."""
+    """Test that the method _check_separator returns proper separator."""
 
     assert PhenotypeFileParser._check_separator(test_str) == expected
 
@@ -52,7 +52,7 @@ def test_single_phenotype_output_key_length() -> None:
 
 @pytest.mark.unit
 def test_case_control_exclusion_counts() -> None:
-    """Check that the PhenotypeFileParser identifies the correct case/control/exlcusion counts."""
+    """Check that the PhenotypeFileParser identifies the correct case/control/exclusion counts."""
     with PhenotypeFileParser("./tests/test_inputs/test_phenotype_file.txt") as parser:
         phenotype_counts, _ = parser.parse_cases_and_controls()
 
@@ -79,7 +79,7 @@ def test_case_control_exclusion_counts() -> None:
                 f"Expected parser to identify {expected_exclusion_counts} cases. Instead {len(exclusions)} cases were identified"
             )
 
-        assert not error_list, "errors occured:\n{}".format("\n".join(error_list))
+        assert not error_list, "errors occurred:\n{}".format("\n".join(error_list))
 
 
 @pytest.mark.unit
@@ -95,7 +95,7 @@ def test_multiple_phenotype_key_counts() -> None:
 
 @pytest.mark.unit
 def test_multiple_phenotype_counts() -> None:
-    """Check that the PhenotypeFileParser identifies the correct case/control/exlcusion counts for multiple phenotypes."""
+    """Check that the PhenotypeFileParser identifies the correct case/control/exclusion counts for multiple phenotypes."""
     with PhenotypeFileParser(
         "./tests/test_inputs/test_multiple_phenotype_file.txt"
     ) as parser:
@@ -149,4 +149,4 @@ def test_multiple_phenotype_counts() -> None:
                 f"Expected parser to identify {expected_exclusion_counts_status_2} cases. Instead {len(exclusions_status_2)} cases were identified"
             )
 
-        assert not error_list, "errors occured:\n{}".format("\n".join(error_list))
+        assert not error_list, "errors occurred:\n{}".format("\n".join(error_list))

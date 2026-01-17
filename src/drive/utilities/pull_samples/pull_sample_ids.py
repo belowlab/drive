@@ -6,7 +6,7 @@ logger = CustomLogger.get_logger(__name__)
 
 
 def map_header_cols_to_indx(header_line: str) -> dict[str, int]:
-    """We want to map column in the header to an index so that later we can access the right column"""
+    """We want to map each column in the header to an index so that later we can access the right column"""
     return {
         col_name: indx for indx, col_name in enumerate(header_line.strip().split("\t"))
     }

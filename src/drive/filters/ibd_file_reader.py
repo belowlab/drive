@@ -55,7 +55,7 @@ def _add_haplotype_id(data: pl.DataFrame, indices: IbdFileIndices) -> pl.DataFra
                 "rapid",
             ], f"The ibd format value provided, {indices.prog_name}, is not one of the allowed values ['hapibd', 'ilash', 'germline', 'rapid']"
             logger.critical(
-                "unable to create haplotype ids even though . This behavior is unexpected and should be reported because it likely indicates there is a bug"
+                "unable to create haplotype ids. This behavior is unexpected and should be reported because it likely indicates there is a bug"
             )
             sys.exit(1)
 
@@ -91,7 +91,7 @@ def _get_unique_id_count(df: pl.DataFrame, col1_name: str, col2_name: str) -> in
 
 
 def _check_for_no_segments(data: pl.DataFrame) -> None:
-    """check if the dataframe is empty and logger a message and terminate program if it is
+    """check if the dataframe is empty and log a message and terminate program if it is
 
     Parameters
     ----------
@@ -151,7 +151,7 @@ def filter_ibd_file(
 
     if keep_df.shape[0]:
         logger.info(
-            f"Identified IBD segments for {samples_with_segments}/{keep_df.shape[0]} sample in the cohort"
+            f"Identified IBD segments for {samples_with_segments}/{keep_df.shape[0]} samples in the cohort"
         )
     else:
         logger.info(
@@ -161,7 +161,7 @@ def filter_ibd_file(
     # we need to generate the haplotype ids and drop duplicated
     # rows or rows where the ids are the same (This shouldn't
     # happen). Then we can only keep the new hapid* columns
-    logger.verbose("Creating ids for each each haplotype")
+    logger.verbose("Creating ids for each haplotype")
 
     filtered_df = _add_haplotype_id(data=filtered_df, indices=indices)
     # Now that we have the haplotype ids we can drop other columns

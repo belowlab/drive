@@ -1,4 +1,4 @@
-# File will have different Interfaces used in the program as well as different class for types. This will simplify the imports and allow me to reduce coupling between modules
+# File will have different Interfaces used in the program as well as different classes for types. This will simplify the imports and allow me to reduce coupling between modules
 
 from collections import namedtuple
 

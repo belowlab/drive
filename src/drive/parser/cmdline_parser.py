@@ -116,14 +116,14 @@ def generate_cmd_parser() -> argparse.ArgumentParser:
         "-k",
         default=3,
         type=int,
-        help="Minimum required number of steps for the community walktrap algorithm.(default: %(default)s)",
+        help="Minimum required number of steps for the community walktrap algorithm. (default: %(default)s)",
     )
 
     cluster_parser.add_argument(
         "--max-recheck",
         default=5,
         type=int,
-        help="Maximum number of times to re-perform the clustering. This value will not be used if the flag --no-recluster is used.(default: %(default)s)",  # noqa: E501
+        help="Maximum number of times to re-perform the clustering. This value will not be used if the flag --no-recluster is used. (default: %(default)s)",  # noqa: E501
     )
 
     cluster_parser.add_argument(
@@ -160,7 +160,7 @@ def generate_cmd_parser() -> argparse.ArgumentParser:
         "--min-network-size",
         default=3,
         type=int,
-        help="This argument sets the minimun network size that we allow. All networks smaller than this size will be filtered out. If the user wishes to keep all networks they can set this to 0. (default: %(default)s)",  # noqa: E501
+        help="This argument sets the minimum network size that we allow. All networks smaller than this size will be filtered out. If the user wishes to keep all networks they can set this to 0. (default: %(default)s)",  # noqa: E501
     )
 
     cluster_parser.add_argument(
@@ -196,7 +196,7 @@ def generate_cmd_parser() -> argparse.ArgumentParser:
         "--recluster",
         default=True,
         action=argparse.BooleanOptionalAction,
-        help="whether or not the user wishes the program to automically recluster based on things like hub threshold, max network size and how connected the graph is. ",  # noqa: E501
+        help="whether or not the user wishes the program to automatically recluster based on things like hub threshold, max network size and how connected the graph is. ",  # noqa: E501
     )
 
     cluster_parser.add_argument(
@@ -210,7 +210,7 @@ def generate_cmd_parser() -> argparse.ArgumentParser:
         "--compress-output",
         default=False,
         action=argparse.BooleanOptionalAction,
-        help="whether or not to compress the output file from the DRIVE clustering output file. When the program is run PhenomeWide, the output file can be quite large. This option helps make file storage more managable",
+        help="whether or not to compress the output file from the DRIVE clustering output file. When the program is run PhenomeWide, the output file can be quite large. This option helps make file storage more manageable",
     )
 
     cluster_parser.add_argument(
@@ -218,7 +218,7 @@ def generate_cmd_parser() -> argparse.ArgumentParser:
         required=False,
         nargs="+",
         type=str,
-        help="List of phecode categories to write to the output file. This flag is only useful if you are running DRIVE phenomewide and if you are running DRIVE with phecodeX. DRIVE will calculate pvalues for all phecodes by default. This flag will check to see if the PheCode Category prefix (such as the CV prefix for cardiovascular phecodes) and only return those phecodes that match. Even with this flag, DRIVE will still return the phenomewide minimum phecode across all the different phecodes. If there is a '/' in the category name please replace this with a underscore",
+        help="List of phecode categories to write to the output file. This flag is only useful if you are running DRIVE phenomewide and if you are running DRIVE with phecodeX. DRIVE will calculate pvalues for all phecodes by default. This flag will check to see if the PheCode Category prefix (such as the CV prefix for cardiovascular phecodes) and only return those phecodes that match. Even with this flag, DRIVE will still return the phenomewide minimum phecode across all the different phecodes. If there is a '/' in the category name please replace this with an underscore",
     )
 
     cluster_parser.add_argument(
@@ -411,7 +411,7 @@ def generate_cmd_parser() -> argparse.ArgumentParser:
     pull_samples_parser.add_argument(
         "--case-col",
         type=str,
-        help="This is the column that list the cases in the network of interest. This flag should only be used if the '--cases-",
+        help="This is the column that lists the cases in the network of interest. This flag should only be used if the '--cases-only' flag is provided.",
     )
 
     pull_samples_parser.add_argument(

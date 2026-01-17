@@ -16,13 +16,13 @@ class Network_Interface(Protocol):
     pvalues: Dict[str, str] = field(default_factory=dict)
 
     def print_members_list(self) -> str:
-        """Returns a string that has all of the members ids separated by space
+        """Returns a string that has all of the member IDs separated by a comma
 
         Returns
         -------
         str
             returns a string where the members list attribute
-            is formatted as a string for the output file. Individuals strings are joined by comma.
+            is formatted as a string for the output file. Individual strings are joined by comma.
         """
         ...
 
@@ -40,13 +40,13 @@ class Network:
     pvalues: Dict[str, Dict[str, Any]] = field(default_factory=dict)
 
     def print_members_list(self) -> str:
-        """Returns a string that has all of the members ids separated by space
+        """Returns a string that has all of the member IDs separated by a comma
 
         Returns
         -------
         str
             returns a string where the members list attribute
-            is formatted as a string for the output file. Individuals strings are joined by comma.
+            is formatted as a string for the output file. Individual strings are joined by comma.
         """
         return ", ".join(list(map(str, self.members)))
 
@@ -62,7 +62,7 @@ class Network:
         Returns
         -------
         bool
-            returns true if the self cluster id is less than the
+            returns True if the self cluster id is less than the
             comp_class cluster id.
         """
 

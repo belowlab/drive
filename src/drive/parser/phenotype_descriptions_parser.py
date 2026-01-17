@@ -17,7 +17,7 @@ class PhecodesMapper:
 def load_phenotype_descriptions(
     phecode_container: PhecodesMapper,
 ) -> None:
-    """Function that will loads information about the phecode id names and the categories into a dictionary
+    """Function that will load information about the phecode id names and the categories into a dictionary
 
     Parameters
     ----------

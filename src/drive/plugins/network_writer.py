@@ -35,7 +35,7 @@ class NetworkWriter:
         """
 
         # making a string for the initial first few columns
-        header_str = "clstID\tn.total\tn.haplotype\ttrue.positive.n\ttrue.positive\tfalst.postive\tIDs\tID.haplotype"  # noqa: E501
+        header_str = "clstID\tn.total\tn.haplotype\ttrue.positive.n\ttrue.positive\tfalse.positive\tIDs\tID.haplotype"  # noqa: E501
 
         if not phenotypes:
             return header_str + "\n"
@@ -60,7 +60,7 @@ class NetworkWriter:
         Parameters
         ----------
         network : Network_Interface
-            network object that hsas all the per network
+            network object that has all the per network
             information from the clusters such as cluster
             ids, networks, pvalues, etc...
 
@@ -164,8 +164,8 @@ class NetworkWriter:
 
         data : RuntimeState
             container that holds information about the runtime of the program such
-            as the networks identified and configuration optons that the user has
-            choosen
+            as the networks identified and configuration options that the user has
+            chosen
 
         phecodes : PhecodesMapper
             object that contains information about the phecodes such as what phecodes are within each category
@@ -212,7 +212,7 @@ class NetworkWriter:
 
             with writer(network_file_output, "wt") as networks_output:
                 # The phecodes from the category_groups includes every single phecode that is
-                # defined in the pheWAS catelogue. Sometimes our matrix might not have all of
+                # defined in the pheWAS catalogue. Sometimes our matrix might not have all of
                 # those codes. We need to make sure that we only use the codes that match ours
 
                 header_str = NetworkWriter._form_header(phecodes_in_analysis)
@@ -245,8 +245,8 @@ class NetworkWriter:
 
         data : RuntimeState
             container that holds information about the runtime of the program such
-            as the networks identified and configuration optons that the user has
-            choosen
+            as the networks identified and configuration options that the user has
+            chosen
 
         phenotypes : list[str]
             list of the phenotypes to write output for. This can either be all of
@@ -303,7 +303,7 @@ class NetworkWriter:
             writer = gzip.open
 
         # we are going to pull out the phenotypes into a list so that we
-        # are guarenteed to maintain order as we are creating the rows
+        # are guaranteed to maintain order as we are creating the rows
         if phecodes_to_keep:
             # make sure the categories exist
             self.check_keep_categories(phecodes_to_keep, data.phenotype_descriptions)

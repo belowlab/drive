@@ -33,7 +33,7 @@ class DuckdbTemplate:
         str
             returns the formatted query string
         """
-        # for clarity we are goin to write out all of the conditions here
+        # for clarity we are going to write out all of the conditions here
         if add_sample_filter:
             condition = [
                 f"t.{self.indices.id1_indx} IN (SELECT IDs FROM ids_df)",

@@ -1,6 +1,6 @@
 from collections import namedtuple
 
-# Ever value in this named tuple will be a string because the column names are strings
+# Every value in this named tuple will be a string because the column names are strings
 IbdFileIndices = namedtuple(
     "IbdFileIndices",
     [
@@ -18,7 +18,7 @@ IbdFileIndices = namedtuple(
 
 
 def create_indices(ibd_file_format: str) -> IbdFileIndices:
-    """Factory method to generate the proper file indice object based on the ibd program
+    """Factory method to generate the proper file index object based on the ibd program
 
     Parameters
     ----------
@@ -29,7 +29,7 @@ def create_indices(ibd_file_format: str) -> IbdFileIndices:
     Returns
     -------
     IbdFileIndices
-        returns a named tuple with the appropriate indices for each column fo interest in the file
+        returns a named tuple with the appropriate indices for each column of interest in the file
     Raises
     ------
     AssertionError

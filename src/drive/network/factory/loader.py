@@ -5,7 +5,7 @@ from typing import Protocol
 
 
 class PluginInterface(Protocol):
-    """Interface that will define how a plugin looks like"""
+    """Interface that will define what a plugin looks like"""
 
     @staticmethod
     def initialize() -> None:

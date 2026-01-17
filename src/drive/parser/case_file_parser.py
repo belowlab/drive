@@ -1,5 +1,5 @@
-"""Module to faciliate the user in parsing the phenotype file by incorporating multiple
-ecodings, separators, and by handling multiple errors."""
+"""Module to facilitate the user in parsing the phenotype file by incorporating multiple
+encodings, separators, and by handling multiple errors."""
 
 from logging import Logger
 from pathlib import Path
@@ -31,8 +31,8 @@ class PhenotypeFileParser:
             filepath to the phenotype file that has case control status for individuals
 
         phenotype_name : str
-            Phenotype name that can be used specify a specific column in a
-            phenotype matrix if the user only wants ot focus on 1 phenotype.
+            Phenotype name that can be used to specify a specific column in a
+            phenotype matrix if the user only wants to focus on 1 phenotype.
 
         Raises
         ------
@@ -123,7 +123,7 @@ class PhenotypeFileParser:
         self, columns: List[str]
     ) -> Tuple[Dict[str, Dict[str, Set[str]]], List[str]]:
         """Function that will generate a dictionary where the keys are
-        phenotypes and the values are lists of the cases/exclusions/controls
+        phenotypes and the values are lists of cases/exclusions/controls
 
         Parameters
         ----------

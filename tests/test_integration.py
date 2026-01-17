@@ -179,7 +179,7 @@ def test_drive_full_run_no_phenotypes(system_args_no_pheno):
         "n.haplotype",
         "true.positive.n",
         "true.positive",
-        "falst.postive",
+        "false.positive",
         "IDs",
         "ID.haplotype",
     ]
@@ -193,7 +193,7 @@ def test_drive_full_run_no_phenotypes(system_args_no_pheno):
             f"Expected the output to have the columns: {','.join(expected_colnames)}, instead these columns were found: {','.join(output.columns)}"
         )
 
-    assert not errors, "errors occured:\n{}".format("\n".join(errors))
+    assert not errors, "errors occurred:\n{}".format("\n".join(errors))
 
 
 def test_drive_with_compression_flag(with_compression_flag):
@@ -223,7 +223,7 @@ def test_drive_with_compression_flag(with_compression_flag):
         errors.append(
             f"Expected to find a compressed file, {output_file}. Instead we found the uncompressed output file, {uncompressed_output_file}"
         )
-    assert not errors, "errors occured:\n{}".format("\n".join(errors))
+    assert not errors, "errors occurred:\n{}".format("\n".join(errors))
 
 
 def test_drive_full_run_with_phenotypes(system_args_with_pheno):
@@ -275,7 +275,7 @@ def test_drive_full_run_with_phenotypes(system_args_with_pheno):
         "n.haplotype",
         "true.positive.n",
         "true.positive",
-        "falst.postive",
+        "false.positive",
         "IDs",
         "ID.haplotype",
     ] + phenotype_cols
@@ -289,7 +289,7 @@ def test_drive_full_run_with_phenotypes(system_args_with_pheno):
             f"Expected the output to have the columns: {','.join(expected_colnames)}, instead these columns were found: {','.join(output.columns)}"
         )
 
-    assert not errors, "errors occured:\n{}".format("\n".join(errors))
+    assert not errors, "errors occurred:\n{}".format("\n".join(errors))
 
 
 def test_drive_dendrogram_single_network(system_args_for_dendrogram):
@@ -340,7 +340,7 @@ def test_pull_samples_success(system_args_for_pull_samples):
 
     assert (
         samples_filepath.exists()
-    ), f"An error occurred while running the integration test for the utilties 'pull-samples' subcommand. the output file, {samples_filepath}, was not found."
+    ), f"An error occurred while running the integration test for the utilities 'pull-samples' subcommand. the output file, {samples_filepath}, was not found."
 
 
 def test_for_correct_samples(system_args_for_pull_samples):
