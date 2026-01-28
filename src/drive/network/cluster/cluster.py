@@ -4,10 +4,16 @@ import logging
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Set, Tuple
 
-import igraph as ig
+from igraph import Graph, VertexClustering
 from log import CustomLogger
 from pandas import DataFrame
 from drive.network.models import Network, Network_Interface
+from drive.network.graph import (
+    generate_graph,
+    random_walk,
+    determine_true_positive_edges,
+    determine_false_positive_edges,
+)
 
 # creating a logger
 logger: logging.Logger = CustomLogger.get_logger(__name__)
@@ -30,65 +36,6 @@ class ClusterHandler:
     recheck_clsts: Dict[int, List[Network_Interface]] = field(default_factory=dict)
     final_clusters: List[Network_Interface] = field(default_factory=list)
     print_dict: dict[int, int] = field(default_factory=dict)
-
-    @staticmethod
-    def generate_graph(
-        ibd_edges: DataFrame,
-        ibd_vertices: Optional[DataFrame] = None,
-    ) -> ig.Graph:
-        """Method that will be responsible for creating the graph
-        used in the network analysis
-
-        Parameters
-        ----------
-        ibd_edges : DataFrame
-            DataFrame that has the edges of the graph with the length
-            of the edges.
-
-        ibd_vertices : Optional[DataFrame]
-            DataFrame that has information for each vertex in the
-            graph. This value will be none when we are redoing the clustering
-        """
-        if ibd_vertices is not None:
-            logger.debug("Generating graph with vertex labels.")
-            return ig.Graph.DataFrame(
-                ibd_edges, directed=False, vertices=ibd_vertices, use_vids=False
-            )
-
-        else:
-            logger.debug(
-                "No vertex metadata provided. Vertex ids will be nonnegative integers"
-            )
-            # return ig.Graph.DataFrame(ibd_edges, directed=False, use_vids=False)
-            return ig.Graph.DataFrame(ibd_edges, directed=False)
-
-    def random_walk(self, graph: ig.Graph) -> ig.VertexClustering:
-        """Method used to perform the random walk from igraph.community_walktrap
-
-        Parameters
-        ----------
-        graph : ig.Graph
-            graph object created by ig.Graph.DataFrame
-
-        Returns
-        -------
-        ig.VertexClustering
-            result of the random walk cluster. This object has
-            information about clusters and membership
-        """
-        logger.debug(
-            f"Performing the community walktrap algorithm with a random walk step size of: {self.random_walk_step_size}"
-        )
-
-        ibd_walktrap = ig.Graph.community_walktrap(
-            graph, weights="cm", steps=self.random_walk_step_size
-        )
-
-        random_walk_clusters = ibd_walktrap.as_clustering()
-
-        logger.verbose(random_walk_clusters.summary())
-
-        return random_walk_clusters
 
     def filter_cluster_size(self, random_walk_clusters_sizes: List[int]) -> List[int]:
         """Method to filter networks that are smaller than the min_cluster_size from
@@ -115,7 +62,7 @@ class ClusterHandler:
 
     @staticmethod
     def _gather_members(
-        random_walk_members: List[int], clst_id: int, graph: ig.Graph
+        random_walk_members: List[int], clst_id: int, graph: Graph
     ) -> Tuple[List[int], List[int]]:
         """Generate a list of individual ids in the network
 
@@ -152,81 +99,6 @@ class ClusterHandler:
 
         return member_list, vertex_ids
 
-    @staticmethod
-    def _determine_true_positive_edges(
-        member_list: List[int], clst_id: int, random_walk_results: ig.VertexClustering
-    ) -> Tuple[int, float]:
-        """determining the number of true positive edges
-
-        Parameters
-        ----------
-        member_list : List[int]
-            list of ids within the specific network
-
-        clst_id : int
-            id for the original cluster
-
-        random_walk_results : ig.VertexClustering
-            vertexClustering object returned after the random
-            walk that has the different clusters
-
-        Returns
-        -------
-        Tuple[int, float]
-            returns a tuple where the first element is the
-            number of edges in the graph and the second
-            element is the ratio of actual edges in the
-            graph compared to the theoretical maximum number
-            of edges in the graph.
-        """
-        # getting the total number of edges possible
-        theoretical_edge_count = len(list(itertools.combinations(member_list, 2)))
-
-        # Getting the number of edges within the graph and saving it
-        # as a dictionary key, 'true_positive_n'
-        cluster_edge_count = len(random_walk_results.subgraph(clst_id).get_edgelist())
-
-        return cluster_edge_count, cluster_edge_count / theoretical_edge_count
-
-    @staticmethod
-    def _determine_false_positive_edges(
-        graph: ig.Graph, vertex_list: List[int]
-    ) -> Tuple[int, List[int]]:
-        """determine the number of false positive edges
-
-        Parameters
-        ----------
-        graph : ig.Graph
-            graph object returned from ig.Graph.DataFrame
-
-        vertex_list : List[int]
-            list of vertex ids within the specific network
-
-        Returns
-        -------
-        Tuple[int, List[int]]
-            returns a tuple where the first element is the
-            number of edges in the graph and the second
-            element is a list of false positive edges.
-        """
-        all_edge = set([])
-
-        for mem in vertex_list:
-            all_edge = all_edge.union(set(graph.incident(mem)))
-
-        false_negative_edges = list(
-            all_edge.difference(
-                list(
-                    graph.get_eids(
-                        pairs=list(itertools.combinations(vertex_list, 2)),
-                        directed=False,
-                        error=False,
-                    )
-                )
-            )
-        )
-        return len(false_negative_edges), false_negative_edges
-
     def _map_ids_back_to_haplotypes(
         self, members: List[int]
     ) -> Tuple[List[str], Set[str]]:
@@ -255,9 +127,9 @@ class ClusterHandler:
 
     def gather_cluster_info(
         self,
-        graph: ig.Graph,
+        graph: Graph,
         cluster_ids: List[int],
-        random_walk_clusters: ig.VertexClustering,
+        random_walk_clusters: VertexClustering,
         parent_cluster_id: Optional[str | float] = None,
     ) -> None:
         """Method for getting the information about membership,
@@ -299,14 +171,14 @@ class ClusterHandler:
             (
                 true_pos_count,
                 true_pos_ratio,
-            ) = ClusterHandler._determine_true_positive_edges(
+            ) = determine_true_positive_edges(
                 member_list, clst_id, random_walk_clusters
             )
             # next we determine the number of false positive edges
             (
                 false_neg_count,
                 false_neg_list,
-            ) = ClusterHandler._determine_false_positive_edges(graph, vertex_ids)
+            ) = determine_false_positive_edges(graph, vertex_ids)
 
             # If the graph is too sparse and it is too large and the max
             # number of rechecks has not been reached then we will put
@@ -391,12 +263,12 @@ class ClusterHandler:
         # the graph could not be constructed and then for it to move on.
         if not redopd.empty and not redo_vs.empty:
             # We are going to generate a new Networks object using the redo graph
-            redo_networks = self.generate_graph(
+            redo_networks = generate_graph(
                 redopd, redo_vs  # pyright: ignore[reportArgumentType]
             )
 
             # performing the random walk
-            redo_walktrap_clusters = self.random_walk(redo_networks)
+            redo_walktrap_clusters = random_walk(redo_networks)
 
             # If only one cluster is found
             if len(redo_walktrap_clusters.sizes()) == 1:
@@ -463,10 +335,10 @@ class ClusterHandler:
 
                 redo_vs = ibd_vs.loc[~redo_vs["idnum"].isin(rmID)]
 
-                redo_networks = self.generate_graph(
+                redo_networks = generate_graph(
                     redopd, redo_vs  # pyright: ignore[reportArgumentType]
                 )
-                redo_walktrap_clusters = self.random_walk(redo_networks)
+                redo_walktrap_clusters = random_walk(redo_networks)
 
             # Filter to the clusters that are larger than the minimum size
             allclst = self.filter_cluster_size(redo_walktrap_clusters.sizes())
@@ -504,7 +376,7 @@ def cluster(
     """
     start_time = datetime.now()
     # Generate the first pass networks
-    network_graph = cluster_obj.generate_graph(
+    network_graph = generate_graph(
         edge_info_df,
         vertex_info_df,
     )
@@ -513,7 +385,7 @@ def cluster(
         f"Identified {network_graph.ecount()} IBD segments from {network_graph.vcount()} haplotypes"  # noqa: E501
     )
 
-    random_walk_results = cluster_obj.random_walk(network_graph)
+    random_walk_results = random_walk(network_graph)
 
     allclst = cluster_obj.filter_cluster_size(random_walk_results.sizes())
 
