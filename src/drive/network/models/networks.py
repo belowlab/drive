@@ -1,19 +1,18 @@
 from dataclasses import dataclass, field
-from typing import Any, Dict, List, Protocol, Set, TypeVar, Union
+from typing import Any, Protocol, TypeVar
 
 T = TypeVar("T", bound="Network")
 
 
 class Network_Interface(Protocol):
-    clst_id: float  # I don't like this attribute being a float but for now it has to remain this way for backwards compatibility
+    clst_id: str
     true_positive_count: int
     true_positive_percent: float
-    false_negative_edges: List[int]
     false_negative_count: int
-    members: Set[int]
-    haplotypes: List[int]
+    members: set[int] | set[str]
+    haplotypes: list[int] | list[str]
     min_pvalue_str: str = ""
-    pvalues: Dict[str, str] = field(default_factory=dict)
+    pvalues: dict[str, dict[str, Any]] = field(default_factory=dict)
 
     def print_members_list(self) -> str:
         """Returns a string that has all of the member IDs separated by a comma
@@ -29,15 +28,14 @@ class Network_Interface(Protocol):
 
 @dataclass
 class Network:
-    clst_id: float
+    clst_id: str
     true_positive_count: int
     true_positive_percent: float
-    false_negative_edges: List[int]
     false_negative_count: int
-    members: Union[Set[int], Set[str]]
-    haplotypes: Union[List[int], List[str]]
+    members: set[int] | set[str]
+    haplotypes: list[int] | list[str]
     min_pvalue_str: str = ""
-    pvalues: Dict[str, Dict[str, Any]] = field(default_factory=dict)
+    pvalues: dict[str, dict[str, Any]] = field(default_factory=dict)
 
     def print_members_list(self) -> str:
         """Returns a string that has all of the member IDs separated by a comma
@@ -50,7 +48,7 @@ class Network:
         """
         return ", ".join(list(map(str, self.members)))
 
-    def __lt__(self, comp_class: T) -> bool:
+    def __lt__(self, comp_class: Network_Interface) -> bool:
         """Override the less than method so that objects can be sorted in
         ascending numeric order based on cluster id.
 

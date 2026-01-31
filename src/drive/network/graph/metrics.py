@@ -2,9 +2,7 @@ from igraph import Graph, VertexClustering
 import itertools
 
 
-def determine_false_positive_edges(
-    graph: Graph, vertex_list: list[int]
-) -> tuple[int, list[int]]:
+def identify_false_positive_edges(graph: Graph, vertex_list: list[int]) -> list[int]:
     """determine the number of false positive edges
 
     Parameters
@@ -38,10 +36,10 @@ def determine_false_positive_edges(
             )
         )
     )
-    return len(false_negative_edges), false_negative_edges
+    return false_negative_edges
 
 
-def determine_true_positive_edges(
+def identify_true_positive_edges(
     member_list: list[int], clst_id: int, random_walk_results: VertexClustering
 ) -> tuple[int, float]:
     """determining the number of true positive edges

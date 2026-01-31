@@ -1,5 +1,6 @@
 import json
 from pathlib import Path
+from drive.network.graph.graph_funcs import hub_detection
 import polars as pl
 from datetime import datetime
 import sys
@@ -7,8 +8,8 @@ import sys
 from log import CustomLogger
 
 import drive.network.factory as factory
-from drive.network.cluster import ClusterHandler, cluster
-from drive.models import create_indices, IbdFileIndices
+from drive.network.cluster import cluster
+from drive.models import create_indices, IbdFileIndices, ClusterConfig
 from drive.network.models import RuntimeState
 from drive.helper_funcs import split_target_string
 from drive.parser import (
@@ -243,17 +244,15 @@ def run_network_identification(args) -> None:
         f"Gathered information for {vertex_info_df.shape[0]} vertices within the dataset"
     )
 
-    # creating the object that will handle clustering within the networks
-    cluster_handler = ClusterHandler(
-        args.min_connected_threshold,
-        args.max_network_size,
-        args.max_recheck,
-        args.step,
-        args.min_network_size,
-        args.segment_distribution_threshold,
-        args.hub_threshold,
-        haplotype_mappings,
-        args.recluster,
+    config = ClusterConfig(
+        min_connected_threshold=args.min_connected_threshold,
+        max_network_size=args.max_network_size,
+        max_recheck_count=args.max_recheck,
+        random_walk_step_size=args.step,
+        min_cluster_size=args.min_network_size,
+        segment_dist_threshold=args.segment_distribution_threshold,
+        hub_threshold=args.hub_threshold,
+        recluster=args.recluster,
     )
 
     # igraph accepts pandas df not polars so we need to convert the polars
@@ -265,7 +264,8 @@ def run_network_identification(args) -> None:
     networks = cluster(
         edge_info_df=edge_pandas_df,
         vertex_info_df=vertex_pandas_df,
-        cluster_obj=cluster_handler,
+        haplotype_mappings=haplotype_mappings,
+        config=config,
     )
 
     # creating the data container that all the plugins can interact with

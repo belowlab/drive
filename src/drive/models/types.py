@@ -7,12 +7,11 @@ from dataclasses import dataclass
 Genes = namedtuple("Genes", ["chr", "start", "end"])
 
 
-@dataclass(slots=True)
+@dataclass(slots=True, frozen=True)
 class Metrics:
     tp_count: int
     tp_ratio: float
     fp_count: int
-    fp_ratio: float
 
 
 @dataclass
@@ -22,13 +21,14 @@ class ClusterConfig:
     max_recheck_count: int
     random_walk_step_size: int
     min_cluster_size: int
-    segment_dist_threshold: int
+    segment_dist_threshold: float
     hub_threshold: float
     recluster: bool
 
 
+@dataclass(slots=True)
 class NetworkCandidate:
     member_ids: list[int]
-    iteration: int
-    parent_id: str
+    curr_iteration: int
+    candidate_id: str
     candidate_metrics: Metrics
