@@ -245,40 +245,26 @@ class DuckDBFilter(FilterProtocol):
 
     def contains_filter(self) -> str:
         """
-        This method works for both DataFrame (eager) and LazyFrame (lazy).
-        When passed a LazyFrame, it adds a filter node to the query plan.
+        Generate the SQL condition string to filter for segments that contain the target gene.
+
+        Returns
+        -------
+        str
+            SQL condition string.
         """
         return f"""
             (t.{self.indices.str_indx} <= {self.target_gene.start} AND t.{self.indices.end_indx} >= {self.target_gene.end})
         """
 
     def overlaps_filter(self) -> str:
-        """Method that will filter the ibd file on four conditions: Chromosome number is the same, segment start position is <= target start position, segment end position is >= to the start position, and the size of the segment is >= to the minimum centimorgan threshold.
-
-        Parameters
-        ----------
-        data_chunk : pl.DataFrame
-            chunk of the ibdfile. The size of this chunk is
-            determined by the chunksize argument to
-            pd.read_csv. This value is currently set to 100,000.
-
-        min_cm : int
-            centimorgan threshold
+        """
+        Generate the SQL condition string to filter for segments that overlap the target gene.
 
         Returns
         -------
-        pd.DataFrame
-            returns the filtered dataframe
-
-        Raises
-        ------
-        ValueError
-            raises a ValueError if the target chromosome number is not
-            found within the provided IBD file. This situation will
-            lead to an error later in the program which is why the
-            exception is raised. It is assumed to be due to the user
-            providing the incorrect file by accident
-        """  # noqa: E501
+        str
+            SQL condition string.
+        """
 
         # Polars lazy filtering using column expressions and dictionary access
         return f"""

@@ -44,8 +44,8 @@ def check_kwargs(args_dict: dict[str, Any]) -> str | None:
 
 def _determine_distances(**kwargs) -> tuple[str | None, float]:
     """Function that will determine the distances between the main grid and then \
-        each connected grid. It will use a value of 2.5 for all grids that don't \
-            share a segment. This is just the min cM value, 5cM, divided in half
+        each connected grid. It will use the min cM value divided in half for all \
+        grids that don't share a segment.
 
     Parameters
     ----------
@@ -134,7 +134,7 @@ def make_distance_matrix(
 
     Parameters
     ----------
-    pairs_df : pd.DataFrame
+    pairs_df : pl.DataFrame
         dataframe that has the pairs_files. it should have at least three columns
         called 'pair_1', 'pair_2', and 'length'
 
@@ -147,8 +147,8 @@ def make_distance_matrix(
 
     Returns
     -------
-    Dict[str, Dict[str, float]]
-        returns a tuple where the first object is a list of ids that has the
+    DistanceMatrixResults
+        returns a dataclass where the first object is a list of ids that has the
         individual id that corresponds to each row. The second object is the
         distance matrix
     """
@@ -332,8 +332,8 @@ def draw_dendrogram(
     -------
     tuple[plt.Figure, plt.Axes, dict[str, Any]]
         returns a tuple with the matplotlib Figure, the
-        matplotlib Axes object, and a dictionary from the sch.
-        dendrogram command
+        matplotlib Axes object, and a dictionary from the sch.dendrogram
+        command
     """
     figure = plt.figure(figsize=(15, 12))
     ax = plt.subplot(111)
@@ -386,7 +386,7 @@ def load_networks(
     network_id: str | None = None,
 ) -> dict[str, dict[str, list[str]]]:
     """method reads the drive networks into a dictionary. If the user chooses to
-    generate dendrograms for all the networks then DRIVe only returns those
+    generate dendrograms for all the networks then DRIVE only returns those
     networks that are between a certain size range
 
     Parameters

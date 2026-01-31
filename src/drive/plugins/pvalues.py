@@ -192,6 +192,7 @@ class Pvalues:
         else:
             return "N/A"
 
+    @staticmethod
     def _remove_exclusions(
         phenotype_counts: Dict[str, List[str]], network: Network_Interface
     ) -> Tuple[int, int]:

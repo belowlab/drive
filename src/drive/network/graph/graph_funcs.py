@@ -143,7 +143,7 @@ def get_network_haplotypes_and_members(
 def hub_detection(
     members: list[int], edges_df: DataFrame, config: ClusterConfig
 ) -> list[int]:
-    """Method that will be use to perform the hub detection"""
+    """Method that will be used to perform the hub detection"""
     # creates an empty dataframe with these columns
     clst_conn = DataFrame(columns=["idnum", "conn", "conn.N", "TP"])
     # iterate over each member id

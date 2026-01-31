@@ -167,7 +167,7 @@ class NetworkWriter:
             as the networks identified and configuration options that the user has
             chosen
 
-        phecodes : PhecodesMapper
+        phenotypes : PhecodesMapper
             object that contains information about the phecodes such as what phecodes are within each category
 
         compress_output : bool

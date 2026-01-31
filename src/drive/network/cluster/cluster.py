@@ -177,10 +177,9 @@ def recluster_candidate(
 
     Parameters
     ----------
-    network : Network_Interface
-        object that represents each cluster. These objects have information
-        about the cluster id, number and ratio of edges, true_positive_percent,
-        false_negative_edges, false_negative_count
+    network_candidate : NetworkCandidate
+        object that represents each cluster candidate. These objects have information
+        about the cluster id and metrics.
 
     ibd_pd : pd.DataFrame
         DataFrame that has information about the edges that a pair shares
@@ -245,21 +244,24 @@ def cluster(
 ) -> list[Network_Interface]:
     """Main function that will perform the clustering using igraph
 
-        Parameters
-        ----------
-        edge_info_df : DataFrame
-            pandas dataframe that represents all of the edges in the cohort. The
-    dataframe has the columns
+    Parameters
+    ----------
+    edge_info_df : DataFrame
+        pandas dataframe that represents all of the edges in the cohort.
 
-        cluster_obj : ClusterHandler
-            Object that contains information about how the random walk
-            needs to be performed. It will use the construct networks and return those
-            values in a list.
+    vertex_info_df : DataFrame
+        pandas dataframe that has information for each vertex in the graph.
 
-        min_network_size : int
-            threshold so we can filter networks that are >= the threshold
+    haplotype_mappings : dict[int, str]
+        mapping of integer ids to haplotype strings.
 
-            Returns
+    config : ClusterConfig
+        Configuration object containing thresholds and parameters.
+
+    Returns
+    -------
+    list[Network_Interface]
+        Returns a list of Network objects identified by the clustering.
     """
     start_time = datetime.now()
 
