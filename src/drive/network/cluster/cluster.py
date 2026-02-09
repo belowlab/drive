@@ -117,7 +117,7 @@ class ClusterHandler:
 
     @staticmethod
     def _gather_members(
-        random_walk_members: List[int], clst_id: int, graph: ig.Graph
+        random_walk_members: ig.VertexClustering, clst_id: int, graph: ig.Graph
     ) -> Tuple[List[int], List[int]]:
         """Generate a list of individuals ids in the network
 
@@ -141,16 +141,21 @@ class ClusterHandler:
             of the element in the membership list and the vertex ids are
             the list of ids provided by nme label in the vs() property.
         """
-        member_list = []
-        # this list has the ids. It is sometimes the same as the
-        # member_list but it will not be the same in the redo_networks
-        # graph
-        vertex_ids = []
+        vertex_ids = random_walk_members[
+            clst_id
+        ]  # Returns a list of vertex indices in that cluster
 
-        for member_id, assigned_clst_id in enumerate(random_walk_members):
-            if assigned_clst_id == clst_id:
-                member_list.append(graph.vs()[member_id]["name"])
-                vertex_ids.append(member_id)
+        member_list = graph.vs[vertex_ids]["name"]
+        # member_list = []
+        # # this list has the ids. It is sometimes the same as the
+        # # member_list but it will not be the same in the redo_networks
+        # # graph
+        # vertex_ids = []
+        #
+        # for member_id, assigned_clst_id in enumerate(random_walk_members):
+        #     if assigned_clst_id == clst_id:
+        #         member_list.append(graph.vs()[member_id]["name"])
+        #         vertex_ids.append(member_id)
 
         return member_list, vertex_ids
 
@@ -293,7 +298,7 @@ class ClusterHandler:
             # We are going to get the vertex id and member id of each
             # graph
             member_list, vertex_ids = ClusterHandler._gather_members(
-                random_walk_clusters.membership, clst_id, graph
+                random_walk_clusters, clst_id, graph
             )
 
             # Next we get the number of edges/ ratio of actual edges to
