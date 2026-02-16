@@ -71,6 +71,7 @@ If you have any questions about DRIVE or run into issues, you can either post an
    :hidden:
 
    /examples/examples_command_format
+   /examples/phenomewide_example
 
 .. toctree::
    :maxdepth: 2
