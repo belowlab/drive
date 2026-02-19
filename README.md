@@ -91,6 +91,10 @@ singularity exec -w --no-home singularity-sandox drive utilities test
 
 *Note*: We expect only people who are contributing to DRIVE to be using PDM. The provided testing command for PDM allows us to ensure that the correct PDM virtual environment is being used. For this reason the PDM command is the most different from the others.
 
+## Example commands
+
+We have provided example commands for DRIVE illustrating how to run DRIVE for [single phenotype](https://drive-ibd.readthedocs.io/en/latest/examples/examples_command_format.html) and for [multiple phenotype]()
+
 ### Reporting issues
 
 If you wish to report a bug or propose a feature you can find templates under the .github/ISSUE_TEMPLATE directory.
