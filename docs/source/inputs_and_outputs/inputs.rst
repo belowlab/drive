@@ -1,19 +1,22 @@
 DRIVE Inputs
 ============
 
-The DRIVE program has two subcommands shown in the image below. 
+The DRIVE program has two subcommands: "cluster" and "dendrogram". 
 
-.. image:: /assets/images/drive_help_message.png
+
+Inputs for the clustering subcommand:
+-------------------------------------
+The cluster subcommand is responsible for identifying networks of individuals who share the same haplotype around a region of interest. The help message for this command is shown in the image below:
+
+.. image:: /assets/images/drive_cluster_help_message.png
     :height: 300
     :align: center
 
 ----------
 
-Inputs for the clustering subcommand:
--------------------------------------
 
-*required:*
-````````````
+*required inputs:*
+``````````````````
 
 * **input**: This input file describes the pairwise shared IBD segments within the cohort. The file is formed as the result of running hap-IBD, iLASH, GERMLINE, or RapID.
 
@@ -23,7 +26,7 @@ Inputs for the clustering subcommand:
 
 ----
 
-* **target**: This argument is the region of interest that you wish to cluster around. The program will filter out segments that don't contain this entire region. This argument should be of the format chromosome_number:start-end (eg: 7:1234-2345).
+* **target**: This argument is the region of interest that you wish to cluster around. The program will filter out segments that don't contain this entire region. This argument should be of the format chromosome_number:start_bp-end_bp like you would see listed in gnomAD (eg: 7:1234-2345).
 
 
 .. warning::
@@ -35,8 +38,8 @@ Inputs for the clustering subcommand:
 
 * **output**: This argument will indicate a path to write the output file to. The user should provide a file path without an extension and the program will add the extension *.drive_networks.txt*.
 
-*optional:*
-```````````
+*optional inputs:*
+``````````````````
 
 * **min-cm**: DRIVE will use this argument to filter out all pairwise IBD segments that are shorter than the provided threshold. This value defaults to 3cM.
 
@@ -50,7 +53,7 @@ Inputs for the clustering subcommand:
 
 ----
 
-* **cases**: A tab separated text file containing individuals who are either cases, controls, or exclusions. This file expects for there to be at least columns. The first column will have individual ids. All other columns in the file are for each phenotype being analyzed. Each column is expected to have the individual's status where cases are indicated by a 1, controls are indicated by a 0, and excluded individuals are indiciated by -1, -1.0, N/A, or a blank space. Excluded individuals will not be included in the binomial test but will be included in the clustering analysis. The file is expected to have a header where the first column is grid or grids (case insensitive) and the remaining columns are the phenotype names. If this argument is not supplied than the program will not perform the binomial test that determines enrichment of phenotypes within the identified networks. 
+* **cases**: A tab separated text file containing individuals who are either cases, controls, or exclusions. This file expects for there to be at least 2 columns. The first column will have individual ids. All other columns in the file are for each phenotype being analyzed. Each column is expected to have the individual's status where cases are indicated by a 1, controls are indicated by a 0, and excluded individuals are indicated by -1, -1.0, N/A, or a blank space. Excluded individuals will not be included in the binomial test but will be included in the clustering analysis. The file is expected to have a header where the first column is grid or grids (case insensitive) and the remaining columns are the phenotype names. If this argument is not supplied than the program will not perform the binomial test that determines enrichment of phenotypes within the identified networks. If the file has more than 2 columns then the program will treat every column after the ID column as a phenotype and will run the enrichment test "phenomewide".
 
 ----
 
@@ -62,7 +65,7 @@ Inputs for the clustering subcommand:
 
 ----
 
-* **min-network-size**: This argument sets a threshold for the minimum size a network has to be to be included in the analysis. Users can filter out pairs or trios but changing this value. By default this argument is set to 2
+* **min-network-size**: This argument sets a threshold for the minimum size a network has to be to be included in the analysis. Users can filter out pairs or trios but changing this value. By default this argument is set to 3
 
 ----
 
@@ -70,7 +73,7 @@ Inputs for the clustering subcommand:
 
 ----
 
-* **segment-overlap**: Flag indicating whether we only want to keep segments which fully contain the target locus or if we want to consider segments which also just partially overlap the target locus. The accept values are "contains" and "defaults".
+* **segment-overlap**: Flag indicating whether we only want to keep segments which fully contain the target locus or if we want to consider segments which also just partially overlap the target locus. The accepted values are "contains" and "overlaps".
 
 ----
 
@@ -82,15 +85,19 @@ Inputs for the clustering subcommand:
 
 ----
 
-* **json-config**: This argument provides a path to the config.json file that DRIVE uses to identify what plugins the user wishes to use. DRIVE uses the plugin architecture to allow users to add new functionality to the program. The program comes with default plugins to determine enrichment pvalues and to write networks to a file. These plugins are listed in the config.json file found within the programs install directory. If the user wishes to use DRIVE in its standard form then they should just use the default value. If the user wishes to extend DRIVE then they can read more about the plugin system and how to add new plugins HERE.
+* **json-config**: This argument provides a path to the config.json file that DRIVE uses to identify what plugins the user wishes to use. DRIVE uses the plugin architecture to allow users to add new functionality to the program. The program comes with default plugins to determine enrichment p-values and to write networks to a file. These plugins are listed in the config.json file found within the programs install directory. If the user wishes to use DRIVE in its standard form then they should just use the default value. If the user wishes to extend DRIVE then they can read more about the plugin system and how to add new plugins HERE.
 
 ----
 
-* **compress-output**: When DRIVE is run PhenomeWide (especially using the newer PheCode X definitions) the output file from the clustering can become quite large. To help manage file storage the user can compress the output. The output file will be gzipped.
+* **chunksize**: This argument controls how many rows of IBD data are read at a time. Larger chunk sizes will speed up the analysis but will use more memory. There is an asymptotic limit on the speed up. Due to how pandas reads in data, trying to read in the whole file at once will still be slower than chunking if the file is very large. By default this value is 100,000.
 
 ----
 
-* **phecode-categories-to-keep**: This flag is another way for the user to restrict the output of DRIVE. This flag is only really useful if DRIVE is being run phenomewide. The user can provide the phecode category group and it will keep only phecodes from that category. The value must be spelled exactly how it is spelled in the info files provided by the PheWAS catalogue. Multiple categories can be chosen by a comma separated list. DRIVE will still output a minimum phecode column that represents the minimum phecode across all categories. Users can still use their own phecode definitions, DRIVE will just not provide a description name for the custom phenotyping and it can't filter custom phenotyping columns.
+* **compress-output**: When DRIVE is run phenomewide (especially using the newer PheCode X definitions) the output file from the clustering can become quite large. To help manage file storage the user can compress the output. The output file will be gzipped.
+
+----
+
+* **phecode-categories-to-keep**: This flag is another way for the user to restrict the output of DRIVE. This flag is only really useful if DRIVE is being run phenomewide. The user can provide the phecode category group and it will keep only phecodes from that category. The value must be spelled exactly how it is spelled in the info files provided by the PheWAS catalogue. Multiple categories can be chosen by providing space-separated values on the command line (e.g. ``--phecode-categories-to-keep "circulatory system" "neoplasms"``). DRIVE will still output a minimum phecode column that represents the minimum phecode across all categories. Users can still use their own phecode definitions, DRIVE will just not provide a description name for the custom phenotyping and it can't filter custom phenotyping columns.
 
 ----
 
@@ -102,7 +109,7 @@ Inputs for the clustering subcommand:
 
 ----
 
-* **verbose**: Flag indicating how verbose the user wants the drive program to be. The flag can be combined with itself to indicating more verbosity (-v = verbose while -vv = debug mode). By default the program will provide minimum information. If the user passes -v the program will run in verbose mode. If the user passes -vv then it will run in debug mode. Debug mode will generate a lot of logging output so use with caution if you are writting to a log file..
+* **verbose**: Flag indicating how verbose the user wants the drive program to be. The flag can be combined with itself to indicating more verbosity (-v = verbose while -vv = debug mode). By default the program will provide minimum information. If the user passes -v the program will run in verbose mode. If the user passes -vv then it will run in debug mode. Debug mode will generate a lot of logging output so use with caution if you are writing to a log file..
 
 ----
 
@@ -113,11 +120,21 @@ Inputs for the clustering subcommand:
 * **log_filename**: Argument providing a name for the log file generated by drive. This log file will be written to the parent directory from the "output" argument. 
 
 
+
+
 Inputs for the dendrogram subcommand:
 -------------------------------------
+The dendrogram subcommand of DRIVE uses local genetic distance defined as the inverse of the pairwise IBD segment length to generate a dendrogram of how participants are related at a locus of interest. The help message for this command is shown below:
 
-*required:*
-```````````
+.. image:: /assets/images/drive_dendrogram_help_message.png
+    :height: 300
+    :align: center
+
+----------
+
+
+*required inputs:*
+``````````````````
 * **input**: This input file is the output from running the cluster subcommand of DRIVE. The file has the suffix "\*.drive_networks.txt". No formatting of this file has to be done before running the dendrogram command.
 
 ----
@@ -134,10 +151,10 @@ Inputs for the dendrogram subcommand:
 
 ----
 
-* **generate-all**: Flag to indicate that the user does wish to generate dendrograms for all of the networks in the DRIVE file. This networks will all be in the specified output directory and will be identified by the network ID. This produces a lot of files (>10,000) which is why we require the user specifies that they want to generate all of the dendrograms. Due to drawing limitations DRIVE will only generate dendrograms for networks >= 3 individuals or <= 30 individuals. These thresholds can be changed with optional parameters.
 
-*optional:*
-```````````
+*optional inputs:*
+``````````````````
+* **generate-all**: Flag to indicate that the user does wish to generate dendrograms for all of the networks in the DRIVE file. This networks will all be in the specified output directory and will be identified by the network ID. This produces a lot of files (>10,000) which is why we require the user specifies that they want to generate all of the dendrograms. Due to drawing limitations DRIVE will only generate dendrograms for networks >= 3 individuals or <= 30 individuals. These thresholds can be changed with optional parameters.
 
 * **format**: This argument indicates which ibd program that was used to identify IBD segments. Currently the program supports values of hapibd, hap-IBD, iLASH, RapID, and GERMLINE. The default value is hapibd.
 
@@ -147,7 +164,7 @@ Inputs for the dendrogram subcommand:
 
 ----
 
-* **segment-overlap**: Flag indicating whether we only want to keep segments which fully contain the target locus or if we want to consider segments which also just partially overlap the target locus. The accept values are "contains" and "defaults".
+* **segment-overlap**: Flag indicating whether we only want to keep segments which fully contain the target locus or if we want to consider segments which also just partially overlap the target locus. The accepted values are "contains" and "overlaps".
 
 ----
 
@@ -155,7 +172,7 @@ Inputs for the dendrogram subcommand:
 
 ----
 
-* **min_network-size**: Threshold for the smallest network to make a dendrogram for. DRIVE can return 2 person networks but dendrograms of these networks are not that informative. Therefore for computationally efficieny we exclude these small networks. A user can change this value to also exclude even larger networks if they so wish. Default value is 3 individuals.
+* **min_network-size**: Threshold for the smallest network to make a dendrogram for. DRIVE can return 2 person networks but dendrograms of these networks are not that informative. Therefore for computationally efficiency we exclude these small networks. A user can change this value to also exclude even larger networks if they so wish. Default value is 3 individuals.
 
 ----
 
@@ -167,7 +184,11 @@ Inputs for the dendrogram subcommand:
 
 ----
 
-* **keep-temp**: To make the dendrogram DRIVE has to create a distance matrix where the measure of distance between 2 individuals is just the inverse of the IBD segment length. This file is not save by default to perserve space. If the user passes this flag then the file will be saved in the specified output directory in a temp folder called "network\_#_temp"
+* **map-ids**: Flag to anonymize individual IDs in the dendrogram by mapping them to IDs of the form "patient_X". This is useful for publication to protect individual identities. When this flag is provided, a mapping file called "network\_#_id_mappings.txt" will be created in the output directory containing the original-to-anonymous ID mappings.
+
+----
+
+* **keep-temp**: To make the dendrogram DRIVE has to create a distance matrix where the measure of distance between 2 individuals is just the inverse of the IBD segment length. This file is not save by default to preserve space. If the user passes this flag then the file will be saved in the specified output directory in a temp folder called "network\_#_temp"
 
 ----
 
