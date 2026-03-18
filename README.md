@@ -38,7 +38,7 @@ docker exec -it --rm drive --version drive-image-tag
 singularity exec singularity-drive-image.sif drive --version
 ```
 
-You should see v3.0.2 (The project version is always listed in the pyproject.toml under the section "version" as well). If the version is older than 3.0 then something went wrong with the install (unless you intentionally installed an old version). Older versions of DRIVE before 3.0.0 will break the integrated testing framework because the command structure of the CLI was different. If you still wish to run the test with an older version then look at the section of the documentation called "Command to test legacy versions of DRIVE (before v3.0.0)". It is recommended that users always check the version number after installing DRIVE before they attempt to run any test data or their own data.
+You should see v3.0.4 (The project version is always listed in the pyproject.toml under the section "version" as well, just incase this document gets out of date). If the version is older than 3.0 then something went wrong with the install (unless you intentionally installed an old version). Older versions of DRIVE before 3.0.0 will break the integrated testing framework because the command structure of the CLI was different. If you still wish to run the test with an older version then look at the section of the documentation called "Command to test legacy versions of DRIVE (before v3.0.0)". It is recommended that users always check the version number after installing DRIVE before they attempt to run any test data or their own data.
 
 ## Installing DRIVE
 
