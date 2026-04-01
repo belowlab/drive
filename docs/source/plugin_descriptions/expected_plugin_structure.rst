@@ -5,7 +5,7 @@ Users are free to design their own plugins to fit their own needs, but it has to
 Plugin API Structure
 --------------------
 
-DRIVE uses an object oriented approach for the plugin architecture. There are ways to achieve this architecture without classes but the developer choose this structure so if you are not familiar with this programming paradigm in python you might want to read up on it before continuing. 
+DRIVE uses an object-oriented approach for the plugin architecture. There are ways to achieve this architecture without classes but the developer chose this structure so if you are not familiar with this programming paradigm in Python you might want to read up on it before continuing. 
 
 
 Required methods/functions/attributes:
@@ -30,7 +30,7 @@ A template for the plugin class is shown below. The example uses dataclasses but
 
     # The way that DRIVE implements the plugin architecture requires that an object 
     # oriented approach be used. We are showing data classes in this example but 
-    # tradition python classes will work as well
+    # traditional Python classes will work as well
 
     @dataclass
     class PluginName:
@@ -47,14 +47,14 @@ A template for the plugin class is shown below. The example uses dataclasses but
             ...
 
 
-    # The pluging file needs to have a function at the end called initialize. This 
+    # The plugin file needs to have a function at the end called initialize. This 
     # function is used by the plugin factory to dynamically run the code at runtime.
     def initialize() -> None:
         factory_register("plugin_name from the file name", PluginName) #If the file is CustomPlugin.py then the plugin name here would be "CustomPlugin"
 
 Where the plugins have to be located in the file system:
 --------------------------------------------------------
-DRIVE expects the code for the plugins to be located in a module within the DRIVE source code directory. Within this source code there is a subdirectory call plugins. This directory is where DRIVE will look for the plugin code.
+DRIVE expects the code for the plugins to be located in a module within the DRIVE source code directory. Within this source code there is a subdirectory called plugins. This directory is where DRIVE will look for the plugin code.
 
 .. attention::
     At the moment this is the only directory where DRIVE looks for plugins. In the future, there may be added support for the user to specify another directory where plugins may be located.

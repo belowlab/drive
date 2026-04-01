@@ -5,7 +5,7 @@ Everyone is welcome to contribute to the development of DRIVE! If you have no id
 
 .. important::
 
-   Due to the nature of academia, DRIVE has to maintain moderate backwards compatiblity and be very explicit when backwards compatiblity is broken. For this reason all DRIVE code has to use syntax compatible with the oldest acceptable version of Python. Sometimes this means very helpful updated language features can't be used. We ask that whenever any contributions that break backwards compatiblity are introduced, you explicit mention how it is breaking compatibility and you use appropriate versioning to indicate the change.
+   Due to the nature of academia, DRIVE has to maintain moderate backward compatibility and be very explicit when backward compatibility is broken. For this reason all DRIVE code has to use syntax compatible with the oldest acceptable version of Python. Sometimes this means very helpful updated language features can't be used. We ask that whenever any contributions that break backward compatibility are introduced, you explicitly mention how it is breaking compatibility and you use appropriate versioning to indicate the change.
 
 Content described in this section:
 ----------------------------------

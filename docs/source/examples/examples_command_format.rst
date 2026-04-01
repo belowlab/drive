@@ -10,7 +10,7 @@ Example command format
 cluster command format:
 -----------------------
 
-The following command assumes that you have either installed DRIVE into a virtualenv using pip/pdm/conda or that you have installed it from github. The following command will show you how to call it if you install DRIVE using pip. This example command has only the required arguments.
+The following command assumes that you have either installed DRIVE into a virtualenv using pip/pdm/conda or that you have installed it from GitHub. The following command will show you how to call it if you install DRIVE using pip. This example command has only the required arguments.
 
 .. code::
 
@@ -18,7 +18,7 @@ The following command assumes that you have either installed DRIVE into a virtua
 
 .. note::
 
-    If you installed DRIVE from github then you can replace the 'drive' portion with "python /path_to_drive.py" or you can add drive to your path. The rest of the command will be the same.
+    If you installed DRIVE from GitHub then you can replace the 'drive' portion with "python /path_to_drive.py" or you can add drive to your path. The rest of the command will be the same.
 
 Explanation of command:
 ```````````````````````
@@ -53,6 +53,6 @@ Explanation of command:
 
 .. hint::
 
-    1. If you are running several DRIVE commands at one time but you are writting them all to the same output folder then you should set a unique log filename using the "--log-filename" flag. Otherwise the log file will be randomly written to by each job. 
+    1. If you are running several DRIVE commands at one time but you are writing them all to the same output folder then you should set a unique log filename using the "--log-filename" flag. Otherwise the log file will be randomly written to by each job. 
 
     2. If you are running DRIVE using a batch scheduler such as SLURM, it is advised to use the --log-to-console flag. SLURM usually catches the STDOUT in a user specified log file. Using this flag will cause DRIVE to write to the SLURM log file as a redundancy. 

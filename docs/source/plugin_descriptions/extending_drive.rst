@@ -1,4 +1,4 @@
-Extending Drive
+Extending DRIVE
 ===============
 
 .. toctree::

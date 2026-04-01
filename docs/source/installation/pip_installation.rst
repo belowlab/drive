@@ -1,11 +1,11 @@
 Installing DRIVE using Pip
 ==========================
 
-DRIVE has been officially released on `PYPI <https://pypi.org/project/drive-ibd/>`_! This installation method is recommended for those who wish to use the software and do not want to update or modify the software. PIP will install all of the necessary dependencies of DRIVE so that the user doesn't have to worry about dependency management. 
+DRIVE has been officially released on `PyPI <https://pypi.org/project/drive-ibd/>`_! This installation method is recommended for those who wish to use the software and do not want to update or modify the software. pip will install all of the necessary dependencies of DRIVE so that the user doesn't have to worry about dependency management. 
 
 .. important:: 
 
-   DRIVE supports Python version >=3.10 (but not Python version 3.11.0 specifically) for compatibility between packages. It is expected that your python version falls within this range when attempting to install the software. You can read more about this version requirement and how to check if you have the right python version :doc:`here </faq>` under the dropdown section 'What versions of Python is DRIVE compatible with?'
+   DRIVE supports Python version >=3.10 (but not Python version 3.11.0 specifically) for compatibility between packages. It is expected that your Python version falls within this range when attempting to install the software. You can read more about this version requirement and how to check if you have the right Python version :doc:`here </faq>` under the dropdown section 'What versions of Python is DRIVE compatible with?'
 
 
 DRIVE can be installed using the following command:
@@ -21,16 +21,16 @@ If the install is successful, then you can run the following command and you sho
 
     drive --help
 
-If you wish to run the provided testing data you can run the follow command provided through the DRIVE utilities subcommand:
+If you wish to run the provided testing data you can run the following command provided through the DRIVE utilities subcommand:
 
 .. code:: bash
 
   drive utilities test
 
-A successful installation will result in all test being labeled as Pass.
+A successful installation will result in all tests being labeled as Pass.
 
 .. note::
 
-    The recommend way to install DRIVE using pip would be to either create a virtual environment using `Anaconda <https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html>`_ or `venv <https://docs.python.org/3/library/venv.html>`_. Once you activate the virtual environment then you can use the above pip command to install DRIVE into an isolated environment.
+    The recommended way to install DRIVE using pip would be to either create a virtual environment using `Anaconda <https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html>`_ or `venv <https://docs.python.org/3/library/venv.html>`_. Once you activate the virtual environment then you can use the above pip command to install DRIVE into an isolated environment.
 
 

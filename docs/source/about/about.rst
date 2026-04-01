@@ -2,7 +2,7 @@ About DRIVE
 ===========
 DRIVE (Distant Relatedness for Identification and Variant Evaluation) is a CLI tool that efficiently leverages graph theory algorithms and IBD in large-scale cohorts to identify networks of individuals with shared haplotypes at a specified locus. These graph approaches allows for DRIVE to aggregate the pairwise shared IBD segments information into networks while retaining the identity of the pairwise segments.
 
-DRIVE utilizes common software design patterns to allow for adaption into custom analytical pipelines and to allow for adoption into a variety of computational platforms, including cloud computing environments. To allow for this adaptability, DRIVE implements a plugin architecture so that that the user can specify which plugins they wish to run and they can design their own plugins. The following paragraph describes the algorithm behind DRIVE.
+DRIVE utilizes common software design patterns to allow for adaptation into custom analytical pipelines and to allow for adoption into a variety of computational platforms, including cloud computing environments. To allow for this adaptability, DRIVE implements a plugin architecture so that the user can specify which plugins they wish to run and they can design their own plugins. The following paragraph describes the algorithm behind DRIVE.
 
 DRIVE Haplotype Clustering (Through the cluster subcommand)
 -----------------------------------------------------------
@@ -33,6 +33,6 @@ This algorithm for DRIVE is depicted in the following figure.
 
 DRIVE dendrogram subcommand:
 ----------------------------
-DRIVE provides as basic implementation of dendrograms that allows the user to visualize the genetic distance between individuals in a phylogenetic tree. This figures illustrates the local IBD sharing that is present in the network. This functionality is implemented using the python library Scipy specific the linkage function using the "ward" linkage algorithm. The user can generate the dendrogram using the DRIVE subcommand "dendrogram". 
+DRIVE provides a basic implementation of dendrograms that allows the user to visualize the genetic distance between individuals in a phylogenetic tree. This figure illustrates the local IBD sharing that is present in the network. This functionality is implemented using the Python library SciPy, specifically the linkage function using the "ward" linkage algorithm. The user can generate the dendrogram using the DRIVE subcommand "dendrogram". 
 
 

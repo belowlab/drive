@@ -8,7 +8,7 @@ Running DRIVE phenomewide
 =========================
 This section illustrates how to run DRIVE for multiple phenotypes or diseases of interest in the same analysis. This process will be referred to as a PheWES (Phenome-wide Enrichment Study) throughout the documentation.
 
-This process is very similar to the how we would run DRIVE and can be illustrated in the following steps:
+This process is very similar to how we would run DRIVE and can be illustrated in the following steps:
 
 1. Identify pairwise IBD segments in the cohort of interest
 2. Generate a phenotype file containing multiple phenotypes of interest
@@ -74,7 +74,7 @@ When finished, DRIVE will create a output file that has five columns for each ph
    :widths: auto
    :delim: |
 
-   clstID|n.total|n.haplotype|true.positive.n|true.positive|falst.postive|IDs|ID.haplotype|min_pvalue|min_phenotype|min_phenotype_description|CV_414_case_count_in_network|CV_414_cases_in_network|CV_414_excluded_count_in_network|CV_414_excluded_in_network|CV_414_pvalue|NS_324.11_case_count_in_network|NS_324.11_cases_in_network|NS_324.11_excluded_count_in_network|NS_324.11_excluded_in_network|NS_324.11_pvalue|phenoC_case_count_in_network|phenoC_cases_in_network|phenoC_excluded_count_in_network|phenoC_excluded_in_network|phenoC_pvalue
+   clstID|n.total|n.haplotype|true.positive.n|true.positive|false.positive|IDs|ID.haplotype|min_pvalue|min_phenotype|min_phenotype_description|CV_414_case_count_in_network|CV_414_cases_in_network|CV_414_excluded_count_in_network|CV_414_excluded_in_network|CV_414_pvalue|NS_324.11_case_count_in_network|NS_324.11_cases_in_network|NS_324.11_excluded_count_in_network|NS_324.11_excluded_in_network|NS_324.11_pvalue|phenoC_case_count_in_network|phenoC_cases_in_network|phenoC_excluded_count_in_network|phenoC_excluded_in_network|phenoC_pvalue
    0|4|4|4|0.6667|0|842,130,30,861|130.1,842.1,30.2,861.2|N/A|N/A|N/A|0|N/A|0|None|1|0|N/A|0|None|1|0|N/A|0|None|1
    1|2|2|1|1.0000|0|223,443|223.1,443.1|N/A|N/A|N/A|0|N/A|0|None|1|0|N/A|0|None|1|0|N/A|0|None|1
    2|2|2|1|1.0000|0|253,957|253.2,957.1|N/A|N/A|N/A|0|N/A|0|None|1|0|N/A|1|253|1|1|253|0|None|1

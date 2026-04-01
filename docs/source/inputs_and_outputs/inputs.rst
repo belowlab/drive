@@ -53,7 +53,7 @@ The cluster subcommand is responsible for identifying networks of individuals wh
 
 ----
 
-* **cases**: A tab separated text file containing individuals who are either cases, controls, or exclusions. This file expects for there to be at least 2 columns. The first column will have individual ids. All other columns in the file are for each phenotype being analyzed. Each column is expected to have the individual's status where cases are indicated by a 1, controls are indicated by a 0, and excluded individuals are indicated by -1, -1.0, N/A, or a blank space. Excluded individuals will not be included in the binomial test but will be included in the clustering analysis. The file is expected to have a header where the first column is grid or grids (case insensitive) and the remaining columns are the phenotype names. If this argument is not supplied than the program will not perform the binomial test that determines enrichment of phenotypes within the identified networks. If the file has more than 2 columns then the program will treat every column after the ID column as a phenotype and will run the enrichment test "phenomewide".
+* **cases**: A tab separated text file containing individuals who are either cases, controls, or exclusions. This file expects for there to be at least 2 columns. The first column will have individual ids. All other columns in the file are for each phenotype being analyzed. Each column is expected to have the individual's status where cases are indicated by a 1, controls are indicated by a 0, and excluded individuals are indicated by -1, -1.0, N/A, or a blank space. Excluded individuals will not be included in the binomial test but will be included in the clustering analysis. The file is expected to have a header where the first column is grid or grids (case insensitive) and the remaining columns are the phenotype names. If this argument is not supplied then the program will not perform the binomial test that determines enrichment of phenotypes within the identified networks. If the file has more than 2 columns then the program will treat every column after the ID column as a phenotype and will run the enrichment test "phenomewide".
 
 ----
 
@@ -65,7 +65,7 @@ The cluster subcommand is responsible for identifying networks of individuals wh
 
 ----
 
-* **min-network-size**: This argument sets a threshold for the minimum size a network has to be to be included in the analysis. Users can filter out pairs or trios but changing this value. By default this argument is set to 3
+* **min-network-size**: This argument sets a threshold for the minimum size a network has to be to be included in the analysis. Users can filter out pairs or trios by changing this value. By default this argument is set to 3
 
 ----
 
@@ -176,7 +176,7 @@ The dendrogram subcommand of DRIVE uses local genetic distance defined as the in
 
 ----
 
-* **font-size**: Size of the text for the leaf nodes of the dendrogram (The individuals' ids). This value defaults to 15 but may have to be changed if you know you have a large network to make a dendrogram for.
+* **font-size**: Size of the text for the leaf nodes of the dendrogram (The individuals' IDs). This value defaults to 15 but may have to be changed if you know you have a large network to make a dendrogram for.
 
 ----
 
@@ -192,7 +192,7 @@ The dendrogram subcommand of DRIVE uses local genetic distance defined as the in
 
 ----
 
-* **verbose**: Flag indicating how verbose the user wants the drive program to be. The flag can be combined with itself to indicating more verbosity (-v = verbose while -vv = debug mode). By default the program will provide minimum information. If the user passes -v the program will run in verbose mode. If the user passes -vv then it will run in debug mode. Debug mode will generate a lot of logging output so use with caution if you are writting to a log file..
+* **verbose**: Flag indicating how verbose the user wants the DRIVE program to be. The flag can be combined with itself to indicating more verbosity (-v = verbose while -vv = debug mode). By default the program will provide minimum information. If the user passes -v the program will run in verbose mode. If the user passes -vv then it will run in debug mode. Debug mode will generate a lot of logging output so use with caution if you are writing to a log file..
 
 ----
 

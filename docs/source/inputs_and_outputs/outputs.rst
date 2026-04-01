@@ -8,12 +8,12 @@ The cluster subcommand currently outputs two files. These files are described be
 
 *Networks File*
 ```````````````
-DRIVE creates a file with the suffix ".drive_networks.txt". This file has the results from the clustering analysis with information such as number of members, members ids, haplotype ids how connected the graph is internally, and the binomial test statistics. This file has at a minimum of 11 columns depending on where the user provides a phenotype file or not. These columns, plus the possible additional columns are described below.
+DRIVE creates a file with the suffix ".drive_networks.txt". This file has the results from the clustering analysis with information such as number of members, members' IDs, haplotype IDs, how connected the graph is internally, and the binomial test statistics. This file has at a minimum of 11 columns depending on where the user provides a phenotype file or not. These columns, plus the possible additional columns are described below.
 
 Column descriptions:
 ^^^^^^^^^^^^^^^^^^^^
 
-* **clustID**: ID given to each network identified. This value will have the form "clst#".
+* **clstID**: ID given to each network identified. This value will have the form "clst#".
 
 ----
 
@@ -29,19 +29,19 @@ Column descriptions:
 
 ----
 
-* **true.postive**: Proportion of identified IBD segments in networks vs the total number of possible IBD segments that could exist between all individuals in the network.
+* **true.positive**: Proportion of identified IBD segments in networks vs the total number of possible IBD segments that could exist between all individuals in the network.
 
 ----
 
-* **false.postive**: Proportion of individuals within the cluster that share an IBD segment with another individual outside of the cluster.
+* **false.positive**: Proportion of individuals within the cluster that share an IBD segment with another individual outside of the cluster.
 
 ----
 
-* **IDs**: List of ids that are in the network. 
+* **IDs**: List of IDs that are in the network. 
 
 ----
 
-* **ID.haplotype**: List of haplotypes that are in the network. These will be equivalent to the ids in the "IDs" column except each id will have a phase value attached to it.
+* **ID.haplotype**: List of haplotypes that are in the network. These will be equivalent to the IDs in the "IDs" column except each ID will have a phase value attached to it.
 
 ----
 
@@ -99,6 +99,6 @@ DRIVE dendrogram command output:
 
 The dendrogram subcommand also outputs two files. One of which is the same log file as described in the previous section. The other file is a png image called "network\_#_dendrogram.png" made for either the network of interest or all the networks in the input file. These images are saved in the specified output directory.
 
-If the user provides the "--keep-temp" flag then an extra directory is create inside the output directory called "network\_#_temp". This subdirectory will contain the network specific distance matrix that is used to generate the dendrogram.
+If the user provides the "--keep-temp" flag then an extra directory is created inside the output directory called "network\_#_temp". This subdirectory will contain the network specific distance matrix that is used to generate the dendrogram.
 
 If the user provides the "--map-ids" flag then an additional file is created called "network\_#_id_mappings.txt". This file contains a mapping of the original individual IDs to anonymized IDs of the form "patient_X". This mapping is useful when preparing dendrograms for publication to protect individual identities.
