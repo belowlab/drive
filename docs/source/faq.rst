@@ -1,32 +1,38 @@
 DRIVE FAQ
 =========
 
-This section attempts to answer questions that people have commonly had or provide suggestions to common problems that people have identified.
+This section addresses frequently asked questions and provides solutions to common problems identified by users.
 
 .. dropdown:: What versions of Python is DRIVE compatible with?
 
     DRIVE supports Python versions >=3.10 (but not Python version 3.11.0 specifically). The allowed Python version can always be found in the pyproject.toml file under the section "requires-python". 
 
-    In the past, there was a bug that if you installed outside of the supported Python versions using either PyPI or Conda, then an old version of DRIVE would be installed and it would break the integration tests. This bug is now rectified and, as long as you are within the aforementioned range, DRIVE should be able to be installed correctly. 
+    In the past, there was a bug where installing outside of the supported Python versions using either PyPI or Conda would cause an old version of DRIVE to be installed, breaking the integration tests. This bug is now rectified and, as long as you are within the aforementioned range, DRIVE should install correctly. 
 
-    You can check your Python version using the command 'python --version'. If your system Python version is outside of the allowed range then you can either install an appropriate version from `Python.org <https://www.python.org/downloads/>`_ or a package manager such as Homebrew on MacOS `Homebrew <https://brew.sh/>`_, or `Conda <https://anaconda.org/anaconda/conda>`_ where you can specify the Python version. *Additionally*, DRIVE does not support the multithreaded version of Python that allows users to disable the GIL since there are still packages that not yet compatible with this experimental version of Python. You can check to see if this version is installed by running 'python --version'. If the result is python3.13t or python3.13t-dev then this is the incorrect version.
+    You can check your Python version using the command 'python --version'. If your system Python version is outside of the allowed range, you can either install an appropriate version from `Python.org <https://www.python.org/downloads/>`_, a package manager such as `Homebrew <https://brew.sh/>`_ on MacOS, or `Conda <https://anaconda.org/anaconda/conda>`_ where you can specify the Python version. *Additionally*, DRIVE does not support the multithreaded version of Python that allows users to disable the GIL, as there are still packages that are not yet compatible with this experimental version of Python. You can check to see if this version is installed by running 'python --version'. If the result is python3.13t or python3.13t-dev, then this is the incorrect version.
+
+.. dropdown:: Why is there no v2? 
+
+    DRIVE v2 was a purely internal implementation of DRIVE. When the plugin architecture was added to DRIVE, we considered this a major change to the user interface which prompted us to change from v1 to v2 based on semantic versioning practic cases. Over the past year, the scope of DRIVE changed again to add the dendrogram functionality through a new subcommand structure (similar to git). This subcommand structure represented another significant change to the user interface, which prompted us to update the version to v3 before publication.
 
 
 .. dropdown:: What are the main differences between DRIVE v1 and DRIVE v3?
 
-    There are a handful of differences and improvements that were added to DRIVE v3 that make it distinct from version 1.0:
+    There are a handful of differences and improvements added to DRIVE v3 that make it distinct from version 1.0:
 
     * **Addition of phenotype enrichment test**
 
-      The original implementation of DRIVE only perform network clustering. DRIVE v3 added a phenotypic enrichment test that the user can enable by providing a case/control file. This enrichment test using binomial statistics to test if a network is enriched for cases compared to the total cohort. This test will be performed for all networks that have 2 or more cases. Users can customize this test with their own code using the plugin architecture of DRIVE. This new test is also generalized so that users can provide a file with case/control definitions for multiple phecodes. This generalization allows users to run a PheWES (Phenomewide Enrichment Study) using a phenotype file format similar to what's required by many PheWAS tools.
+      The original implementation of DRIVE only performed network clustering. DRIVE v3 added a phenotypic enrichment test that users can enable by providing a case/control file. This enrichment test uses binomial statistics to determine if a network is enriched for cases compared to the total cohort. This test will be performed for all networks that have 2 or more cases. Users can customize this test with their own code using the plugin architecture of DRIVE. This new test is also generalized so that users can provide a file with case/control definitions for multiple phecodes. This generalization allows users to run a PheWES (Phenome-wide Enrichment Study) using a phenotype file format similar to what is required by many PheWAS tools.
 
-    * **Extensibility through the plugins**
+    * **Extensibility through plugins**
 
-      DRIVE v3 is designed to interface with existing analytical pipelines through an flexible and extensible backend. This backend relies on the plugin architecture described in more detail here :doc:`Plugin Description </plugin_descriptions/plugin_architecture>`. Users can create their own "plugins" to perform additional analyses or output data in a more convenient format. This flexibility allows users to adjust DRIVE to their use cases without having to wait for formal updates to DRIVE from the Below Lab. You can click on this link to read more information about the way DRIVE stores the network data in the :doc:`Data API </plugin_descriptions/data_container_api>` or to view an example of a valid plugin :doc:`plugin template </plugin_descriptions/expected_plugin_structure>`
+      DRIVE v3 is designed to interface with existing analytical pipelines through a flexible and extensible backend. This backend relies on the plugin architecture described in more detail here: :doc:`Plugin Description </plugin_descriptions/plugin_architecture>`. Users can create their own "plugins" to perform additional analyses or output data in a more convenient format. This flexibility allows users to adjust DRIVE to their use cases without having to wait for formal updates to DRIVE from the Below Lab. You can click on this link to read more information about the way DRIVE stores the network data in the :doc:`Data API </plugin_descriptions/data_container_api>` or to view an example of a valid plugin: :doc:`plugin template </plugin_descriptions/expected_plugin_structure>`
 
     * **Performance increases**
 
-      In designing DRIVE v3, we took advantage of features of common data science libraries such as Pandas and PyArrow to boost performance. Current profiling shows a 10 fold improvement when running only the clustering algorithm over the CFTR locus in pairwise IBD segments for 250,000 individuals. The increase in memory comes from reading the data in using large chunks of dataframes rather than reading the file line by line. Since DRIVE was designed to be used primarily on servers or the cloud we figured this to be an acceptable increase (although you can control the size of chunks being read in using the chunksize argument.)
+      In designing DRIVE v3, we took advantage of features from common data science libraries such as Pandas and PyArrow to boost performance. Current profiling shows a 27-fold improvement when running only the clustering algorithm over the CFTR locus in pairwise IBD segments for 250,000 individuals. This improvement comes largely from processing the input IBD segment data in chunks, which reduces the number of memory allocations when generating the DataFrame. Previously, DRIVE read this data in line-by-line and concatenated the DataFrame for each row read, which led to many memory allocations. We also switched from the default pandas parsing engine to the C-engine, which is faster but also less flexible, and converted the default Pandas' "Object" types into PyArrow String objects, which are smaller (helping with memory allocation). This change means that we will see a linear decrease in the time it takes to read the IBD data as the user increases the chunk size, but in DRIVE v3 the bottleneck is the graph construction and the community walktrap algorithm, so overall runtime will not be as affected by this step.
+
+      We do observe an increase in runtime memory. This increase in memory comes from reading the data in using large chunks of DataFrames rather than reading the file line-by-line, and from the data structure used to store the identified networks for later statistics. Since DRIVE was designed to be used primarily on servers or the cloud, we considered this to be an acceptable increase (although you can control the size of chunks being read using the chunksize argument). There are other data structures in DRIVE contributing to the memory consumption, so doubling the chunk size does not necessarily mean you would see a 2x memory consumption from the overall program's runtime.
 
       .. list-table:: DRIVE v1 performance compared to DRIVE v3
           :widths: 25 50 25
@@ -34,31 +40,34 @@ This section attempts to answer questions that people have commonly had or provi
 
           * - DRIVE version
             - Runtime
-            - Memory
+            - Memory Consumption
           * - v1
             - 37 hours and 14 minutes
             - 3 Gb
           * - v3
-            - 1 hour and 38 minutes
-            - 32 Gb
+            - 1 hour and 23 minutes
+            - 5.4 Gb (32 Gb)
+
+      *For DRIVE v3, the memory use when providing a phenotype file is shown in parentheses.*
+
 
     * **Improved logging and error handling**
 
-      DRIVE v1 did not utilize any logging and often let the program tactlessly crash when it encountered errors. Now DRIVE has more robust error handling and logging functionality that the user can customize through a verbosity flag "-v". There are almost certainly still ways to get the program to crash, but we have attempted to cover many of the errors commonly encountered in development. If you encounter new errors that you think are worth handling please let us know by submitting a GitHub issue so we can reproduce the error and then determine the best way to implement error handling.
+      DRIVE v1 did not utilize any logging and often let the program crash abruptly when it encountered errors. Now, DRIVE has more robust error handling and logging functionality that the user can customize through a verbosity flag "-v". There are almost certainly still ways to get the program to crash, but we have attempted to cover many of the errors commonly encountered in development. If you encounter new errors that you think are worth handling, please let us know by submitting a GitHub issue so we can reproduce the error and then determine the best way to implement error handling.
 
     * **Incorporation of the ability to generate dendrograms into the DRIVE codebase**
 
       In the original publication using DRIVE v1, the dendrogram of a network of interest was visualized using the phylogenetic tree generator `ATGC: FastME <http://www.atgc-montpellier.fr/fastme/>`_. This approach required the user to rely on a second software tool not maintained by the Below Lab. For DRIVE v3, we implemented our own dendrogram generation using scipy and packaged it in a DRIVE subcommand called dendrogram. This approach allows us to ensure that the dendrogram functionality stays consistent and is optimized to work with the DRIVE output without requiring the user to perform a lot of post-processing.
 
-.. dropdown:: Not familiar with Object-Oriented Programming so how do I design a plugin?
+.. dropdown:: Not familiar with Object-Oriented Programming? How do I design a plugin?
 
-      DRIVE relies very heavily on the object-oriented programming (OOP) paradigm to implement the plugin architecture. We are not expecting everyone to be an expert in OOP to design their own plugins. For that reason we have provided a template of the plugin structure :doc:`here </plugin_descriptions/expected_plugin_structure>`. The user can add their code in the analyze function. The user will also have to give the plugin a name in the name field right above the analyze function and they will have to provide a Python file name (without the .py suffix) in the quoted section of the initialize function.
+      DRIVE relies heavily on the object-oriented programming (OOP) paradigm to implement the plugin architecture. We do not expect everyone to be an expert in OOP to design their own plugins. For that reason, we have provided a template of the plugin structure :doc:`here </plugin_descriptions/expected_plugin_structure>`. The user can add their code in the analyze function. The user will also have to give the plugin a name in the name field right above the analyze function and provide a Python file name (without the .py suffix) in the quoted section of the initialize function.
 
 
 .. dropdown:: How was the test data generated? 
 
-      The simulated IBD segments used as input for DRIVE were generated using a similar procedure as described here in this paper Open-source by Tang et al: `Open-source benchmarking of IBD segment detection methods for biobank-scale cohorts <https://doi.org/10.1093/gigascience/giac111>`_. You can read a detailed description of how we generated the testing data under the section called :doc:`Simulating IBD Data: </installation/testing>`.
+      The simulated IBD segments used as input for DRIVE were generated using a similar procedure as described in Tang et al: `Open-source benchmarking of IBD segment detection methods for biobank-scale cohorts <https://doi.org/10.1093/gigascience/giac111>`_. You can read a detailed description of how we generated the testing data under the section called :doc:`Simulating IBD Data: </installation/testing>`.
 
 .. dropdown:: How can I report any issues that I find with DRIVE?
 
-      To keep track of issues with DRIVE we ask that you open a GitHub issue. We have provided a template that can be found at ".github/ISSUE_TEMPLATE" within the repository. We ask that you use this format because it helps us to understand your issue and to reproduce it.
+      To keep track of issues with DRIVE, we ask that you open a GitHub issue. We have provided a template that can be found at ".github/ISSUE_TEMPLATE" within the repository. We ask that you use this format because it helps us to understand your issue and to reproduce it.
