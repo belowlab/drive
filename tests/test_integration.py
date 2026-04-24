@@ -367,3 +367,64 @@ def test_for_correct_samples(system_args_for_pull_samples):
     assert (
         not sample_differences
     ), f"The samples, {','.join(sample_differences)}, were expected to be found within the file but were not. Instead, only these values were found, {','.join(samples_in_file)}"
+
+
+def _validate_id_consistency(output_df: pd.DataFrame) -> None:
+    """Helper to assert haplotype uniqueness and individual ID frequency."""
+    # 1. Check Haplotype Uniqueness (ID.1, ID.2)
+    # Explode the comma-separated strings into individual IDs
+    all_haplotypes = output_df["ID.haplotype"].str.split(",").explode()
+    all_haplotypes = all_haplotypes[all_haplotypes.notna() & (all_haplotypes != "")]
+
+    hap_counts = all_haplotypes.value_counts()
+    duplicate_haplotypes = hap_counts[hap_counts > 1]
+
+    assert (
+        duplicate_haplotypes.empty
+    ), f"Found haplotype IDs assigned to multiple networks: {duplicate_haplotypes.to_dict()}"
+
+    # 2. Check Individual ID Frequency (ID)
+    # Each individual can appear at most twice (once for each haplotype)
+    all_ids = output_df["IDs"].str.split(",").explode()
+    all_ids = all_ids[all_ids.notna() & (all_ids != "")]
+
+    id_counts = all_ids.value_counts()
+    excessive_ids = id_counts[id_counts > 2]
+
+    assert (
+        excessive_ids.empty
+    ), f"Found individual IDs appearing more than twice (9+ times bug): {excessive_ids.to_dict()}"
+
+
+def test_id_consistency_no_phenotypes(system_args_no_pheno):
+    # Ensure output directory exists
+    output_path = site_packages_path / "tests/test_output"
+    output_path.mkdir(exist_ok=True)
+
+    # Execute the drive main function
+    drive.main()
+
+    # Load the output file
+    output = pd.read_csv(
+        output_path / "integration_test_results_no_pheno.drive_networks.txt",
+        sep="\t",
+    )
+
+    _validate_id_consistency(output)
+
+
+def test_id_consistency_with_phenotypes(system_args_with_pheno):
+    # Ensure output directory exists
+    output_path = site_packages_path / "tests/test_output"
+    output_path.mkdir(exist_ok=True)
+
+    # Execute the drive main function
+    drive.main()
+
+    # Load the output file
+    output = pd.read_csv(
+        output_path / "integration_test_results_with_pheno.drive_networks.txt",
+        sep="\t",
+    )
+
+    _validate_id_consistency(output)
