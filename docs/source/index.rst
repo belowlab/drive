@@ -23,7 +23,7 @@ The easiest way to install DRIVE is from the PYPI register. Users can use the fo
    DRIVE supports Python versions >=3.10 (but not Python version 3.11.0) for compatibility between packages. It is expected that your python version falls within this range when attempting to install the software. You can check the python version using the 'python --version' command. If the version number is outside of the acceptable range then you must install an appropriate version from sources such as `Python.org <https://www.python.org/downloads/>`_, or a package manager such as `Homebrew <https://brew.sh/>`_ on MacOS, `Conda <https://anaconda.org/anaconda/conda>`_, or the appropriate Linux package manage if you are running Linux. *Additionally*, DRIVE doesn't support the development version of python 3.13t that allows users to disable the GIL due to some packages not being fully compatible yet.
 
 **Check Version:**
-Once you have installed DRIVE you should check the version to ensure that you have the most recent code. At the time of writing the newest version is 3.0.2 but you can also check the PYPI Badge at the top of the GitHub README.md. This badge will display the most recent version on PYPI. This check is important because the testing framework was not added to DRIVE until v3 so running the test with an older version of DRIVE will result in an error (see :doc:`FAQ </faq>`).
+Once you have installed DRIVE you should check the version to ensure that you have the most recent code. At the time of writing the newest version is 3.1.0 but you can also check the PYPI Badge at the top of the GitHub README.md. This badge will display the most recent version on PYPI. This check is important because the testing framework was not added to DRIVE until v3 so running the test with an older version of DRIVE will result in an error (see :doc:`FAQ </faq>`).
 
 .. code:: bash
 
@@ -50,7 +50,7 @@ The following paper discusses an initial implementation of the clustering algori
 
 Contact:
 --------
-If you have any questions about DRIVE or run into issues, you can either post an issue on the Github issues page or you can contact us at the email address, insert email here.
+If you have any questions about DRIVE or run into issues, you can either post an issue on the GitHub issues page or you can contact us at the email address, insert email here.
 
 .. toctree::
    :maxdepth: 2
@@ -79,6 +79,7 @@ If you have any questions about DRIVE or run into issues, you can either post an
 
    /contributing/contributing
    /plugin_descriptions/extending_drive
+
 
 
 

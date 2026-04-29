@@ -39,13 +39,13 @@ Data class attributes:
         pvalues: Dict[str, Dict[str, Any]] = field(default_factory=dict)
 
         def print_members_list(self) -> str:
-            """Returns a string that has all of the members ids separated by space
+            """Returns a string that has all of the members' IDs separated by space
 
             Returns
             -------
             str
                 returns a string where the members list attribute
-                is formatted as a string for the output file. Individuals strings are joined by comma.
+                is formatted as a string for the output file. Individual strings are joined by comma.
             """
             return ", ".join(list(map(str, self.members)))
 
@@ -61,8 +61,8 @@ Data class attributes:
             Returns
             -------
             bool
-                returns true if the self cluster id is less than the
-                comp_class cluster id.
+                returns True if the self cluster ID is less than the
+                comp_class cluster ID.
             """
 
             return self.clst_id < comp_class.clst_id
@@ -70,7 +70,7 @@ Data class attributes:
 .. role:: python(code)
    :language: python
 
-- **output**: This attribute is a path object that describes where to write the drive output to. This path will have a file prefix that drive appends a suffix to when it writes to a file. If you wish to get the parent directory you can just use :python:`network_obj.output.parent`.
+- **output**: This attribute is a path object that describes where to write the DRIVE output to. This path will have a file prefix that DRIVE appends a suffix to when it writes to a file. If you wish to get the parent directory you can just use :python:`network_obj.output.parent`.
 
 - **carriers**: This attribute is a dictionary of dictionaries that tells who cases, controls, and exclusions are for each phenotype. The outer key is the phenotype id. The inner dictionary has 3 keys: "cases", "controls", "excluded". The values for each of these keys are a list that contains the individual ids for each case, control, or excluded individual, respectively.
 

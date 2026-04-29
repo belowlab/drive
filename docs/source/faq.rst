@@ -26,7 +26,7 @@ This section attempts to answer questions that people have commonly had or provi
 
     * **Performance increases**
 
-      In designing DRIVE v3, we took advantage of features of common data science libraries such as Pandas and PyArrow to boost performance. Current profiling shows a 10 fold improvement when running only the clustering algorithm over the CFTR locus in pairwise IBD segments for 250,000 individuals. The increase in memory comes from reading the data in using large chunks of dataframes rather than reading the file line by line. Since DRIVE was designed to be used primarily on servers or the cloud we figured this to be an acceptable increase (although you can control the size of chunks being read in using the chunksize argument.)
+      In designing DRIVE v3, we took advantage of features of common data science libraries such as Pandas, PyArrow, and DuckDB to boost performance. Current profiling shows a 26.5x improvement when running only the clustering algorithm over the CFTR locus in pairwise IBD segments for 250,000 individuals. The performance increase resulted in moving the IBD segment I/O and filtering to DuckDB. In v1, DRIVE read this data in 1 line at a time and appended the new line to a (growing) pandas dataframe. This process resulted in many memory allocations, which became slower as the dataframe grew in size. DuckDB enables DRIVE to use multiple threads to read in and filter the file. With the inclusion of DuckDB, this step of DRIVE is now multi-threaded but the rest of the runtime which relies on pandas, iGraph, and scipy is still single threaded.
 
       .. list-table:: DRIVE v1 performance compared to DRIVE v3
           :widths: 25 50 25
@@ -39,20 +39,20 @@ This section attempts to answer questions that people have commonly had or provi
             - 37 hours and 14 minutes
             - 3 Gb
           * - v3
-            - 1 hour and 38 minutes
-            - 32 Gb
+            - 1 hour and 27 minutes
+            - 7.1 Gb
 
     * **Improved logging and error handling**
 
-      DRIVE v1 did not utilize any logging and often let the program tactlessly crash when it encountered errors. Now DRIVE has more robust error handling and logging functionality that the user can customize through a verbosity flag "-v". There are almost certainly still ways to get the program to crash, but we have attempt to cover many of the errors commonly encountered in development. If you encounter new errors that you think are worth handling please let us know by submitting a github issue so we can reproduce the error and then determine the best way to implement error handling.
+      DRIVE v1 did not utilize any logging and often let the program tactlessly crash when it encountered errors. Now DRIVE has more robust error handling and logging functionality that the user can customize through a verbosity flag "-v". There are almost certainly still ways to get the program to crash, but we have attempted to cover many of the errors commonly encountered in development. If you encounter new errors that you think are worth handling please let us know by submitting a GitHub issue so we can reproduce the error and then determine the best way to implement error handling.
 
     * **Incorporation of the ability to generate dendrograms into the DRIVE codebase**
 
-      In the original publication using DRIVE v1, the dendrogram of a network of interest was visualized using the phylogenetic tree generator `ATGC: FastME <http://www.atgc-montpellier.fr/fastme/>`_. This approach required the user to rely on a second software tool not maintained by the Belowlab. For DRIVE v3, we implemented our own dendrogram generation using scipy and packaged it in a DRIVE subcommand called dendrogram. This approach allows us to ensure that the dendrogram functionality stays consistent and is optimized to work with the DRIVE output without requiring the user to perform a lot of post-processing.
+      In the original publication using DRIVE v1, the dendrogram of a network of interest was visualized using the phylogenetic tree generator `ATGC: FastME <http://www.atgc-montpellier.fr/fastme/>`_. This approach required the user to rely on a second software tool not maintained by the Below Lab. For DRIVE v3, we implemented our own dendrogram generation using scipy and packaged it in a DRIVE subcommand called dendrogram. This approach allows us to ensure that the dendrogram functionality stays consistent and is optimized to work with the DRIVE output without requiring the user to perform a lot of post-processing.
 
-.. dropdown:: Not familar with Object-Oriented Programming so how do I design a plugin?
+.. dropdown:: Not familiar with Object-Oriented Programming so how do I design a plugin?
 
-      DRIVE relies very heavily on the object-oriented programming (OOP) paradigm to implement the plugin architecture. We are not expecting everyone to be an expert in OOP to design their own plugins. For that reason we have provided a template of the plugin structure :doc:`here </plugin_descriptions/expected_plugin_structure>`. The user can add their code in the analyze function. The user will also have to give the plugin a name in the name field right above the analyze function and they will have to provie a python file name (without the .py suffix) in the quoted section of the initialize function.
+      DRIVE relies very heavily on the object-oriented programming (OOP) paradigm to implement the plugin architecture. We are not expecting everyone to be an expert in OOP to design their own plugins. For that reason we have provided a template of the plugin structure :doc:`here </plugin_descriptions/expected_plugin_structure>`. The user can add their code in the analyze function. The user will also have to give the plugin a name in the name field right above the analyze function and they will have to provide a python file name (without the .py suffix) in the quoted section of the initialize function.
 
 
 .. dropdown:: How was the test data generated? 
@@ -61,4 +61,4 @@ This section attempts to answer questions that people have commonly had or provi
 
 .. dropdown:: How can I report any issues that I find with DRIVE?
 
-      To keep track of issues with DRIVE we ask that you open a github issue. We have provided a template that can be found at ".github/ISSUE_TEMPLATE" within the repository. We ask that you use this format because it helps us to understand your issue and to reproduce it.
+      To keep track of issues with DRIVE we ask that you open a GitHub issue. We have provided a template that can be found at ".github/ISSUE_TEMPLATE" within the repository. We ask that you use this format because it helps us to understand your issue and to reproduce it.
