@@ -35,7 +35,7 @@ class NetworkWriter:
         """
 
         # making a string for the initial first few columns
-        header_str = "clstID\tn.total\tn.haplotype\ttrue.positive.n\ttrue.positive\tfalst.postive\tIDs\tID.haplotype"  # noqa: E501
+        header_str = "clstID\tn.total\tn.haplotype\ttrue.positive.n\ttrue.positive\tfalse.positive\tIDs\tID.haplotype"  # noqa: E501
 
         if not phenotypes:
             return header_str + "\n"

@@ -1,11 +1,11 @@
 Installing DRIVE using Pip
 ==========================
 
-DRIVE has been officially released on `PYPI <https://pypi.org/project/drive-ibd/>`_! This installation method is recommended for those who wish to use the software and do not want to update or modify the software. PIP will install all of the necessary dependencies of DRIVE so that the user doesn't have to worry about dependency management. 
+DRIVE has been officially released on `PyPI <https://pypi.org/project/drive-ibd/>`_! This installation method is recommended for those who wish to use the software and do not want to update or modify the software. pip will install all of the necessary dependencies of DRIVE so that the user doesn't have to worry about dependency management. 
 
 .. important:: 
 
-   DRIVE supports Python version >=3.10 (but not Python version 3.11.0 specifically) for compatibility between packages. It is expected that your python version falls within this range when attempting to install the software. You can read more about this version requirement and how to check if you have the right python version :doc:`here </faq>` under the dropdown section 'What versions of Python is DRIVE compatible with?'
+   DRIVE supports Python version >=3.10 (but not Python version 3.11.0 specifically) for compatibility between packages. It is expected that your Python version falls within this range when attempting to install the software. You can read more about this version requirement and how to check if you have the right Python version :doc:`here </faq>` under the dropdown section 'What versions of Python is DRIVE compatible with?'
 
 
 DRIVE can be installed using the following command:

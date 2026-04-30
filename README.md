@@ -34,7 +34,7 @@ python -m drive.drive --version
 # if using the docker image
 docker exec -it --rm drive --version drive-image-tag
 
-# or using the signularity image
+# or using the singularity image
 singularity exec singularity-drive-image.sif drive --version
 ```
 
@@ -63,11 +63,12 @@ If you are working on an HPC cluster it may be better to use a singularity image
 singularity pull singularity-image-name.sif docker://jtb114/drive:latest
 ```
 
-**Running the Test Data:**
+### Running the Test Data
+
 Once you have checked that the correct version of DRIVE is installed, you can run the test data to ensure that DRIVE is producing the expected output. To provide test data from DRIVE we simulated pairwise IBD segments using MSPrime, SHAPEIT4, and hap-IBD. This data is stored in the tests/test_inputs folder of the repository and is also bundled with the installs from PyPI or Docker. This data can be run using the commands below:
 
 ```bash
-# If installed from PYPI
+# If installed from PyPI
 drive utilities test
 
 # If installed using pdm
@@ -80,17 +81,27 @@ python -m drive.drive utilities test
 docker run -it --rm drive-image-tag drive utilities test
 ```
 
-Because singularity is a read-only file system for security, the commands to run the test data are different. Users can't run the built in testing framework because it will not have permissions to write to the filesystem (filesystem meaning the directory in the singularity image). Instead users can run the following commands to run the test data. First a writable "sandbox" has to be created. Users can replace the phrase "singularity-sandbox" with a name of their choosing. After that step, users can exec the sandbox. All other commands can use the normal singularity image (not the sandbox).
+**Caveat on running the test data with different inputs:**
+
+Users are more than welcome to repeat the "Simulating IBD Data" pipeline and use another IBD calling tool such as iLASH or GERMLINE. Commands to rerun this pipeline are under the "Simulating IBD Data" section. There is no guarantee that DRIVE will replicate the test output file "" which used hap-IBD. Each of these programs will have differences in the detected pairwise IBD segments which may affect the networks identified by DRIVE. Because of these innate differences in the IBD detection tools, we make no guarantee that the output will exactly match the output file, "test_drive_phenomewide_output.drive_networks.txt", which can be found in the tests/test_outputs directory at the GitHub repository.
+
+**Running the Test Data with Singularity:**
+
+Because singularity is a read-only file system for security, the commands to run the test data are different. Users can't run the built-in testing framework because it will not have permissions to write to the filesystem (filesystem meaning the directory in the singularity image). Instead users can run the following commands to run the test data. First a writable "sandbox" has to be created. Users can replace the phrase "singularity-sandbox" with a name of their choosing. After that step, users can exec the sandbox. All other commands can use the normal singularity image (not the sandbox).
 
 ```bash
 # Using singularity to make a sandbox
 singularity build --sandbox singularity-sandbox singularity-image-path.sif
 # Now you can run the unit test using the sandbox image
-singularity exec -w --no-home singularity-sandox drive utilities test
+singularity exec -w --no-home singularity-sandbox drive utilities test
 ```
 
 *Note*: We expect only people who are contributing to DRIVE to be using PDM. The provided testing command for PDM allows us to ensure that the correct PDM virtual environment is being used. For this reason the PDM command is the most different from the others.
 
-### Reporting issues
+## Example commands
+
+We have provided example commands for DRIVE illustrating how to run DRIVE for [single phenotype](https://drive-ibd.readthedocs.io/en/latest/examples/examples_command_format.html) and for [multiple phenotype]()
+
+## Reporting issues
 
 If you wish to report a bug or propose a feature you can find templates under the .github/ISSUE_TEMPLATE directory.

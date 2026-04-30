@@ -1,6 +1,6 @@
 Testing DRIVE 
 ====================
-Once DRIVE is installed, the user can use the provided test data to better understand how to run the program and to see examples of the inputs. This test data can be found in the tests folder on github `(test data location) <https://github.com/belowlab/drive/tree/main/tests>`_. At the moment, only integration test have been implemented for DRIVE. This section of the documentation will only provide information relevant to the integration tests. 
+Once DRIVE is installed, the user can use the provided test data to better understand how to run the program and to see examples of the inputs. This test data can be found in the tests folder on GitHub `(test data location) <https://github.com/belowlab/drive/tree/main/tests>`_. At the moment, only integration tests have been implemented for DRIVE. This section of the documentation will only provide information relevant to the integration tests. 
 
 The following two sections describe how we simulated the IBD data to use for the integration tests and then how the test folder is structured. If you only wish to know how to run the test data then you can skip to the "Commands to test successful installation" section.
 
@@ -36,7 +36,7 @@ DRIVE uses the \*.ibd.gz file generated from hap-IBD, so this file was placed in
 
 Files/Directories found within the tests directory:
 ---------------------------------------------------
-The test data directory has a subdirectory called "test_inputs" and a python script called "test_integration.py" that are essential to running the integration test. They are discribed in further detail below.
+The test data directory has a subdirectory called "test_inputs" and a Python script called "test_integration.py" that are essential to running the integration tests. They are described in further detail below.
 
 **test_inputs directory**:
 Within this directory there are two files of interest:
@@ -63,7 +63,7 @@ Depending how DRIVE was installed, the commands to run the test data can be diff
    .. tab-item:: PIP 
       :sync: key1
 
-      As of v3.0.2, the Python testing framework "Pytest" has been bundled with DRIVE now so that users can run the test data directly from the DRIVE CLI. If DRIVE was installed directly from PYPI into either a virtualenv or a conda environment, then you can run the test data with the following command:
+      As of v3.0.2, the Python testing framework "Pytest" has been bundled with DRIVE now so that users can run the test data directly from the DRIVE CLI. If DRIVE was installed directly from PyPI into either a virtualenv or a conda environment, then you can run the test data with the following command:
 
       .. code:: bash
 
@@ -109,14 +109,14 @@ Depending how DRIVE was installed, the commands to run the test data can be diff
         docker run -it --rm drive-image-tag drive utilities test
         
 
-      Singularity is a read-only file system for security. Due to this, the commands to run the test data are different. Users can't run the built in testing framework because it will not have permissions to write to the filesystem (filesystem meaning the directory in the singularity image). Instead users can run the following commands to run the test data. First a writable "sandbox" has to be created. Users can replace the phrase "singularity-sandbox" with a name of their choosing. After that step, users can exec the sandbox. All other commands can use the normal singularity image (not the sandbox).
+      Singularity is a read-only file system for security. Due to this, the commands to run the test data are different. Users can't run the built-in testing framework because it will not have permissions to write to the filesystem (filesystem meaning the directory in the singularity image). Instead users can run the following commands to run the test data. First a writable "sandbox" has to be created. Users can replace the phrase "singularity-sandbox" with a name of their choosing. After that step, users can execute the sandbox. All other commands can use the normal singularity image (not the sandbox).
 
       .. code::
 
         # Using singularity to make a sandbox
         singularity build --sandbox singularity-sandbox singularity-image-path.sif
         # Now you can run the unit test using the sandbox image
-        singularity exec -w --no-home singularity-sandox drive utilities test
+        singularity exec -w --no-home singularity-sandbox drive utilities test
         
    .. tab-item:: Manual
       :sync: key5

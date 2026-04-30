@@ -3,7 +3,7 @@
 Code Styling Tips
 =================
 
-When contributing to this project we ask that you use a few development tools to maintain consistent code style across the code base. Each of these tools will be described in the sections below. These tools can be install with poetry when you run the following command:
+When contributing to this project we ask that you use a few development tools to maintain consistent code style across the code base. Each of these tools will be described in the sections below. These tools can be installed with poetry when you run the following command:
 
 .. code:: bash
 

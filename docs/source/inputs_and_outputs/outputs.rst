@@ -13,7 +13,7 @@ DRIVE creates a file with the suffix ".drive_networks.txt". This file has the re
 Column descriptions:
 ^^^^^^^^^^^^^^^^^^^^
 
-* **clustID**: ID given to each network identified. This value will have the form "clst#".
+* **clstID**: ID given to each network identified. This value will have the form "clst#".
 
 ----
 
@@ -46,6 +46,7 @@ Column descriptions:
 ----
 
 * **min_pvalue**: Value of the smallest p-value calculated for the network from the binomial test. If a phenotype file is not provided then this value will be N/A.
+* **min_pvalue**: Value of the smallest p-value calculated for the network from the binomial test. If a phenotype file is not provided then this value will be N/A.
 
 ----
 
@@ -57,11 +58,19 @@ Column descriptions:
 
 ----
 
-* **\*_cases_in_network**: Number of individuals in the network that are affected by the phenotype. 
+* **\*_case_count_in_network**: Number of individuals in the network that are affected by the phenotype. 
 
 ----
 
-* **\*_excluded_in_network**: Number of individuals in the network that are excluded from the statistics analysis. 
+* **\*_cases_in_network**: Comma-separated list of individual IDs in the network that are cases for the phenotype.
+
+----
+
+* **\*_excluded_count_in_network**: Number of individuals in the network that are excluded from the statistical analysis for the phenotype.
+
+----
+
+* **\*_excluded_in_network**: Comma-separated list of individual IDs in the network that are excluded from the statistical analysis for the phenotype.
 
 ----
 
@@ -69,7 +78,15 @@ Column descriptions:
 
 .. note::
 
-    The final three columns, "\*_cases_in_network, \*_excluded_in_network, \*_pvalue" are only created if the user provides a case file, otherwise the output file will only have the first 11 columns. If the user provides a case file then these three columns will be created for each phenotype so if you provided 3 phenotypes then 9 columns would be added to the output file.
+    The final five columns, "\*_case_count_in_network, \*_cases_in_network, \*_excluded_count_in_network, \*_excluded_in_network, \*_pvalue" are only created if the user provides a case file, otherwise the output file will only have the first 11 columns. If the user provides a case file then these five columns will be created for each phenotype so if you provided 3 phenotypes then 15 columns would be added to the output file.
+
+.. note::
+
+    If the user passes the ``--compress-output`` flag, the output file will be gzipped and have the suffix ".drive_networks.txt.gz".
+
+.. note::
+
+    If the user passes the ``--split-phecode-categories`` flag, the output will be broken into a separate file for each phecode category. Each file follows the naming pattern ``{output}.{category}.drive_networks.txt`` and still contains the base network columns along with the minimum phecode columns.
 
 
 *Log File*
@@ -83,4 +100,6 @@ DRIVE dendrogram command output:
 
 The dendrogram subcommand also outputs two files. One of which is the same log file as described in the previous section. The other file is a png image called "network\_#_dendrogram.png" made for either the network of interest or all the networks in the input file. These images are saved in the specified output directory.
 
-If the user provides the "--keep-temp" flag then an extra directory is created inside the output directory called "network\_#_temp". This subdirectory will contain the network-specific distance matrix that is used to generate the dendrogram..
+If the user provides the "--keep-temp" flag then an extra directory is created inside the output directory called "network\_#_temp". This subdirectory will contain the network specific distance matrix that is used to generate the dendrogram.
+
+If the user provides the "--map-ids" flag then an additional file is created called "network\_#_id_mappings.txt". This file contains a mapping of the original individual IDs to anonymized IDs of the form "patient_X". This mapping is useful when preparing dendrograms for publication to protect individual identities.

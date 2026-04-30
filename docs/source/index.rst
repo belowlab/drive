@@ -12,7 +12,7 @@ Distant Relatedness for Identification and Variant Evaluation (DRIVE) is a novel
 Quick Installation:
 -------------------
 **Installing DRIVE:**
-The easiest way to install DRIVE is from the PYPI register. Users can use the following command to install the program. This method ensures that all the necessary dependencies are installed. This method assumes you have either made a virtualenv (venv) or a conda environment to install the program into. To read more about this install method read the :doc:`Pip Installation <installation/pip_installation>` section.
+The easiest way to install DRIVE is from the PyPI register. Users can use the following command to install the program. This method ensures that all the necessary dependencies are installed. This method assumes you have either made a virtualenv (venv) or a conda environment to install the program into. To read more about this install method read the :doc:`Pip Installation <installation/pip_installation>` section.
 
 .. code:: bash
 
@@ -20,7 +20,7 @@ The easiest way to install DRIVE is from the PYPI register. Users can use the fo
 
 .. important:: 
 
-   DRIVE supports Python versions >=3.10 (but not Python version 3.11.0) for compatibility between packages. It is expected that your python version falls within this range when attempting to install the software. You can check the python version using the 'python --version' command. If the version number is outside of the acceptable range then you must install an appropriate version from sources such as `Python.org <https://www.python.org/downloads/>`_, or a package manager such as `Homebrew <https://brew.sh/>`_ on MacOS, `Conda <https://anaconda.org/anaconda/conda>`_, or the appropriate Linux package manage if you are running Linux. *Additionally*, DRIVE doesn't support the development version of python 3.13t that allows users to disable the GIL due to some packages not being fully compatible yet.
+   DRIVE supports Python versions >=3.10 (but not Python version 3.11.0) for compatibility between packages. It is expected that your Python version falls within this range when attempting to install the software. You can check the Python version using the 'python --version' command. If the version number is outside of the acceptable range then you must install an appropriate version from sources such as `Python.org <https://www.python.org/downloads/>`_, or a package manager such as `Homebrew <https://brew.sh/>`_ on MacOS, `Conda <https://anaconda.org/anaconda/conda>`_, or the appropriate Linux package manage if you are running Linux. *Additionally*, DRIVE doesn't support the development version of Python 3.13t that allows users to disable the GIL due to some packages not being fully compatible yet.
 
 **Check Version:**
 Once you have installed DRIVE you should check the version to ensure that you have the most recent code. At the time of writing the newest version is 3.1.0 but you can also check the PYPI Badge at the top of the GitHub README.md. This badge will display the most recent version on PYPI. This check is important because the testing framework was not added to DRIVE until v3 so running the test with an older version of DRIVE will result in an error (see :doc:`FAQ </faq>`).
@@ -30,22 +30,24 @@ Once you have installed DRIVE you should check the version to ensure that you ha
   drive --version
 
 
-**Run test to check sucessful installation:**
-Once you have ensured that the correct version is installed then you can run the integration test using the following command. 
+Run tests to check successful installation:
+-------------------------------------------
+
+Once you have ensured that the correct version is installed then you can run the integration tests using the following command. 
 
 .. code:: bash
 
   drive utilities test
 
-These tests use simulated IBD data to check that DRIVE is identifying the correct networks and is creating the appropriate output files. You can read more about the simulations under the section called "Simulating IBD Data" :doc:`here </installation/testing>`
+These tests use simulated IBD data to check that DRIVE is identifying the correct networks and is creating the appropriate output files. Genotype data was then simulated using MSPrime, data was phased using SHAPEIT4, and pairwise IBD segments were detected using hap-IBD. You can read more about the simulations under the section called "Simulating IBD Data" :doc:`here </installation/testing>`.
 
-.. note::
+.. warning::
 
-   To read more about this install go to the Pip Installation section
+   Users are more than welcome to repeat the "Simulating IBD Data" pipeline and use another IBD calling tool such as iLASH or GERMLINE. Commands to rerun this pipeline are under the "Simulating IBD Data" section. Each of these programs will have differences in the detected pairwise IBD segments which may affect the networks identified by DRIVE. Because of these innate differences in the IBD detection tools, we make no guarantee that the output will exactly match the output file, "test_drive_phenomewide_output.drive_networks.txt", which can be found in the tests/test_output directory at the GitHub repository.
 
 Citation:
 ---------
-The following paper discusses an initial implementation of the clustering algorithm of DRIVE (1.0.0) and can be citied if you use the tool: `Detection of distant relatedness in biobaks to identify undiagnosed cases of Mendelian disease as applied to Long QT Syndrome <https://doi-org.proxy.library.vanderbilt.edu/10.1038/s41467-024-51977-4>`_.
+The following paper discusses an initial implementation of the clustering algorithm of DRIVE (1.0.0) and can be cited if you use the tool: `Detection of distant relatedness in biobanks to identify undiagnosed cases of Mendelian disease as applied to Long QT Syndrome <https://doi-org.proxy.library.vanderbilt.edu/10.1038/s41467-024-51977-4>`_.
 
 
 Contact:
@@ -71,6 +73,7 @@ If you have any questions about DRIVE or run into issues, you can either post an
    :hidden:
 
    /examples/examples_command_format
+   /examples/phenomewide_example
 
 .. toctree::
    :maxdepth: 2

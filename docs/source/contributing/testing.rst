@@ -9,12 +9,13 @@ The following commands for running tests assume that you are running them from t
 
 .. code::
 
-   pdm run pytest -v test/test_integration.py
+   pdm run pytest -v tests/test_integration.py
 
 
 Adding Tests:
 -------------
 
+DRIVE is not fully covered by unit tests so a very helpful way to contribute would be to add unit tests. All we ask is that you use the pytest mark "unit" if you are adding a unit test or "integtest" if you are adding an integration test. The following section of the Pytest documentation can explain this process in more detail: `How to create tests <https://docs.pytest.org/en/stable/getting-started.html>`_.
 DRIVE is not fully covered by unit tests so a very helpful way to contribute would be to add unit tests. All we ask is that you use the pytest mark "unit" if you are adding a unit test or "integtest" if you are adding an integration test. The following section of the Pytest documentation can explain this process in more detail: `How to create tests <https://docs.pytest.org/en/stable/getting-started.html>`_.
 
 

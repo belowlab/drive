@@ -4,6 +4,7 @@ How to contribute
 Fixing Bugs:
 ------------
 If you discover any bugs, you could either submit an issue through GitHub using the recommended issue template. You are also welcome to try to fix the issue on your own and then submit a pull request. We ask that you read the code style section (:ref:`code_style`). Your pull request will only be accepted if it conforms to the development standards that DRIVE uses.
+If you discover any bugs, you could either submit an issue through GitHub using the recommended issue template. You are also welcome to try to fix the issue on your own and then submit a pull request. We ask that you read the code style section (:ref:`code_style`). Your pull request will only be accepted if it conforms to the development standards that DRIVE uses.
 
 Improving Documentation:
 ------------------------

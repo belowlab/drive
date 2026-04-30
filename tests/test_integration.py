@@ -179,7 +179,7 @@ def test_drive_full_run_no_phenotypes(system_args_no_pheno):
         "n.haplotype",
         "true.positive.n",
         "true.positive",
-        "falst.postive",
+        "false.positive",
         "IDs",
         "ID.haplotype",
     ]
@@ -275,7 +275,7 @@ def test_drive_full_run_with_phenotypes(system_args_with_pheno):
         "n.haplotype",
         "true.positive.n",
         "true.positive",
-        "falst.postive",
+        "false.positive",
         "IDs",
         "ID.haplotype",
     ] + phenotype_cols

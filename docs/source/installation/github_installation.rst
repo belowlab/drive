@@ -1,4 +1,5 @@
 Installing DRIVE from GitHub
+Installing DRIVE from GitHub
 ============================
 This installation method assumes that you are familiar with Git, GitHub, the command line, venv, and a python package manager (either PDM or the Anaconda package manager). It is also assumed that these programs are installed/can be installed on whatever computing environment you are using. You will have to use all of these tools so you will need to be familiar enough with each one to run the example commands. If you wish to learn more about these tools then you can read the links below:
 
@@ -9,27 +10,31 @@ This installation method assumes that you are familiar with Git, GitHub, the com
     Website for Git. This link specifically goes to the documentation site. There are videos that go over the basics as well as the online version of the "Pro Git" book that gives all the information you could ever want for Git
 
 * .. card:: GitHub:
+* .. card:: GitHub:
     :link: https://github.com/
 
     GitHub website documentation
+    GitHub website documentation
 
+* .. card:: Command Line Interface
 * .. card:: Command Line Interface
     :link: https://www.learnenough.com/command-line-tutorial
     :shadow: sm
 
     This is probably overkill but here is a very in-depth CLI tutorial
+    This is probably overkill but here is a very in-depth CLI tutorial
 
-* .. card:: virtualenvs (specifically venv)
+* .. card:: virtual environments (specifically venv)
     :link: https://docs.python.org/3/library/venv.html
     :shadow: sm
 
-    This is a common way to make virtual environments that is supported by the official python organization. This link describes venv and shows how to make a venv
+    This is a common way to make virtual environments that is supported by the official Python organization. This link describes venv and shows how to make a venv
 
 * .. card:: Python Dependency Manager (PDM)
     :link: https://pdm-project.org/latest/
     :shadow: sm
 
-    PDM is another package manager for python that aims to support the whole development process from initialization, package management, building, and deployment
+    PDM is another package manager for Python that aims to support the whole development process from initialization, package management, building, and deployment
 
 * .. card:: Anaconda
     :link: https://www.anaconda.com/
@@ -73,11 +78,11 @@ If you see a directory file tree then the program cloned correctly. If you recei
 
 Step 2: Installing necessary dependencies:
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-To install the necessary dependencies for DRIVE you have to use a python compatible package manager. For this documentation, we are going to assume you are using Conda, PDM, or PIP. 
+To install the necessary dependencies for DRIVE you have to use a Python compatible package manager. For this documentation, we are going to assume you are using Conda, PDM, or pip. 
 
 .. important:: 
 
-   DRIVE supports Python versions >=3.10 (but not Python version 3.11.0 specifically) for compatibility between packages. It is expected that your python version falls within this range when attempting to install the software. You can read more about this version requirement and how to check if you have the right python version :doc:`here </faq>` under the dropdown section 'What versions of Python is DRIVE compatible with?'
+   DRIVE supports Python versions >=3.10 (but not Python version 3.11.0 specifically) for compatibility between packages. It is expected that your Python version falls within this range when attempting to install the software. You can read more about this version requirement and how to check if you have the right Python version :doc:`here </faq>` under the dropdown section 'What versions of Python is DRIVE compatible with?'
 
 .. tab-set::
    :sync-group: installation-types

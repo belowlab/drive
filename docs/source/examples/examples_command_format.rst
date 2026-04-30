@@ -10,7 +10,7 @@ Example command format
 cluster command format:
 -----------------------
 
-The following command assumes that you have either installed DRIVE into a virtualenv using pip/pdm/conda or that you have installed it from github. The following command will show you how to call it if you install DRIVE using pip. This example command has only the required arguments.
+The following command assumes that you have either installed DRIVE into a virtualenv using pip/pdm/conda or that you have installed it from GitHub. The following command will show you how to call it if you install DRIVE using pip. This example command has only the required arguments.
 
 .. code::
 
@@ -18,7 +18,7 @@ The following command assumes that you have either installed DRIVE into a virtua
 
 .. note::
 
-    If you installed DRIVE from github then you can replace the 'drive' portion with "python /path_to_drive.py" or you can add drive to your path. The rest of the command will be the same.
+    If you installed DRIVE from GitHub then you can replace the 'drive' portion with "python /path_to_drive.py" or you can add drive to your path. The rest of the command will be the same.
 
 Explanation of command:
 ```````````````````````

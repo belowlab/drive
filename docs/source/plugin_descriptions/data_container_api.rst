@@ -40,6 +40,7 @@ Data class attributes:
 
         def print_members_list(self) -> str:
             """Returns a string that has all of the members' IDs separated by space
+            """Returns a string that has all of the members' IDs separated by space
 
             Returns
             -------
@@ -72,8 +73,8 @@ Data class attributes:
 
 - **output**: This attribute is a path object that describes where to write the DRIVE output to. This path will have a file prefix that DRIVE appends a suffix to when it writes to a file. If you wish to get the parent directory you can just use :python:`network_obj.output.parent`.
 
-- **carriers**: This attribute is a dictionary of dictionaries that tells who cases, controls, and exclusions are for each phenotype. The outer key is the phenotype id. The inner dictionary has 3 keys: "cases", "controls", "excluded". The values for each of these keys are a list that contains the individual ids for each case, control, or excluded individual, respectively.
+- **carriers**: This attribute is a dictionary of dictionaries that tells who cases, controls, and exclusions are for each phenotype. The outer key is the phenotype ID. The inner dictionary has 3 keys: "cases", "controls", "excluded". The values for each of these keys are a list that contains the individual IDs for each case, control, or excluded individual, respectively.
 
-- **phenotype_descriptions**: This attribute is another dictionary of dictionaries that has a description of each phenotype. The outer key is the phenotype id. The inner key is the string phenotype and has the phenotype description as a value.
+- **phenotype_descriptions**: This attribute is another dictionary of dictionaries that has a description of each phenotype. The outer key is the phenotype ID. The inner key is the string phenotype and has the phenotype description as a value.
 
 - **config_options**: This attribute is a dictionary where the keys represent runtime options that the plugin can use and the values are the state for the runtime option. For example the network writer plugin checks to see if there is a key "compress" and decides whether or not to compress the output file based on the value of this key.

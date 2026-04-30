@@ -34,6 +34,8 @@ extensions = [
     "sphinx.ext.todo",
     "sphinx.ext.autosectionlabel",
     "sphinx_design",
+    "sphinxcontrib.jquery",
+    "sphinx_datatables",
     # 'sphinxcontrib_autodocgen'
 ]
 
