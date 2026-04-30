@@ -107,7 +107,7 @@ def _check_for_no_segments(data: pl.DataFrame) -> None:
 
 
 def filter_ibd_file(
-    sql_query: str, keep_df: pl.DataFrame, indices: IbdFileIndices
+    sql_query: str, thread_count: int, keep_df: pl.DataFrame, indices: IbdFileIndices
 ) -> pl.DataFrame:
     """This function will produce the following basic filtering: 1) min_cM threshold, 2) keep samples 3) overlaps or contains locus of interest
 
@@ -116,9 +116,17 @@ def filter_ibd_file(
     sql_query : str
         query string that will be used in the duckdb filtering
 
+    thread_count : int
+        number of threads that will eb used by duckdb to filter the
+        pairwise IBD data
+
     keep_df : pl.DataFrame
         dataframe that has one column named IDs. This dataframe
         represents all of the ids to keep in the analysis
+
+    indices : IbdFileIndices
+        namedtuple that has the column indices representing the data
+        within the IBD segment file from the IBD detection programs.
 
     Returns
     -------
@@ -137,6 +145,11 @@ def filter_ibd_file(
             f"filtering the ibd segments to only include {keep_df.shape[0]} participants"
         )
     try:
+        logger.verbose(
+            f"using {thread_count} threads to read in the IBD data with DuckDB."
+        )
+
+        conn.execute(f"SET threads TO {thread_count};")
         filtered_df = conn.execute(sql_query).pl()
     except duckdb.InvalidInputException as e:
         logger.critical(

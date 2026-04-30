@@ -504,7 +504,10 @@ def generate_dendrograms(args) -> None:
     ).get_network_filter(add_sample_filter=False)
 
     filtered_ibd_df = filter_ibd_file(
-        sql_query=sql_query, keep_df=pl.DataFrame(), indices=indices
+        sql_query=sql_query,
+        thread_count=args.threads,
+        keep_df=pl.DataFrame(),
+        indices=indices,
     )
     # At this point in the code the filtered_ibd_df has columns for the id1 & id2 string, the chromosome, start and end position of the segment, cm length, and hapid1 & hapid2.
 

@@ -220,7 +220,10 @@ def run_network_identification(args) -> None:
     cohort_id_df = pl.DataFrame({"IDs": cohort_ids})
 
     filtered_ibd_df = filter_ibd_file(
-        sql_query=sql_query, keep_df=cohort_id_df, indices=indices
+        sql_query=sql_query,
+        thread_count=args.threads,
+        keep_df=cohort_id_df,
+        indices=indices,
     )
 
     end_time = datetime.now()
