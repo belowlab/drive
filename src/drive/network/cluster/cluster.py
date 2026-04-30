@@ -117,7 +117,7 @@ class ClusterHandler:
 
     @staticmethod
     def _gather_members(
-        random_walk_members: List[int], clst_id: int, graph: ig.Graph
+        random_walk_results: ig.VertexClustering, clst_id: int, graph: ig.Graph
     ) -> Tuple[List[int], List[int]]:
         """Generate a list of individuals ids in the network
 
@@ -141,16 +141,14 @@ class ClusterHandler:
             of the element in the membership list and the vertex ids are
             the list of ids provided by nme label in the vs() property.
         """
-        member_list = []
-        # this list has the ids. It is sometimes the same as the
-        # member_list but it will not be the same in the redo_networks
-        # graph
-        vertex_ids = []
 
-        for member_id, assigned_clst_id in enumerate(random_walk_members):
-            if assigned_clst_id == clst_id:
-                member_list.append(graph.vs()[member_id]["name"])
-                vertex_ids.append(member_id)
+        vertex_ids = random_walk_results[clst_id]
+
+        # 2. Extract ALL names at once (bypasses igraph query overhead)
+        all_names = graph.vs["name"]
+
+        # 3. Map the isolated vertex IDs to their names
+        member_list = [all_names[vid] for vid in vertex_ids]
 
         return member_list, vertex_ids
 
@@ -181,12 +179,15 @@ class ClusterHandler:
             graph compared to the theoretical maximum number
             of edges in the graph.
         """
-        # getting the total number of edges possible
-        theoretical_edge_count = len(list(itertools.combinations(member_list, 2)))
+        # getting the total number of edges possible using the n choose 2 formula:
+        # n*(n-1)/2 where n is the number of people in the ntwork
+        member_count = len(member_list)
+
+        theoretical_edge_count = (member_count * (member_count - 1)) / 2
 
         # Getting the number of edges within the graph and saving it
         # as a dictionary key, 'true_positive_n'
-        cluster_edge_count = len(random_walk_results.subgraph(clst_id).get_edgelist())
+        cluster_edge_count = random_walk_results.subgraph(clst_id).ecount()
 
         return cluster_edge_count, cluster_edge_count / theoretical_edge_count
 
@@ -293,7 +294,7 @@ class ClusterHandler:
             # We are going to get the vertex id and member id of each
             # graph
             member_list, vertex_ids = ClusterHandler._gather_members(
-                random_walk_clusters.membership, clst_id, graph
+                random_walk_clusters, clst_id, graph
             )
 
             # Next we get the number of edges/ ratio of actual edges to
