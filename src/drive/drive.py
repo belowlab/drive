@@ -5,6 +5,7 @@ import sys
 from log import CustomLogger
 
 from drive.parser import generate_cmd_parser
+from drive.helper_funcs import generate_random_logfile_suffix
 
 
 def main() -> None:
@@ -25,6 +26,10 @@ def main() -> None:
             args.output, args.log_filename, args.verbose, args.log_to_console
         )
     else:
+        full_log_path = args.output.parent / args.log_filename
+
+        if full_log_path.exists():
+            args.log_filename = generate_random_logfile_suffix(args.log_filename)
         logger.configure(
             args.output.parent, args.log_filename, args.verbose, args.log_to_console
         )

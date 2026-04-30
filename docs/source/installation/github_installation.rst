@@ -1,6 +1,6 @@
-Installing DRIVE from Github
+Installing DRIVE from GitHub
 ============================
-This installation method assumes that you are familiar with Git, Github, the commandline, venv, and a python package manager (either PDM or the Anaconda package manager). It is also assumed that these programs are installed/can be install on whatever computing environment you are using. You will have to use all of these tools so you will need to be familiar enough with each one to run the example commands. If you wish to learn more about these tools then you can read the links below:
+This installation method assumes that you are familiar with Git, GitHub, the command line, venv, and a python package manager (either PDM or the Anaconda package manager). It is also assumed that these programs are installed/can be installed on whatever computing environment you are using. You will have to use all of these tools so you will need to be familiar enough with each one to run the example commands. If you wish to learn more about these tools then you can read the links below:
 
 * .. card:: Git
     :link: https://git-scm.com/doc
@@ -8,16 +8,16 @@ This installation method assumes that you are familiar with Git, Github, the com
     
     Website for Git. This link specifically goes to the documentation site. There are videos that go over the basics as well as the online version of the "Pro Git" book that gives all the information you could ever want for Git
 
-* .. card:: Github:
+* .. card:: GitHub:
     :link: https://github.com/
 
-    Github website documentation
+    GitHub website documentation
 
-* .. card:: Commandline Interface
+* .. card:: Command Line Interface
     :link: https://www.learnenough.com/command-line-tutorial
     :shadow: sm
 
-    This is probably overkill but here is a very indepth CLI tutorial
+    This is probably overkill but here is a very in-depth CLI tutorial
 
 * .. card:: virtualenvs (specifically venv)
     :link: https://docs.python.org/3/library/venv.html
@@ -45,9 +45,9 @@ This installation method assumes that you are familiar with Git, Github, the com
 Steps to installing DRIVE:
 --------------------------
 
-Step 1: Clone the Github repository:
+Step 1: Clone the GitHub repository:
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-You can clone the Github repository into your local environment using the command shown below:
+You can clone the GitHub repository into your local environment using the command shown below:
 
 .. code::
 
@@ -66,10 +66,10 @@ The process should look similar to the screencasts below:
 .. image:: /screencasts/github_cloning.gif
     :height: 300
     :align: center
-    :alt: github cloning screencast
+    :alt: GitHub cloning screencast
 
 
-If you see a directory file tree then the program cloned correctly. If you receive an error saying that the directory does not exist, then you will have to debug the error to move onto step 2. All steps after this section assume that you have moved into the parent directory of the cloned github repository.
+If you see a directory file tree then the program cloned correctly. If you receive an error saying that the directory does not exist, then you will have to debug the error to move onto step 2. All steps after this section assume that you have moved into the parent directory of the cloned GitHub repository.
 
 Step 2: Installing necessary dependencies:
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -85,9 +85,9 @@ To install the necessary dependencies for DRIVE you have to use a python compati
    .. tab-item:: Conda
       :sync: key1 
 
-      This installation is only recommanded for those not looking to contribute to DRIVE and those who do not prefer to directly install DRIVE using the :doc:`Pip installation method </installation/pip_installation>`. Everything described here would also work with `Mamba <https://mamba.readthedocs.io/en/latest/index.html>`_ (a faster version of conda) if you replace 'conda' with 'mamba'.
+      This installation is only recommended for those not looking to contribute to DRIVE and those who do not prefer to directly install DRIVE using the :doc:`Pip installation method </installation/pip_installation>`. Everything described here would also work with `Mamba <https://mamba.readthedocs.io/en/latest/index.html>`_ (a faster version of conda) if you replace 'conda' with 'mamba'.
 
-      Users can recreate an appropriate environment using the following command. The DRIVE_envi.yml file will be in the root directory of the cloned github repository.
+      Users can recreate an appropriate environment using the following command. The DRIVE_envi.yml file will be in the root directory of the cloned GitHub repository.
 
       .. code::
 
@@ -107,13 +107,13 @@ To install the necessary dependencies for DRIVE you have to use a python compati
       *This method is required if you are contributing to DRIVE development*
 
       **Using PDM to install Python:**
-      PDM can install specific python versions `(documentation) <https://pdm-project.org/en/latest/usage/project/#install-python-interpreters-with-pdm>`_ and creates virtual environments using a number of backends. We recommend installing the newest stable version of python (currently 3.13) for development and using venv for the virtual environemnt backend. 
+      PDM can install specific python versions `(documentation) <https://pdm-project.org/en/latest/usage/project/#install-python-interpreters-with-pdm>`_ and creates virtual environments using a number of backends. We recommend installing the newest stable version of python (currently 3.14) for development and using venv for the virtual environment backend. 
 
       Once you have installed the appropriate version of Python, then you can create a new virtual environment named drive-ibd and then instruct PDM to use this environment. The commands to do this are shown below:
 
       .. code::
 
-        pdm venv create -n drive-ibd -w venv --force 3.13
+        pdm venv create -n drive-ibd -w venv --force 3.14
 
         pdm use --venv drive-ibd
     
@@ -146,7 +146,7 @@ To install the necessary dependencies for DRIVE you have to use a python compati
 
       **If using PIP**
 
-      Pip is able to install dependencies from the pyproject.toml file. It is recommended that you first create a python virtualenv using the appropriate version of Python and then use Pip to install dependencies into that environment.. The following command will install all dependencies.
+      Pip is able to install dependencies from the pyproject.toml file. It is recommended that you first create a python virtualenv using the appropriate version of Python and then use Pip to install dependencies into that environment. The following command will install all dependencies. This installation method assumes that you have installed an appropriate version of Python on your computer.
 
       .. code::
 
@@ -164,7 +164,7 @@ If successful you will have all the dependencies you need to run the program. Yo
 The above command runs DRIVE in module mode which is required to ensure that all packages are correctly imported in DRIVE.
 
 
-Users should see the DRIVE cli as shown below: 
+Users should see the DRIVE CLI as shown below: 
 
 .. image:: /screencasts/drive_help_message.gif
     :height: 300
@@ -178,7 +178,7 @@ You can additionally check to make sure you have the correct version of DRIVE us
 
     python -m drive.drive --version
 
-The most up to date version of DRIVE can be found in the pyproject.toml file under the section "version". If your version is older than what is listed in the pyproject.toml than something went wrong during the install (Unless you purposefully installed an older version).
+The most up to date version of DRIVE can be found in the pyproject.toml file under the section "version". If your version is older than what is listed in the pyproject.toml then something went wrong during the install (Unless you purposefully installed an older version).
 
 **Running test data:**
 

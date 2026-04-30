@@ -21,16 +21,16 @@ If the install is successful, then you can run the following command and you sho
 
     drive --help
 
-If you wish to run the provided testing data you can run the follow command provided through the DRIVE utilities subcommand:
+If you wish to run the provided testing data you can run the following command provided through the DRIVE utilities subcommand:
 
 .. code:: bash
 
   drive utilities test
 
-A successful installation will result in all test being labeled as Pass.
+A successful installation will result in all tests being labeled as Pass.
 
 .. note::
 
-    The recommend way to install DRIVE using pip would be to either create a virtual environment using `Anaconda <https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html>`_ or `venv <https://docs.python.org/3/library/venv.html>`_. Once you activate the virtual environment then you can use the above pip command to install DRIVE into an isolated environment.
+    The recommended way to install DRIVE using pip would be to either create a virtual environment using `Anaconda <https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html>`_ or `venv <https://docs.python.org/3/library/venv.html>`_. Once you activate the virtual environment then you can use the above pip command to install DRIVE into an isolated environment.
 
 

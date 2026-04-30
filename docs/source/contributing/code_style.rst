@@ -35,7 +35,7 @@ DRIVE uses Ruff for static code analysis. This tool will detect common code smel
 
 Commitizen
 ----------
-Commitizen is used to enforce consistency across commits and help with the automatic generation of changelogs. Commitizen relies on the concept of `conventional commits <https://www.conventionalcommits.org/en/v1.0.0/>`_ to make commit messages more readable and meaning for both humans and machines. For more information on how to use commitizen, the documentation can be found here `Commitizen documentation <https://commitizen-tools.github.io/commitizen/>`_. If the repository wasn't cloned from github then commitizen will require the user to create a pyproject.toml file for configuration options. If this file needs to be made then the user should copy and paste the following code into the pyproject.toml file to maintain consistency:
+Commitizen is used to enforce consistency across commits and help with the automatic generation of changelogs. Commitizen relies on the concept of `conventional commits <https://www.conventionalcommits.org/en/v1.0.0/>`_ to make commit messages more readable and meaningful for both humans and machines. For more information on how to use commitizen, the documentation can be found here `Commitizen documentation <https://commitizen-tools.github.io/commitizen/>`_. If the repository wasn't cloned from github then commitizen will require the user to create a pyproject.toml file for configuration options. If this file needs to be made then the user should copy and paste the following code into the pyproject.toml file to maintain consistency:
 
 .. code::
     

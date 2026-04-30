@@ -164,14 +164,16 @@ Depending how DRIVE was installed, the commands to run the test data can be diff
 
       **Running example data for DRIVE v2**
 
-      Although DRIVE v2 was only a development version and was never truely released for external use, it is still avaliable on PYPI (Although there is no guarantee that there may not be bugs that were worked out in later development). There were no subcommands in the CLI so only the clustering and phenomewide enrichment functionality is avaliable. You can still run the test data using the following commands:
+      Although DRIVE v2 was only a development version and was never truly released for external use, it is still available on PYPI (Although there is no guarantee that there may not be bugs that were worked out in later development). There were no subcommands in the CLI so only the clustering and phenome-wide enrichment functionality is available. You can still run the test data using the following commands:
 
       .. code::
 
          drive -i tests/test_inputs/simulated_ibd_test_data_v2_chr20.ibd.gz  -f hapibd -t 20:4666882-4682236 -o test --recluster --min-cm 3 --log-to-console
 
-      If successful, this command will generate a output file called test.drive_networks.txt.
+      If successful, this command will generate an output file called test.drive_networks.txt.
 
 .. important::
 
-   The commands for the "PDM installation" and "GitHub installation" that you are running them from the drive repository parent directory. 
+   The commands for running the test using "PDM" and "GitHub" assume that you are running them from the drive repository parent directory. 
+ 
+ry. 
