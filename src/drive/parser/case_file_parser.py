@@ -183,7 +183,7 @@ class PhenotypeFileParser:
 
     def parse_cases_and_controls(
         self,
-    ) -> Tuple[Dict[str, Dict[str, Set[str]]], Dict[int, str]]:
+    ) -> Tuple[Dict[str, Dict[str, Set[str]]], list[str]]:
         """Generate a list for cases, controls, and excluded individuals.
 
         Returns

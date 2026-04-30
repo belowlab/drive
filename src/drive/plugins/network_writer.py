@@ -7,7 +7,7 @@ from log import CustomLogger
 
 from drive.network.factory import factory_register
 from drive.network.models import Network_Interface, RuntimeState
-from drive.utilities.parser.phenotype_descriptions_parser import PhecodesMapper
+from drive.parser.phenotype_descriptions_parser import PhecodesMapper
 
 logger = CustomLogger.get_logger(__name__)
 

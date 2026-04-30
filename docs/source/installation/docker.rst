@@ -1,6 +1,6 @@
 Using DRIVE with Docker
 =======================
-DRIVE is available in a container on DockerHub. This image was built for Linux/arm64 and Linux/amd64. If users need to run DRIVE on a Windows machine then it is recommended to use pip to install into a virtual environment. The image can be pulled from DockerHub with the following command:
+DRIVE is available in a container on DockerHub. This image was built for linux/arm64 and linux/amd64. If users need to run DRIVE on a Windows machine then the user will have to use a different method than Docker (it is recommended to use PIP to install into a virtual environment for these individuals). The image can be pulled from DockerHub with the following command:
 
 .. code::
 

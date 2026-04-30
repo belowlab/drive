@@ -1,6 +1,5 @@
 import random
 import string
-from pathlib import Path
 
 
 def generate_random_logfile_suffix(log_filename: str) -> str:

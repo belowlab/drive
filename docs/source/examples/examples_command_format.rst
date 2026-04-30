@@ -53,6 +53,6 @@ Explanation of command:
 
 .. hint::
 
-    1. If you are running several DRIVE commands at one time but you are writing them all to the same output folder then you should set a unique log filename using the "--log-filename" flag. Otherwise the log file will be randomly written to by each job. 
+    1. If you are running several DRIVE commands at one time but you are writing them all to the same output folder then you should set a unique log filename using the "--log-filename" flag. Otherwise the log file will be randomly written to by each job corrupting the file. 
 
     2. If you are running DRIVE using a batch scheduler such as SLURM, it is advised to use the --log-to-console flag. SLURM usually catches the STDOUT in a user specified log file. Using this flag will cause DRIVE to write to the SLURM log file as a redundancy. 

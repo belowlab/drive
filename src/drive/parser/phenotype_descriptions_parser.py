@@ -5,8 +5,6 @@ import sys
 
 from log import CustomLogger
 
-from pandas import read_csv
-
 logger = CustomLogger.get_logger(__name__)
 
 
@@ -33,7 +31,7 @@ def load_phenotype_descriptions(
     """
     # We need to find the path to each phecode file
 
-    phecode_filepaths = Path(__file__).parent.parent.parent / "phecode_mappings"
+    phecode_filepaths = Path(__file__).parent / "phecode_mappings"
 
     phecode_map_files = list(phecode_filepaths.glob("*.txt"))
 

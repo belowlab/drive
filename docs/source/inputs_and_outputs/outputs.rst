@@ -8,7 +8,7 @@ The cluster subcommand currently outputs two files. These files are described be
 
 *Networks File*
 ```````````````
-DRIVE creates a file with the suffix ".drive_networks.txt". This file has the results from the clustering analysis with information such as number of members, members' IDs, haplotype IDs, how connected the graph is internally, and the binomial test statistics. This file has at a minimum of 11 columns depending on where the user provides a phenotype file or not. These columns, plus the possible additional columns are described below.
+DRIVE creates a file with the suffix ".drive_networks.txt". This file has the results from the clustering analysis with information such as number of members, members' IDs, haplotype IDs, how connected the graph is internally, and the binomial test statistics. This file has at a minimum of 11 columns depending on whether the user provides a phenotype file or not. These columns, plus the possible additional columns are described below.
 
 Column descriptions:
 ^^^^^^^^^^^^^^^^^^^^
@@ -46,14 +46,15 @@ Column descriptions:
 ----
 
 * **min_pvalue**: Value of the smallest p-value calculated for the network from the binomial test. If a phenotype file is not provided then this value will be N/A.
+* **min_pvalue**: Value of the smallest p-value calculated for the network from the binomial test. If a phenotype file is not provided then this value will be N/A.
 
 ----
 
-* **min_phenotype**: Name of the phenotype that corresponds to the smallest pvalue. This value will also be N/A if a phenotype file is not provided.
+* **min_phenotype**: Name of the phenotype that corresponds to the smallest p-value. This value will also be N/A if a phenotype file is not provided.
 
 ----
 
-* **min_phenotype_description**: Description of what the phenotype is. This value will be N/A if a descriptions file is not provided or if the phenotype doesn't have a description, or if a phenotype file is not provided. By default DRIVE will automatically provided descriptions for PheCode 1.2 and X.
+* **min_phenotype_description**: Description of what the phenotype is. This value will be N/A if a description file is not provided, if the phenotype doesn't have a description, or if a phenotype file is not provided.
 
 ----
 

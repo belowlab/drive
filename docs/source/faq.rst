@@ -30,9 +30,7 @@ This section addresses frequently asked questions and provides solutions to comm
 
     * **Performance increases**
 
-      In designing DRIVE v3, we took advantage of features from common data science libraries such as Pandas and PyArrow to boost performance. Current profiling shows a 27-fold improvement when running only the clustering algorithm over the CFTR locus in pairwise IBD segments for 250,000 individuals. This improvement comes largely from processing the input IBD segment data in chunks, which reduces the number of memory allocations when generating the DataFrame. Previously, DRIVE read this data in line-by-line and concatenated the DataFrame for each row read, which led to many memory allocations. We also switched from the default pandas parsing engine to the C-engine, which is faster but also less flexible, and converted the default Pandas' "Object" types into PyArrow String objects, which are smaller (helping with memory allocation). This change means that we will see a linear decrease in the time it takes to read the IBD data as the user increases the chunk size, but in DRIVE v3 the bottleneck is the graph construction and the community walktrap algorithm, so overall runtime will not be as affected by this step.
-
-      We do observe an increase in runtime memory. This increase in memory comes from reading the data in using large chunks of DataFrames rather than reading the file line-by-line, and from the data structure used to store the identified networks for later statistics. Since DRIVE was designed to be used primarily on servers or the cloud, we considered this to be an acceptable increase (although you can control the size of chunks being read using the chunksize argument). There are other data structures in DRIVE contributing to the memory consumption, so doubling the chunk size does not necessarily mean you would see a 2x memory consumption from the overall program's runtime.
+      In designing DRIVE v3, we took advantage of features of common data science libraries such as Pandas, PyArrow, and DuckDB to boost performance. Current profiling shows a 26.5x improvement when running only the clustering algorithm over the CFTR locus in pairwise IBD segments for 250,000 individuals. The performance increase resulted in moving the IBD segment I/O and filtering to DuckDB. In v1, DRIVE read this data in 1 line at a time and appended the new line to a (growing) pandas dataframe. This process resulted in many memory allocations, which became slower as the dataframe grew in size. DuckDB enables DRIVE to use multiple threads to read in and filter the file. With the inclusion of DuckDB, this step of DRIVE is now multi-threaded but the rest of the runtime which relies on pandas, iGraph, and scipy is still single threaded.
 
       .. list-table:: DRIVE v1 performance compared to DRIVE v3
           :widths: 25 50 25
@@ -45,23 +43,21 @@ This section addresses frequently asked questions and provides solutions to comm
             - 37 hours and 14 minutes
             - 3 Gb
           * - v3
-            - 1 hour and 23 minutes
-            - 5.4 Gb (32 Gb)
-
-      *For DRIVE v3, the memory use when providing a phenotype file is shown in parentheses.*
-
+            - 1 hour and 27 minutes
+            - 7.1 Gb
 
     * **Improved logging and error handling**
 
-      DRIVE v1 did not utilize any logging and often let the program crash abruptly when it encountered errors. Now, DRIVE has more robust error handling and logging functionality that the user can customize through a verbosity flag "-v". There are almost certainly still ways to get the program to crash, but we have attempted to cover many of the errors commonly encountered in development. If you encounter new errors that you think are worth handling, please let us know by submitting a GitHub issue so we can reproduce the error and then determine the best way to implement error handling.
+      DRIVE v1 did not utilize any logging and often let the program tactlessly crash when it encountered errors. Now DRIVE has more robust error handling and logging functionality that the user can customize through a verbosity flag "-v". There are almost certainly still ways to get the program to crash, but we have attempted to cover many of the errors commonly encountered in development. If you encounter new errors that you think are worth handling please let us know by submitting a GitHub issue so we can reproduce the error and then determine the best way to implement error handling.
 
     * **Incorporation of the ability to generate dendrograms into the DRIVE codebase**
 
       In the original publication using DRIVE v1, the dendrogram of a network of interest was visualized using the phylogenetic tree generator `ATGC: FastME <http://www.atgc-montpellier.fr/fastme/>`_. This approach required the user to rely on a second software tool not maintained by the Below Lab. For DRIVE v3, we implemented our own dendrogram generation using scipy and packaged it in a DRIVE subcommand called dendrogram. This approach allows us to ensure that the dendrogram functionality stays consistent and is optimized to work with the DRIVE output without requiring the user to perform a lot of post-processing.
+      In the original publication using DRIVE v1, the dendrogram of a network of interest was visualized using the phylogenetic tree generator `ATGC: FastME <http://www.atgc-montpellier.fr/fastme/>`_. This approach required the user to rely on a second software tool not maintained by the Below Lab. For DRIVE v3, we implemented our own dendrogram generation using scipy and packaged it in a DRIVE subcommand called dendrogram. This approach allows us to ensure that the dendrogram functionality stays consistent and is optimized to work with the DRIVE output without requiring the user to perform a lot of post-processing.
 
-.. dropdown:: Not familiar with Object-Oriented Programming? How do I design a plugin?
+.. dropdown:: Not familiar with Object-Oriented Programming so how do I design a plugin?
 
-      DRIVE relies heavily on the object-oriented programming (OOP) paradigm to implement the plugin architecture. We do not expect everyone to be an expert in OOP to design their own plugins. For that reason, we have provided a template of the plugin structure :doc:`here </plugin_descriptions/expected_plugin_structure>`. The user can add their code in the analyze function. The user will also have to give the plugin a name in the name field right above the analyze function and provide a Python file name (without the .py suffix) in the quoted section of the initialize function.
+      DRIVE relies very heavily on the object-oriented programming (OOP) paradigm to implement the plugin architecture. We are not expecting everyone to be an expert in OOP to design their own plugins. For that reason we have provided a template of the plugin structure :doc:`here </plugin_descriptions/expected_plugin_structure>`. The user can add their code in the analyze function. The user will also have to give the plugin a name in the name field right above the analyze function and they will have to provide a python file name (without the .py suffix) in the quoted section of the initialize function.
 
 
 .. dropdown:: How was the test data generated? 
@@ -70,4 +66,4 @@ This section addresses frequently asked questions and provides solutions to comm
 
 .. dropdown:: How can I report any issues that I find with DRIVE?
 
-      To keep track of issues with DRIVE, we ask that you open a GitHub issue. We have provided a template that can be found at ".github/ISSUE_TEMPLATE" within the repository. We ask that you use this format because it helps us to understand your issue and to reproduce it.
+      To keep track of issues with DRIVE we ask that you open a GitHub issue. We have provided a template that can be found at ".github/ISSUE_TEMPLATE" within the repository. We ask that you use this format because it helps us to understand your issue and to reproduce it.

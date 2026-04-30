@@ -33,6 +33,6 @@ This algorithm for DRIVE is depicted in the following figure.
 
 DRIVE dendrogram subcommand:
 ----------------------------
-DRIVE provides a basic implementation of dendrograms that allows the user to visualize the genetic distance between individuals in a phylogenetic tree. This figure illustrates the local IBD sharing that is present in the network. This functionality is implemented using the Python library SciPy, specifically the linkage function using the "ward" linkage algorithm. The user can generate the dendrogram using the DRIVE subcommand "dendrogram". 
+DRIVE provides a basic implementation of dendrograms that allows the user to visualize the genetic distance between individuals in a phylogenetic tree. This figure illustrates the local IBD sharing that is present in the network. This functionality is implemented using the python library Scipy, specifically the linkage function using the "ward" linkage algorithm. The user can generate the dendrogram using the DRIVE subcommand "dendrogram". 
 
 

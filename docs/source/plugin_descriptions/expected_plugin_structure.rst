@@ -11,18 +11,18 @@ DRIVE uses an object-oriented approach for the plugin architecture. There are wa
 Required methods/functions/attributes:
 --------------------------------------
 
-DRIVE requires the plugin class to have one method called "analyze". This method is called by the main DRIVE code. This method should only accept the arguments "self" and "\*\*kwargs and should not return a value. This kwargs argument will contain the Data container that has the networks identified from the clustering analysis. This container is described in further detail in a different section. This is the only mandatory method. Users can add other methods but they need to be called within this analyze method because DRIVE will only call the analyze method. This is the only mandatory method. Users can add other methods but they need to be called within this analyze method because DRIVE will only call the analyze method. 
+DRIVE requires the plugin class to have one method called "analyze". This method is called by the main DRIVE code. This method should only accept the arguments "self" and "\*\*kwargs" and should not return a value. This kwargs argument will contain the data container that has the networks identified from the clustering analysis. This container is described in further detail in a different section. This is the only mandatory method. Users can add other methods but they need to be called within this analyze method because DRIVE will only call the analyze method. 
 
 .. note:: 
 
-    Although the analyze function cannot return a value. It can modify the data container and this modification would be used in any plugins that follow this one.
+    Although the analyze method cannot return a value, it can modify the data container and this modification would be used in any plugins that follow this one.
 
 
 DRIVE also requires the plugin class to have an attribute called "name". This attribute is used for logging messages so DRIVE will crash if it is not present.
 
 This plugin file is required to have one additional function called "initialize" which accepts no arguments and returns nothing. This function is used by DRIVE to run the code dynamically. 
 
-A template for the plugin class is shown below. The example uses dataclasses but a traditional class will work as well
+A template for the plugin class is shown below. The example uses dataclasses but a traditional Python class will work as well
 
 ..  code-block:: python
 

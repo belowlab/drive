@@ -1,14 +1,13 @@
+from datetime import datetime
 import itertools
 import logging
-import sys
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Set, Tuple
 
 import igraph as ig
 from log import CustomLogger
 from pandas import DataFrame
-
-from drive.network.models import Filter, Network, Network_Interface
+from drive.network.models import Network, Network_Interface
 
 # creating a logger
 logger: logging.Logger = CustomLogger.get_logger(__name__)
@@ -27,11 +26,12 @@ class ClusterHandler:
     min_cluster_size: int
     segment_dist_threshold: int
     hub_threshold: float
-    haplotype_mappings: Dict[str, int]
+    haplotype_mappings: Dict[int, str]
     recluster: bool
     check_times: int = 0
     recheck_clsts: Dict[int, List[Network_Interface]] = field(default_factory=dict)
     final_clusters: List[Network_Interface] = field(default_factory=list)
+    print_dict: dict[int, int] = field(default_factory=dict)
 
     @staticmethod
     def generate_graph(
@@ -117,7 +117,7 @@ class ClusterHandler:
 
     @staticmethod
     def _gather_members(
-        random_walk_members: List[int], clst_id: int, graph: ig.Graph
+        random_walk_results: ig.VertexClustering, clst_id: int, graph: ig.Graph
     ) -> Tuple[List[int], List[int]]:
         """Generate a list of individuals ids in the network
 
@@ -141,16 +141,14 @@ class ClusterHandler:
             of the element in the membership list and the vertex ids are
             the list of ids provided by nme label in the vs() property.
         """
-        member_list = []
-        # this list has the ids. It is sometimes the same as the
-        # member_list but it will not be the same in the redo_networks
-        # graph
-        vertex_ids = []
 
-        for member_id, assigned_clst_id in enumerate(random_walk_members):
-            if assigned_clst_id == clst_id:
-                member_list.append(graph.vs()[member_id]["name"])
-                vertex_ids.append(member_id)
+        vertex_ids = random_walk_results[clst_id]
+
+        # 2. Extract ALL names at once (bypasses igraph query overhead)
+        all_names = graph.vs["name"]
+
+        # 3. Map the isolated vertex IDs to their names
+        member_list = [all_names[vid] for vid in vertex_ids]
 
         return member_list, vertex_ids
 
@@ -181,15 +179,19 @@ class ClusterHandler:
             graph compared to the theoretical maximum number
             of edges in the graph.
         """
-        # getting the total number of edges possible
-        theoretical_edge_count = len(list(itertools.combinations(member_list, 2)))
+        # getting the total number of edges possible using the n choose 2 formula:
+        # n*(n-1)/2 where n is the number of people in the ntwork
+        member_count = len(member_list)
+
+        theoretical_edge_count = (member_count * (member_count - 1)) / 2
 
         # Getting the number of edges within the graph and saving it
         # as a dictionary key, 'true_positive_n'
-        cluster_edge_count = len(random_walk_results.subgraph(clst_id).get_edgelist())
+        cluster_edge_count = random_walk_results.subgraph(clst_id).ecount()
 
         return cluster_edge_count, cluster_edge_count / theoretical_edge_count
 
+    @staticmethod
     def _determine_false_positive_edges(
         graph: ig.Graph, vertex_list: List[int]
     ) -> Tuple[int, List[int]]:
@@ -259,7 +261,7 @@ class ClusterHandler:
         graph: ig.Graph,
         cluster_ids: List[int],
         random_walk_clusters: ig.VertexClustering,
-        parent_cluster_id: Optional[str] = None,
+        parent_cluster_id: Optional[str | float] = None,
     ) -> None:
         """Method for getting the information about membership,
         true.positive, false.positives, etc... from the random
@@ -292,7 +294,7 @@ class ClusterHandler:
             # We are going to get the vertex id and member id of each
             # graph
             member_list, vertex_ids = ClusterHandler._gather_members(
-                random_walk_clusters.membership, clst_id, graph
+                random_walk_clusters, clst_id, graph
             )
 
             # Next we get the number of edges/ ratio of actual edges to
@@ -319,6 +321,9 @@ class ClusterHandler:
                 and len(member_list) > self.max_network_size
                 and self.recluster
             ):
+                haplotype_ids, member_ids = self._map_ids_back_to_haplotypes(
+                    member_list
+                )
                 # We can put all of this information into a network class. Here the
                 # member list will still be in integers
                 network = Network(
@@ -328,7 +333,7 @@ class ClusterHandler:
                     false_neg_list,
                     false_neg_count,
                     member_list,
-                    vertex_ids,
+                    member_list,
                 )
                 # debug statement if we want to see the members and the haplotypes
                 logger.debug(f"members: {member_list}\nhaplotypes: {vertex_ids}")
@@ -377,24 +382,24 @@ class ClusterHandler:
         original_id = network.clst_id
         # logger.debug("In redo_clustering section")
         # filters for the specific cluster
-        redopd = ibd_pd[
+        redopd = ibd_pd.loc[
             (ibd_pd["idnum1"].isin(network.haplotypes))
             & (ibd_pd["idnum2"].isin(network.haplotypes))
         ]
 
-        redo_vs = ibd_vs[ibd_vs.idnum.isin(network.haplotypes)]
+        redo_vs = ibd_vs.loc[ibd_vs.idnum.isin(network.haplotypes)]
 
         # If the redopd or redo_vs is empty it causes strange behavior and the code will
         # usually fail. The desired behavior is for the program to tell teh user that
         # the graph could not be constructed and then for it to move on.
         if not redopd.empty and not redo_vs.empty:
             # We are going to generate a new Networks object using the redo graph
-            redo_networks = ClusterHandler.generate_graph(redopd, redo_vs)
-            # redo_networks = ClusterHandler.generate_graph(redopd)
+            redo_networks = self.generate_graph(
+                redopd, redo_vs  # pyright: ignore[reportArgumentType]
+            )
+
             # performing the random walk
             redo_walktrap_clusters = self.random_walk(redo_networks)
-            # logger.info(redo_networks)
-            # logger.info(redo_walktrap_clusters)
 
             # If only one cluster is found
             if len(redo_walktrap_clusters.sizes()) == 1:
@@ -403,7 +408,7 @@ class ClusterHandler:
                 # iterate over each member id
                 # for idnum in network.haplotypes:
 
-                for idnum in network.members:
+                for idnum in sorted(list(network.members)):
                     conn = sum(
                         list(
                             map(
@@ -454,19 +459,17 @@ class ClusterHandler:
                         )
                     ]["idnum"]
                 )
-
+                # refilter the redopd and redo_vs to not include the hub nodes
                 redopd = redopd.loc[
                     (~redopd["idnum1"].isin(rmID)) & (~redopd["idnum2"].isin(rmID))
                 ]
-                redo_graph = self.generate_graph(
-                    redopd,
+
+                redo_vs = ibd_vs.loc[~redo_vs["idnum"].isin(rmID)]
+
+                redo_networks = self.generate_graph(
+                    redopd, redo_vs  # pyright: ignore[reportArgumentType]
                 )
-                # redo_g = ig.Graph.DataFrame(redopd, directed=False)
-                redo_walktrap_clusters = self.random_walk(redo_graph)
-                # redo_walktrap = ig.Graph.community_walktrap(
-                #     redo_g, weights="cm", steps=self.random_walk_step_size
-                # )
-                # redo_walktrap_clusters = redo_walktrap.as_clustering()
+                redo_walktrap_clusters = self.random_walk(redo_networks)
 
             # Filter to the clusters that are llarger than the minimum size
             allclst = self.filter_cluster_size(redo_walktrap_clusters.sizes())
@@ -481,18 +484,16 @@ class ClusterHandler:
 
 
 def cluster(
-    filter_obj: Filter,
+    edge_info_df: DataFrame,
+    vertix_info_df: DataFrame,
     cluster_obj: ClusterHandler,
-    centimorgan_indx: int,
 ) -> List[Network_Interface]:
     """Main function that will perform the clustering using igraph
 
     Parameters
     ----------
-    filter_obj : Filter
-        Filter object that has two attributes: ibd_pd and ibd_vs. These
-        attributes are two dataframes that have information about the
-        edges and information about the vertices.
+    edge_info_df : DataFrame
+        pandas dataframe that represents all of the edges in the cohort. The dataframe has the columns
 
     cluster_obj : ClusterHandler
         Object that contains information about how the random walk
@@ -504,16 +505,15 @@ def cluster(
 
         Returns
     """
-    filter_obj.ibd_pd = filter_obj.ibd_pd.rename(columns={centimorgan_indx: "cm"})
-    # filtering the edges dataframe to the correct columns
-    ibd_pd = filter_obj.ibd_pd.loc[:, ["idnum1", "idnum2", "cm"]]
-
-    ibd_vs = filter_obj.ibd_vs.reset_index(drop=True)
-
+    start_time = datetime.now()
     # Generate the first pass networks
     network_graph = cluster_obj.generate_graph(
-        ibd_pd,
-        ibd_vs,
+        edge_info_df,
+        vertix_info_df,
+    )
+
+    logger.info(
+        f"Identified {network_graph.ecount()} IBD segments from {network_graph.vcount()} haplotypes"  # noqa: E501
     )
 
     random_walk_results = cluster_obj.random_walk(network_graph)
@@ -527,18 +527,25 @@ def cluster(
         and len(cluster_obj.recheck_clsts.get(cluster_obj.check_times, [])) > 0
     ):
         cluster_obj.check_times += 1
+
         logger.verbose(f"recheck: {cluster_obj.check_times}")
 
         _ = cluster_obj.recheck_clsts.setdefault(cluster_obj.check_times, [])
+        # We can use bracket syntax here since we add 1 to cluster_obj.
+        # check_times 4 lines earlier
+        for network in cluster_obj.recheck_clsts[cluster_obj.check_times - 1]:
+            cluster_obj.redo_clustering(network, edge_info_df, vertix_info_df)
 
-        for network in cluster_obj.recheck_clsts.get(cluster_obj.check_times - 1):
-            cluster_obj.redo_clustering(network, ibd_pd, ibd_vs)
     # logginng the number of segments, haplotypes, and clusters
     # identified in the analysis
-    logger.info(
-        f"Identified {network_graph.ecount()} IBD segments from {network_graph.vcount()} haplotypes"  # noqa: E501
-    )
 
     logger.info(f"Identified {len(cluster_obj.final_clusters)} IBD clusters")
+
+    end_time = datetime.now()
+
+    logger.verbose(f"clustering analysis finished. Time taken: {end_time-start_time}")
+    logger.verbose(
+        f"Number of reclustering iterations performed: {cluster_obj.check_times}"
+    )
 
     return cluster_obj.final_clusters

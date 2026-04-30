@@ -7,7 +7,7 @@ from rich_argparse import RichHelpFormatter
 from drive.dendrogram import generate_dendrograms
 from drive.network import run_network_identification
 from drive.utilities.pull_samples import run_pull_samples
-from drive.utilities.callbacks import CheckInputExist
+from drive.parser.callbacks import CheckInputExist
 from drive.utilities.testing import run_integration_test
 
 
@@ -200,17 +200,17 @@ def generate_cmd_parser() -> argparse.ArgumentParser:
     )
 
     cluster_parser.add_argument(
-        "--chunksize",
-        type=int,
-        default=100_000,
-        help="change the chunksize used to read in the shared segment data. Larger chunksizes will speed up the analysis but will use more memory. There is a asymptotic limit on the speed up still. Due to how pandas reads in data, trying to read in the whole file at once will still be slower than chunking if the file is really big. (default: %(default)s)",
-    )
-
-    cluster_parser.add_argument(
         "--compress-output",
         default=False,
         action=argparse.BooleanOptionalAction,
         help="whether or not to compress the output file from the DRIVE clustering output file. When the program is run PhenomeWide, the output file can be quite large. This option helps make file storage more managable",
+    )
+
+    cluster_parser.add_argument(
+        "--threads",
+        default=5,
+        type=int,
+        help="number of threads to use during the analysis. These threads are used by DuckDB when reading in the IBD segment data.",
     )
 
     cluster_parser.add_argument(
@@ -304,6 +304,13 @@ def generate_cmd_parser() -> argparse.ArgumentParser:
         default=3,
         type=int,
         help="minimum centimorgan threshold. The program expects this to be an integer value. (default: %(default)s)",
+    )
+
+    dendrogram_parser.add_argument(
+        "--threads",
+        default=5,
+        type=int,
+        help="number of threads to use during the analysis. These threads are used by DuckDB when reading in the IBD segment data.",
     )
 
     dendrogram_parser.add_argument(
