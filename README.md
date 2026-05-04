@@ -57,7 +57,7 @@ If the user wishes to develop DRIVE or install the program from source then they
 **Docker Installation:**
 DRIVE is also available on Docker. This option eliminates the need for the user to worry about the Python Version. The docker image and the command to pull the image can be found here [jtb114/drive](https://hub.docker.com/r/jtb114/drive).
 
-If you are working on an HPC cluster it may be better to use a singularity image. Singularity can pull the docker container and build a singularity image with the following command:
+If you are working on an HPC cluster it may be better to use a singularity image for security. Singularity can pull the docker container and build a singularity image with the following command:
 
 ```bash
 singularity pull singularity-image-name.sif docker://jtb114/drive:latest
@@ -83,7 +83,7 @@ docker run -it --rm drive-image-tag drive utilities test
 
 **Caveat on running the test data with different inputs:**
 
-Users are more than welcome to repeat the "Simulating IBD Data" pipeline and use another IBD calling tool such as iLASH or GERMLINE. Commands to rerun this pipeline are under the "Simulating IBD Data" section. There is no guarantee that DRIVE will replicate the test output file "" which used hap-IBD. Each of these programs will have differences in the detected pairwise IBD segments which may affect the networks identified by DRIVE. Because of these innate differences in the IBD detection tools, we make no guarantee that the output will exactly match the output file, "test_drive_phenomewide_output.drive_networks.txt", which can be found in the tests/test_outputs directory at the GitHub repository.
+Users are more than welcome to repeat the "Simulating IBD Data" pipeline and use another IBD calling tool such as iLASH or GERMLINE. Commands to rerun this pipeline are under the "Simulating IBD Data" section. Each of these programs will have differences in the detected pairwise IBD segments which may affect the networks identified by DRIVE. Because of these innate differences in the IBD detection tools, we make no guarantee that the output will exactly match the output file, "test_drive_phenomewide_output.drive_networks.txt", which can be found in the tests/test_outputs directory at the GitHub repository.
 
 **Running the Test Data with Singularity:**
 
