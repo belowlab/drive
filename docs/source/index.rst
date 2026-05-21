@@ -7,7 +7,7 @@
 Welcome to DRIVE's documentation!
 =================================
 
-Distant Relatedness for Identification and Variant Evaluation (DRIVE) is a novel approach to IBD-based genotype inference used to identify shared chromosomal segments in dense genetic arrays. DRIVE implemented a random walk algorithm that identifies clusters of individuals who share a pairwise IBD segment overlapping a locus of interest. This tool was written in Python and developed by the Below Lab at Vanderbilt University.
+Distant Relatedness for Identification and Variant Evaluation (DRIVE) is a novel approach to IBD-based genotype inference used to identify shared chromosomal segments in dense genetic arrays. DRIVE utilizes a community walktrap algorithm that identifies clusters of individuals who share a pairwise IBD segment overlapping a locus of interest. This tool was written in Python and developed by the Below Lab at Vanderbilt University.
 
 Quick Installation:
 -------------------

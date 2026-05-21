@@ -22,7 +22,7 @@ class ClusterHandler:
     minimum_connected_thres: float
     max_network_size: int
     max_rechecks: int
-    random_walk_step_size: int
+    walktrap_step_size: int
     min_cluster_size: int
     segment_dist_threshold: int
     hub_threshold: float
@@ -64,8 +64,8 @@ class ClusterHandler:
             # return ig.Graph.DataFrame(ibd_edges, directed=False, use_vids=False)
             return ig.Graph.DataFrame(ibd_edges, directed=False)
 
-    def random_walk(self, graph: ig.Graph) -> ig.VertexClustering:
-        """Method used to perform the random walk from igraph.community_walktrap
+    def walktrap(self, graph: ig.Graph) -> ig.VertexClustering:
+        """Method used to perform the walktrap from igraph.community_walktrap
 
         Parameters
         ----------
@@ -75,31 +75,31 @@ class ClusterHandler:
         Returns
         -------
         ig.VertexClustering
-            result of the random walk cluster. This object has
+            result of the walktrap. This object has
             information about clusters and membership
         """
         logger.debug(
-            f"Performing the community walktrap algorithm with a random walk step size of: {self.random_walk_step_size}"
+            f"Performing the community walktrap algorithm with a step size of: {self.walktrap_step_size}"
         )
 
         ibd_walktrap = ig.Graph.community_walktrap(
-            graph, weights="cm", steps=self.random_walk_step_size
+            graph, weights="cm", steps=self.walktrap_step_size
         )
 
-        random_walk_clusters = ibd_walktrap.as_clustering()
+        walktrap_clusters = ibd_walktrap.as_clustering()
 
-        logger.verbose(random_walk_clusters.summary())
+        logger.verbose(walktrap_clusters.summary())
 
-        return random_walk_clusters
+        return walktrap_clusters
 
-    def filter_cluster_size(self, random_walk_clusters_sizes: List[int]) -> List[int]:
+    def filter_cluster_size(self, walktrap_clusters_sizes: List[int]) -> List[int]:
         """Method to filter networks that are smaller than the min_cluster_size from
         the analysis
 
         Parameters
         ----------
-        random_walk_clusters_sizes : List[int]
-            size of each cluster from the random walk results
+        walktrap_clusters_sizes : List[int]
+            size of each cluster from the walktrap results
 
         Returns
         -------
@@ -111,20 +111,20 @@ class ClusterHandler:
         """
         return [
             i
-            for i, v in enumerate(random_walk_clusters_sizes)
+            for i, v in enumerate(walktrap_clusters_sizes)
             if v >= self.min_cluster_size
         ]
 
     @staticmethod
     def _gather_members(
-        random_walk_results: ig.VertexClustering, clst_id: int, graph: ig.Graph
+        walktrap_results: ig.VertexClustering, clst_id: int, graph: ig.Graph
     ) -> Tuple[List[int], List[int]]:
         """Generate a list of individuals ids in the network
 
         Parameters
         ----------
-        random_walk_members : List[int]
-            list of all members from the random walk results
+        walktrap_members : List[int]
+            list of all members from the walktrap results
 
         clst_id : int
             id for the cluster. This value is used to pull out members
@@ -142,7 +142,7 @@ class ClusterHandler:
             the list of ids provided by nme label in the vs() property.
         """
 
-        vertex_ids = random_walk_results[clst_id]
+        vertex_ids = walktrap_results[clst_id]
 
         # 2. Extract ALL names at once (bypasses igraph query overhead)
         all_names = graph.vs["name"]
@@ -154,7 +154,7 @@ class ClusterHandler:
 
     @staticmethod
     def _determine_true_positive_edges(
-        member_list: List[int], clst_id: int, random_walk_results: ig.VertexClustering
+        member_list: List[int], clst_id: int, walktrap_results: ig.VertexClustering
     ) -> Tuple[int, float]:
         """determining the number of true positive edges
 
@@ -166,9 +166,9 @@ class ClusterHandler:
         clst_id : int
             id for the original cluster
 
-        random_walk_results : ig.VertexClustering
-            vertexClustering object returned after the random
-            walk that has the different clusters
+        walktrap_results : ig.VertexClustering
+            vertexClustering object returned after the
+            walktrap that has the different clusters
 
         Returns
         -------
@@ -187,7 +187,7 @@ class ClusterHandler:
 
         # Getting the number of edges within the graph and saving it
         # as a dictionary key, 'true_positive_n'
-        cluster_edge_count = random_walk_results.subgraph(clst_id).ecount()
+        cluster_edge_count = walktrap_results.subgraph(clst_id).ecount()
 
         return cluster_edge_count, cluster_edge_count / theoretical_edge_count
 
@@ -260,11 +260,11 @@ class ClusterHandler:
         self,
         graph: ig.Graph,
         cluster_ids: List[int],
-        random_walk_clusters: ig.VertexClustering,
+        walktrap_clusters: ig.VertexClustering,
         parent_cluster_id: Optional[str | float] = None,
     ) -> None:
         """Method for getting the information about membership,
-        true.positive, false.positives, etc... from the random
+        true.positive, false.positives, etc... from the walktrap
         walk
 
         Parameters
@@ -275,8 +275,8 @@ class ClusterHandler:
         cluster_ids : List[int]
             list of integers for each cluster id
 
-        random_walk_clusters : ig.VertexClustering
-            result from performing the random walk.
+        walktrap_clusters : ig.VertexClustering
+            result from performing the walktrap.
 
         parent_cluster_id : Optional[str]
             id of the original cluster that is now being broken up. Child
@@ -294,7 +294,7 @@ class ClusterHandler:
             # We are going to get the vertex id and member id of each
             # graph
             member_list, vertex_ids = ClusterHandler._gather_members(
-                random_walk_clusters, clst_id, graph
+                walktrap_clusters, clst_id, graph
             )
 
             # Next we get the number of edges/ ratio of actual edges to
@@ -303,7 +303,7 @@ class ClusterHandler:
                 true_pos_count,
                 true_pos_ratio,
             ) = ClusterHandler._determine_true_positive_edges(
-                member_list, clst_id, random_walk_clusters
+                member_list, clst_id, walktrap_clusters
             )
             # next we determine the number of false positive edges
             (
@@ -398,8 +398,8 @@ class ClusterHandler:
                 redopd, redo_vs  # pyright: ignore[reportArgumentType]
             )
 
-            # performing the random walk
-            redo_walktrap_clusters = self.random_walk(redo_networks)
+            # performing the walktrap
+            redo_walktrap_clusters = self.walktrap(redo_networks)
 
             # If only one cluster is found
             if len(redo_walktrap_clusters.sizes()) == 1:
@@ -469,7 +469,7 @@ class ClusterHandler:
                 redo_networks = self.generate_graph(
                     redopd, redo_vs  # pyright: ignore[reportArgumentType]
                 )
-                redo_walktrap_clusters = self.random_walk(redo_networks)
+                redo_walktrap_clusters = self.walktrap(redo_networks)
 
             # Filter to the clusters that are llarger than the minimum size
             allclst = self.filter_cluster_size(redo_walktrap_clusters.sizes())
@@ -496,7 +496,7 @@ def cluster(
         pandas dataframe that represents all of the edges in the cohort. The dataframe has the columns
 
     cluster_obj : ClusterHandler
-        Object that contains information about how the random walk
+        Object that contains information about how the walktrap
         needs to be performed. It will use the construct networks and return those
         values in a list.
 
@@ -516,11 +516,11 @@ def cluster(
         f"Identified {network_graph.ecount()} IBD segments from {network_graph.vcount()} haplotypes"  # noqa: E501
     )
 
-    random_walk_results = cluster_obj.random_walk(network_graph)
+    walktrap_results = cluster_obj.walktrap(network_graph)
 
-    allclst = cluster_obj.filter_cluster_size(random_walk_results.sizes())
+    allclst = cluster_obj.filter_cluster_size(walktrap_results.sizes())
 
-    cluster_obj.gather_cluster_info(network_graph, allclst, random_walk_results)
+    cluster_obj.gather_cluster_info(network_graph, allclst, walktrap_results)
 
     while (
         cluster_obj.check_times < cluster_obj.max_rechecks

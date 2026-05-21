@@ -45,7 +45,7 @@ The cluster subcommand is responsible for identifying networks of individuals wh
 
 ----
 
-* **step**: This argument indicates the number of minimum steps that the random walk will use to generate a network. By default this value is 3.
+* **step**: This argument indicates the number of minimum steps that the walktrap will use to generate a network. By default this value is 3.
 
 ----
 
