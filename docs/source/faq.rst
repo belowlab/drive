@@ -30,20 +30,23 @@ This section addresses frequently asked questions and provides solutions to comm
 
     * **Performance increases**
 
-      In designing DRIVE v3, we took advantage of features of common data science libraries such as Pandas, PyArrow, and DuckDB to boost performance. Current profiling shows a 26.5x improvement when running only the clustering algorithm over the CFTR locus in pairwise IBD segments for 250,000 individuals. The performance increase resulted in moving the IBD segment I/O and filtering to DuckDB. In v1, DRIVE read this data in 1 line at a time and appended the new line to a (growing) pandas dataframe. This process resulted in many memory allocations, which became slower as the dataframe grew in size. DuckDB enables DRIVE to use multiple threads to read in and filter the file. With the inclusion of DuckDB, this step of DRIVE is now multi-threaded but the rest of the runtime which relies on pandas, iGraph, and scipy is still single threaded.
+      In designing DRIVE v3, we took advantage of features of common data science libraries such as Pandas, PyArrow, and DuckDB to boost performance. Current profiling shows a ~35x improvement when running only the clustering algorithm over the CFTR locus in pairwise IBD segments for 250,000 individuals. The performance increase resulted in moving the IBD segment I/O and filtering to DuckDB. In v1, DRIVE read this data in 1 line at a time and appended the new line to a (growing) pandas dataframe. This process resulted in many memory allocations, which became slower as the dataframe grew in size. DuckDB enables DRIVE to use multiple threads to read in and filter the file. With the inclusion of DuckDB, this step of DRIVE is now multi-threaded but the rest of the runtime which relies on pandas, iGraph, and scipy is still single threaded.
 
       .. list-table:: DRIVE v1 performance compared to DRIVE v3
-          :widths: 25 50 25
+          :widths: 25 25 25 25
           :header-rows: 1
 
           * - DRIVE version
-            - Runtime
+            - Runtime (Wall Clock)
+            - Runtime (User Time)
             - Memory Consumption
           * - v1
-            - 37 hours and 14 minutes
-            - 3 Gb
+            - 36h 16m
+            - 20h 25m
+            - 3.1 Gb
           * - v3
-            - 1 hour and 27 minutes
+            - 1h 3m
+            - 1h 11m
             - 7.1 Gb
 
     * **Improved logging and error handling**

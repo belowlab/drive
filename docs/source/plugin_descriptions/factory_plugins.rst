@@ -9,5 +9,4 @@ This plugin performs the binomial test to determine enrichment of phenotypes of 
 
 "network writer" plugin
 -----------------------
-This plugin is responsible for writing all the output about what clusters were detected and if those networks are enriched for a phenotype of interest to a file. This plugin will create a file with the extension "*drive.networks.txt". This plugin has to be run after the p-values plugin because it uses some of the results of the p-values plugin.
-
+This plugin is responsible for writing all the output about what clusters were detected and if those networks are enriched for a phenotype of interest to a file. This plugin will create a file with the extension "\*drive.networks.txt". This plugin has to be run after the p-values plugin because it uses some of the results of the p-values plugin.
