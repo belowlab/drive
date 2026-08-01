@@ -1,11 +1,16 @@
 {
-    "plugins":["drive.plugins.pvalues", "drive.plugins.network_writer"],
-    "modules": [
-        {
-            "name":"pvalues"
-        },
-        {
-            "name":"network_writer"
-        }
-    ]
+  "plugins": [
+    "drive.plugins.pvalues",
+    "drive.plugins.network_writer"
+  ],
+  "modules": [
+    {
+      "name": "pvalues",
+      "description": "Test for enrichment of phenotypes within identified networks using a binomial test. Requires the user to provide a phenotype file"
+    },
+    {
+      "name": "network_writer",
+      "description": "Writes the networks to an output file. More information about what this file looks like can be found here: https://drive-ibd.readthedocs.io/en/latest/inputs_and_outputs/outputs.html"
+    }
+  ]
 }

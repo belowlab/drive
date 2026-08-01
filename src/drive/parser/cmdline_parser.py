@@ -9,6 +9,7 @@ from drive.network import run_network_identification
 from drive.utilities.pull_samples import run_pull_samples
 from drive.parser.callbacks import CheckInputExist
 from drive.utilities.testing import run_integration_test
+from drive.utilities.functions import list_plugins
 
 
 def generate_cmd_parser() -> argparse.ArgumentParser:
@@ -447,5 +448,23 @@ def generate_cmd_parser() -> argparse.ArgumentParser:
     )
 
     testing_parser.set_defaults(func=run_integration_test)
+
+    list_plugins_parser = utility_cmd_subparser.add_parser(
+        name="list-plugins",
+        help="list available plugins that can be detected based on the configuration file",
+        formatter_class=RichHelpFormatter,
+        parents=[common_parser],
+        description="list-plugins",
+    )
+
+    list_plugins_parser.add_argument(
+        "--json-config",
+        "-j",
+        default=None,
+        type=Path,
+        help="path to the json config file",
+    )
+
+    list_plugins_parser.set_defaults(func=list_plugins)
 
     return parser
