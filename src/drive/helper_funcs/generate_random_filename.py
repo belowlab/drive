@@ -1,5 +1,6 @@
 import random
 import string
+from pathlib import Path
 
 
 def generate_random_logfile_suffix(log_filename: str) -> str:
@@ -22,6 +23,11 @@ def generate_random_logfile_suffix(log_filename: str) -> str:
     # Return an 8 character string of random letters and digits. 8 should be
     # enough that we don't have many collisions
     random_suffix = "".join(random.choices(string.ascii_letters + string.digits, k=8))
-    prefix, suffix = log_filename.strip().split(".")
+
+    log_filepath = Path(log_filename)
+
+    prefix = log_filepath.stem
+
+    suffix = log_filepath.suffix
 
     return f"{prefix}_{random_suffix}.{suffix}"
