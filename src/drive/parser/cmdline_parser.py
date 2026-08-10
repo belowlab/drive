@@ -107,8 +107,8 @@ def generate_cmd_parser() -> argparse.ArgumentParser:
         "--min-cm",
         "-m",
         default=3,
-        type=int,
-        help="minimum centimorgan threshold. The program expects this to be an integer value. (default: %(default)s)",
+        type=float,
+        help="minimum centimorgan threshold. (default: %(default)s)",
     )
 
     cluster_parser.add_argument(
@@ -302,8 +302,8 @@ def generate_cmd_parser() -> argparse.ArgumentParser:
         "--min-cm",
         "-m",
         default=3,
-        type=int,
-        help="minimum centimorgan threshold. The program expects this to be an integer value. (default: %(default)s)",
+        type=float,
+        help="minimum centimorgan threshold. (default: %(default)s)",
     )
 
     dendrogram_parser.add_argument(

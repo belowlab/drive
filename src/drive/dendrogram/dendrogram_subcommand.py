@@ -126,7 +126,7 @@ class DistanceMatrixResults:
 
 def make_distance_matrix(
     pairs_df: pl.DataFrame,
-    min_cM: int,
+    min_cM: float,
     map_ids: bool,
     distance_function: Callable = _determine_distances,
 ) -> DistanceMatrixResults:

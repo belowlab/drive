@@ -27,7 +27,7 @@ class PandasFilter(FilterProtocol):
         self.target_gene = target_gene
         self.filter: Callable = self.set_filter(filter_type)
 
-    def contains_filter(self, data_chunk: DataFrame, min_cm: int) -> DataFrame:
+    def contains_filter(self, data_chunk: DataFrame, min_cm: float) -> DataFrame:
         """Method that will filter the ibd file on four conditions: Chromosome number is the same, segment start position is <= target start position, segment end position is >= to the start position, and the size of the segment is >= to the minimum centimorgan threshold.
 
         Parameters
@@ -37,7 +37,7 @@ class PandasFilter(FilterProtocol):
             determined by the chunksize argument to
             pd.read_csv. This value is currently set to 100,000.
 
-        min_cm : int
+        min_cm : float
             centimorgan threshold
 
         Returns
@@ -64,7 +64,7 @@ class PandasFilter(FilterProtocol):
             & (data_chunk[self.indices.cM_indx] >= min_cm)
         ].copy()
 
-    def overlaps_filter(self, data_chunk: DataFrame, min_cm: int) -> DataFrame:
+    def overlaps_filter(self, data_chunk: DataFrame, min_cm: float) -> DataFrame:
         """Method that will filter the ibd file on four conditions: Chromosome number is the same, segment start position is <= target start position, segment end position is >= to the start position, and the size of the segment is >= to the minimum centimorgan threshold.
 
         Parameters
@@ -74,7 +74,7 @@ class PandasFilter(FilterProtocol):
             determined by the chunksize argument to
             pd.read_csv. This value is currently set to 100,000.
 
-        min_cm : int
+        min_cm : float
             centimorgan threshold
 
         Returns
@@ -169,7 +169,7 @@ class PolarsFilter(FilterProtocol):
             determined by the chunksize argument to
             pd.read_csv. This value is currently set to 100,000.
 
-        min_cm : int
+        min_cm : float
             centimorgan threshold
 
         Returns
