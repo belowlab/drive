@@ -28,6 +28,8 @@ def generate_random_logfile_suffix(log_filename: str) -> str:
 
     prefix = log_filepath.stem
 
-    suffix = log_filepath.suffix
+    # suffix attribute returns the file suffix with the "." so we can strip that
+    # off for consistency
+    suffix = log_filepath.suffix.lstrip(".")
 
     return f"{prefix}_{random_suffix}.{suffix}"
