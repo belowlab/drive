@@ -230,6 +230,15 @@ def generate_cmd_parser() -> argparse.ArgumentParser:
         help="if this flag is provided by the user then the output will be broken up into a file for each phecode category. Each file will still contain the columns that give the network information and the minimum phecode for each network. Output files will all be written to the same output directory. This flag should only be used if the user is running the analysis phenomewide. It shouldn't be used with the phecode-categories-to-keep flag.",
     )
 
+    cluster_parser.add_argument(
+        "--plugins",
+        required=False,
+        nargs="+",
+        type=str,
+        default=None,
+        help="List of plugins to use during the analysis. The 'network_writer' plugin will always be included to write output. If omitted, all plugins configured in the json file are used.",
+    )
+
     cluster_parser.set_defaults(func=run_network_identification)
 
     # This is where we will define all of the necessary arguments to make
