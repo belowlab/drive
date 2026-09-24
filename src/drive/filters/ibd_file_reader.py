@@ -45,8 +45,8 @@ def _add_haplotype_id(data: pl.DataFrame, indices: IbdFileIndices) -> pl.DataFra
 
         case "germline" | "ilash":
             # Define logic for copying: Just select the columns
-            hap1_expr = pl.col(indices.id1_indx)
-            hap2_expr = pl.col(indices.id2_indx)
+            hap1_expr = pl.col(indices.hap1_indx)
+            hap2_expr = pl.col(indices.hap2_indx)
         case _:
             assert indices.prog_name in [
                 "hapibd",

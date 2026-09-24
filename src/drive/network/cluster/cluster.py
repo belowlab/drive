@@ -464,7 +464,7 @@ class ClusterHandler:
                     (~redopd["idnum1"].isin(rmID)) & (~redopd["idnum2"].isin(rmID))
                 ]
 
-                redo_vs = ibd_vs.loc[~redo_vs["idnum"].isin(rmID)]
+                redo_vs = redo_vs.loc[~redo_vs["idnum"].isin(rmID)]
 
                 redo_networks = self.generate_graph(
                     redopd, redo_vs  # pyright: ignore[reportArgumentType]
