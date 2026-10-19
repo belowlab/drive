@@ -18,6 +18,7 @@ class NetworkWriter:
     txt file from the information provided"""
 
     name: str = "NetworkWriter plugin"
+    description: str = "Writes output for the identified networks"
 
     @staticmethod
     def _form_header(phenotypes: List[str]) -> str:

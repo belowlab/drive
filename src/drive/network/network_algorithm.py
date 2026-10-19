@@ -48,6 +48,75 @@ def find_json_file() -> Path:
     return config_path
 
 
+MANDATORY_WRITER = "network_writer"
+
+
+def validate_provided_plugins(
+    requested_plugins: list[str] | None,
+    available_modules: list[dict[str, str]],
+) -> list[dict[str, str]]:
+    """Validate requested plugins and ensure network_writer is always present and runs last.
+
+    Parameters
+    ----------
+    requested_plugins : list[str] | None
+        Plugin names passed via `--plugins`. If None, all configured modules are used.
+    available_modules : list[dict[str, str]]
+        List of module dictionaries from config.json.
+
+    Returns
+    -------
+    list[dict[str, str]]
+        Ordered list of module dicts to execute, ending with network_writer.
+    """
+    module_by_name = {mod["name"]: mod for mod in available_modules}
+    valid_names = set(module_by_name.keys())
+
+    if MANDATORY_WRITER not in module_by_name:
+        raise KeyError(
+            f"Mandatory plugin '{MANDATORY_WRITER}' was not found in the configuration modules."
+        )
+
+    # Default case: user didn't specify --plugins, run all configured modules
+    if requested_plugins is None:
+        selected_names = [mod["name"] for mod in available_modules]
+    else:
+        # Normalize in case user passed space- or comma-separated names
+        selected_names = []
+        for item in requested_plugins:
+            selected_names.extend([p.strip() for p in item.split(",") if p.strip()])
+
+        # Deduplicate while preserving order
+        seen = set()
+        selected_names = [n for n in selected_names if not (n in seen or seen.add(n))]
+
+    # 1. Validate that all requested plugins exist in config.json
+    invalid_plugins = [name for name in selected_names if name not in valid_names]
+    if invalid_plugins:
+        available_str = ", ".join(sorted(valid_names))
+        invalid_str = ", ".join(invalid_plugins)
+        logger.critical(
+            f"Invalid plugin(s): {invalid_str}. Available plugins: {available_str}"
+        )
+        raise ValueError(
+            f"Unknown plugin(s) '{invalid_str}'. Available plugins: {available_str}"
+        )
+
+    # 2. Always ensure network_writer is included
+    if MANDATORY_WRITER not in selected_names:
+        logger.debug(
+            f"Adding mandatory '{MANDATORY_WRITER}' plugin to the execution list"
+        )
+        selected_names.append(MANDATORY_WRITER)
+
+    # 3. Always ensure network_writer executes last (after analysis plugins)
+    ordered_names = [name for name in selected_names if name != MANDATORY_WRITER] + [
+        MANDATORY_WRITER
+    ]
+
+    return [module_by_name[name] for name in ordered_names]
+
+
 def generate_vertex_info_df(
     data: pl.DataFrame, indices: IbdFileIndices
 ) -> pl.DataFrame:
@@ -288,12 +357,14 @@ def run_network_identification(args) -> None:
 
     # making sure that the output directory is created
     # This section will load in the analysis plugins and run each plugin
-    with open(json_config, encoding="utf-8") as json_config:
-        config = json.load(json_config)
+    with open(json_config, encoding="utf-8") as json_file:
+        config = json.load(json_file)
 
         factory.load_plugins(config["plugins"])
 
-        analysis_plugins = [factory.factory_create(item) for item in config["modules"]]
+        modules_to_run = validate_provided_plugins(args.plugins, config["modules"])
+
+        analysis_plugins = [factory.factory_create(item) for item in modules_to_run]
 
         logger.debug(
             f"Using plugins: {', '.join([obj.name for obj in analysis_plugins])}"

@@ -17,6 +17,7 @@ class Pvalues:
     """Class that is responsible for determining the pvalues for each network"""
 
     name: str = "Pvalue plugin"
+    description: str = "binomial enrichment test"
 
     @staticmethod
     def _determine_pvalue(
