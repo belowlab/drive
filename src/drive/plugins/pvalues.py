@@ -1,13 +1,12 @@
 from dataclasses import dataclass
-from typing import Dict, List, Tuple
-
-from drive.parser.phenotype_descriptions_parser import PhecodesMapper
-from log import CustomLogger
-from numpy import float64
-from scipy.stats import binomtest
+from typing import Any
 
 from drive.network.factory import factory_register
 from drive.network.models import Network_Interface, RuntimeState
+from drive.parser.phenotype_descriptions_parser import PhecodesMapper
+from log import CustomLogger
+from numpy import float64
+from scipy.stats import binomtest, mannwhitneyu
 
 logger = CustomLogger.get_logger(__name__)
 
@@ -17,10 +16,62 @@ class Pvalues:
     """Class that is responsible for determining the pvalues for each network"""
 
     name: str = "Pvalue plugin"
-    description: str = "binomial enrichment test"
+    description: str = "Enrichment test"
 
     @staticmethod
-    def _determine_pvalue(
+    def _determine_pvalue_continuous(
+        network_values: list[float],
+        cohort_values: list[float],
+        alternative: str = "two-sided",
+        network_id: int | str = "N/A",
+        phenotype: str = "N/A",
+    ) -> float64:
+        """Function that will perform the Mann-Whitney U non-parametric test.
+
+        Parameters
+        ----------
+        network_values : list[float]
+            Continuous phenotype values of individuals within the network.
+        cohort_values : list[float]
+            Continuous phenotype values of individuals outside the network.
+        alternative : str, default 'two-sided'
+            Defines the alternative hypothesis ('two-sided', 'greater', 'less').
+        network_id : int | str, default 'N/A'
+            Identifier of the network being evaluated, used for error logging.
+        phenotype : str, default 'N/A'
+            Identifier of the phenotype being evaluated, used for error logging.
+
+        Returns
+        -------
+        float64
+            Returns the calculated p-value from scipy.stats.mannwhitneyu.
+        """
+        if len(network_values) < 2 or len(cohort_values) < 2:
+            logger.debug(
+                f"Network {network_id} for phenotype {phenotype} has insufficient "
+                f"observations (network: {len(network_values)}, cohort: {len(cohort_values)}). "
+                f"Returning p-value of 1.0"
+            )
+            return float64(1.0)
+
+        try:
+            result = mannwhitneyu(
+                network_values, cohort_values, alternative=alternative
+            )
+            pvalue = float64(result.pvalue)
+            logger.debug(
+                f"pvalue for continuous phenotype {phenotype} in network {network_id} = {pvalue}"
+            )
+            return pvalue
+        except ValueError as err:
+            logger.warning(
+                f"Network {network_id} for phenotype {phenotype} encountered an issue during "
+                f"the Mann-Whitney U test: {err}. Returning p-value of 1.0"
+            )
+            return float64(1.0)
+
+    @staticmethod
+    def _determine_pvalue_binary(
         phenotype: str,
         phenotype_percent: float,
         carriers_count: int,
@@ -45,23 +96,23 @@ class Pvalues:
 
         Returns
         -------
-        float
+        float64
             Returns the calculated pvalue
         """
         # the probability is 1 if the carrier count is zero because it is chances of
         # finding 0 or higher which is everyone
         if carriers_count == 0:
             logger.debug(f"carrier count = 0 therefore pvalue for {phenotype} = 1")
-            return 1
+            return float64(1.0)
         elif carriers_count - 1 == 0:
             logger.debug(
                 "When the proband was removed, there were no more carriers who remained in the network. Therefore returning a p-value of 1"
             )
-            return 1
+            return float64(1.0)
 
         result = binomtest(carriers_count - 1, network_size - 1, phenotype_percent)
 
-        pvalue = result.pvalue
+        pvalue = float64(result.pvalue)
 
         logger.debug(f"pvalue for {phenotype} = {pvalue}")
 
@@ -69,7 +120,7 @@ class Pvalues:
 
     @staticmethod
     def _determine_phenotype_frequency(
-        phecode: str, phenotype_counts: Dict[str, List[str]]
+        phecode: str, phenotype_counts: dict[str, list[str] | set[str]]
     ) -> float:
         """calculate the phenotype frequency in the cohort
 
@@ -78,8 +129,8 @@ class Pvalues:
         phecode : str
             phecode id. This value will only be used for a logging statement
 
-        phenotype_counts : Dict[str, List[str]]
-            Dictionary that has list for individuals who are
+        phenotype_counts : dict[str, list[str] | set[str]]
+            Dictionary that has list/set for individuals who are
             cases, controls, or exclusions.
 
         Returns
@@ -87,29 +138,23 @@ class Pvalues:
         float
             returns the phenotype frequency as a float
         """
-
-        # We need to first check if there are even controls in the file
         phenotype_frequency = len(phenotype_counts.get("cases")) / (
             len(phenotype_counts.get("controls")) + len(phenotype_counts.get("cases"))
         )
-
-        # logger.verbose(
-        #     f"For PheCode, {phecode}, {len(phenotype_counts.get('cases'))} cases and {len(phenotype_counts.get('controls'))} were identified giving a phenotype frequency of {phenotype_frequency}"  # noqa: E501
-        # )
 
         return phenotype_frequency
 
     @staticmethod
     def _get_carrier_count_in_network(
-        phenotype_counts: Dict[str, List[str]], network: Network_Interface
+        phenotype_counts: dict[str, list[str] | set[str]], network: Network_Interface
     ) -> int:
         """Determine the number of individual cases that are
         also in the network
 
         Parameters
         ----------
-        phenotype_counts : Dict[str, List[str]]
-            Dictionary that has list for individuals who are
+        phenotype_counts : dict[str, list[str] | set[str]]
+            Dictionary that has list/set for individuals who are
             cases, controls, or exclusions.
 
         network : Network_Interface
@@ -121,20 +166,18 @@ class Pvalues:
         int
             returns the number of carriers in the network
         """
-        # determine the number of carriers in the network
-
         return len(network.members.intersection(phenotype_counts.get("cases")))
 
     @staticmethod
     def _get_carriers_in_network(
-        phenotype_counts: Dict[str, List[str]], network: Network_Interface
+        phenotype_counts: dict[str, list[str] | set[str]], network: Network_Interface
     ) -> str:
         """Generate a set of cases that are in the network
 
         Parameters
         ----------
-        phenotype_counts : Dict[str, List[str]]
-            Dictionary that has list for individuals who are
+        phenotype_counts : dict[str, list[str] | set[str]]
+            Dictionary that has list/set for individuals who are
             cases, controls, or exclusions.
 
         network : Network_Interface
@@ -145,10 +188,9 @@ class Pvalues:
         -------
         str
             returns a string of individuals that are in both the phenotype_counts
-            case set and the network members set. If this interection is empty
+            case set and the network members set. If this intersection is empty
             then it returns a str "N/A"
         """
-        # determine the number of carriers in the network
         case_individuals = network.members.intersection(phenotype_counts.get("cases"))
 
         if case_individuals:
@@ -160,14 +202,14 @@ class Pvalues:
 
     @staticmethod
     def _get_exclusions_in_network(
-        phenotype_counts: Dict[str, List[str]], network: Network_Interface
+        phenotype_counts: dict[str, list[str] | set[str]], network: Network_Interface
     ) -> str:
-        """Generate a set of cases that are in the network
+        """Generate a set of exclusions that are in the network
 
         Parameters
         ----------
-        phenotype_counts : Dict[str, List[str]]
-            Dictionary that has list for individuals who are
+        phenotype_counts : dict[str, list[str] | set[str]]
+            Dictionary that has list/set for individuals who are
             cases, controls, or exclusions.
 
         network : Network_Interface
@@ -178,10 +220,9 @@ class Pvalues:
         -------
         str
             returns a string of individuals that are in both the phenotype_counts
-            exclusion set and the network members set. If this interection is
+            exclusion set and the network members set. If this intersection is
             empty then it returns a str "N/A"
         """
-        # determine the number of carriers in the network
         excluded_individuals = network.members.intersection(
             phenotype_counts.get("excluded")
         )  # noqa: E501
@@ -191,18 +232,19 @@ class Pvalues:
                 network.members.intersection(phenotype_counts.get("excluded"))
             )  # noqa: E501
         else:
-            "N/A"
+            return "N/A"
 
+    @staticmethod
     def _remove_exclusions(
-        phenotype_counts: Dict[str, List[str]], network: Network_Interface
-    ) -> Tuple[int, int]:
+        phenotype_counts: dict[str, list[str] | set[str]], network: Network_Interface
+    ) -> tuple[int, int]:
         """determine size of network after removing excluded
         individuals
 
         Parameters
         ----------
-        phenotype_counts : Dict[str, List[str]]
-            Dictionary that has list for individuals who are
+        phenotype_counts : dict[str, list[str] | set[str]]
+            Dictionary that has list/set for individuals who are
             cases, controls, or exclusions.
 
         network : Network_Interface
@@ -211,13 +253,12 @@ class Pvalues:
 
         Returns
         -------
-        Tuple[int, int]
+        tuple[int, int]
             returns the number of individuals in the network,
             not counting those individuals classified as
             excluded in the phenotype_counts dictionary. Also
-            returns the number of individuals excluded. Also returns the
+            returns the number of individuals excluded.
         """
-
         return (
             len(network.members.difference(phenotype_counts.get("excluded"))),
             len(network.members.intersection(phenotype_counts.get("excluded"))),
@@ -226,8 +267,8 @@ class Pvalues:
     def _gather_network_information(
         self,
         network: Network_Interface,
-        cohort_carriers: Dict[str, Dict[str, List[str]]],
-    ) -> tuple[str, str, Dict[str, str]]:
+        cohort_carriers: dict[str, dict[str, list[str] | set[str]]],
+    ) -> tuple[str, str, dict[str, str]]:
         """Determine information about how many
         carriers are in each network, the percentage, the IIDs of
         the carriers in the network, and use this to calculate the
@@ -236,31 +277,24 @@ class Pvalues:
 
         Parameters
         ----------
-
-        network : Network
+        network : Network_Interface
             Network object attributes for iids, pairs, and haplotypes
 
-        cohort_carriers : Dict[str, Dict[str, List[str]]]
+        cohort_carriers : dict[str, dict[str, list[str] | set[str]]]
             dictionary where the keys are phenotype ids and the values are a dictionary
-            with the list of cases/controls/exclusions
+            with the list/set of cases/controls/exclusions
 
         Returns
         -------
-        Tuple[str, str, Dict[str, str]]
+        tuple[str, str, dict[str, str]]
             returns a tuple where the first element is the string of the
             minimum phenotype code. The second value is the description
             of the minimum phenotype. The third value is a dictionary
             that for each phenotype has a string with the number of
             cases, number of excluded individuals, and the p-values.
         """
-        # setting null values for the output string and the cur_min_phecode string.
-        # Also setting a value of 1 for the cur_min_pvalue because this will be the
-        # largest pvalue possible
-
-        cur_min_pvalue = 1
-
+        cur_min_pvalue = 1.0
         cur_min_phenotype = ""
-
         phenotype_pvalues = {}
 
         # iterating over each phenotype
@@ -292,47 +326,112 @@ class Pvalues:
                 ) = Pvalues._remove_exclusions(phenotype_counts, network)
 
                 # calling the sub function that determines the pvalue
-                pvalue: float = Pvalues._determine_pvalue(
+                pvalue: float = Pvalues._determine_pvalue_binary(
                     phenotype,
                     phenotype_freq,
                     num_carriers_in_network,
                     network_size_after_exclusions,
                 )
 
-                # Next two lines create the string and then concats it to the output_str
-
                 phenotype_str = f"{num_carriers_in_network}\t{carrier_str}\t{excluded_count}\t{exclusion_str}\t{pvalue}"  # noqa: E501
 
                 phenotype_pvalues[phenotype] = phenotype_str
 
                 # Now we will see if the phecode is lower then the cur_min_pvalue.
-                # If it is then we will change the cur_min_pvalue and we will
-                # update the cur_min_phecode
                 if pvalue < cur_min_pvalue and pvalue != 0:
                     cur_min_pvalue = pvalue
-
                     cur_min_phenotype = phenotype
 
-        # if a minimum phecode is identified then we need to create a string, otherwise
-        # we use N/A's
         if not cur_min_phenotype:
             cur_min_phenotype = "N/A"
             cur_min_pvalue = "N/A"
 
-        # return the pvalue_output string first and either a tuple of N/As or the min
-        # pvalue/min_phecode
-        return cur_min_pvalue, cur_min_phenotype, phenotype_pvalues
+        return str(cur_min_pvalue), cur_min_phenotype, phenotype_pvalues
+
+    def _gather_network_information_continuous(
+        self,
+        network: Network_Interface,
+        cohort_phenotypes: dict[str, dict[str, Any]],
+        alternative: str = "two-sided",
+    ) -> tuple[str, str, dict[str, str]]:
+        """Determine continuous trait statistics and p-values for each phenotype in a network.
+
+        Parameters
+        ----------
+        network : Network_Interface
+            Network object with members and attributes.
+        cohort_phenotypes : dict[str, dict[str, Any]]
+            Dictionary where keys are phenotype IDs and values are dictionaries with
+            'values' mapping IIDs to floats and 'excluded' containing missing/NaN IIDs.
+        alternative : str, default 'two-sided'
+            Alternative hypothesis for the Mann-Whitney U test.
+
+        Returns
+        -------
+        tuple[str, str, dict[str, str]]
+            Tuple where the first element is the minimum p-value (or 'N/A'),
+            second element is the phenotype ID corresponding to the minimum p-value,
+            and third element is a dictionary mapping each phenotype to its 5-column
+            result string.
+        """
+        cur_min_pvalue = 1.0
+        cur_min_phenotype = ""
+        phenotype_pvalues = {}
+
+        for phenotype, trait_data in cohort_phenotypes.items():
+            values_dict = trait_data.get("values", {})
+            excluded_set = trait_data.get("excluded", set())
+
+            # Individuals in the network with valid measurements
+            network_measured_ids = [
+                iid for iid in network.members if iid in values_dict
+            ]
+            network_values = [values_dict[iid] for iid in network_measured_ids]
+
+            # Background cohort individuals (not in the network) with valid measurements
+            cohort_values = [
+                val for iid, val in values_dict.items() if iid not in network.members
+            ]
+
+            # Exclusions in network
+            excluded_in_network = network.members.intersection(excluded_set)
+            excluded_count = len(excluded_in_network)
+            exclusion_str = (
+                ", ".join(excluded_in_network) if excluded_in_network else "N/A"
+            )
+
+            pvalue = Pvalues._determine_pvalue_continuous(
+                network_values,
+                cohort_values,
+                alternative=alternative,
+                network_id=network.clst_id,
+                phenotype=phenotype,
+            )
+
+            # For continuous phenotypes, both case count and cases string are N/A
+            phenotype_str = (
+                f"N/A\tN/A\t{excluded_count}\t{exclusion_str}\t{pvalue}"  # noqa: E501
+            )
+            phenotype_pvalues[phenotype] = phenotype_str
+
+            if pvalue < cur_min_pvalue and pvalue != 0:
+                cur_min_pvalue = pvalue
+                cur_min_phenotype = phenotype
+
+        if not cur_min_phenotype:
+            cur_min_phenotype = "N/A"
+            cur_min_pvalue = "N/A"
+
+        return str(cur_min_pvalue), cur_min_phenotype, phenotype_pvalues
 
     @staticmethod
     def _get_descriptions(phecode_description: PhecodesMapper, min_phecode: str) -> str:
         """Method to get the description for the minimum phecode
+
         Parameters
         ----------
-        phecode_descriptions : dict[str, dict[str, str]]
-            dictionary with descriptions of each phecode. The outer key is the
-            phenotype id. The inner key is the string phenotype and the value is a
-            string that describes the phenotype
-
+        phecode_description : PhecodesMapper
+            dictionary with descriptions of each phecode.
         min_phecode : str
             minimum phecode string
 
@@ -341,7 +440,6 @@ class Pvalues:
         str
             returns a string that has the phecode description
         """
-        # getting the description
         return phecode_description.phecode_names.get(min_phecode, "N/A")
 
     def analyze(self, **kwargs) -> None:
@@ -349,14 +447,25 @@ class Pvalues:
         # affected_inds, and the phenotype_prevalances attribute
         data: RuntimeState = kwargs["data"]
 
+        is_continuous = data.config_options.get("run_continuous_trait", False)
+
         if data.carriers:
             for network in data.networks:
                 # Determining the pvalues for the network
-                (
-                    min_pvalue_str,
-                    min_phenotype_code,
-                    phenotype_pvalues,
-                ) = self._gather_network_information(network, data.carriers)
+                if is_continuous:
+                    (
+                        min_pvalue_str,
+                        min_phenotype_code,
+                        phenotype_pvalues,
+                    ) = self._gather_network_information_continuous(
+                        network, data.carriers
+                    )
+                else:
+                    (
+                        min_pvalue_str,
+                        min_phenotype_code,
+                        phenotype_pvalues,
+                    ) = self._gather_network_information(network, data.carriers)
 
                 min_phecode_description = self._get_descriptions(
                     data.phenotype_descriptions, min_phenotype_code

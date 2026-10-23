@@ -231,6 +231,14 @@ def generate_cmd_parser() -> argparse.ArgumentParser:
     )
 
     cluster_parser.add_argument(
+        "--continuous",
+        required=False,
+        default=False,
+        action=argparse.BooleanOptionalAction,
+        help="Specifies that the user wants to run DRIVE for a continuous phenotype. When enabled DRIVE will use a wilcox-rank sum test instead of the binomial enrichment test.",
+    )
+
+    cluster_parser.add_argument(
         "--plugins",
         required=False,
         nargs="+",

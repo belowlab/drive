@@ -12,7 +12,7 @@ from drive.models import create_indices, IbdFileIndices
 from drive.network.models import RuntimeState
 from drive.helper_funcs import split_target_string
 from drive.parser import (
-    PhenotypeFileParser,
+    open_phenotype_file,
     load_phenotype_descriptions,
     PhecodesMapper,
 )
@@ -247,8 +247,9 @@ def run_network_identification(args) -> None:
     # if the user has provided a phenotype file then we will determine case/control/
     # exclusion counts. Otherwise we return an empty dictionary
     if args.cases:
-        with PhenotypeFileParser(args.cases, args.phenotype_name) as phenotype_file:
-            phenotype_counts, cohort_ids = phenotype_file.parse_cases_and_controls()
+        with open_phenotype_file(
+            args.cases, args.phenotype_name, is_continuous=args.continuous
+        ) as (phenotype_counts, cohort_ids):
 
             logger.info(
                 f"identified {len(phenotype_counts.keys())} phenotypes within the file {args.cases}"  # noqa: E501
@@ -350,6 +351,7 @@ def run_network_identification(args) -> None:
             "compress": args.compress_output,
             "phecode_categories_to_keep": args.phecode_categories_to_keep,
             "split_phecode_categories": args.split_phecode_categories,
+            "run_continuous_trait": args.continuous,
         },
     )
 

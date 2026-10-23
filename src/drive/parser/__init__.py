@@ -1,5 +1,11 @@
 # isort: skip_file
-from .case_file_parser import PhenotypeFileParser
+from .case_file_parser import (
+    load_phenotype_df,
+    open_phenotype_file,
+    parse_binary_matrix,
+    parse_continuous_matrix,
+    resolve_phenotype_columns,
+)
 from .phenotype_descriptions_parser import load_phenotype_descriptions, PhecodesMapper
 from .cmdline_parser import (
     generate_cmd_parser,
