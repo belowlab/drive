@@ -6,6 +6,8 @@ import pytest
 
 from drive.utilities.functions import pull_network_enrichment
 from drive.utilities.functions.pull_network_enrichment import (
+    determine_reader,
+    gather_drive_files,
     gather_pvalues,
     parse_header,
     read_network_ids,
@@ -185,3 +187,124 @@ def test_pull_network_enrichment_gzip_output(
         lines = f_in.read().strip().split("\n")
     assert lines[0] == "network_id\tphecode_id\tphecode_pvalue"
     assert len(lines) == 4
+
+
+@pytest.mark.unit
+def test_determine_reader(tmp_path: Path) -> None:
+    """Test that determine_reader selects gzip.open for .gz and open otherwise."""
+    assert determine_reader(tmp_path / "results.drive_networks.txt") is open
+    assert determine_reader(tmp_path / "results.drive_networks.txt.gz") is gzip.open
+
+
+@pytest.mark.unit
+def test_gather_drive_files_single_file(mock_results_file: Path) -> None:
+    """Test gather_drive_files with a single file path."""
+    files = gather_drive_files(mock_results_file)
+    assert files == [mock_results_file]
+
+
+@pytest.mark.unit
+def test_gather_drive_files_directory_uncompressed(
+    tmp_path: Path, mock_results_header: str
+) -> None:
+    """Test gather_drive_files with a directory containing uncompressed files."""
+    results_dir = tmp_path / "results_dir"
+    results_dir.mkdir()
+    f1 = results_dir / "cat1.drive_networks.txt"
+    f2 = results_dir / "cat2.drive_networks.txt"
+    f1.write_text(mock_results_header, encoding="utf-8")
+    f2.write_text(mock_results_header, encoding="utf-8")
+
+    files = gather_drive_files(results_dir)
+    assert set(files) == {f1, f2}
+
+
+@pytest.mark.unit
+def test_gather_drive_files_directory_compressed(
+    tmp_path: Path, mock_results_header: str
+) -> None:
+    """Test gather_drive_files fallback to .gz files when no uncompressed files exist."""
+    results_dir = tmp_path / "results_gz_dir"
+    results_dir.mkdir()
+    f1 = results_dir / "cat1.drive_networks.txt.gz"
+    with gzip.open(f1, "wt", encoding="utf-8") as gz:
+        gz.write(mock_results_header)
+
+    files = gather_drive_files(results_dir)
+    assert files == [f1]
+
+
+@pytest.mark.unit
+def test_gather_drive_files_nonexistent_path(tmp_path: Path) -> None:
+    """Test gather_drive_files raises FileNotFoundError for non-existent path."""
+    with pytest.raises(FileNotFoundError, match="does not exist"):
+        gather_drive_files(tmp_path / "missing_file_or_dir")
+
+
+@pytest.mark.unit
+def test_gather_drive_files_empty_directory(tmp_path: Path) -> None:
+    """Test gather_drive_files raises ValueError when directory contains no DRIVE files."""
+    empty_dir = tmp_path / "empty_dir"
+    empty_dir.mkdir()
+    with pytest.raises(ValueError, match="There were no drive files found"):
+        gather_drive_files(empty_dir)
+
+
+@pytest.mark.unit
+def test_pull_network_enrichment_from_directory(
+    tmp_path: Path, mock_results_header: str
+) -> None:
+    """Test pulling enrichment results when a directory is passed as results_file."""
+    results_dir = tmp_path / "split_dir"
+    results_dir.mkdir()
+
+    # File 1 has Network 0
+    f1 = results_dir / "part1.drive_networks.txt"
+    f1.write_text(
+        mock_results_header
+        + "0\t4\t4\t4\t0.6667\t0\t842,130\t130.1\t0.01\tCV_414\tdesc\t1\t842\t0\tNone\t0.01\t0\tN/A\t0\tNone\t0.5\t0\tN/A\t0\tNone\t1.0\n",
+        encoding="utf-8",
+    )
+    # File 2 has Network 1
+    f2 = results_dir / "part2.drive_networks.txt"
+    f2.write_text(
+        mock_results_header
+        + "1\t2\t2\t1\t1.0000\t0\t223,443\t223.1\t0.05\tNS_324.11\tdesc\t0\tN/A\t0\tNone\t0.8\t1\t223\t0\tNone\t0.05\t0\tN/A\t0\tNone\t0.9\n",
+        encoding="utf-8",
+    )
+
+    networks_file = tmp_path / "nets.txt"
+    networks_file.write_text("0\n1\n", encoding="utf-8")
+
+    output_file = tmp_path / "dir_output.txt"
+    args = Namespace(
+        network_id=None,
+        networks_file=networks_file,
+        results_file=results_dir,
+        output=output_file,
+    )
+    pull_network_enrichment(args)
+
+    assert output_file.exists()
+    lines = output_file.read_text(encoding="utf-8").strip().split("\n")
+    assert lines[0] == "network_id\tphecode_id\tphecode_pvalue"
+    # Both network 0 (3 phecodes) and network 1 (3 phecodes) should be present: 1 header + 6 data rows = 7 lines
+    assert len(lines) == 7
+    found_networks = {line.split("\t")[0] for line in lines[1:]}
+    assert found_networks == {"0", "1"}
+
+
+@pytest.mark.unit
+def test_pull_network_enrichment_no_matching_networks_exits(
+    mock_results_file: Path, tmp_path: Path
+) -> None:
+    """Test pull_network_enrichment exits with status 1 when no requested networks are found."""
+    args = Namespace(
+        network_id="9999",
+        networks_file=None,
+        results_file=mock_results_file,
+        output=tmp_path / "should_not_be_written.txt",
+    )
+    with pytest.raises(SystemExit) as exc_info:
+        pull_network_enrichment(args)
+    assert exc_info.value.code == 1

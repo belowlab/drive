@@ -3,6 +3,8 @@ from pathlib import Path
 import gzip
 import sys
 from log import CustomLogger
+from typing import TextIO, BinaryIO
+from collections.abc import Callable
 
 logger = CustomLogger.get_logger(__name__)
 
@@ -92,6 +94,69 @@ def gather_pvalues(
     return phecode_pvalues
 
 
+def determine_reader(results_path: Path) -> Callable[..., TextIO | BinaryIO]:
+    """abstraction that decides whether to return a normal open function
+    or gzip.open based on file type
+
+    Parameters
+    ----------
+    results_path : Path
+        Filename from the DRIVE analysis. This file can be
+        compressed with GZIP or uncompressed
+
+    Returns
+    -------
+    Callable[..., TextIO | BinaryIO]
+        returns the open function if the file is not compressed
+        and gzip.open function if the file is compressed
+    """
+    return gzip.open if results_path.suffix == ".gz" else open
+
+
+def gather_drive_files(results_path: Path) -> list[Path]:
+    """Gathers all of the files from the DRIVE analysis into a list
+
+    Parameters
+    ----------
+    results_path : Path
+        either a filepath to the output file from DRIVE or a directory
+        which contains all of the output files from DRIVE. This function
+        assumes that these files have the suffix 'drive_networks.txt'.
+
+    Returns
+    -------
+    list[Path]
+        returns a list containing the different files. If the results_path
+        variable refers to a single file then this list will be of size 1
+
+    Raises
+    ------
+    ValueError | FileNotFoundError
+        raises a ValueError if no files with the suffix 'drive_networks.txt'
+        are found within the provided directory. Raises a FileNotFoundError
+        if the results_path variable doesn't exist
+    """
+
+    if not results_path.exists():
+        raise FileNotFoundError(f"The path, {results_path}, does not exist.")
+    elif results_path.is_dir():
+        drive_files = list(results_path.glob("*drive_networks.txt"))
+        # If there are no uncompressed files then we should look for compressed files
+        if len(drive_files) == 0:
+            logger.warning(
+                "No uncompressed DRIVE results files found. Searching for gzipped compressed output files"
+            )
+            drive_files = list(results_path.glob("*drive_networks.txt.gz"))
+            if len(drive_files) == 0:
+                raise ValueError(
+                    f"There were no drive files found in the directory: {results_path}. We are assuming that all the output files from DRIVE still have the same suffix 'drive_networks.txt'. Please make sure these files with this suffix are present"
+                )
+    else:
+        drive_files = [results_path]
+
+    return drive_files
+
+
 def pull_network_enrichment(args: Namespace) -> None:
     """pull the enrichment results for networks of interest and write to a file.
 
@@ -109,46 +174,42 @@ def pull_network_enrichment(args: Namespace) -> None:
         # This is a set
         network_ids = {args.network_id}
 
-    # We have to be able to account for both GZIP compressed and uncompressed files
-    # The next few lines will abstract the open function to account for this
-    reader = open
-    # Alias the gzip reader instead if the file is compressed
-    if args.results_file.suffix == ".gz":
-        logger.debug(
-            f"detected that the input file, {args.results_file}, was compressed. Using the gzip reader instead of standard open function"
-        )
-        reader = gzip.open
+    # The user can pass either a directory or a file as the input. The following
+    # function will gather all of these files together
+    drive_files = gather_drive_files(args.results_file)
 
     # This dictionary will hold the results that we care about. This will
     # be a nested dictionary where the outer key is the network id, the
     # inner key is the phecode id, and the values are the pvalues for each
     # phecode
     pvalues = {}
-    remaining_networks = set(network_ids)
+    for result_file in drive_files:
+        # We need to create a set that defines what networks we need to find in the file
+        remaining_networks = set(network_ids)
+        reader = determine_reader(result_file)
+        with reader(result_file, "rt") as results_fh:
+            header = results_fh.readline()
 
-    with reader(args.results_file, "rt") as results_fh:
-        header = results_fh.readline()
+            phecode_indices = parse_header(header)
 
-        phecode_indices = parse_header(header)
+            if not phecode_indices:
+                logger.warning(
+                    f"No phecode enrichment p-value columns were found in the header of {result_file}."
+                )
 
-        if not phecode_indices:
-            logger.warning(
-                f"No phecode enrichment p-value columns were found in the header of {args.results_file}."
-            )
+            for line in results_fh:
+                split_row = line.strip().split("\t")
 
-        for line in results_fh:
-            split_row = line.strip().split("\t")
+                clst_id = split_row[0]
+                if clst_id in remaining_networks:
 
-            clst_id = split_row[0]
-            if clst_id in remaining_networks:
+                    network_pvalues = gather_pvalues(split_row, phecode_indices)
 
-                network_pvalues = gather_pvalues(split_row, phecode_indices)
+                    pvalues.setdefault(clst_id, {}).update(network_pvalues)
+                    remaining_networks.remove(clst_id)
 
-                pvalues[clst_id] = network_pvalues
-                remaining_networks.remove(clst_id)
-
-                if not remaining_networks:
-                    break
+                    if not remaining_networks:
+                        break
 
     if not pvalues:
         logger.warning(
