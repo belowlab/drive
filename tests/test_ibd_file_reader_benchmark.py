@@ -17,7 +17,6 @@ from drive.models import create_indices
 from drive.parser import PhenotypeFileParser
 from drive.network import generate_edge_info_df, generate_vertex_info_df
 
-
 ##load in the env variables
 
 load_dotenv("tests/.env")

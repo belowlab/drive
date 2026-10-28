@@ -10,7 +10,6 @@ sys.path.append("./src")
 
 from drive import drive
 
-
 site_packages_path = Path(sysconfig.get_paths().get("platlib"))
 
 

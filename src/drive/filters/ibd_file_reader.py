@@ -5,7 +5,6 @@ import duckdb
 import sys
 from drive.models import IbdFileIndices
 
-
 logger = CustomLogger.get_logger(__name__)
 
 
