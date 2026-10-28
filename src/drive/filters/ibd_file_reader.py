@@ -150,7 +150,7 @@ def filter_ibd_file(
         )
 
         conn.execute(f"SET threads TO {thread_count};")
-        filtered_df = conn.execute(sql_query).pl()
+        filtered_df = conn.sql(sql_query).pl()
     except duckdb.InvalidInputException as e:
         logger.critical(
             f"Encountered the following exception while trying to run the following query:\nQUERY:\n{sql_query}\n.EXCEPTION:{e}\n"
