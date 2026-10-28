@@ -9,7 +9,7 @@ from drive.network import run_network_identification
 from drive.utilities.pull_samples import run_pull_samples
 from drive.parser.callbacks import CheckInputExist
 from drive.utilities.testing import run_integration_test
-from drive.utilities.functions import list_plugins
+from drive.utilities.functions import list_plugins, pull_network_enrichment
 
 
 def generate_cmd_parser() -> argparse.ArgumentParser:
@@ -228,6 +228,14 @@ def generate_cmd_parser() -> argparse.ArgumentParser:
         default=False,
         action=argparse.BooleanOptionalAction,
         help="if this flag is provided by the user then the output will be broken up into a file for each phecode category. Each file will still contain the columns that give the network information and the minimum phecode for each network. Output files will all be written to the same output directory. This flag should only be used if the user is running the analysis phenomewide. It shouldn't be used with the phecode-categories-to-keep flag.",
+    )
+
+    cluster_parser.add_argument(
+        "--continuous",
+        required=False,
+        default=False,
+        action=argparse.BooleanOptionalAction,
+        help="Specifies that the user wants to run DRIVE for a continuous phenotype. When enabled DRIVE will use a wilcox-rank sum test instead of the binomial enrichment test.",
     )
 
     cluster_parser.add_argument(
@@ -475,5 +483,46 @@ def generate_cmd_parser() -> argparse.ArgumentParser:
     )
 
     list_plugins_parser.set_defaults(func=list_plugins)
+
+    pull_enrichment_parser = utility_cmd_subparser.add_parser(
+        name="pull-enrichment",
+        aliases=["pull-network-enrichment"],
+        help="pull enrichment p-values for all phecodes for network(s) of interest",
+        formatter_class=RichHelpFormatter,
+        parents=[common_parser],
+        description="pull-enrichment",
+    )
+
+    network_group = pull_enrichment_parser.add_mutually_exclusive_group(required=True)
+
+    network_group.add_argument(
+        "-n",
+        "--network-id",
+        type=str,
+        help="ID of the network to pull from the DRIVE results file",
+    )
+
+    network_group.add_argument(
+        "--networks-file",
+        type=Path,
+        help="Path to a text file containing network IDs (one per line) to pull from the DRIVE results file",
+    )
+
+    pull_enrichment_parser.add_argument(
+        "--results-file",
+        type=Path,
+        required=True,
+        help="Path to the DRIVE results file (e.g. *.drive_networks.txt or *.gz).",
+    )
+
+    pull_enrichment_parser.add_argument(
+        "-o",
+        "--output",
+        type=Path,
+        default=Path("enrichment_pvalues.txt"),
+        help="Output tab-separated file with enrichment p-values. (default: %(default)s)",
+    )
+
+    pull_enrichment_parser.set_defaults(func=pull_network_enrichment)
 
     return parser

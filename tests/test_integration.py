@@ -119,6 +119,46 @@ def system_args_with_pheno(monkeypatch):
 
 
 @pytest.fixture()
+def system_args_with_continuous_pheno(monkeypatch):
+    input_file = (
+        site_packages_path / "tests/test_inputs/simulated_ibd_test_data_v2_chr20.ibd.gz"
+    )
+
+    output_file = (
+        site_packages_path
+        / "tests/test_output/integration_test_results_with_continuous_pheno"
+    )
+
+    carrier_file = (
+        site_packages_path / "tests/test_inputs/test_continuous_phenotype_file.txt"
+    )
+
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "drive",
+            "cluster",
+            "-i",
+            str(input_file.absolute()),
+            "-f",
+            "hapibd",
+            "-t",
+            "20:4666882-4682236",
+            "-o",
+            str(output_file.absolute()),
+            "-m",
+            "3",
+            "-c",
+            str(carrier_file.absolute()),
+            "--continuous",
+            "--recluster",
+            "--log-filename",
+            "integration_test_results_with_continuous_pheno.log",
+        ],
+    )
+
+
+@pytest.fixture()
 def system_args_for_dendrogram(monkeypatch):
     input_file = (
         site_packages_path
@@ -292,6 +332,89 @@ def test_drive_full_run_with_phenotypes(system_args_with_pheno):
     assert not errors, "errors occured:\n{}".format("\n".join(errors))
 
 
+def test_drive_full_run_with_continuous_phenotypes(system_args_with_continuous_pheno):
+    # Make sure the output directory exists
+    output_path = site_packages_path / "tests/test_output"
+    output_path.mkdir(exist_ok=True)
+
+    drive.main()
+
+    # we need to make sure the output was properly formed
+    output = pd.read_csv(
+        site_packages_path
+        / "tests/test_output/integration_test_results_with_continuous_pheno.drive_networks.txt",
+        sep="\t",
+        keep_default_na=False,
+    )
+
+    # list of errors to keep
+    errors = []
+
+    # lets read in the header of the continuous phenotype file
+    with open(
+        site_packages_path / "tests/test_inputs/test_continuous_phenotype_file.txt",
+        "r",
+    ) as pheno_input:
+        header_cols = pheno_input.readline().strip().split("\t")
+        pheno_cols = header_cols[1:]
+
+        col_combinations = list(
+            itertools.product(
+                pheno_cols,
+                [
+                    "_case_count_in_network",
+                    "_cases_in_network",
+                    "_excluded_count_in_network",
+                    "_excluded_in_network",
+                    "_pvalue",
+                ],
+            )
+        )
+
+        phenotype_cols = [
+            "min_pvalue",
+            "min_phenotype",
+            "min_phenotype_description",
+        ] + ["".join(val) for val in col_combinations]
+
+    # list of columns it should have
+    expected_colnames = [
+        "clstID",
+        "n.total",
+        "n.haplotype",
+        "true.positive.n",
+        "true.positive",
+        "false.positive",
+        "IDs",
+        "ID.haplotype",
+    ] + phenotype_cols
+
+    if not output.shape == (165, len(expected_colnames)):
+        errors.append(
+            f"Expected the output to have 165 rows and {len(expected_colnames)} columns instead it had {output.shape[0]} rows and {output.shape[1]}"
+        )
+    if [col for col in output.columns if col not in expected_colnames]:
+        errors.append(
+            f"Expected the output to have the columns: {','.join(expected_colnames)}, instead these columns were found: {','.join(output.columns)}"
+        )
+
+    # For continuous traits, both case count and cases columns must be 'N/A'
+    for pheno in pheno_cols:
+        case_count_vals = output[f"{pheno}_case_count_in_network"].astype(str).unique()
+        if not (len(case_count_vals) == 1 and case_count_vals[0] == "N/A"):
+            errors.append(
+                f"Expected {pheno}_case_count_in_network to be 'N/A' for all rows, but found {case_count_vals}"
+            )
+
+        cases_vals = output[f"{pheno}_cases_in_network"].astype(str).unique()
+        if not (len(cases_vals) == 1 and cases_vals[0] == "N/A"):
+            errors.append(
+                f"Expected {pheno}_cases_in_network to be 'N/A' for all rows, but found {cases_vals}"
+            )
+
+    assert not errors, "errors occurred:\n{}".format("\n".join(errors))
+
+
 def test_drive_dendrogram_single_network(system_args_for_dendrogram):
     output_path = site_packages_path / "tests/test_output"
     output_path.mkdir(exist_ok=True)
@@ -424,6 +547,24 @@ def test_id_consistency_with_phenotypes(system_args_with_pheno):
     # Load the output file
     output = pd.read_csv(
         output_path / "integration_test_results_with_pheno.drive_networks.txt",
+        sep="\t",
+    )
+
+    _validate_id_consistency(output)
+
+
+def test_id_consistency_with_continuous_phenotypes(system_args_with_continuous_pheno):
+    # Ensure output directory exists
+    output_path = site_packages_path / "tests/test_output"
+    output_path.mkdir(exist_ok=True)
+
+    # Execute the drive main function
+    drive.main()
+
+    # Load the output file
+    output = pd.read_csv(
+        output_path
+        / "integration_test_results_with_continuous_pheno.drive_networks.txt",
         sep="\t",
     )
 
