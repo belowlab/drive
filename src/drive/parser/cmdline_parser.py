@@ -10,6 +10,7 @@ from drive.utilities.pull_samples import run_pull_samples
 from drive.parser.callbacks import CheckInputExist
 from drive.utilities.testing import run_integration_test
 from drive.utilities.functions import list_plugins, pull_network_enrichment
+from drive.utilities.pull_segments import pull_network_segments
 
 
 def generate_cmd_parser() -> argparse.ArgumentParser:
@@ -215,6 +216,20 @@ def generate_cmd_parser() -> argparse.ArgumentParser:
     )
 
     cluster_parser.add_argument(
+        "--max-memory",
+        default=None,
+        type=str,
+        help="Maximum memory limit for DuckDB to use during IBD segment filtering (e.g. '10GB', '500MB'). (default: %(default)s)",
+    )
+
+    cluster_parser.add_argument(
+        "--temp-dir",
+        default=None,
+        type=Path,
+        help="Directory where DuckDB can spill data to disk if the memory limit is exceeded. (default: %(default)s)",
+    )
+
+    cluster_parser.add_argument(
         "--phecode-categories-to-keep",
         required=False,
         nargs="+",
@@ -329,6 +344,20 @@ def generate_cmd_parser() -> argparse.ArgumentParser:
         default=5,
         type=int,
         help="number of threads to use during the analysis. These threads are used by DuckDB when reading in the IBD segment data.",
+    )
+
+    dendrogram_parser.add_argument(
+        "--max-memory",
+        default=None,
+        type=str,
+        help="Maximum memory limit for DuckDB to use during IBD segment filtering (e.g. '10GB', '500MB'). (default: %(default)s)",
+    )
+
+    dendrogram_parser.add_argument(
+        "--temp-dir",
+        default=None,
+        type=Path,
+        help="Directory where DuckDB can spill data to disk if the memory limit is exceeded. (default: %(default)s)",
     )
 
     dendrogram_parser.add_argument(
@@ -524,5 +553,116 @@ def generate_cmd_parser() -> argparse.ArgumentParser:
     )
 
     pull_enrichment_parser.set_defaults(func=pull_network_enrichment)
+
+    pull_segments_parser = utility_cmd_subparser.add_parser(
+        name="pull-segments",
+        help="pull pairwise IBD segments for network(s) of interest",
+        formatter_class=RichHelpFormatter,
+        parents=[common_parser],
+        description="pull-segments",
+    )
+
+    segments_network_group = pull_segments_parser.add_mutually_exclusive_group(
+        required=True
+    )
+
+    segments_network_group.add_argument(
+        "-n",
+        "--network-id",
+        type=str,
+        help="ID of the network to pull from the DRIVE results file",
+    )
+
+    segments_network_group.add_argument(
+        "--networks-file",
+        type=Path,
+        action=CheckInputExist,
+        help="Path to a text file containing network IDs (one per line) to pull from the DRIVE results file",
+    )
+
+    pull_segments_parser.add_argument(
+        "-i",
+        "--input",
+        "--drive-file",
+        dest="drive_file",
+        type=Path,
+        required=True,
+        action=CheckInputExist,
+        help="Path to the DRIVE results file (*.drive_networks.txt or *.gz).",
+    )
+
+    pull_segments_parser.add_argument(
+        "--ibd",
+        "--ibd-file",
+        dest="ibd_file",
+        type=Path,
+        required=True,
+        action=CheckInputExist,
+        help="Path to the pairwise IBD file.",
+    )
+
+    pull_segments_parser.add_argument(
+        "-t",
+        "--target",
+        type=str,
+        required=True,
+        help="Target region or position, chr:start-end or chr:pos",
+    )
+
+    pull_segments_parser.add_argument(
+        "-f",
+        "--format",
+        default="hapibd",
+        type=str,
+        choices=["hapibd", "ilash", "germline", "rapid"],
+        help="IBD program used to detect segments. (default: %(default)s)",
+    )
+
+    pull_segments_parser.add_argument(
+        "-m",
+        "--min-cm",
+        default=3,
+        type=int,
+        help="Minimum centimorgan threshold. (default: %(default)s)",
+    )
+
+    pull_segments_parser.add_argument(
+        "--segment-overlap",
+        default="contains",
+        choices=["contains", "overlaps"],
+        type=str,
+        help="Indicates if the segment contains the whole target region or overlaps it. (default: %(default)s)",
+    )
+
+    pull_segments_parser.add_argument(
+        "--threads",
+        default=5,
+        type=int,
+        help="Number of threads to use during DuckDB filtering. (default: %(default)s)",
+    )
+
+    pull_segments_parser.add_argument(
+        "--max-memory",
+        default=None,
+        type=str,
+        help="Maximum memory limit for DuckDB to use during IBD segment filtering (e.g. '10GB', '500MB'). (default: %(default)s)",
+    )
+
+    pull_segments_parser.add_argument(
+        "--temp-dir",
+        default=None,
+        type=Path,
+        help="Directory where DuckDB can spill data to disk if the memory limit is exceeded. (default: %(default)s)",
+    )
+
+    pull_segments_parser.add_argument(
+        "-o",
+        "--output",
+        type=Path,
+        default=Path("filtered_segments.ibd"),
+        help="Output file path. (default: %(default)s)",
+    )
+
+    pull_segments_parser.set_defaults(func=pull_network_segments)
 
     return parser

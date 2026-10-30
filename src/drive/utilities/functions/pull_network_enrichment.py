@@ -6,6 +6,8 @@ from log import CustomLogger
 from typing import TextIO, BinaryIO
 from collections.abc import Callable
 
+from drive.helper_funcs import open_writer
+
 logger = CustomLogger.get_logger(__name__)
 
 
@@ -221,14 +223,7 @@ def pull_network_enrichment(args: Namespace) -> None:
             f"The following network IDs were not found in {args.results_file}: {', '.join(sorted(remaining_networks))}"
         )
 
-    # now lets also abstract away the writer in case the user wishes to write the output
-    # to a gzip file
-    writer = open
-
-    if args.output.suffix == ".gz":
-        writer = gzip.open
-
-    with writer(args.output, "wt") as output_fh:
+    with open_writer(args.output) as output_fh:
         output_fh.write("network_id\tphecode_id\tphecode_pvalue\n")
         for network_id, network_pvalues in pvalues.items():
             for phecode, pvalue in network_pvalues.items():

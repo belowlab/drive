@@ -102,6 +102,80 @@ singularity exec -w --no-home singularity-sandbox drive utilities test
 
 We have provided example commands for DRIVE illustrating how to run DRIVE for [single phenotype](https://drive-ibd.readthedocs.io/en/latest/examples/examples_command_format.html) and for [multiple phenotype]()
 
+## Utility Commands
+
+DRIVE provides several helper subcommands under `drive utilities` to post-process and query analysis results:
+
+### Pulling Pairwise IBD Segments (`pull-segments`)
+
+The `pull-segments` utility extracts all pairwise IBD segments belonging to one or more networks of interest. It uses DuckDB to query the raw IBD file and filters down to pairwise segments matching the network's haplotypes, prepending the `clstID` to each record in the output.
+
+**Extract segments for a single network:**
+```bash
+drive utilities pull-segments \
+  -n 0 \
+  -i results.drive_networks.txt \
+  --ibd raw_segments.ibd.gz \
+  -t 20:4666882-4682236 \
+  -f hapibd \
+  -o network_0_segments.ibd
+```
+
+**Extract segments for multiple networks from a file:**
+```bash
+drive utilities pull-segments \
+  --networks-file target_networks.txt \
+  -i results.drive_networks.txt \
+  --ibd raw_segments.ibd.gz \
+  -t 20:4666882-4682236 \
+  -m 3 \
+  --segment-overlap contains \
+  --threads 4 \
+  -o filtered_segments.ibd.gz
+```
+
+*Key Options:*
+* `-n, --network-id`: A single network ID to pull (mutually exclusive with `--networks-file`).
+* `--networks-file`: Text or tab-separated file containing network IDs (one per line).
+* `-i, --input, --drive-file`: Path to the DRIVE results file (`*.drive_networks.txt` or `.gz`).
+* `--ibd, --ibd-file`: Path to the raw pairwise IBD segments file.
+* `-t, --target`: Target locus (`chr:start-end` or `chr:pos`).
+* `-f, --format`: IBD program format (`hapibd`, `ilash`, `germline`, `rapid`). Default: `hapibd`.
+* `-m, --min-cm`: Minimum centimorgan threshold. Default: `3`.
+* `--segment-overlap`: Overlap filter condition (`contains` or `overlaps`). Default: `contains`.
+* `--threads`: Number of threads for DuckDB. Default: `5`.
+* `--max-memory`: Maximum memory limit for DuckDB to use during filtering (e.g. `10GB`, `500MB`). Default: `None`.
+* `--temp-dir`: Temporary directory where DuckDB can spill data to disk if the memory limit is exceeded. Default: `None`.
+* `-o, --output`: Output file path. If ending with `.gz`, the output is automatically gzipped. Default: `filtered_segments.ibd`.
+
+---
+
+### Pulling Network Enrichment P-Values (`pull-enrichment`)
+
+The `pull-enrichment` utility extracts enrichment p-values across all phecodes for specified networks from DRIVE results.
+
+**Extract enrichment for a single network:**
+```bash
+drive utilities pull-enrichment \
+  -n 0 \
+  --results-file results.drive_networks.txt \
+  -o network_0_enrichment.txt
+```
+
+**Extract enrichment for multiple networks:**
+```bash
+drive utilities pull-enrichment \
+  --networks-file target_networks.txt \
+  --results-file results.drive_networks.txt \
+  -o enrichment_pvalues.txt
+```
+
+*Key Options:*
+* `-n, --network-id`: Network ID to pull (mutually exclusive with `--networks-file`).
+* `--networks-file`: Text file with network IDs (one per line).
+* `--results-file`: Path to the DRIVE results file or a directory containing DRIVE results.
+* `-o, --output`: Output file path. Default: `enrichment_pvalues.txt`.
+
 ## Reporting issues
 
 If you wish to report a bug or propose a feature you can find templates under the .github/ISSUE_TEMPLATE directory.

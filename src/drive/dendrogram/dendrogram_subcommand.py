@@ -508,6 +508,8 @@ def generate_dendrograms(args) -> None:
         thread_count=args.threads,
         keep_df=pl.DataFrame(),
         indices=indices,
+        max_memory=args.max_memory,
+        temp_dir=args.temp_dir,
     )
     # At this point in the code the filtered_ibd_df has columns for the id1 & id2 string, the chromosome, start and end position of the segment, cm length, and hapid1 & hapid2.
 
