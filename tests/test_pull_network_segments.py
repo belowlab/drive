@@ -169,6 +169,8 @@ def test_pull_network_segments_none_found(
         min_cm=3,
         segment_overlap="contains",
         threads=1,
+        max_memory=None,
+        temp_dir=None,
         output=out_file,
     )
 
@@ -196,6 +198,8 @@ def test_pull_network_segments_end_to_end(tmp_path: Path) -> None:
         min_cm=3,
         segment_overlap="contains",
         threads=2,
+        max_memory=None,
+        temp_dir=None,
         output=out_file,
     )
 
@@ -239,6 +243,8 @@ def test_pull_network_segments_gz_output(tmp_path: Path) -> None:
         min_cm=3,
         segment_overlap="contains",
         threads=2,
+        max_memory=None,
+        temp_dir=None,
         output=out_file,
     )
 

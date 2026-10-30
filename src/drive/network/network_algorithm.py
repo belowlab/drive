@@ -294,6 +294,8 @@ def run_network_identification(args) -> None:
         thread_count=args.threads,
         keep_df=cohort_id_df,
         indices=indices,
+        max_memory=args.max_memory,
+        temp_dir=args.temp_dir,
     )
 
     end_time = datetime.now()

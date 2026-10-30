@@ -1,5 +1,6 @@
 import polars as pl
 from datetime import datetime
+from pathlib import Path
 from log import CustomLogger
 import duckdb
 import sys
@@ -106,7 +107,12 @@ def _check_for_no_segments(data: pl.DataFrame) -> None:
 
 
 def filter_ibd_file(
-    sql_query: str, thread_count: int, keep_df: pl.DataFrame, indices: IbdFileIndices
+    sql_query: str,
+    thread_count: int,
+    keep_df: pl.DataFrame,
+    indices: IbdFileIndices,
+    max_memory: str | None = None,
+    temp_dir: Path | str | None = None,
 ) -> pl.DataFrame:
     """This function will produce the following basic filtering: 1) min_cM threshold, 2) keep samples 3) overlaps or contains locus of interest
 
@@ -126,6 +132,12 @@ def filter_ibd_file(
     indices : IbdFileIndices
         namedtuple that has the column indices representing the data
         within the IBD segment file from the IBD detection programs.
+
+    max_memory : str | None
+        optional maximum memory limit for DuckDB (e.g. '10GB', '500MB')
+
+    temp_dir : Path | str | None
+        optional directory where DuckDB can spill to disk if memory limit is exceeded
 
     Returns
     -------
@@ -149,6 +161,13 @@ def filter_ibd_file(
         )
 
         conn.execute(f"SET threads TO {thread_count};")
+        if max_memory:
+            logger.verbose(f"setting DuckDB max_memory to {max_memory}")
+            conn.execute(f"SET max_memory TO '{max_memory}';")
+        if temp_dir:
+            logger.verbose(f"setting DuckDB temp_directory to {temp_dir}")
+            conn.execute(f"SET temp_directory TO '{temp_dir}';")
+
         filtered_df = conn.sql(sql_query).pl()
     except duckdb.InvalidInputException as e:
         logger.critical(

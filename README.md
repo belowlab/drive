@@ -144,6 +144,8 @@ drive utilities pull-segments \
 * `-m, --min-cm`: Minimum centimorgan threshold. Default: `3`.
 * `--segment-overlap`: Overlap filter condition (`contains` or `overlaps`). Default: `contains`.
 * `--threads`: Number of threads for DuckDB. Default: `5`.
+* `--max-memory`: Maximum memory limit for DuckDB to use during filtering (e.g. `10GB`, `500MB`). Default: `None`.
+* `--temp-dir`: Temporary directory where DuckDB can spill data to disk if the memory limit is exceeded. Default: `None`.
 * `-o, --output`: Output file path. If ending with `.gz`, the output is automatically gzipped. Default: `filtered_segments.ibd`.
 
 ---

@@ -216,6 +216,20 @@ def generate_cmd_parser() -> argparse.ArgumentParser:
     )
 
     cluster_parser.add_argument(
+        "--max-memory",
+        default=None,
+        type=str,
+        help="Maximum memory limit for DuckDB to use during IBD segment filtering (e.g. '10GB', '500MB'). (default: %(default)s)",
+    )
+
+    cluster_parser.add_argument(
+        "--temp-dir",
+        default=None,
+        type=Path,
+        help="Directory where DuckDB can spill data to disk if the memory limit is exceeded. (default: %(default)s)",
+    )
+
+    cluster_parser.add_argument(
         "--phecode-categories-to-keep",
         required=False,
         nargs="+",
@@ -330,6 +344,20 @@ def generate_cmd_parser() -> argparse.ArgumentParser:
         default=5,
         type=int,
         help="number of threads to use during the analysis. These threads are used by DuckDB when reading in the IBD segment data.",
+    )
+
+    dendrogram_parser.add_argument(
+        "--max-memory",
+        default=None,
+        type=str,
+        help="Maximum memory limit for DuckDB to use during IBD segment filtering (e.g. '10GB', '500MB'). (default: %(default)s)",
+    )
+
+    dendrogram_parser.add_argument(
+        "--temp-dir",
+        default=None,
+        type=Path,
+        help="Directory where DuckDB can spill data to disk if the memory limit is exceeded. (default: %(default)s)",
     )
 
     dendrogram_parser.add_argument(
@@ -611,6 +639,20 @@ def generate_cmd_parser() -> argparse.ArgumentParser:
         default=5,
         type=int,
         help="Number of threads to use during DuckDB filtering. (default: %(default)s)",
+    )
+
+    pull_segments_parser.add_argument(
+        "--max-memory",
+        default=None,
+        type=str,
+        help="Maximum memory limit for DuckDB to use during IBD segment filtering (e.g. '10GB', '500MB'). (default: %(default)s)",
+    )
+
+    pull_segments_parser.add_argument(
+        "--temp-dir",
+        default=None,
+        type=Path,
+        help="Directory where DuckDB can spill data to disk if the memory limit is exceeded. (default: %(default)s)",
     )
 
     pull_segments_parser.add_argument(
