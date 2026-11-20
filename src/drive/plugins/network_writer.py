@@ -327,6 +327,16 @@ class NetworkWriter:
         else:
             phenotypes = list(data.carriers.keys())
 
+        # If the user requested split categories but only provided 1 (or fewer) phenotypes,
+        # warn and fall back to single file output.
+        if split_phecodes and len(phenotypes) <= 1:
+            logger.warning(
+                f"The split-phecode-categories flag was provided, but only {len(phenotypes)} "
+                f"{'phenotype was' if len(phenotypes) == 1 else 'phenotypes were'} found. "
+                "Writing output to a single file instead."
+            )
+            split_phecodes = False
+
         # We need to decide how to write the output. Whether we want
         # to write it as multiple files or to output to a single file
         if split_phecodes:
